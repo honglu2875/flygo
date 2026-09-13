@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "source_repository": "/home/cubic27/go",
+  "source_commit": null,
+  "note": "The reference folder has no Git metadata. File hashes identify the inspected working tree. The three Go crates are initially unmodified; bindings, configuration, tests and lockfile are adapted independently.",
+  "files": [
+    {
+      "source": "crates/go-core/Cargo.toml",
+      "destination": "crates/go-core/Cargo.toml",
+      "source_sha256": "a3d9550c533e47394f603f835b098c34af2cfaf1779892da2f15249874c69b70"
+    },
+    {
+      "source": "crates/go-core/KATAGO_LICENSE.md",
+      "destination": "crates/go-core/KATAGO_LICENSE.md",
+      "source_sha256": "7644e5aa38ba259d229675eefc6477c3b5fbecd2f24f77061c4b9c0f57c74e22"
+    },
+    {
+      "source": "crates/go-core/src/bin/go-bench.rs",
+      "destination": "crates/go-core/src/bin/go-bench.rs",
+      "source_sha256": "ac29a820b938705cc4c09bc22d8aad568ed1b5fc97052b3d5ff07f4abe57cd2a"
+    },
+    {
+      "source": "crates/go-core/src/lib.rs",
+      "destination": "crates/go-core/src/lib.rs",
+      "source_sha256": "de3fa63197aa2e7c8dc1f49cb9c48c8846297918b2b12881a24f3a90fe2f72c4"
+    },
+    {
+      "source": "crates/go-core/src/scoring.rs",
+      "destination": "crates/go-core/src/scoring.rs",
+      "source_sha256": "a6f0bb1696b5e1a82915cee8449ad8d047a394f0a23ffe0216d10045095b5692"
+    },
+    {
+      "source": "crates/go-core/src/tests.rs",
+      "destination": "crates/go-core/src/tests.rs",
+      "source_sha256": "9728eed0d8a3875628cd948983ae349a4e5b5d1a82ef1a9a134b97434584b877"
+    },
+    {
+      "source": "crates/go-search/Cargo.toml",
+      "destination": "crates/go-search/Cargo.toml",
+      "source_sha256": "a307ae5b2e228d883ef31fda42dfc5772809f54e5623cbb0021c2965ec26a986"
+    },
+    {
+      "source": "crates/go-search/MCTX_LICENSE.md",
+      "destination": "crates/go-search/MCTX_LICENSE.md",
+      "source_sha256": "59d7a1d5b802d8709b0f18020823e63ef8dc9051299e76702431ba438ab6efe1"
+    },
+    {
+      "source": "crates/go-search/examples/gumbel_probe.rs",
+      "destination": "crates/go-search/examples/gumbel_probe.rs",
+      "source_sha256": "b05afbf49b8ac19c027c81e32e2b94b121170fba018047126157dbc6a1dadb73"
+    },
+    {
+      "source": "crates/go-search/src/gumbel.rs",
+      "destination": "crates/go-search/src/gumbel.rs",
+      "source_sha256": "4e9582ddedb64315c2593dcda827318e5cfbaad5452ae3d531be17f51acf621c"
+    },
+    {
+      "source": "crates/go-search/src/lib.rs",
+      "destination": "crates/go-search/src/lib.rs",
+      "source_sha256": "cc114e58167e2c48d9e9e16f27460a35bbe4203e06a27206f4ea6430bcdef1db"
+    },
+    {
+      "source": "crates/go-search/src/tests.rs",
+      "destination": "crates/go-search/src/tests.rs",
+      "source_sha256": "65664e2752764e279aa25db3e0031431dfb3bcebe30b16a11f439427c1e79eb0"
+    },
+    {
+      "source": "crates/go-actors/Cargo.toml",
+      "destination": "crates/go-actors/Cargo.toml",
+      "source_sha256": "c5bfd84219eebbb1bb88bc7a5943b6bdc0043fe52ea3db54248a970575914115"
+    },
+    {
+      "source": "crates/go-actors/src/actor.rs",
+      "destination": "crates/go-actors/src/actor.rs",
+      "source_sha256": "bfbbc42d193e28486f6cc179eb1a498c326ab4e219f5b6d7e519c93410550b89"
+    },
+    {
+      "source": "crates/go-actors/src/game.rs",
+      "destination": "crates/go-actors/src/game.rs",
+      "source_sha256": "5efe82adcc2354ca2324a434918db30da0eebcbfbef9cb0bd03e7a4afac7b996"
+    },
+    {
+      "source": "crates/go-actors/src/lib.rs",
+      "destination": "crates/go-actors/src/lib.rs",
+      "source_sha256": "cf9c9eb61a78b90ce55b8b0c1402409d269b4b4624749f26d71a17057fae30cd"
+    },
+    {
+      "source": "crates/go-actors/src/observations.rs",
+      "destination": "crates/go-actors/src/observations.rs",
+      "source_sha256": "d9a94201dbc70bd041fcf9593dff481417beb792331e96150e0a073d23592507"
+    },
+    {
+      "source": "crates/go-actors/src/pool.rs",
+      "destination": "crates/go-actors/src/pool.rs",
+      "source_sha256": "da75b112a8b3e6e6aceb95940f5a1f1981285e3ec8f167a53227e03d8a96c69f"
+    },
+    {
+      "source": "crates/go-actors/src/position.rs",
+      "destination": "crates/go-actors/src/position.rs",
+      "source_sha256": "5dc9d8c4614fab3237021806b14b22d2d691855583c32d842a47940b144e2546"
+    },
+    {
+      "source": "crates/go-actors/src/tests.rs",
+      "destination": "crates/go-actors/src/tests.rs",
+      "source_sha256": "41cc53d687ce94e7dd0db829b7bd1910113aeb1af8a598f43ed139b881c2b5a1"
+    },
+    {
+      "source": "crates/go-actors/src/traces.rs",
+      "destination": "crates/go-actors/src/traces.rs",
+      "source_sha256": "d002c2458c4c93684b7cf07cab1f52a46c6a48c3e30c80b72710149d135d2ade"
+    },
+    {
+      "source": "crates/go-bridge/src/lib.rs",
+      "destination": "crates/flygo-python/src/lib.rs",
+      "source_sha256": "8a8a899c35d1a3fe184f2ae55a467fe3cb309e13c581039ec516d3b82c28cf4a"
+    },
+    {
+      "source": "crates/go-bridge/src/game.rs",
+      "destination": "crates/flygo-python/src/game.rs",
+      "source_sha256": "5b2cb5f77c7328b7311860566a4ac84b8303426906ef56560f653204d640c1f9"
+    },
+    {
+      "source": "crates/go-bridge/src/observations.rs",
+      "destination": "crates/flygo-python/src/observations.rs",
+      "source_sha256": "65de692750ad65aec602748287d6a1b88b02d1c39582cb682bf679dcf52d0af3"
+    },
+    {
+      "source": "packages/gozero/src/gozero/gtp.py",
+      "destination": "python/flygo/gtp.py",
+      "source_sha256": "3c315929d4bf61dceb7947d7d44e5317bc2370b64ea23d6344395cb7f3544416"
+    },
+    {
+      "source": "tests/test_gtp.py",
+      "destination": "tests/test_gtp.py",
+      "source_sha256": "dc4de20c18844091a964d30e3ed8e9e50fe8315e6d6ada6ef397ab7aca216985"
+    },
+    {
+      "source": "eval/fixtures/pass_alive_area.json",
+      "destination": "tests/fixtures/pass_alive_area.json",
+      "source_sha256": "3ab068433f7ec191dd2245d4ff22d1d533e0bbcbd6db4351a85b22185abd875c"
+    },
+    {
+      "source": "eval/katago_area_oracle.cpp",
+      "destination": "tests/oracle/katago_area_oracle.cpp",
+      "source_sha256": "f4daaf555119e85dbf29783761fe9761bf02e4c2a5c366e02b5095f71addc3d0"
+    },
+    {
+      "source": "eval/katago_9x9_smoke.cfg",
+      "destination": "configs/katago-qualification.cfg",
+      "source_sha256": "9552f3236bd5b593d57017e454d77dec56b84b2024d2eb9dbfaa14b08722a2a4"
+    },
+    {
+      "source": "rust-toolchain.toml",
+      "destination": "rust-toolchain.toml",
+      "source_sha256": "887f9be066a15585a2c583578e84b0fcb541126d81546276bad3d2ff00d61167"
+    },
+    {
+      "source": "Cargo.lock",
+      "destination": "Cargo.lock",
+      "source_sha256": "cc1f454a1720e915b03b47262da3e6e264cd864f73e33c121be82b4079d9542b"
+    }
+  ],
+  "adapted_references": [
+    {
+      "source": "packages/gozero/src/gozero/native.py",
+      "source_sha256": "ea07e53de479d8968e0ddb198a087afa8f9326d270146f80bc8293f5f1c82402",
+      "used_by": "python/flygo/go.py"
+    },
+    {
+      "source": "tests/test_native.py",
+      "source_sha256": "498858c1e4df7ff91b987ace07c5b7976403a77e28c388a32504c37e3beeca46",
+      "used_by": "tests/test_go.py"
+    },
+    {
+      "source": "eval/qualify_katago.py",
+      "source_sha256": "2dc06f953ab970b6163a08429016fdc924c2ecde7492aa63660d081c0a7d28b0",
+      "used_by": "python/flygo/qualify.py"
+    },
+    {
+      "source": "eval/katago_build.json",
+      "source_sha256": "7af67ecc353336016905627764dc4bf50e91ed356bab0c6af619e6a8ffa56334",
+      "used_by": "configs/katago-bootstrap.json"
+    },
+    {
+      "source": "eval/katago_9x9.json",
+      "source_sha256": "5ff5b633bd4612e0a746caaeae88488fe238be656a45043c29b29aaee74017ea",
+      "used_by": "configs/katago-bootstrap.json"
+    }
+  ]
+}

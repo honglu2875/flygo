@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "rules": "positional-area-multisuicide-v1",
+  "board_size": 9,
+  "komi": 7.5,
+  "teacher": {
+    "board_sizes": [
+      9
+    ],
+    "name": "kata9x9-b18c384nbt-20231025",
+    "role": "raw policy/value teacher; selected by 2026-09-13 9x9 panel",
+    "sha256": "a1298ce1adc1dad7bd868ca962b2384cc8388ed373a00e6bae1114fa6f9e2d61",
+    "source_relative_path": ".gozero/external/models/a1298ce1adc1dad7bd868ca962b2384cc8388ed373a00e6bae1114fa6f9e2d61/kata9x9-b18c384nbt-20231025.bin.gz",
+    "source_url": "https://github.com/lightvector/KataGo/releases/download/v1.13.2-kata9x9/kata9x9-b18c384nbt-20231025.bin.gz"
+  },
+  "opponents": [
+    {
+      "sha256": "d07ae856740d284494325661d7cbcde0d1aa3ece3ede6b54c70f2fa5da9e0c09",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b6c96-s938496-d1208807.txt.gz",
+      "bytes": 5077550,
+      "name": "kata1-b6c96-s938496-d1208807",
+      "role": "training_opponent_candidate"
+    },
+    {
+      "sha256": "760206c686a481e83bbb859c8b0062177c4717742c76ca81d8b23f960a54bfa7",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b6c96-s10014464-d2201128.txt.gz",
+      "bytes": 4991481,
+      "name": "kata1-b6c96-s10014464-d2201128",
+      "role": "training_opponent_candidate"
+    },
+    {
+      "sha256": "d37e7501e498c9bc754d869438d8d3b4a736619fe9d7055022426aaff5dd6470",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b6c96-s16525312-d2925067.txt.gz",
+      "bytes": 4980520,
+      "name": "kata1-b6c96-s16525312-d2925067",
+      "role": "training_opponent_candidate"
+    },
+    {
+      "sha256": "36420d10c6a4bbf243d991b4a2920dc6ff42f6c2d0a1cfaa438a4daf2b0254ac",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b6c96-s24455424-d3879081.txt.gz",
+      "bytes": 4975306,
+      "name": "kata1-b6c96-s24455424-d3879081",
+      "role": "training_opponent_candidate"
+    },
+    {
+      "name": "kata1-b6c96-s175395328-d26788732",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b6c96-s175395328-d26788732.txt.gz",
+      "sha256": "48d6754de3c4754f95bf6a5ca40957a49e5e915aaaeede133a17b9ccf8fa5fcb",
+      "bytes": 4967720,
+      "role": "qualification_candidate"
+    },
+    {
+      "name": "kata1-b10c128-s258941696-d77667876",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s258941696-d77667876.txt.gz",
+      "sha256": "b0ce4a7fa0d961cd14a5758569cc3170e9051bc1586bd62ff2ba334de130d9ab",
+      "bytes": 14472513,
+      "role": "qualification_candidate"
+    },
+    {
+      "name": "kata1-b15c192-s1672170752-d466197061",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b15c192-s1672170752-d466197061.txt.gz",
+      "sha256": "09456899f1b9155217f4ca059cf8a68f79b7eba22cf6b7c00ffb7f17ce067967",
+      "bytes": 48038914,
+      "role": "qualification_candidate"
+    },
+    {
+      "name": "kata1-tf3-b11c768-s11500M-d6163M",
+      "sha256": "73f6454eba62d2f6d099af8ce66d8c3fde6225e223c55817da0627590e98b0ae",
+      "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-tf3-b11c768-s11500M-d6163M.bin.gz",
+      "role": "training_opponent_candidate"
+    }
+  ],
+  "engine_sha256": "1ae1ed2108caa025bba853634b7f1aad3a29baa0ba27b4a298759ca6b172d104",
+  "visits": 16,
+  "max_moves": 324,
+  "opening_moves": 8,
+  "behavior": "root order after 8-ply 0.75 visits + 0.25 raw policy exploration",
+  "opponent_assignment": "uniform checkpoint strata; equal planned games per stratum",
+  "labels": "raw policy and raw value all plies; searched teacher labels only expert turns",
+  "neural_history": "ignorePreRootHistory=false, ignoreAllHistory=false; complete causal prefix",
+  "search_determinism": "concurrent KataGo search can differ across runs; published rows immutable"
+}

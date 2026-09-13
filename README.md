@@ -1,0 +1,182 @@
+# FlyGo
+
+Learn 9×9 Go with one fixed fly connectome: **165,122 neurons and 15,270,273
+directed edges**. Neuron and edge identities remain fixed. Strengths, local
+dynamics, sensory attachment, readout and internal passes are research variables.
+
+The repository now runs expert generation on four CPU hosts, complete Rust
+inference/backpropagation/Adam, offline teacher distillation, portable
+checkpoints, and prior/PUCT/Gumbel play. JAX supplies an independent CPU
+reference. TPU execution is pending qualification when the hardware is free.
+The early trained models are weak; working training is not a strength claim.
+
+- [Interactive model guide](docs/model.html): illustrated graph, Go adapters,
+  recurrent passes, current variants and proposed extensions. Open directly in
+  a browser; all images, data and controls work offline.
+- [PROGRESS.md](PROGRESS.md): current jobs, results and remaining gates.
+- [DESIGN.md](DESIGN.md): equations, module boundaries and extension rules.
+- [DATASET.md](DATASET.md): teacher, targets, splits and RAM storage policy.
+- [MILESTONES.md](MILESTONES.md): acceptance criteria and research sequence.
+
+**Everyday commands**
+
+Run these from the repository on the first host. Runtime artifacts live under
+`/dev/shm/flygo`; development builds do not replace running jobs' immutable
+environments.
+
+```bash
+# Build and check Rust/Python, including optional independent JAX CPU parity.
+python3 -B scripts/dev.py check --jax
+# Optional build for this CPU's instruction set; qualified on these EPYC hosts.
+python3 -B scripts/dev.py check --jax --native
+
+# Concise fleet status; add --json for full records.
+python3 -B scripts/cluster.py status --run-id expert-v1
+
+# Gracefully drain generation, or restart it with a measured runtime setting.
+python3 -B scripts/cluster.py stop --run-id expert-v1
+python3 -B scripts/cluster.py restart --run-id expert-v1 --concurrent-games 16
+
+# Freeze once all opponent/color strata can supply the requested size.
+/dev/shm/flygo/venv/bin/python scripts/freeze_corpus.py \
+  --release v0-1m --positions 1000000 --wait
+
+# Clone all currently complete games into a new research release.
+# Original opening-family splits are preserved; the opponent mix is recorded.
+/dev/shm/flygo/venv/bin/python scripts/freeze_corpus.py \
+  --release research-snapshot-001 --selection all-complete
+
+# One new offline run. Select currently available physical cores with --cpus.
+/dev/shm/flygo/venv/bin/flygo train \
+  --release screen-v1 --run-id my-k8-seed1 \
+  --passes 8 --seed 1 --steps 1000 --batch-size 32 --threads 24
+
+# Execute an explicit, disjoint four-host experiment plan.
+# A plan name is immutable; use a new name for another experiment.
+/dev/shm/flygo/venv/bin/python scripts/deploy_research.py \
+  --config configs/screen-v1.json
+
+# Interactive GTP; --simulations 0 uses the prior, positive budgets use search.
+/dev/shm/flygo/venv/bin/flygo gtp \
+  --checkpoint /dev/shm/flygo/runs/my-k8-seed1/checkpoints/step-00001000.npz \
+  --simulations 16 --search puct
+
+# Fresh, paired-color games against a calibrated KataGo checkpoint.
+/dev/shm/flygo/venv/bin/flygo eval \
+  --checkpoint /dev/shm/flygo/runs/my-k8-seed1/checkpoints/step-00001000.npz \
+  --opponent 0 --games 16 --output /dev/shm/flygo/runs/my-match
+```
+
+All commands expose `--help`. Training uses a fixed release and uniform
+position sampling with deterministic D4 augmentation. To continue a run,
+pass the same release/model settings, `--resume <checkpoint>` and a larger
+total `--steps`. Creating `<run>/stop` requests a checkpoint at the next safe
+boundary. `status.json`, `metrics.jsonl`, `latest.json` and the last two
+checkpoints are the run's small operational interface.
+
+The active snapshot study is specified in
+[configs/prototype-v1.json](configs/prototype-v1.json): four depth/readout
+configurations, two paired seeds, 10,000 updates each. Periodic validation uses
+fixed random 2,048-position slices shared by all variants. Complete validation
+and fresh KataGo panels remain separate from these frequent progress metrics.
+If deployment is interrupted, rerun the identical plan with `--resume-launch`;
+it validates and adopts matching live trials, then starts the missing ones.
+
+The cluster launcher pins generation to **64 physical cores per host**:
+`0–31,60–91`, eight workers with eight cores each. Research uses
+`32–59,92–119`; generation's SMT siblings are excluded from research profiles.
+The four hosts have **480 physical / 960 logical CPUs in total**. Affinity is
+applied only to FlyGo jobs. Explicit experiment plans check for overlapping
+allocations within the plan; the operator must still account for existing jobs.
+
+**Small programming interfaces**
+
+```python
+from pathlib import Path
+from flygo.go import Game
+from flygo.fly import FlyConfig, RustFly, load_graph
+
+game = Game()                     # 9×9, komi 7.5, exact full rules history
+game.play(1, 0)                    # Black at the top-left intersection
+
+graph = load_graph(Path("/dev/shm/flygo/graphs/<graph-id>"))
+model = RustFly(graph, FlyConfig(steps=8, threads=24))
+prediction = model.infer(game.features()[None])
+# model.loss_and_grad(features, legal, teacher_policy, teacher_value)
+# model.train_step(features, legal, teacher_policy, teacher_value)
+```
+
+Actions are row-major, with `size²` for pass. Observations are
+`[batch, size, size, 2*history+4]`; the 9×9 baseline has 972 features. Policy
+logits have 82 actions and value is in the player-to-move perspective.
+`Actors` in [go.py](python/flygo/go.py) supplies coarse batched search requests
+for high-throughput callers. `choose_moves` in [play.py](python/flygo/play.py)
+batches independent native searches around any compatible evaluator.
+
+Native callers use `go_core::Board`, `go_actors::game::Game`, `go_actors::Pool`
+and `fly_core::{Graph, Model, Params}` with `fly_core::optim::Adam`.
+The fly numerical crate does not depend on Go, Python or JAX.
+
+**Where to make a change**
+
+| Area | Read/edit |
+|---|---|
+| Go rules, search, actors | `crates/go-core`, `go-search`, `go-actors`; imported unchanged with source hashes |
+| Sparse forward, transpose, edge gradients | `crates/fly-core/src/sparse.rs` |
+| Neuron equation and its backward rule | `crates/fly-core/src/recurrent.rs`, `python/flygo/jax/model.py`, `tests/test_fly.py` |
+| Sensory/readout maps and initialization | `python/flygo/fly.py`; generic Rust composition in `fly-core/src/model.rs` |
+| Loss and CPU Adam | `fly-core/src/model.rs`, `optim.rs`; matching JAX functions |
+| Frozen data and learner | `python/flygo/data/loader.py`, `train.py` |
+| Shared immutable feature cache | `python/flygo/data/cache.py` |
+| Teacher protocol and production | `python/flygo/data/{katago,label,generate,corpus,service}.py` |
+| Checkpoint portability and peer copies | `python/flygo/{checkpoint,replication}.py` |
+| Placement, shared RAM and launch | `runtime.py`, `storage.py`, `scripts/{cluster,deploy_research}.py` |
+
+The initial equation is
+`v[k+1] = (1-a)*v[k] + a*(W*ReLU(v[k]) + bias + sensory_input)`.
+The sparse multiplication costs O(E×batch) per pass. Parameters are shared
+across passes; activity resets for each board evaluation. Training differentiates
+the K internal passes, while Go retains the real game's complete rules history.
+Edge strengths use signed softplus magnitudes; type-shared leak lies in
+`(0.01,0.99)`. The [design](DESIGN.md) specifies initialization and derivatives.
+
+**Reproducibility and storage**
+
+Graph preparation preserves original synapse counts and annotations separately
+from learned parameters, and verifies every retained edge against the source
+tables. The current source is the pinned MaleCNS v1.0 `Traced` selection with
+at least two retained synapses per pair. It is not interchangeable with a
+different fly release or threshold. Attribution is in [THIRD_PARTY.md](THIRD_PARTY.md).
+
+Teacher raw policy/value label both players' turns. Played moves, searched
+teacher labels and terminal outcomes remain separate fields. Frozen manifests
+fix complete-game/opening-family splits and hashes. Validation includes D4
+input novelty; final test labels remain outside architecture selection.
+
+An `all-complete` release stores independent, checksum-verified copies under
+its own `games/` directory, so ongoing generation cannot change its membership.
+Its manifest records the cutoff, actual opponent mix and inherited splits.
+The bounded loader accepts up to two million positions and preallocates typed
+arrays once. Trials share a read-only memory-mapped cache under
+`/dev/shm/flygo/cache/features/`, verified against its dataset identity and file
+hashes. Cache construction has shared RAM admission and atomic publication;
+there is no automatic eviction of active caches.
+
+Checkpoints contain canonical parameters, Adam moments/step, port assignments,
+model configuration, graph/dataset IDs and sampler state. Local publication
+precedes peer copying; a failed copy leaves a recoverable checkpoint and an
+explicit retry status. The four-host launcher starts a replica coordinator on
+host 0, which already has trusted SSH to the peers.
+
+Each host enforces a shared **100 GiB FlyGo file cap**, **64 GiB free `/dev/shm`
+floor** and **96 GiB available RAM floor**, including reservations and staging.
+Pressure pauses new work. Frozen releases and checkpoints have verified peer
+copies; RAM remains volatile across reboot or common cleanup. Owned persistent
+SSH sessions are part of the current job lifetime arrangement.
+
+The runtime package requires NumPy, Python 3.12 and the Rust extension. Optional
+`jax` is for numerical qualification and `data` adds PyArrow for graph preparation.
+Build tooling can reuse Python/Rust and verified KataGo artifacts from `~/go`;
+the installed engine does not import that framework. JAX CPU parity does not
+qualify TPU execution: the current reference materializes edge-by-batch
+messages, so TPU memory and kernels remain an explicit next gate.

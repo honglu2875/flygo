@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "engine": {
+    "source_relative_path": ".gozero/build/katago-92ee95c0/katago",
+    "sha256": "1ae1ed2108caa025bba853634b7f1aad3a29baa0ba27b4a298759ca6b172d104",
+    "commit": "92ee95c0a4b25fec214da00951ab69e97e207729",
+    "backend": "EIGEN"
+  },
+  "model": {
+    "name": "kata9x9-b18c384nbt-20231025",
+    "source_relative_path": ".gozero/external/models/a1298ce1adc1dad7bd868ca962b2384cc8388ed373a00e6bae1114fa6f9e2d61/kata9x9-b18c384nbt-20231025.bin.gz",
+    "sha256": "a1298ce1adc1dad7bd868ca962b2384cc8388ed373a00e6bae1114fa6f9e2d61",
+    "board_sizes": [9],
+    "role": "M1 qualification; M2 teacher selection remains open",
+    "source_url": "https://github.com/lightvector/KataGo/releases/download/v1.13.2-kata9x9/kata9x9-b18c384nbt-20231025.bin.gz"
+  }
+}

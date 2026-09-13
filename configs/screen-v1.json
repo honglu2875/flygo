@@ -1,0 +1,18 @@
+{
+  "name": "screen-100k",
+  "release": "screen-v1",
+  "updates": 1000,
+  "batch_size": 32,
+  "rate": 0.003,
+  "eval_every": 250,
+  "checkpoint_every": 250,
+  "question": "Compare K=4 and K=8 on a larger frozen corpus with three matched seeds and equal example exposures. This is a CPU-budget screening, not selection of a final architecture.",
+  "jobs": [
+    {"host": 0, "passes": 8, "seed": 1, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"host": 1, "passes": 4, "seed": 1, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"host": 2, "passes": 4, "seed": 2, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"host": 1, "passes": 8, "seed": 2, "cpus": [92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115]},
+    {"host": 2, "passes": 8, "seed": 3, "cpus": [92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115]},
+    {"host": 3, "passes": 4, "seed": 3, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]}
+  ]
+}

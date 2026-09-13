@@ -1,0 +1,16 @@
+{
+  "name": "readout-2624",
+  "release": "screen-v1",
+  "groups": 2624,
+  "updates": 1000,
+  "batch_size": 32,
+  "rate": 0.003,
+  "eval_every": 250,
+  "checkpoint_every": 250,
+  "question": "Does a wider disjoint readout preserve useful board information? Compare with the finished screen-100k K=4 controls at identical seeds, data and example exposures. Input assignments remain identical, and the wider pools subdivide the original groups. No topology change.",
+  "jobs": [
+    {"host": 1, "passes": 4, "seed": 1, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"host": 2, "passes": 4, "seed": 2, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"host": 3, "passes": 4, "seed": 3, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]}
+  ]
+}
