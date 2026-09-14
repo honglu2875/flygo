@@ -1,0 +1,92 @@
+--- a/crates/fly-core/src/sparse.rs
++++ b/crates/fly-core/src/sparse.rs
+@@ -107,0 +108,27 @@
++
++    #[test]
++    fn source_driven_multiply_keeps_bits_for_sparse_and_dense_inputs() {
++        let graph = Graph::new(&[0, 3, 4, 6, 9], &[0, 1, 3, 2, 1, 3, 0, 1, 2],
++            &[0, 0, 0, 0], &[1.0, -1.0, 1.0, -1.0]).unwrap();
++        let weights = [1e10, -1e10, 0.125, 0.3, -0.7, 1.5, -0.0, 2.0, -3.0];
++        for threads in [1, 2, 7] {
++            let executor = Executor::new(threads).unwrap();
++            for batch in [1, 3, 32] {
++                for mask in 0..16 {
++                    let mut input = vec![0.0; graph.neurons() * batch];
++                    for source in 0..graph.neurons() {
++                        for b in 0..batch {
++                            input[source * batch + b] = if mask & (1 << source) == 0 { -0.0 }
++                                else { (b as f32 - 2.0) * 0.375 };
++                        }
++                    }
++                    let expected = executor.multiply(&graph, &weights, &input, batch);
++                    let actual = executor.multiply_sources(&graph, &weights, &input, batch);
++                    assert!(actual.iter().zip(expected).all(|(a,b)| a.to_bits() == b.to_bits()));
++                }
++            }
++        }
++        let executor = Executor::new(2).unwrap();
++        let mut invalid = weights;invalid[0] = f32::INFINITY;
++        assert!(executor.multiply_sources(&graph, &invalid, &[0.0; 4], 1)[0].is_nan());
++    }
+@@ -129,0 +157,43 @@
++    }
++    /// Experimental source-driven multiply for very sparse input activity.
++    /// Each worker owns a destination interval. Visiting active sources in
++    /// ascending order preserves every destination's canonical reduction order.
++    /// This is a profiling candidate; the production selector is unchanged.
++    pub fn multiply_sources(
++        &self,
++        graph: &Graph,
++        weights: &[f32],
++        input: &[f32],
++        batch: usize,
++    ) -> Vec<f32> {
++        // Preserve IEEE products such as infinity times an otherwise skipped zero.
++        if weights.iter().any(|x| !x.is_finite()) {
++            return self.multiply(graph, weights, input, batch);
++        }
++        let active: Vec<usize> = input.chunks(batch).enumerate()
++            .filter_map(|(source, row)| row.iter().any(|&x| x != 0.0).then_some(source))
++            .collect();
++        let rows_per_worker = graph.neurons().div_ceil(self.pool.current_num_threads());
++        let mut output = vec![0.0; input.len()];
++        self.pool.install(|| {
++            output.par_chunks_mut(rows_per_worker * batch).enumerate().for_each(|(chunk, out)| {
++                let first = chunk * rows_per_worker;
++                let last = first + out.len() / batch;
++                for &source in &active {
++                    let start = graph.transpose_indptr[source];
++                    let end = graph.transpose_indptr[source + 1];
++                    let destinations = &graph.transpose_src[start..end];
++                    let begin = destinations.partition_point(|&destination| destination < first);
++                    let finish = destinations.partition_point(|&destination| destination < last);
++                    for offset in begin..finish {
++                        let destination = destinations[offset];
++                        let weight = weights[graph.transpose_edges[start + offset]];
++                        let row = &mut out[(destination - first) * batch..(destination - first + 1) * batch];
++                        for (value, &x) in row.iter_mut().zip(&input[source * batch..(source + 1) * batch]) {
++                            *value += weight * x;
++                        }
++                    }
++                }
++            });
++        });
++        output
+--- a/crates/flygo-python/src/fly.rs
++++ b/crates/flygo-python/src/fly.rs
+@@ -191,0 +192,5 @@
++            let expected = model.executor.multiply(&model.graph, &output.tape.weights, &rate, batch);
++            let candidate = model.executor.multiply_sources(&model.graph, &output.tape.weights, &rate, batch);
++            if !candidate.iter().zip(&expected).all(|(a,b)| a.to_bits() == b.to_bits()) {
++                return Err("Source-driven profiling kernel differs from reference".to_string());
++            }
+@@ -195,0 +201 @@
++                "multiply_sources",
+@@ -207,2 +213,5 @@
+-                        "parameter_validation" => {
+-                            model.validate(&state.params)?;
++                        "parameter_validation" => { model.validate(&state.params)?; }
++                        "multiply_sources" => {
++                            std::hint::black_box(model.executor.multiply_sources(
++                                &model.graph, &output.tape.weights, &rate, batch,
++                            ));

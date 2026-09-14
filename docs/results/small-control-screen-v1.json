@@ -1,0 +1,203 @@
+{
+  "results": [
+    {
+      "checkpoint": {
+        "bytes": 665146,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "dense-control-no-fly-edges-v1",
+        "path": "/dev/shm/flygo/runs/tpu-small-cnn-v0-lr001-s1-learner/checkpoints/step-00000256.npz",
+        "peer": "4 SPMD controllers; independent saves with identical SHA-256",
+        "replica_status": "verified",
+        "sha256": "55afe421cba25801a210fe4f3e4fbbb328782bb41255d0885543f91c77f3da71",
+        "step": 256
+      },
+      "run_id": "tpu-small-cnn-v0-lr001-s1",
+      "source": "/dev/shm/flygo/environments/7a9c190de16ddd46f739",
+      "status": {
+        "elapsed_seconds": 69.48555326461792,
+        "numerical_runtime": "jax-highest-fp32-norm-cnn-v1",
+        "state": "complete",
+        "step": 256,
+        "training_exposures": 524288,
+        "updated": 1789372131.0193987
+      },
+      "training": {
+        "batch_size": 2048,
+        "blocks": 9,
+        "channels": 17,
+        "checkpoint_every": 128,
+        "clip": 1,
+        "eval_batch_size": 2048,
+        "eval_every": 128,
+        "eval_positions": 2048,
+        "groups": 656,
+        "model": "cnn",
+        "passes": 4,
+        "rate": 0.001,
+        "rate_scales": {},
+        "release": "v0-1m",
+        "seed": 1,
+        "updates": 256
+      },
+      "validation": {
+        "kind": "validation",
+        "natural": {
+          "policy_cross_entropy": 3.0653720043572052,
+          "policy_kl": 1.4374951897739088,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.2431640625,
+          "value_mse": 0.586668791342311
+        },
+        "novel": {
+          "policy_cross_entropy": 3.094208893132337,
+          "policy_kl": 1.39466202986587,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.2529296875,
+          "value_mse": 0.6204282926043659
+        },
+        "step": 256,
+        "train": {
+          "policy_cross_entropy": 3.046177066906225,
+          "policy_kl": 1.2007732822181645,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.291015625,
+          "value_mse": 0.5278181691699924
+        },
+        "unix": 1789372127.9337146
+      }
+    },
+    {
+      "checkpoint": {
+        "bytes": 665147,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "dense-control-no-fly-edges-v1",
+        "path": "/dev/shm/flygo/runs/tpu-small-cnn-v0-lr003-s1-learner/checkpoints/step-00000256.npz",
+        "peer": "4 SPMD controllers; independent saves with identical SHA-256",
+        "replica_status": "verified",
+        "sha256": "3c8317ddf1a6b6e5d973ac548b911ad74bb0b974790c7183b4633ee87c412aae",
+        "step": 256
+      },
+      "run_id": "tpu-small-cnn-v0-lr003-s1",
+      "source": "/dev/shm/flygo/environments/7a9c190de16ddd46f739",
+      "status": {
+        "elapsed_seconds": 59.90603160858154,
+        "numerical_runtime": "jax-highest-fp32-norm-cnn-v1",
+        "state": "complete",
+        "step": 256,
+        "training_exposures": 524288,
+        "updated": 1789372222.0858743
+      },
+      "training": {
+        "batch_size": 2048,
+        "blocks": 9,
+        "channels": 17,
+        "checkpoint_every": 128,
+        "clip": 1,
+        "eval_batch_size": 2048,
+        "eval_every": 128,
+        "eval_positions": 2048,
+        "groups": 656,
+        "model": "cnn",
+        "passes": 4,
+        "rate": 0.003,
+        "rate_scales": {},
+        "release": "v0-1m",
+        "seed": 1,
+        "updates": 256
+      },
+      "validation": {
+        "kind": "validation",
+        "natural": {
+          "policy_cross_entropy": 2.7883277372271156,
+          "policy_kl": 1.160450922643819,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.33203125,
+          "value_mse": 0.5074303389945523
+        },
+        "novel": {
+          "policy_cross_entropy": 2.861136588068991,
+          "policy_kl": 1.161589724802524,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.3310546875,
+          "value_mse": 0.5453725481381776
+        },
+        "step": 256,
+        "train": {
+          "policy_cross_entropy": 2.8115650286391527,
+          "policy_kl": 0.966161243951092,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.365234375,
+          "value_mse": 0.40983987752838813
+        },
+        "unix": 1789372220.5114186
+      }
+    },
+    {
+      "checkpoint": {
+        "bytes": 665145,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "dense-control-no-fly-edges-v1",
+        "path": "/dev/shm/flygo/runs/tpu-small-cnn-v0-lr01-s1-learner/checkpoints/step-00000256.npz",
+        "peer": "4 SPMD controllers; independent saves with identical SHA-256",
+        "replica_status": "verified",
+        "sha256": "5322d0eb790b9636eda7ebe48fadfc2eecbb2b92e2339e284281ad71b574a31d",
+        "step": 256
+      },
+      "run_id": "tpu-small-cnn-v0-lr01-s1",
+      "source": "/dev/shm/flygo/environments/7a9c190de16ddd46f739",
+      "status": {
+        "elapsed_seconds": 58.72438931465149,
+        "numerical_runtime": "jax-highest-fp32-norm-cnn-v1",
+        "state": "complete",
+        "step": 256,
+        "training_exposures": 524288,
+        "updated": 1789372319.937501
+      },
+      "training": {
+        "batch_size": 2048,
+        "blocks": 9,
+        "channels": 17,
+        "checkpoint_every": 128,
+        "clip": 1,
+        "eval_batch_size": 2048,
+        "eval_every": 128,
+        "eval_positions": 2048,
+        "groups": 656,
+        "model": "cnn",
+        "passes": 4,
+        "rate": 0.01,
+        "rate_scales": {},
+        "release": "v0-1m",
+        "seed": 1,
+        "updates": 256
+      },
+      "validation": {
+        "kind": "validation",
+        "natural": {
+          "policy_cross_entropy": 2.612293992540472,
+          "policy_kl": 0.9844171779571753,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.38134765625,
+          "value_mse": 0.5734220583392273
+        },
+        "novel": {
+          "policy_cross_entropy": 2.708496714781425,
+          "policy_kl": 1.008949851514958,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.35595703125,
+          "value_mse": 0.6131341727909034
+        },
+        "step": 256,
+        "train": {
+          "policy_cross_entropy": 2.698767284144883,
+          "policy_kl": 0.8533634994568222,
+          "positions": 2048,
+          "teacher_top1_agreement": 0.40625,
+          "value_mse": 0.46381485641103226
+        },
+        "unix": 1789372318.2954848
+      }
+    }
+  ],
+  "status": "complete"
+}

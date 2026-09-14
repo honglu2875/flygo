@@ -8,10 +8,10 @@ see [current progress](../PROGRESS.md) for active jobs and decisions.
 Research status last checked **2026-09-13 20:07 UTC**. Eight new baseline/variant trials are training
 on a cloned 1.48M-position snapshot. Generation continues on all four hosts.
 The earlier nine 100k-data trials and their evaluation panels are complete.
-See [README.md](README.md) for commands and [MILESTONES.md](MILESTONES.md) for gates.
+See [README.md](../README.md) for commands and [MILESTONES.md](../MILESTONES.md) for gates.
 
 **Model guide added 2026-09-13 21:32 UTC.** The standalone
-[interactive HTML guide](docs/model.html) explains the fixed graph, sensory
+[interactive HTML guide](model.html) explains the fixed graph, sensory
 attachment, pooling/heads, recurrent equation, current 2×2 study, proposed
 extensions, offline distillation/search, and CPU/TPU costs. It embeds an actual
 64×64 connectivity summary and a validation-position prediction from the
@@ -20,11 +20,11 @@ circuits and proposed mechanisms are labeled separately. Chromium checks
 passed for all controls, offline operation, reduced motion and widths from
 320 to 1,440 pixels; figures were visually reviewed. Evidence is in
 `/dev/shm/flygo/runs/model-guide/render-checks.json`; a
-[preview image](docs/model-preview.png) is also available.
+[preview image](model-preview.png) is also available.
 
 | Milestone | Status | Evidence / remaining gate |
 |---|---|---|
-| M0 — design | Complete | [DESIGN.md](DESIGN.md), [DATASET.md](DATASET.md), explicit fixed-topology contract |
+| M0 — design | Complete | [DESIGN.md](../DESIGN.md), [DATASET.md](../DATASET.md), explicit fixed-topology contract |
 | M1 — Go stack | Complete | Source hashes, native oracle, Rust/Python parity and actual KataGo game |
 | M2 — expert pilot | Complete | Audited pilot, raw-value/prefix checks, 8-model calibration, storage/session and live-restart qualification |
 | M3 — corpus production | Running | Four-host production, balanced 100k and cloned 1.48M research releases, shared feature cache and peer recovery; balanced 1M V0 and cache-eviction qualification remain |
@@ -45,7 +45,7 @@ passed for all controls, offline operation, reduced motion and widths from
   generation cores; eight physical cores/host remain outside those allocations.
   All 200 training threads passed affinity checks. Every trial has performed
   optimizer updates, and initial checkpoints have verified peer copies.
-- [configs/prototype-v1.json](configs/prototype-v1.json) crosses K=4/8 with
+- [configs/prototype-v1.json](../configs/prototype-v1.json) crosses K=4/8 with
   656/2,624 readout groups, seeds 1/2, 10,000 updates × batch 32. All trials use
   the same immutable CPU-native environment, dataset, optimizer and sampling
   contract. Initial parameters/optimizer/ports were bitwise identical within
@@ -221,9 +221,9 @@ Updated **2026-09-14 04:25 UTC**. Autonomous work is authorized until about
 conventional neural engine at matched prediction FLOPs and training-position
 exposure. No fly strength advantage has been established.
 
-[README](README.md) describes interfaces; [RESEARCH](RESEARCH.md) records study
-contracts and biological hypotheses; [MILESTONES](MILESTONES.md) defines gates.
-Earlier qualification detail remains in [history](docs/qualification-history.md).
+[README](../README.md) describes interfaces; [RESEARCH](../RESEARCH.md) records study
+contracts and biological hypotheses; [MILESTONES](../MILESTONES.md) defines gates.
+Earlier qualification detail remains in [history](qualification-history.md).
 
 | Milestone | Status | Evidence / remaining work |
 |---|---|---|
@@ -378,7 +378,7 @@ were visually reviewed. Evidence: `runs/model-guide/20260914/render-checks.json`
 CNN versus 1.5037–1.5054 for fly. Mean paired differences favor CNN by 0.7559
 KL and 0.1540 MSE. Prior wins are CNN 94/96 versus fly 0/96; PUCT 93/96 versus
 3/96; Gumbel 92/95 versus 0/95, with one capped game per family. This is a
-substantial current gap. [Controlled results](docs/research-results.md) records
+substantial current gap. [Controlled results](research-results.md) records
 all seeds, nominal compute/exposure contracts and uncertainty; raw counted
 panels are not Elo. Final test labels remain outside tuning.
 
@@ -504,3 +504,103 @@ the original unstarted seed 3. Every host passed a 58 GiB heap plus 4 GiB file
 preflight. The retry has published its initial checkpoint and is training.
 Dependent smooth-confirmation and small-CNN launchers use new attempt records;
 scientific contracts and qualified source versions remain unchanged.
+
+## Streaming prediction and Adam epsilon — 2026-09-14 08:15 UTC
+
+Prediction now uses the same recurrent step and readout functions as the
+differentiation path but retains only the current state. The public Python
+inference interface is unchanged; explicit traces still retain all states.
+Source `224914260953ab863b96` matches every initial/trained hard and smooth
+.01/.05 output, loss and gradient byte against the preceding implementation.
+The first profiling attempt stopped because an old smooth reference file was
+absent; the new attempt independently generated and retained that reference.
+Both attempts and all six completed cases remain under `cpu-streaming-lane-v*`.
+
+At K32/B128, initial-model peak process RSS falls from 4,004,872,192 to
+1,434,501,120 bytes. Warm times are approximately 6.3–6.4 s in both versions;
+there is no resolved latency gain. This is a depth/memory implementation probe,
+not a trained architecture result. [Raw repetitions and hashes](results/streaming-memory-v1.json).
+
+`cpu-streaming-recovery-v1` and `v2` reproduce all 28 checkpoint-array hashes
+and sampler after three actual continuation updates. Their extra exact
+comparison of diagnostic FP64 gradient norms fails in the last bits, including
+one attempt with the same three-thread count. For example, one step records
+15.691457648564205 versus 15.691457648564212. These remain failed diagnostic
+gate records; the reports do not claim that every logged float is bitwise
+identical. No scientific numerical tolerance was relaxed.
+
+Adam epsilon is now explicit in Rust, the Python API, JAX and checkpoint
+training contracts. It is positive finite FP32 and lies outside the square
+root of the bias-corrected second moment. Legacy checkpoints imply 1e-8;
+resume rejects an unintended epsilon change. Source `c65c9808cdf39ee16587`
+passes all four hard/smooth-.01 by epsilon-1e-6/1e-4 full-graph CPU reference
+checks, including every gradient and three free-running updates. Each case
+also completes six actual scheduled/scaled V0 updates and fresh 3→6 recovery
+with all 28 arrays and sampler exact. [Complete gate evidence](results/epsilon-qualification-v1.json).
+Actual TPU epsilon and smooth-rate qualification remain pending.
+
+## Deployment recovery and smaller control — 2026-09-14 08:15 UTC
+
+Immutable bundle replication now hashes existing peer files and archives only
+missing entries. Equal-size content conflicts and escaping symlinks fail before
+transfer; the extraction path still verifies racing existing files and publishes
+atomically. Tests execute the real inventory/extraction protocol on two fixture
+roots, including partial, idempotent and interrupted-receipt cases. Source
+`4fe16e716e2ab90ec073` passes **48 Rust and 72 Python tests**. Large running
+studies keep their original model sources.
+
+The smooth-confirmation host-2 deployment stopped before launch because its
+old bundle path tried to archive already present feature data. The hard-e6
+screen stopped at initial checkpoint admission with only step-zero validation
+logged, no checkpoint and no optimizer updates. Missing-only deployment
+resumes the former with the identical plan/source and reruns the latter on
+host 2 under an attempt-specific ID; original failures remain. File/RAM floors
+and the own-file cap are unchanged.
+
+The small-CNN's first qualification lookup failed before any worker launch:
+the frozen launcher resolved its default worker relative to the wrong folder.
+The launcher now resolves sibling scripts, and `tpu-small-cnn-parity-v2`
+passes on all 16 TPU devices: full outputs, losses, gradients and three
+checkpoint-aligned CPU/TPU transitions at the original pointwise tolerances,
+maximum absolute reported error 3.54e-5. Free-running cross-backend trajectory
+identity is not claimed. The completed screen selects .01 by the declared
+final-slice KL+MSE rule.
+
+Confirmation seed 1 completes. The first seed-2 attempt fails at initial
+checkpoint admission while a development file reservation overlaps; all four
+controllers stop before updates. The replacement adopts seed 1, repeats seed 2
+from the same initialization and runs original seed 3. All hosts pass an
+additional 4 GiB files / 58 GiB heap preflight, and no large build overlaps the
+recovered cohorts. All three final validations and common 32-game panels are
+now complete. Attempt IDs change, scientific settings and exposure budgets do not.
+
+The proposed archive of 54 retired prototype checkpoint replicas stopped
+before moving anything on storage admission. Automatic approval review then
+rejected its retry because it would remove local copies after verification on
+another host's volatile RAM. No checkpoint was relocated or removed; the
+safer deployment optimization above permits progress within the existing limits.
+
+## Source-driven sparse-kernel probe — 2026-09-14 08:45 UTC
+
+Snapshot `0377c6696cbbccb9cb07` adds a profiling-only source traversal with
+disjoint destination partitions. Exhaustive small-graph activity masks and
+full-graph B1/B32 initial, trained hard and trained smooth fixtures all retain
+reference output bits. The experimental source passes 49 Rust / 72 Python tests.
+Its kernel takes about 2.1–2.5 times as long as the existing multiply on trained
+hard fixtures, and also regresses on dense fixtures. Production selection was
+never changed. The unused method/test are removed after preserving the frozen
+source and exact working diff under `sparse-source-profile-v1`.
+
+The profiler retains a separate parameter-validation timer: about 1.2–1.6 ms
+in these cases. This alone does not justify a state-ownership refactor. The
+[complete profiling artifact](results/sparse-source-profile-v1.json) distinguishes
+kernel measurements from full prediction latency and retains all repetitions.
+
+After removing the candidate, source `9058055f34adfea1b7bd` passes 48 Rust and
+72 Python regressions and a direct retained-profiler smoke check. The existing
+three-update actual TPU gate passes for this source's default epsilon,
+following an all-host additional 4 GiB file / 60 GiB heap preflight. All four
+controllers then reproduce the step-2-to-step-3 checkpoint arrays and sampler
+exactly in fresh processes, with the portable Rust update checks also passing.
+No pointwise tolerance changes. [Complete evidence](results/current-tpu-default-v1.json).
+This does not qualify nondefault epsilon or smooth rates on the TPU.

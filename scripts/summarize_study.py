@@ -61,9 +61,10 @@ def main():
                                 exposures=record['optimizer_step']*settings['batch_size'])
             family='cnn' if 'blocks' in config else 'fly'
             readout=None
-            if family=='fly':
-                with np.load(record['checkpoint'],allow_pickle=False) as saved:
-                    readout=int(np.count_nonzero(saved['port/output_group']>=0))
+            with np.load(record['checkpoint'],allow_pickle=False) as saved:
+                training_contract=json.loads(saved['metadata'].tobytes()).get('training_contract',{})
+                parameter_count=sum(saved[key].size for key in saved.files if key.startswith('param/'))
+                if family=='fly':readout=int(np.count_nonzero(saved['port/output_group']>=0))
             cost=(cnn_cost(channels=config['channels'],blocks=config['blocks']) if family=='cnn' else
                   fly_cost(graph['neurons'],graph['edges'],graph['sensory_neurons'],passes=config['steps'],
                            groups=config['groups'],readout_neurons=readout,rate_softness=config.get('rate_softness',0.0),
@@ -82,7 +83,8 @@ def main():
                     nominal_neural_flops=evaluations*cost['arithmetic_flops'],seconds=match['seconds'])
             records.append(dict(run=name,study=current.name,adopted_reference=adopted,family=family,seed=config['seed'],model=config,
                 checkpoint_sha256=record['sha256'],metrics_sha256=sha256(path),dataset_id=record['dataset_id'],
-                optimizer_updates=record['optimizer_step'],batch_size=settings['batch_size'],
+                optimizer_updates=record['optimizer_step'],batch_size=settings['batch_size'],training_contract=training_contract,
+                stored_parameter_scalars=parameter_count,
                 training_position_exposures=record['optimizer_step']*settings['batch_size'],
                 validation=record['slices'],inference_cost=cost,matches=panels))
         contrast=None

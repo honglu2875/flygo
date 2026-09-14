@@ -1,0 +1,98 @@
+{
+  "name": "small-control-screen-v2",
+  "release": "v0-1m",
+  "require_cohorts": [
+    "tpu-small-cnn-parity-v2"
+  ],
+  "batch_size": 2048,
+  "updates": 256,
+  "rates": [
+    0.001,
+    0.003,
+    0.01
+  ],
+  "seeds": [
+    1
+  ],
+  "selection": "Minimum final fixed validation-slice policy KL + value MSE at update 256; break exact ties by lower rate. All three rates retained. Confirm the selected rate from initialization at 512 updates for seeds 1/2/3.",
+  "arithmetic": {
+    "cnn_flops": 8361890,
+    "fly_seed1_mean_warm_cpu_flops": 8339944.6640625,
+    "fly_seed1_range": [
+      7594014,
+      9084738
+    ],
+    "relative_mean_difference": 0.002631352703341472,
+    "scope": "Expected arithmetic under the counted CPU rule versus nominal SAME CNN arithmetic. Sample-dependent, not hardware instructions; convolution padding, memory and latency separate."
+  },
+  "cost_evidence": "runs/inference-work-v1/result.json",
+  "architecture_selection": "17 channels and nine blocks chosen from cost before this study. Current nominal 126.7M CNN benchmark remains unchanged.",
+  "training_exposures_per_case": 524288,
+  "additional_references": "Adopt existing matched-control-v1 fly rate screen and matched-confirm-v1 fly seeds at their registered horizons; no extra fly training or final-test selection.",
+  "cases": [
+    {
+      "run_id": "tpu-small-cnn-v0-lr001-s1",
+      "training": {
+        "model": "cnn",
+        "channels": 17,
+        "blocks": 9,
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.001,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 256,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-small-cnn-v0-lr003-s1",
+      "training": {
+        "model": "cnn",
+        "channels": 17,
+        "blocks": 9,
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.003,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 256,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-small-cnn-v0-lr01-s1",
+      "training": {
+        "model": "cnn",
+        "channels": 17,
+        "blocks": 9,
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 256,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    }
+  ],
+  "recovery": "No small CNN worker was launched in parity-v1: its frozen launcher resolved the worker script relative to the wrong directory. Identical source, CPU reference, model and training cases; explicit sibling worker path and new qualification/study IDs."
+}

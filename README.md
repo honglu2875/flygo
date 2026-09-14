@@ -20,6 +20,8 @@ The early trained models are weak; working training is not a strength claim.
 - [MILESTONES.md](MILESTONES.md): acceptance criteria and research sequence.
 - [RESEARCH.md](RESEARCH.md): comparison budgets, optimizer and biology hypotheses.
 - [Controlled results](docs/research-results.md): completed comparisons and their limits.
+- [Neuron-group study](docs/group-study.md): next-phase milestones, with the
+  [measured density and regrowth proposal](docs/structural-plasticity.md).
 
 **Everyday commands**
 
@@ -37,7 +39,11 @@ python3 -B scripts/dev.py check --jax --native
 /dev/shm/flygo/venv/bin/python scripts/profile_cpu.py \
   --output /dev/shm/flygo/runs/my-cpu-profile --cpus 117,118,119
 
-# Concise fleet status; add --json for full records.
+# Fresh-process prediction latency and peak RSS; no optimizer updates.
+/dev/shm/flygo/venv/bin/python scripts/benchmark_prediction.py \
+  --output /dev/shm/flygo/runs/my-prediction.json --batch-size 32
+
+# Concise fleet status; --json is compact, --json --details includes full records.
 python3 -B scripts/cluster.py status --run-id expert-v1
 
 # Gracefully drain generation, or restart it with a measured runtime setting.
@@ -87,6 +93,8 @@ boundary. `status.json`, `metrics.jsonl`, `latest.json` and the last two
 checkpoints are the run's small operational interface.
 
 Fly trials accept `--ports <qualified.npz>` and `--rate-scales '{"bias":0.01}'`.
+`--epsilon` controls Adam's denominator outside the square root (default 1e-8).
+It is saved in the training contract; resume rejects an unintended change.
 Rate multipliers affect the final Adam step after common global clipping and
 moment estimation. The defaults preserve the baseline. `--model cnn` selects
 the separate control; it uses the same data, loss, sampler and JAX optimizer.
@@ -180,6 +188,11 @@ The initial equation is
 The sparse multiplication costs O(E×batch) per pass. Parameters are shared
 across passes; activity resets for each board evaluation. Training differentiates
 the K internal passes, while Go retains the real game's complete rules history.
+Python `infer()` and Rust `Model::predict()` retain only the current recurrent
+state, using O(N×batch) state memory independently of K. Training and explicit
+`trace=True` retain O(K×N×batch) states for differentiation or inspection.
+Both paths call the same propagation and readout code; graph/parameter storage
+is separate from these state-memory counts.
 Edge strengths use signed softplus magnitudes; type-shared leak lies in
 `(0.01,0.99)`. The [design](DESIGN.md) specifies initialization and derivatives.
 

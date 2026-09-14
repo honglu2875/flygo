@@ -500,3 +500,70 @@ This extra result-driven tuning is reported as project research compute.
 The shuffled-input seed 2 TPU cohort stopped at step-zero checkpoint admission: w0 would have crossed the unchanged 96 GiB available-RAM floor after conservative reservations, during an overlapping short CPU qualification. All four workers exited and every learner log contains only step-zero validation, so this failed attempt consumed zero optimizer updates. The qualification has finished. Each host now passes an additional 58 GiB heap plus 4 GiB files preflight for the outer TPU reservation, trainer and checkpoint overhead. No storage floor is reduced.
 
 `spatial-input-recovery-v2` adopts the seven successful cohorts, restarts shuffled seed 2 as `tpu-spatial-v0-shuffled-s2-attempt2` with unchanged source `0d4e6e6ea6298d22370c` and scientific contract, then runs the original unstarted shuffled seed 3. A new seed 2 evaluation follows its original full validation and common 32-game panels. The smooth confirmation queue failed before launching anything; its recovery changes only this failed lane dependency, keeping the original three training run IDs and qualified source. Existing healthy seed 1/3 validation waiters remain. The small CNN launcher is separately retried after the recovery study. Failed queue/cohort/evaluation records remain intact. Avoid additional large CPU qualification reservations while these cohorts run.
+
+### Adam epsilon screen, registered 2026-09-14 07:22 UTC
+
+Completed optimizer confirmation improves policy at larger rates but worsens value relative to .003. The mean-conditioning investigation also exposed the sensitivity of near-zero gradients under Adam. Before structured zeroth-order changes, isolate the denominator scale: `delta theta = -eta m_hat / (sqrt(v_hat) + epsilon)`, where epsilon is outside the square root. This is an optimizer factor, not a new biological claim.
+
+`epsilon-v1` tests 1e-6 and 1e-4 separately under hard and smooth .01 firing, at global .03 and bias multiplier .01. All output-weight multipliers remain one, independent of the head-rate screen. K4/G656/B32, seed 1, 1,000 updates and 32,000 exposures match existing epsilon-1e-8 controls. All final full validations and paired differences are reported. No test labels, best-step selection or joint head/epsilon selection. A favorable screen requires a separately registered multi-seed confirmation.
+
+Before launch, require full-graph independent JAX CPU states/loss/all-gradient/three-update checks at unchanged tolerances for every epsilon/dynamics pair, and actual six-update scheduled training plus fresh three-update checkpoint/sampler reproduction. Save epsilon in each training contract; legacy absence means 1e-8 and CLI resume rejects an unintended change. Scientific workers use one immutable qualified source and start on 92–115 only after the head-rate validation workers exit. TPU epsilon qualification remains pending.
+
+### Small control confirmation and operational recoveries — 2026-09-14 08:15 UTC
+
+The previously declared small-CNN screen selects .01 by final KL+MSE; all
+three rates and the exact selection are retained in the results. The
+three-seed, 512-update confirmation and common-opening panels were frozen
+before confirmation outcomes in `small-control-confirm-v1` and its followup
+plan. The actual shape qualification succeeds as `tpu-small-cnn-parity-v2`;
+v1 failed on a frozen script path before launching any worker.
+
+Confirmation seed 2's original attempt stops at initial checkpoint admission
+while a development reservation overlaps. It consumes zero optimizer updates;
+all controllers exit. `small-control-confirm-recovery-v2` adopts successful
+seed 1, repeats seed 2 under an attempt-specific name and runs original seed 3.
+All scientific settings and source `7a9c190de16ddd46f739` remain unchanged.
+The recovery follows a passed all-host additional 4 GiB file / 58 GiB heap
+preflight. The failed seed-2 followup stays recorded beside the successful
+replacement, and every final checkpoint is evaluated.
+
+Similarly, `epsilon-recovery-v2` repeats only hard epsilon 1e-6 after original
+host 0 initial-checkpoint admission fails; only step-zero validation existed.
+The replacement uses host 2 after its prior validation releases 92–115,
+with identical source `c65c9808cdf39ee16587`, seed, inputs and optimizer.
+Smooth confirmation seed 2 resumes its unchanged plan/source after a
+pre-launch redundant bundle archive is avoided. These are operational
+recoveries, not independent training seeds or additional successful screen
+trials. All zero-update failures and repeat diagnostic/generation costs remain
+part of project compute; no storage floor or numerical tolerance is relaxed.
+
+### Next research phase: neuron groups
+
+The user requests a deliberate study of neuron grouping after current
+engineering and registered studies. Follow the [group-study milestones](docs/group-study.md):
+annotation atlas, connectivity and null models, measured model dynamics,
+execution-layout profiling, then a small number of physiological hypotheses.
+The [initial descriptive audit](docs/structural-plasticity.md) preserves source
+labels, counts and uncertainties. It does not infer functional equivalence
+from soma proximity or raw density. The baseline already shares leak and bias
+by cell type. Missing local physiology is an explicit unknown.
+
+Local regrowth and shared retinal kernels remain proposed later experiments;
+no edge has been added and no changed-topology training is registered. The
+main comparison remains equal prediction FLOPs and labeled-position exposure
+horizon. Parameter counts, total tuning/training work, padding and latency
+are separate reported quantities, as confirmed by the user.
+
+### Epsilon decision and source-driven execution probe — 2026-09-14 08:45 UTC
+
+All four epsilon cases complete full validation. Every larger epsilon worsens
+policy KL; only hard 1e-6 avoids a resolved MSE regression. Retain 1e-8 and
+do not advance a larger epsilon to confirmation under this screen. The
+single-seed head-rate result and remaining smooth confirmation stay separate.
+
+A read-only source-driven sparse-kernel prototype preserves canonical
+per-destination summation order and matches output bits, but is slower for
+all six initial/trained hard/smooth B1/B32 fixtures. Preserve its source and
+measurements; remove the unused candidate from the engine. Production dispatch
+was never changed. Later group-based layouts must pass whole-model performance
+and parity gates before adoption, rather than being inferred from edge density.

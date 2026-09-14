@@ -1,0 +1,409 @@
+{
+  "status": "passed",
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "neurons": 165122,
+  "edges": 15270273,
+  "self_edges": 69,
+  "whole_graph_density": 0.0005600639107377601,
+  "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+  "definition": "Directed neuron pairs with >=2 minconf-0.5 synapses in the fixed Traced MaleCNS v1.0 graph. Internal density excludes self edges and divides by n*(n-1). Pair blocks divide by source_n*target_n.",
+  "scope": "Class labels are not full neuropil membership. Direct column annotations are incomplete and identify assigned columns, not all arborization overlap. Left/right comes from somaSide, falling back to rootSide. Small groups and degree differences confound raw density; these are descriptive counts, not a degree-controlled enrichment test. No graph change or task-dependent group selection.",
+  "visual_column_summary": {
+    "annotated_neurons": 23720,
+    "columns": 1771,
+    "columns_with_at_least_2_neurons": 1771,
+    "density_quantiles": [
+      0.16666666666666666,
+      0.3333333333333333,
+      0.3761904761904762,
+      0.42424242424242425,
+      0.5
+    ],
+    "internal_edges": 111160,
+    "neuron_count_quantiles": [
+      3.0,
+      12.0,
+      12.0,
+      15.0,
+      19.0
+    ],
+    "pooled_density": 0.37237285523821007,
+    "possible_pairs": 298518
+  },
+  "raw_report": "/dev/shm/flygo/runs/next-gates/group-density-v2.json",
+  "raw_sha256": "0ff271a08ad9f15c77bbc7d73455bed6235fd79436434f0ca1aa51df24f454a4",
+  "script_sha256": "afc68f7bbc5d0b136ab4f5191df358c02d4bddb4a7274a9aaf3c559cf3de6429",
+  "class_groups": [
+    {
+      "density": 1.0,
+      "edges": 2,
+      "group": "ALLN/?",
+      "internal_fraction_of_incoming": 0.0029542097488921715,
+      "internal_fraction_of_outgoing": 0.0018885741265344666,
+      "neurons": 2,
+      "synapses": 15
+    },
+    {
+      "density": 0.23403964456596035,
+      "edges": 10272,
+      "group": "ALLN/L",
+      "internal_fraction_of_incoming": 0.15410696871952592,
+      "internal_fraction_of_outgoing": 0.20663018989378823,
+      "neurons": 210,
+      "synapses": 289064
+    },
+    {
+      "density": 0.2465626161278335,
+      "edges": 10616,
+      "group": "ALLN/R",
+      "internal_fraction_of_incoming": 0.14504713758710205,
+      "internal_fraction_of_outgoing": 0.1907534185039441,
+      "neurons": 208,
+      "synapses": 295449
+    },
+    {
+      "density": 0.04867611204882956,
+      "edges": 5710,
+      "group": "ALPN/L",
+      "internal_fraction_of_incoming": 0.12847050353237638,
+      "internal_fraction_of_outgoing": 0.08196015387265315,
+      "neurons": 343,
+      "synapses": 53326
+    },
+    {
+      "density": 0.053842088213731605,
+      "edges": 6316,
+      "group": "ALPN/R",
+      "internal_fraction_of_incoming": 0.127973416541719,
+      "internal_fraction_of_outgoing": 0.0842863815306599,
+      "neurons": 343,
+      "synapses": 61189
+    },
+    {
+      "density": 0.03399098428975435,
+      "edges": 74303,
+      "group": "CX/L",
+      "internal_fraction_of_incoming": 0.43744186320338163,
+      "internal_fraction_of_outgoing": 0.486527720483758,
+      "neurons": 1479,
+      "synapses": 674442
+    },
+    {
+      "density": 0.03417130278351994,
+      "edges": 73891,
+      "group": "CX/R",
+      "internal_fraction_of_incoming": 0.44305269911318707,
+      "internal_fraction_of_outgoing": 0.4820497765600026,
+      "neurons": 1471,
+      "synapses": 660315
+    },
+    {
+      "density": 0.01983988861816916,
+      "edges": 570,
+      "group": "DAN/L",
+      "internal_fraction_of_incoming": 0.012085745181604223,
+      "internal_fraction_of_outgoing": 0.01747715704912001,
+      "neurons": 170,
+      "synapses": 1741
+    },
+    {
+      "density": 0.016637660981552383,
+      "edges": 478,
+      "group": "DAN/R",
+      "internal_fraction_of_incoming": 0.010705966672639311,
+      "internal_fraction_of_outgoing": 0.014785944073249195,
+      "neurons": 170,
+      "synapses": 1521
+    },
+    {
+      "density": 0.030542109621627248,
+      "edges": 124439,
+      "group": "Kenyon_Cell/L",
+      "internal_fraction_of_incoming": 0.7250506910294358,
+      "internal_fraction_of_outgoing": 0.6520764010794665,
+      "neurons": 2019,
+      "synapses": 372423
+    },
+    {
+      "density": 0.03102239723635041,
+      "edges": 129673,
+      "group": "Kenyon_Cell/R",
+      "internal_fraction_of_incoming": 0.7385871082024731,
+      "internal_fraction_of_outgoing": 0.6636929895946894,
+      "neurons": 2045,
+      "synapses": 392468
+    },
+    {
+      "density": 0.1502659574468085,
+      "edges": 339,
+      "group": "MBON/L",
+      "internal_fraction_of_incoming": 0.010126052930282573,
+      "internal_fraction_of_outgoing": 0.030273263082693336,
+      "neurons": 48,
+      "synapses": 6665
+    },
+    {
+      "density": 0.13222789115646258,
+      "edges": 311,
+      "group": "MBON/R",
+      "internal_fraction_of_incoming": 0.00937000994245428,
+      "internal_fraction_of_outgoing": 0.028218854913347247,
+      "neurons": 49,
+      "synapses": 6212
+    }
+  ],
+  "type_groups": [
+    {
+      "density": 0.9880952380952381,
+      "edges": 415,
+      "group": "Delta7/L",
+      "internal_fraction_of_incoming": 0.2143595041322314,
+      "internal_fraction_of_outgoing": 0.12896208825357364,
+      "neurons": 21,
+      "synapses": 5772
+    },
+    {
+      "density": 0.9976190476190476,
+      "edges": 419,
+      "group": "Delta7/R",
+      "internal_fraction_of_incoming": 0.21355759429153925,
+      "internal_fraction_of_outgoing": 0.12559952038369304,
+      "neurons": 21,
+      "synapses": 6275
+    },
+    {
+      "density": 0.3438735177865613,
+      "edges": 174,
+      "group": "EPG/L",
+      "internal_fraction_of_incoming": 0.023355704697986576,
+      "internal_fraction_of_outgoing": 0.03527265355767282,
+      "neurons": 23,
+      "synapses": 2817
+    },
+    {
+      "density": 0.31225296442687744,
+      "edges": 158,
+      "group": "EPG/R",
+      "internal_fraction_of_incoming": 0.0213657876943881,
+      "internal_fraction_of_outgoing": 0.03277328355113047,
+      "neurons": 23,
+      "synapses": 2708
+    },
+    {
+      "density": 0.8392857142857143,
+      "edges": 3384,
+      "group": "KCab-p/L",
+      "internal_fraction_of_incoming": 0.58364953432218,
+      "internal_fraction_of_outgoing": 0.5687394957983193,
+      "neurons": 64,
+      "synapses": 15812
+    },
+    {
+      "density": 0.8348557692307692,
+      "edges": 3473,
+      "group": "KCab-p/R",
+      "internal_fraction_of_incoming": 0.5771979391723451,
+      "internal_fraction_of_outgoing": 0.5783513738551207,
+      "neurons": 65,
+      "synapses": 16419
+    },
+    {
+      "density": 0.9889162561576355,
+      "edges": 803,
+      "group": "PFNa/L",
+      "internal_fraction_of_incoming": 0.5342648037258816,
+      "internal_fraction_of_outgoing": 0.31953840031834463,
+      "neurons": 29,
+      "synapses": 6986
+    },
+    {
+      "density": 0.9938423645320197,
+      "edges": 807,
+      "group": "PFNa/R",
+      "internal_fraction_of_incoming": 0.5408847184986595,
+      "internal_fraction_of_outgoing": 0.31897233201581027,
+      "neurons": 29,
+      "synapses": 7534
+    },
+    {
+      "density": 0.9947368421052631,
+      "edges": 378,
+      "group": "PFNd/L",
+      "internal_fraction_of_incoming": 0.2767203513909224,
+      "internal_fraction_of_outgoing": 0.2380352644836272,
+      "neurons": 20,
+      "synapses": 4137
+    },
+    {
+      "density": 0.9578947368421052,
+      "edges": 364,
+      "group": "PFNd/R",
+      "internal_fraction_of_incoming": 0.2577903682719547,
+      "internal_fraction_of_outgoing": 0.22778473091364204,
+      "neurons": 20,
+      "synapses": 3704
+    }
+  ],
+  "dense_type_pairs": [
+    {
+      "density": 0.9977324263038548,
+      "edges": 440,
+      "source": "Delta7/L",
+      "source_neurons": 21,
+      "target": "Delta7/R",
+      "target_neurons": 21
+    },
+    {
+      "density": 0.9954648526077098,
+      "edges": 439,
+      "source": "Delta7/R",
+      "source_neurons": 21,
+      "target": "Delta7/L",
+      "target_neurons": 21
+    },
+    {
+      "density": 0.7743271221532091,
+      "edges": 374,
+      "source": "EPG/R",
+      "source_neurons": 23,
+      "target": "Delta7/L",
+      "target_neurons": 21
+    },
+    {
+      "density": 0.772256728778468,
+      "edges": 373,
+      "source": "EPG/L",
+      "source_neurons": 23,
+      "target": "Delta7/R",
+      "target_neurons": 21
+    },
+    {
+      "density": 0.7432712215320911,
+      "edges": 359,
+      "source": "EPG/R",
+      "source_neurons": 23,
+      "target": "Delta7/R",
+      "target_neurons": 21
+    },
+    {
+      "density": 0.7412008281573499,
+      "edges": 358,
+      "source": "EPG/L",
+      "source_neurons": 23,
+      "target": "Delta7/L",
+      "target_neurons": 21
+    },
+    {
+      "density": 0.7015810276679841,
+      "edges": 355,
+      "source": "MeTu3a/R",
+      "source_neurons": 22,
+      "target": "Cm14/R",
+      "target_neurons": 23
+    },
+    {
+      "density": 0.634,
+      "edges": 317,
+      "source": "MeTu3a/L",
+      "source_neurons": 20,
+      "target": "Cm14/L",
+      "target_neurons": 25
+    },
+    {
+      "density": 0.516,
+      "edges": 258,
+      "source": "Cm14/L",
+      "source_neurons": 25,
+      "target": "MeTu3a/L",
+      "target_neurons": 20
+    },
+    {
+      "density": 0.5158102766798419,
+      "edges": 261,
+      "source": "Cm14/R",
+      "source_neurons": 23,
+      "target": "MeTu3a/R",
+      "target_neurons": 22
+    },
+    {
+      "density": 0.49130434782608695,
+      "edges": 339,
+      "source": "MeLo10/R",
+      "source_neurons": 30,
+      "target": "MeLo8/R",
+      "target_neurons": 23
+    },
+    {
+      "density": 0.4830729166666667,
+      "edges": 1113,
+      "source": "WG3/L",
+      "source_neurons": 48,
+      "target": "WG4/L",
+      "target_neurons": 48
+    },
+    {
+      "density": 0.4798387096774194,
+      "edges": 357,
+      "source": "MeLo10/L",
+      "source_neurons": 31,
+      "target": "MeLo8/L",
+      "target_neurons": 24
+    },
+    {
+      "density": 0.44019138755980863,
+      "edges": 368,
+      "source": "MeTu3b/R",
+      "source_neurons": 38,
+      "target": "MeTu3a/R",
+      "target_neurons": 22
+    },
+    {
+      "density": 0.4340277777777778,
+      "edges": 1000,
+      "source": "WG3/R",
+      "source_neurons": 48,
+      "target": "WG4/R",
+      "target_neurons": 48
+    },
+    {
+      "density": 0.40384615384615385,
+      "edges": 231,
+      "source": "Dm-DRA1/R",
+      "source_neurons": 26,
+      "target": "MeTu3a/R",
+      "target_neurons": 22
+    },
+    {
+      "density": 0.4,
+      "edges": 336,
+      "source": "MeTu3b/L",
+      "source_neurons": 42,
+      "target": "MeTu3a/L",
+      "target_neurons": 20
+    },
+    {
+      "density": 0.3815676141257537,
+      "edges": 443,
+      "source": "MeLo11/R",
+      "source_neurons": 27,
+      "target": "TmY19a/R",
+      "target_neurons": 43
+    },
+    {
+      "density": 0.38088235294117645,
+      "edges": 518,
+      "source": "Li15/L",
+      "source_neurons": 20,
+      "target": "LC11/L",
+      "target_neurons": 68
+    },
+    {
+      "density": 0.3796825396825397,
+      "edges": 598,
+      "source": "Li15/R",
+      "source_neurons": 21,
+      "target": "LC11/R",
+      "target_neurons": 75
+    }
+  ]
+}

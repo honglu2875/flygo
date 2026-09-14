@@ -1,0 +1,317 @@
+{
+  "status": "complete",
+  "plan": {
+    "source": "/dev/shm/flygo/environments/0377c6696cbbccb9cb07",
+    "native_sha256": "7b094a5db5773a1f6d6843463e836acf61ea4e3f10ad9b4715604b07ff26db80",
+    "cpus": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "batches": [
+      1,
+      32
+    ],
+    "repetitions": 3,
+    "cases": {
+      "initial": null,
+      "trained": "/dev/shm/flygo/runs/tpu-confirm-v0-fly-s1-learner/checkpoints/step-00000512.npz",
+      "smooth01": "/dev/shm/flygo/runs/smooth-v0-s01-lr03-bias001-seed1/checkpoints/step-00001000.npz"
+    },
+    "scope": "Profiling only. Candidate walks nonzero input rows in ascending source order, partitions disjoint destinations, and includes its finite-weight validation. Production selection is unchanged. Each native call requires candidate/reference output bytes to match."
+  },
+  "records": [
+    {
+      "case": "initial",
+      "batch_size": 1,
+      "active_neurons": 162613,
+      "active_edges": 15167501,
+      "kernels": {
+        "multiply": [
+          0.009124439,
+          0.009119239,
+          0.009140229
+        ],
+        "multiply_sources": [
+          0.089902581,
+          0.070305083,
+          0.084488721
+        ],
+        "parameter_validation": [
+          0.00135065,
+          0.001073829,
+          0.00119439
+        ],
+        "transpose": [
+          0.017579728,
+          0.016812518,
+          0.016446858
+        ],
+        "transpose_prepare": [
+          0.011207829,
+          0.008890529,
+          0.007867179
+        ],
+        "transpose_prepared": [
+          0.008809949,
+          0.008878269,
+          0.008985009
+        ],
+        "edge_vjp": [
+          0.006889939,
+          0.006465509,
+          0.00690666
+        ]
+      }
+    },
+    {
+      "case": "initial",
+      "batch_size": 32,
+      "active_neurons": 164907,
+      "active_edges": 15264729,
+      "kernels": {
+        "multiply": [
+          0.041520616,
+          0.040641796,
+          0.040304925
+        ],
+        "multiply_sources": [
+          0.110278598,
+          0.108449149,
+          0.108941189
+        ],
+        "parameter_validation": [
+          0.00149604,
+          0.00121552,
+          0.001180579
+        ],
+        "transpose": [
+          0.046635026,
+          0.049374045,
+          0.046530925
+        ],
+        "transpose_prepare": [
+          0.009079959,
+          0.00906746,
+          0.009049809
+        ],
+        "transpose_prepared": [
+          0.037843376,
+          0.038201646,
+          0.038343026
+        ],
+        "edge_vjp": [
+          0.050019815,
+          0.048013876,
+          0.047893286
+        ]
+      }
+    },
+    {
+      "case": "trained",
+      "batch_size": 1,
+      "active_neurons": 10966,
+      "active_edges": 794368,
+      "kernels": {
+        "multiply": [
+          0.006730029,
+          0.005995389,
+          0.006360099
+        ],
+        "multiply_sources": [
+          0.013521699,
+          0.013325309,
+          0.013416359
+        ],
+        "parameter_validation": [
+          0.00154073,
+          0.0015677,
+          0.00139768
+        ],
+        "transpose": [
+          0.019186018,
+          0.020304768,
+          0.021250008
+        ],
+        "transpose_prepare": [
+          0.012058129,
+          0.013028788,
+          0.011783249
+        ],
+        "transpose_prepared": [
+          0.008497709,
+          0.010943898,
+          0.009007089
+        ],
+        "edge_vjp": [
+          0.007415129,
+          0.007195539,
+          0.006961729
+        ]
+      }
+    },
+    {
+      "case": "trained",
+      "batch_size": 32,
+      "active_neurons": 15741,
+      "active_edges": 1201465,
+      "kernels": {
+        "multiply": [
+          0.010610668,
+          0.010061169,
+          0.009816549
+        ],
+        "multiply_sources": [
+          0.025119278,
+          0.025004387,
+          0.025460418
+        ],
+        "parameter_validation": [
+          0.00159987,
+          0.00115929,
+          0.00127895
+        ],
+        "transpose": [
+          0.038096867,
+          0.038300776,
+          0.037320896
+        ],
+        "transpose_prepare": [
+          0.00901683,
+          0.009181569,
+          0.01008027
+        ],
+        "transpose_prepared": [
+          0.028880257,
+          0.029996647,
+          0.029505557
+        ],
+        "edge_vjp": [
+          0.00759924,
+          0.007165789,
+          0.00770509
+        ]
+      }
+    },
+    {
+      "case": "smooth01",
+      "batch_size": 1,
+      "active_neurons": 164641,
+      "active_edges": 15241451,
+      "kernels": {
+        "multiply": [
+          0.010124359,
+          0.009533319,
+          0.009137039
+        ],
+        "multiply_sources": [
+          0.091419852,
+          0.088941292,
+          0.090136171
+        ],
+        "parameter_validation": [
+          0.00166873,
+          0.00135892,
+          0.00121068
+        ],
+        "transpose": [
+          0.019115187,
+          0.019665018,
+          0.019229579
+        ],
+        "transpose_prepare": [
+          0.008884689,
+          0.00904628,
+          0.010545069
+        ],
+        "transpose_prepared": [
+          0.008922219,
+          0.008779449,
+          0.0086584
+        ],
+        "edge_vjp": [
+          0.00519015,
+          0.00546447,
+          0.005170339
+        ]
+      }
+    },
+    {
+      "case": "smooth01",
+      "batch_size": 32,
+      "active_neurons": 165050,
+      "active_edges": 15264978,
+      "kernels": {
+        "multiply": [
+          0.048101436,
+          0.042123206,
+          0.040979286
+        ],
+        "multiply_sources": [
+          0.106530529,
+          0.108286809,
+          0.107100269
+        ],
+        "parameter_validation": [
+          0.00148068,
+          0.00123019,
+          0.001196989
+        ],
+        "transpose": [
+          0.051564996,
+          0.049871665,
+          0.050457925
+        ],
+        "transpose_prepare": [
+          0.00921157,
+          0.009670749,
+          0.009043129
+        ],
+        "transpose_prepared": [
+          0.041103616,
+          0.041042565,
+          0.040739396
+        ],
+        "edge_vjp": [
+          0.045163635,
+          0.044822395,
+          0.045505246
+        ]
+      }
+    }
+  ],
+  "decision": "Reject this profiling candidate: slower at every measured initial/trained hard/smooth case. Production selector was never changed; candidate code removed after preserving this snapshot and patch.",
+  "patch": {
+    "path": "/dev/shm/flygo/runs/sparse-source-profile-v1/candidate-worktree.patch",
+    "sha256": "20ac1e12f7004c4cb206fa60e7918cb1f23abdd3c1d23d6e969403b46c247286"
+  },
+  "scope": "One final recurrent state per fixture and batch, three warm repetitions on host 0 using 24 pinned cores; bitwise candidate/reference checks are enforced by the profiler. This is kernel timing, not complete prediction timing.",
+  "reproduction": {
+    "base_commit": "9b6c416b89be86a92dced7cdf32d4b180dffa73b",
+    "isolated_patch": "docs/results/sparse-source-profile-v1.patch",
+    "sha256": "bf63be109cc1bda35dd7f1028581f8888ba1e6a7bb2d882806d2859ab8ae5507",
+    "scope": "Apply this profiling-only patch to the engine commit; production dispatch remains unchanged. The original combined working diff and native snapshot are also retained.",
+    "apply_command": "git apply --unidiff-zero docs/results/sparse-source-profile-v1.patch"
+  }
+}

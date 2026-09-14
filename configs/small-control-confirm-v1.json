@@ -1,0 +1,94 @@
+{
+  "name": "small-control-confirm-v1",
+  "release": "v0-1m",
+  "require_cohorts": [
+    "tpu-small-cnn-parity-v2"
+  ],
+  "batch_size": 2048,
+  "updates": 512,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "rates": [
+    0.01
+  ],
+  "arithmetic": {
+    "cnn_flops": 8361890,
+    "fly_seed1_mean_warm_cpu_flops": 8339944.6640625,
+    "fly_seed1_range": [
+      7594014,
+      9084738
+    ],
+    "relative_mean_difference": 0.002631352703341472,
+    "scope": "Expected arithmetic under the counted CPU rule versus nominal SAME CNN arithmetic. Sample-dependent, not hardware instructions; convolution padding, memory and latency separate."
+  },
+  "selection": "Rate .01 minimizes final seed-1 screen policy KL + value MSE (1.5578392363 vs 1.6678812616 at .003 and 2.0241639811 at .001). Three new initializations, 512 updates, equal 1,048,576 exposures. No best-step or seed selection.",
+  "screen": "runs/small-control-screen-v2/results.json",
+  "cases": [
+    {
+      "run_id": "tpu-small-confirm-v0-lr01-s1",
+      "training": {
+        "model": "cnn",
+        "channels": 17,
+        "blocks": 9,
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-small-confirm-v0-lr01-s2",
+      "training": {
+        "model": "cnn",
+        "channels": 17,
+        "blocks": 9,
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 2,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-small-confirm-v0-lr01-s3",
+      "training": {
+        "model": "cnn",
+        "channels": 17,
+        "blocks": 9,
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 3,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    }
+  ]
+}

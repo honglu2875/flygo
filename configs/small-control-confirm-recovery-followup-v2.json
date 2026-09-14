@@ -1,0 +1,68 @@
+{
+  "release": "v0-1m",
+  "updates": 512,
+  "batch_size": 2048,
+  "rate": 0.01,
+  "matches": {
+    "opponent": 0,
+    "opponent_visits": 16,
+    "games": 32,
+    "seed": 684209,
+    "search_modes": [
+      "prior",
+      "puct",
+      "gumbel"
+    ],
+    "simulations": 16,
+    "rule": "Fresh paired openings shared between families/seeds; every neural evaluation counted. Capped games excluded from wins, reported separately."
+  },
+  "selection": "Every final checkpoint at 1,048,576 exposures. No checkpoint or seed selection.",
+  "name": "small-control-confirm-recovery-followup-v2",
+  "registration": "configs/small-control-confirm-recovery-v2.json",
+  "execution": "Reuse immutable 7a9c190de16ddd46f739 inference and qualified JAX runtime. Three separate physical CPU lanes start after the epsilon screen validation on their host. Host 0 epsilon trial failed before its first update during checkpoint storage admission; its trainer has exited. Its lane is released by the completed head-rate panel instead, with the epsilon retry assigned to host 2.",
+  "jobs": [
+    {
+      "host": 1,
+      "run_id": "tpu-small-confirm-v0-lr01-s2-attempt2-learner",
+      "cohort": "tpu-small-confirm-v0-lr01-s2-attempt2",
+      "backend": "tpu",
+      "wait_for": [
+        "epsilon-validation-v1/epsilon-v0-hard-e4-s1"
+      ],
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "passes": 4,
+      "groups": 656,
+      "seed": 2,
+      "model": "cnn",
+      "rate": 0.01,
+      "rate_scales": {},
+      "channels": 17,
+      "blocks": 9
+    }
+  ]
+}

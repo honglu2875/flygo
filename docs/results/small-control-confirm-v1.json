@@ -1,0 +1,2511 @@
+{
+  "adopted_references": [
+    {
+      "plan_sha256": "d8a1b3481b4af88dfe72e80f34bc5405742b6bf677acb689a3e4577bd0c24b3a",
+      "run": "tpu-confirm-v0-fly-s1-learner",
+      "study": "matched-confirm-followup-v1",
+      "validation_sha256": "4260cd23562345e2909290b2274b22344acbcb2ac4b18d60ea8b7ff6e7d59e47"
+    },
+    {
+      "plan_sha256": "24e694d9b47319bae21c39575299e00d88759dd738c93133f75fc9a8b7b87a7a",
+      "run": "tpu-small-confirm-v0-lr01-s1-learner",
+      "study": "small-control-confirm-followup-v1",
+      "validation_sha256": "ff201c7e9d64f7ebc26408462c00824921f75b73b26c13e7a595fb70c0e5a706"
+    },
+    {
+      "plan_sha256": "d8a1b3481b4af88dfe72e80f34bc5405742b6bf677acb689a3e4577bd0c24b3a",
+      "run": "tpu-confirm-v0-fly-s2-learner",
+      "study": "matched-confirm-followup-v1",
+      "validation_sha256": "e00cd1ae3fd4fa3840d898cd9883577c81b8d0f3b56f872af7f7eb7ee73cac41"
+    },
+    {
+      "plan_sha256": "d8a1b3481b4af88dfe72e80f34bc5405742b6bf677acb689a3e4577bd0c24b3a",
+      "run": "tpu-confirm-v0-fly-s3-learner",
+      "study": "matched-confirm-followup-v1",
+      "validation_sha256": "44a5069b70d31a1fd8b464396646551b4e5ddc593e9de3d7e94660e871bdd8e5"
+    },
+    {
+      "plan_sha256": "24e694d9b47319bae21c39575299e00d88759dd738c93133f75fc9a8b7b87a7a",
+      "run": "tpu-small-confirm-v0-lr01-s3-learner",
+      "study": "small-control-confirm-followup-v1",
+      "validation_sha256": "b8058cc570f45724fdcefdd1e58f78aca6a2ecd7b62c577c37c5c7932144ba49"
+    }
+  ],
+  "collected_sha256": "b16828e8bdb7a252ea7012a97ad4b091f0e5b3ce99b8e437e3321700438e6623",
+  "compute_scope": "Nominal neural arithmetic, including every counted search evaluation. Report CPU zero skipping, dense boundary/channel padding and latency separately. Excludes teacher generation, diagnostics, validation, gradient/backward work and earlier tuning trials; this is not total project compute.",
+  "contrast": {
+    "between_pair_sample_standard_deviation": [
+      0.012655777510779828,
+      0.03050669924176403,
+      0.0022806600334658385
+    ],
+    "direction": "candidate minus reference",
+    "mean_over_registered_pairs": {
+      "games": 800,
+      "policy_kl": {
+        "game_bootstrap_95": [
+          -0.6126153660467067,
+          -0.5848317846222264
+        ],
+        "mean": -0.599073681487864
+      },
+      "positions": 70425,
+      "teacher_top1_agreement": {
+        "game_bootstrap_95": [
+          0.2014754273333927,
+          0.2134327575983261
+        ],
+        "mean": 0.20753046976689146
+      },
+      "value_mse": {
+        "game_bootstrap_95": [
+          -0.1282822445024303,
+          -0.07732814170915374
+        ],
+        "mean": -0.10289124168640841
+      }
+    },
+    "metric_order": [
+      "policy_kl",
+      "value_mse",
+      "teacher_top1_agreement"
+    ],
+    "pairs": [
+      {
+        "candidate": "tpu-small-confirm-v0-lr01-s1-learner",
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              -0.6249480645863675,
+              -0.5970177047272295
+            ],
+            "mean": -0.6113087438586184
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.20012902794658166,
+              0.21423600189834122
+            ],
+            "mean": 0.207057152999645
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              -0.13621360107328756,
+              -0.0824436237642718
+            ],
+            "mean": -0.10992583009327746
+          }
+        },
+        "reference": "tpu-confirm-v0-fly-s1-learner"
+      },
+      {
+        "candidate": "tpu-small-confirm-v0-lr01-s2-attempt2-learner",
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              -0.6147815276557937,
+              -0.5847314705477159
+            ],
+            "mean": -0.5998768540954672
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.20283250566238734,
+              0.21763124097585926
+            ],
+            "mean": 0.21001064962726304
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              -0.09293762892934257,
+              -0.046069802191381175
+            ],
+            "mean": -0.06948173071862304
+          }
+        },
+        "reference": "tpu-confirm-v0-fly-s2-learner"
+      },
+      {
+        "candidate": "tpu-small-confirm-v0-lr01-s3-learner",
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              -0.5983898909654166,
+              -0.573526911949738
+            ],
+            "mean": -0.5860354465095065
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.20031675665156437,
+              0.2112211535114464
+            ],
+            "mean": 0.20552360667376643
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              -0.1593241724385505,
+              -0.10118459361510554
+            ],
+            "mean": -0.1292661642473247
+          }
+        },
+        "reference": "tpu-confirm-v0-fly-s3-learner"
+      }
+    ],
+    "uncertainty": "Game bootstrap conditions on these trained checkpoints. Sample SD describes variation across paired training seeds; a small seed set does not establish a precise seed-population confidence interval."
+  },
+  "final_test": "not evaluated",
+  "match_scope": "Raw completed-game counts with common paired openings; capped games reported separately. Small panels are not an Elo estimate.",
+  "plan_sha256": "8d746792faf298ed74f2c5e391a2d63000b28bd7c6c0e708326c4dcf76b956c1",
+  "records": [
+    {
+      "adopted_reference": false,
+      "batch_size": 2048,
+      "checkpoint_sha256": "89eae53d759a5fe6ab5aa5ac4d903e26f16b1fb88531b16fe26b9450817e2999",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "family": "cnn",
+      "inference_cost": {
+        "arithmetic_flops": 8361890,
+        "convention": "Standard SAME-convolution count includes boundary zero padding; accelerator channel/tile padding is additional",
+        "nominal_3x3_site_pairs": 729,
+        "nonpadding_3x3_site_pairs": 625,
+        "parts": {
+          "pass_head": 35,
+          "policy_hidden": 422739,
+          "policy_projection": 2835,
+          "pooling": 2754,
+          "residual_blocks": 7634088,
+          "stem": 298809,
+          "value_head": 630
+        },
+        "relu_comparisons": 27557,
+        "tanh_evaluations": 1
+      },
+      "matches": {
+        "gumbel": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.96923937360179,
+          "neural_evaluations": 30341,
+          "nominal_neural_flops": 253708104490,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 31.158909559249878,
+          "student_moves": 1788,
+          "wins": 31
+        },
+        "prior": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 1.0,
+          "neural_evaluations": 1909,
+          "nominal_neural_flops": 15962848010,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 31.357494831085205,
+          "student_moves": 1909,
+          "wins": 31
+        },
+        "puct": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 15.70244919228765,
+          "neural_evaluations": 30133,
+          "nominal_neural_flops": 251968831370,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 32.67684769630432,
+          "student_moves": 1919,
+          "wins": 31
+        }
+      },
+      "metrics_sha256": "1cb1bfcb328eec181f497f9f52c9a7497bd7c0a78f2a4236f4066c0eeb550857",
+      "model": {
+        "actions": 82,
+        "blocks": 9,
+        "channels": 17,
+        "features": 972,
+        "seed": 2,
+        "threads": 7
+      },
+      "optimizer_updates": 512,
+      "run": "tpu-small-confirm-v0-lr01-s2-attempt2-learner",
+      "seed": 2,
+      "stored_parameter_scalars": 51955,
+      "study": "small-control-confirm-recovery-followup-v2",
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {},
+        "schedule": {
+          "decay_until": 0,
+          "final_ratio": 0.1,
+          "peak": 0.01,
+          "version": "absolute-update-rate-v1",
+          "warmup_steps": 0
+        }
+      },
+      "training_position_exposures": 1048576,
+      "validation": {
+        "decisive": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.168958130474587,
+              1.1920352295166823
+            ],
+            "mean": 1.1806134034700617
+          },
+          "positions": 19892,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4407892689547037,
+              0.45508848366323623
+            ],
+            "mean": 0.4479690327769958
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4510817303462108,
+              0.4842308686825086
+            ],
+            "mean": 0.4667094160481756
+          }
+        },
+        "late": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.5303987026024634,
+              0.5792494443647935
+            ],
+            "mean": 0.5537060276748905
+          },
+          "positions": 30430,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4784458096266579,
+              0.4990115242627916
+            ],
+            "mean": 0.4893854748603352
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.35050219670840405,
+              0.41103544717493906
+            ],
+            "mean": 0.37921014402265735
+          }
+        },
+        "middle": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2292588854225468,
+              1.2602360100750736
+            ],
+            "mean": 1.244134421449307
+          },
+          "positions": 27195,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.33547794117647056,
+              0.3494671801646366
+            ],
+            "mean": 0.3423791138076852
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.6068258488507072,
+              0.6691847017554163
+            ],
+            "mean": 0.6375148667228073
+          }
+        },
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.8844451998073204,
+              0.9231551781974792
+            ],
+            "mean": 0.9038684136277343
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.42819734831622497,
+              0.4393418974712175
+            ],
+            "mean": 0.4340504082357117
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4542853232515916,
+              0.4996996544035476
+            ],
+            "mean": 0.4777806190314457
+          }
+        },
+        "near_even": {
+          "games": 304,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2335580911564978,
+              1.3120220912013896
+            ],
+            "mean": 1.2723653860507076
+          },
+          "positions": 2077,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.37965594963516797,
+              0.4227879157972203
+            ],
+            "mean": 0.4015406836783823
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.31665692952744856,
+              0.35468692981932176
+            ],
+            "mean": 0.3358658886939041
+          }
+        },
+        "novel_d4_input": {
+          "games": 799,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.8976921381416723,
+              0.9448404232543162
+            ],
+            "mean": 0.9203903758375546
+          },
+          "positions": 63354,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4069500279153319,
+              0.42033472318938986
+            ],
+            "mean": 0.4136597531331881
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4733886281081214,
+              0.5254756591904984
+            ],
+            "mean": 0.49902566276853655
+          }
+        },
+        "opening": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9986922036642254,
+              1.027141900358857
+            ],
+            "mean": 1.0133924231462783
+          },
+          "positions": 12800,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.489921875,
+              0.504142578125
+            ],
+            "mean": 0.497265625
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3592037792160741,
+              0.3869052296832171
+            ],
+            "mean": 0.3727436415744803
+          }
+        },
+        "opponent_lower": {
+          "games": 179,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.5667903776603671,
+              0.6154625001114555
+            ],
+            "mean": 0.5912729696455845
+          },
+          "positions": 20164,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.46778752662810924,
+              0.48836157526711
+            ],
+            "mean": 0.47807974608212656
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.15626758269548266,
+              0.198479088636169
+            ],
+            "mean": 0.1773277630913392
+          }
+        },
+        "opponent_middle": {
+          "games": 339,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9474684604845437,
+              0.9879108749546397
+            ],
+            "mean": 0.9688803959949954
+          },
+          "positions": 30717,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.40437197911563155,
+              0.42036684257437634
+            ],
+            "mean": 0.412247289774392
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5228455072325979,
+              0.5844203275023937
+            ],
+            "mean": 0.5541347736881007
+          }
+        },
+        "opponent_upper": {
+          "games": 282,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.112300450944688,
+              1.13525859623618
+            ],
+            "mean": 1.124202095068632
+          },
+          "positions": 19544,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.41524013361679957,
+              0.4298898138683881
+            ],
+            "mean": 0.42289193614408516
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.6326753550852968,
+              0.7043666025889684
+            ],
+            "mean": 0.6677601942764224
+          }
+        },
+        "saturated": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.7562606290238147,
+              0.7951431436423454
+            ],
+            "mean": 0.774464840289735
+          },
+          "positions": 48456,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4222665783470794,
+              0.4366530437913174
+            ],
+            "mean": 0.4297300643883111
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.45734950997826035,
+              0.518327076756263
+            ],
+            "mean": 0.4884085137122752
+          }
+        },
+        "teacher_pass": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.24725613622477072,
+              0.26962656058580475
+            ],
+            "mean": 0.2579233716370868
+          },
+          "positions": 12340,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.6793245182187808,
+              0.7084068792558462
+            ],
+            "mean": 0.6940032414910859
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.23435489783430585,
+              0.29131571031212167
+            ],
+            "mean": 0.2617735315977443
+          }
+        }
+      }
+    },
+    {
+      "adopted_reference": true,
+      "batch_size": 2048,
+      "checkpoint_sha256": "333ad7f216f4cc08ffad11d1a8822d0f5aa28cde60c2946a1572b0782ef537bb",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "family": "fly",
+      "inference_cost": {
+        "arithmetic_flops": 126697550.0,
+        "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+        "parts": {
+          "heads": 108896,
+          "input_gain": 15912,
+          "rate_dynamics": 3962928,
+          "readout_conditioning": 0,
+          "readout_pool": 447630.0,
+          "smooth_rate_arithmetic": 0,
+          "sparse_aggregation": 122162184
+        },
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "readout_neurons": 149210,
+        "relu_comparisons": 809698,
+        "softplus_evaluations": 0,
+        "tanh_evaluations": 1,
+        "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+      },
+      "matches": {
+        "gumbel": {
+          "capped": 1,
+          "completed": 31,
+          "evaluations_per_student_move": 16.77210401891253,
+          "neural_evaluations": 35473,
+          "nominal_neural_flops": 4494342191150.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 430.08002758026123,
+          "student_moves": 2115,
+          "wins": 0
+        },
+        "prior": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 1.0,
+          "neural_evaluations": 907,
+          "nominal_neural_flops": 114914677850.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 14.97234845161438,
+          "student_moves": 907,
+          "wins": 0
+        },
+        "puct": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.859201047806156,
+          "neural_evaluations": 25744,
+          "nominal_neural_flops": 3261701727200.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 276.7060067653656,
+          "student_moves": 1527,
+          "wins": 1
+        }
+      },
+      "metrics_sha256": "02f81e879043f56cb32cdb9f7736a362e15323bd3bc60d5bd277138f47d646fa",
+      "model": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "seed": 1,
+        "steps": 4,
+        "threads": 7
+      },
+      "optimizer_updates": 512,
+      "run": "tpu-confirm-v0-fly-s1-learner",
+      "seed": 1,
+      "stored_parameter_scalars": 15514402,
+      "study": "matched-confirm-followup-v1",
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {}
+      },
+      "training_position_exposures": 1048576,
+      "validation": {
+        "decisive": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.0752819326945184,
+              2.102473128068751
+            ],
+            "mean": 2.089638795690285
+          },
+          "positions": 19892,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.14348259234801988,
+              0.15192466305745722
+            ],
+            "mean": 0.14764729539513372
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.45169012395665425,
+              0.4797226272210151
+            ],
+            "mean": 0.46598791609310336
+          }
+        },
+        "late": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.7997373222725989,
+              0.8750074635264145
+            ],
+            "mean": 0.8352202463338066
+          },
+          "positions": 30430,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.35390748549940565,
+              0.3862986147982249
+            ],
+            "mean": 0.37114689451199473
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3979590247341805,
+              0.4632062337159117
+            ],
+            "mean": 0.42980817139479943
+          }
+        },
+        "middle": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.075352271043528,
+              2.122931646718778
+            ],
+            "mean": 2.0997846442264576
+          },
+          "positions": 27195,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.07143638816686322,
+              0.07920701993509748
+            ],
+            "mean": 0.07527118955690384
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.7800450490909739,
+              0.8357642638281577
+            ],
+            "mean": 0.8067306984016323
+          }
+        },
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.4720110046787425,
+              1.536255025124131
+            ],
+            "mean": 1.5042303862684108
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.21869570911717293,
+              0.23474154613885462
+            ],
+            "mean": 0.22668086616968405
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.536853596199864,
+              0.5794136588238569
+            ],
+            "mean": 0.5569514412250519
+          }
+        },
+        "near_even": {
+          "games": 304,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.3290447122517466,
+              2.3908688599567394
+            ],
+            "mean": 2.359385795293369
+          },
+          "positions": 2077,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.10693320988109277,
+              0.13803621773392186
+            ],
+            "mean": 0.12181030332209918
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.18228479450525611,
+              0.22570915156273497
+            ],
+            "mean": 0.20396971064309483
+          }
+        },
+        "novel_d4_input": {
+          "games": 799,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.4569400073171097,
+              1.5315109668739786
+            ],
+            "mean": 1.4936831398374462
+          },
+          "positions": 63354,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.21146764231021323,
+              0.23198429206481638
+            ],
+            "mean": 0.22173816964990373
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5701565218663374,
+              0.6190050309123958
+            ],
+            "mean": 0.5943339491625583
+          }
+        },
+        "opening": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.8173839147477033,
+              1.8412936379281397
+            ],
+            "mean": 1.8293773013497334
+          },
+          "positions": 12800,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.1978125,
+              0.212033203125
+            ],
+            "mean": 0.204921875
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.30080466320631566,
+              0.3551026727299997
+            ],
+            "mean": 0.32853134763266745
+          }
+        },
+        "opponent_lower": {
+          "games": 179,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9556723018393795,
+              1.0460720168499102
+            ],
+            "mean": 0.9997203365856431
+          },
+          "positions": 20164,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.336358781144347,
+              0.36036112562543293
+            ],
+            "mean": 0.3485915492957746
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.38270890531740065,
+              0.4643611226014753
+            ],
+            "mean": 0.4220947838136138
+          }
+        },
+        "opponent_middle": {
+          "games": 339,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.530295865338327,
+              1.593184450721252
+            ],
+            "mean": 1.5627482324082478
+          },
+          "positions": 30717,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.19781441157389232,
+              0.21853468098421228
+            ],
+            "mean": 0.20786535143405932
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5789667942931152,
+              0.6469567529322257
+            ],
+            "mean": 0.612521768101621
+          }
+        },
+        "opponent_upper": {
+          "games": 282,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.9127981359941522,
+              1.951591072309068
+            ],
+            "mean": 1.9327735689293795
+          },
+          "positions": 19544,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.12605109118156815,
+              0.13498805292866325
+            ],
+            "mean": 0.13047482603356528
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5755357193361271,
+              0.6420686193913836
+            ],
+            "mean": 0.6087471795271736
+          }
+        },
+        "saturated": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2002307259132974,
+              1.2576783775319904
+            ],
+            "mean": 1.2272553601671075
+          },
+          "positions": 48456,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.2542152510720149,
+              0.273142652353731
+            ],
+            "mean": 0.26362060425953443
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5815224137128607,
+              0.6405564683116286
+            ],
+            "mean": 0.6094235705040565
+          }
+        },
+        "teacher_pass": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.2745637327771977,
+              0.2977698803898436
+            ],
+            "mean": 0.28555912040052206
+          },
+          "positions": 12340,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.8170313683176224,
+              0.8422487771010458
+            ],
+            "mean": 0.8292544570502431
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.24131585017191948,
+              0.28889349392370717
+            ],
+            "mean": 0.26488013045426945
+          }
+        }
+      }
+    },
+    {
+      "adopted_reference": true,
+      "batch_size": 2048,
+      "checkpoint_sha256": "9d015934845e183731135f5d0eaac4ae03cc6cd4285b3c97fdc87d1390938dfb",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "family": "cnn",
+      "inference_cost": {
+        "arithmetic_flops": 8361890,
+        "convention": "Standard SAME-convolution count includes boundary zero padding; accelerator channel/tile padding is additional",
+        "nominal_3x3_site_pairs": 729,
+        "nonpadding_3x3_site_pairs": 625,
+        "parts": {
+          "pass_head": 35,
+          "policy_hidden": 422739,
+          "policy_projection": 2835,
+          "pooling": 2754,
+          "residual_blocks": 7634088,
+          "stem": 298809,
+          "value_head": 630
+        },
+        "relu_comparisons": 27557,
+        "tanh_evaluations": 1
+      },
+      "matches": {
+        "gumbel": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.38095238095238,
+          "neural_evaluations": 38528,
+          "nominal_neural_flops": 322166897920,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 42.75330400466919,
+          "student_moves": 2352,
+          "wins": 22
+        },
+        "prior": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 1.0,
+          "neural_evaluations": 1837,
+          "nominal_neural_flops": 15360791930,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 30.929396867752075,
+          "student_moves": 1837,
+          "wins": 30
+        },
+        "puct": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.066152149944873,
+          "neural_evaluations": 29144,
+          "nominal_neural_flops": 243698922160,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 30.92858624458313,
+          "student_moves": 1814,
+          "wins": 27
+        }
+      },
+      "metrics_sha256": "1e970088dcc2697ec433b5e14b73cce0a8183507f644475691519512549faed6",
+      "model": {
+        "actions": 82,
+        "blocks": 9,
+        "channels": 17,
+        "features": 972,
+        "seed": 1,
+        "threads": 7
+      },
+      "optimizer_updates": 512,
+      "run": "tpu-small-confirm-v0-lr01-s1-learner",
+      "seed": 1,
+      "stored_parameter_scalars": 51955,
+      "study": "small-control-confirm-followup-v1",
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {},
+        "schedule": {
+          "decay_until": 0,
+          "final_ratio": 0.1,
+          "peak": 0.01,
+          "version": "absolute-update-rate-v1",
+          "warmup_steps": 0
+        }
+      },
+      "training_position_exposures": 1048576,
+      "validation": {
+        "decisive": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.1711001484732015,
+              1.1921182178651057
+            ],
+            "mean": 1.1818550845935423
+          },
+          "positions": 19892,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4210953634206761,
+              0.4363076656640448
+            ],
+            "mean": 0.42926804745626385
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.37714909111985917,
+              0.4197480635973539
+            ],
+            "mean": 0.3970997804624342
+          }
+        },
+        "late": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.5294056487096204,
+              0.5795525877126891
+            ],
+            "mean": 0.5528361650541024
+          },
+          "positions": 30430,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4806483985062857,
+              0.5016255779732527
+            ],
+            "mean": 0.4917844232665133
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3320383262384348,
+              0.39829691937069317
+            ],
+            "mean": 0.36276478682490493
+          }
+        },
+        "middle": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.1993861865093705,
+              1.2295410624786172
+            ],
+            "mean": 1.213776024936241
+          },
+          "positions": 27195,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.35147036517309627,
+              0.36675874809383213
+            ],
+            "mean": 0.35922044493473065
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.6113976594037832,
+              0.6888970745512708
+            ],
+            "mean": 0.64965230675163
+          }
+        },
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.8733515297820116,
+              0.9133241541411988
+            ],
+            "mean": 0.8929216424097925
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.42768489108908664,
+              0.43938049094453496
+            ],
+            "mean": 0.4337380191693291
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.41984170062700876,
+              0.47425949433527836
+            ],
+            "mean": 0.4470256111317744
+          }
+        },
+        "near_even": {
+          "games": 304,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2339318995746078,
+              1.3085983699678687
+            ],
+            "mean": 1.2704066937366947
+          },
+          "positions": 2077,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.3710289903596104,
+              0.41742657231155944
+            ],
+            "mean": 0.39528165623495426
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3700871228631787,
+              0.42292676161616566
+            ],
+            "mean": 0.39570280042734796
+          }
+        },
+        "novel_d4_input": {
+          "games": 799,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.8774282203049768,
+              0.9246196486580305
+            ],
+            "mean": 0.9003978384197158
+          },
+          "positions": 63354,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.41711366713872416,
+              0.43081991677273035
+            ],
+            "mean": 0.42393534741294947
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.44838738081325696,
+              0.5084955836179776
+            ],
+            "mean": 0.4779201846500673
+          }
+        },
+        "opening": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.006619155342811,
+              1.0322663334736488
+            ],
+            "mean": 1.0197314973415803
+          },
+          "positions": 12800,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.444216796875,
+              0.46320898437499997
+            ],
+            "mean": 0.4540625
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.2012145582555645,
+              0.2340051996163153
+            ],
+            "mean": 0.21683997802834226
+          }
+        },
+        "opponent_lower": {
+          "games": 179,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.5378959651011441,
+              0.5916688270785481
+            ],
+            "mean": 0.5638523101661447
+          },
+          "positions": 20164,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4685231868646329,
+              0.4908597583408966
+            ],
+            "mean": 0.48031144614163856
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.09604780743615118,
+              0.14151110799958658
+            ],
+            "mean": 0.117780565121959
+          }
+        },
+        "opponent_middle": {
+          "games": 339,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9418413049427476,
+              0.9829627642114165
+            ],
+            "mean": 0.9635701279638349
+          },
+          "positions": 30717,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.3959047051623086,
+              0.41246760404984006
+            ],
+            "mean": 0.4039456978220529
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4793676948336326,
+              0.5607678726556337
+            ],
+            "mean": 0.5201908675360372
+          }
+        },
+        "opponent_upper": {
+          "games": 282,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.1114409274115506,
+              1.13136465331913
+            ],
+            "mean": 1.1213930139098638
+          },
+          "positions": 19544,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.42305641046449793,
+              0.44098260147612045
+            ],
+            "mean": 0.4325112566516578
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.6314355056468144,
+              0.7131189735859149
+            ],
+            "mean": 0.6717227011221644
+          }
+        },
+        "saturated": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.739378018773313,
+              0.7790391244622982
+            ],
+            "mean": 0.7581292434597114
+          },
+          "positions": 48456,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4294253267181343,
+              0.44455134746572494
+            ],
+            "mean": 0.437221396731055
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4341496079761685,
+              0.50674644084469
+            ],
+            "mean": 0.469720883162227
+          }
+        },
+        "teacher_pass": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.23435959425641617,
+              0.2604971987831415
+            ],
+            "mean": 0.2469222906813947
+          },
+          "positions": 12340,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.7014307744337189,
+              0.7339625801404522
+            ],
+            "mean": 0.7177471636952998
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.18929647048213533,
+              0.24629138859829236
+            ],
+            "mean": 0.21581101876155365
+          }
+        }
+      }
+    },
+    {
+      "adopted_reference": true,
+      "batch_size": 2048,
+      "checkpoint_sha256": "4df73c668dea9c2877ffb4824438c5151c2f0feafed81ab76f1269086312582b",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "family": "fly",
+      "inference_cost": {
+        "arithmetic_flops": 126697550.0,
+        "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+        "parts": {
+          "heads": 108896,
+          "input_gain": 15912,
+          "rate_dynamics": 3962928,
+          "readout_conditioning": 0,
+          "readout_pool": 447630.0,
+          "smooth_rate_arithmetic": 0,
+          "sparse_aggregation": 122162184
+        },
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "readout_neurons": 149210,
+        "relu_comparisons": 809698,
+        "softplus_evaluations": 0,
+        "tanh_evaluations": 1,
+        "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+      },
+      "matches": {
+        "gumbel": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.816037735849058,
+          "neural_evaluations": 28520,
+          "nominal_neural_flops": 3613414126000.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 318.6612741947174,
+          "student_moves": 1696,
+          "wins": 0
+        },
+        "prior": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 1.0,
+          "neural_evaluations": 938,
+          "nominal_neural_flops": 118842301900.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 15.524765729904175,
+          "student_moves": 938,
+          "wins": 0
+        },
+        "puct": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.78782287822878,
+          "neural_evaluations": 27297,
+          "nominal_neural_flops": 3458463022350.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 323.4247212409973,
+          "student_moves": 1626,
+          "wins": 2
+        }
+      },
+      "metrics_sha256": "6bbd56edb9a096a6167321c2fdf8132e8223533e0d78f19452ae050c9cc29631",
+      "model": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "seed": 2,
+        "steps": 4,
+        "threads": 7
+      },
+      "optimizer_updates": 512,
+      "run": "tpu-confirm-v0-fly-s2-learner",
+      "seed": 2,
+      "stored_parameter_scalars": 15514402,
+      "study": "matched-confirm-followup-v1",
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {}
+      },
+      "training_position_exposures": 1048576,
+      "validation": {
+        "decisive": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.0736940694582837,
+              2.098921403934144
+            ],
+            "mean": 2.0864529337612634
+          },
+          "positions": 19892,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.14276699029126214,
+              0.1526475911461905
+            ],
+            "mean": 0.14754675246330182
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4358120697168026,
+              0.46524608020710473
+            ],
+            "mean": 0.45067984930074956
+          }
+        },
+        "late": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.7983789970902818,
+              0.8735213406006512
+            ],
+            "mean": 0.8340506156576276
+          },
+          "positions": 30430,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.3540730522046788,
+              0.3850000219139708
+            ],
+            "mean": 0.3706868222149195
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.392843522102221,
+              0.46412141501157145
+            ],
+            "mean": 0.4265293351705238
+          }
+        },
+        "middle": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.0798348699033475,
+              2.1275573308293327
+            ],
+            "mean": 2.1042628149479388
+          },
+          "positions": 27195,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.06420268343824016,
+              0.07196267696267696
+            ],
+            "mean": 0.06788012502298217
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.7517340813952698,
+              0.8094766944784172
+            ],
+            "mean": 0.7796962323654472
+          }
+        },
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.4705661687184408,
+              1.536373388528389
+            ],
+            "mean": 1.5037452677232013
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.2153640116702204,
+              0.23225710841863362
+            ],
+            "mean": 0.2240397586084487
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5251976968342582,
+              0.5698390556474567
+            ],
+            "mean": 0.5472623497500686
+          }
+        },
+        "near_even": {
+          "games": 304,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.3220329035143714,
+              2.3893778869610225
+            ],
+            "mean": 2.354428263367563
+          },
+          "positions": 2077,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.10201143873580984,
+              0.129085429626396
+            ],
+            "mean": 0.11555127587867116
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.19163495071625047,
+              0.2311610145911209
+            ],
+            "mean": 0.21101675190546443
+          }
+        },
+        "novel_d4_input": {
+          "games": 799,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.4558967851110152,
+              1.5314935582061113
+            ],
+            "mean": 1.4933924758498758
+          },
+          "positions": 63354,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.20840500148567853,
+              0.22933995571784616
+            ],
+            "mean": 0.2189127758310446
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5561777773663373,
+              0.6076936270675952
+            ],
+            "mean": 0.582142350839368
+          }
+        },
+        "opening": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.8087225780152376,
+              1.831353210064383
+            ],
+            "mean": 1.8199744525340362
+          },
+          "positions": 12800,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.200076171875,
+              0.214298828125
+            ],
+            "mean": 0.2071875
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3148159106627231,
+              0.3674978638756941
+            ],
+            "mean": 0.3404550213071255
+          }
+        },
+        "opponent_lower": {
+          "games": 179,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9537143496156553,
+              1.0440709855499057
+            ],
+            "mean": 0.9977964831055173
+          },
+          "positions": 20164,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.32910333502357075,
+              0.3565085207116738
+            ],
+            "mean": 0.3428883158103551
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3563088253911251,
+              0.43730304933423075
+            ],
+            "mean": 0.39618623996220576
+          }
+        },
+        "opponent_middle": {
+          "games": 339,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.5336332966449329,
+              1.5985642512075118
+            ],
+            "mean": 1.567096809250947
+          },
+          "positions": 30717,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.1970876660794305,
+              0.21778634516495293
+            ],
+            "mean": 0.20701891460754632
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5662938148493616,
+              0.6392935860290271
+            ],
+            "mean": 0.6030068728904001
+          }
+        },
+        "opponent_upper": {
+          "games": 282,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.9075736574635933,
+              1.9436753878704711
+            ],
+            "mean": 1.9261757830692527
+          },
+          "positions": 19544,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.1225817550040784,
+              0.13358292125501225
+            ],
+            "mean": 0.1281723291035612
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5800556257829069,
+              0.6531743037006434
+            ],
+            "mean": 0.6155182932857268
+          }
+        },
+        "saturated": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2004048449813394,
+              1.25928984347582
+            ],
+            "mean": 1.2280706459058317
+          },
+          "positions": 48456,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.24960867065406406,
+              0.26952133517248605
+            ],
+            "mean": 0.26009162951956416
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5699173664720203,
+              0.6331488135662245
+            ],
+            "mean": 0.6013237911744763
+          }
+        },
+        "teacher_pass": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.2750323904337012,
+              0.29963935607614794
+            ],
+            "mean": 0.2863782103067382
+          },
+          "positions": 12340,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.794796244701089,
+              0.8204848334666107
+            ],
+            "mean": 0.8076175040518638
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.2423485797734545,
+              0.2940898768929479
+            ],
+            "mean": 0.2667789912082474
+          }
+        }
+      }
+    },
+    {
+      "adopted_reference": true,
+      "batch_size": 2048,
+      "checkpoint_sha256": "2ab03fc9a1f6290f65028822b932cac5cea78bb193d648c24b9dd90237d74e94",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "family": "fly",
+      "inference_cost": {
+        "arithmetic_flops": 126697550.0,
+        "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+        "parts": {
+          "heads": 108896,
+          "input_gain": 15912,
+          "rate_dynamics": 3962928,
+          "readout_conditioning": 0,
+          "readout_pool": 447630.0,
+          "smooth_rate_arithmetic": 0,
+          "sparse_aggregation": 122162184
+        },
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "readout_neurons": 149210,
+        "relu_comparisons": 809698,
+        "softplus_evaluations": 0,
+        "tanh_evaluations": 1,
+        "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+      },
+      "matches": {
+        "gumbel": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.74483596597813,
+          "neural_evaluations": 41343,
+          "nominal_neural_flops": 5238056809650.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 491.08451628685,
+          "student_moves": 2469,
+          "wins": 0
+        },
+        "prior": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 1.0,
+          "neural_evaluations": 872,
+          "nominal_neural_flops": 110480263600.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 14.114177703857422,
+          "student_moves": 872,
+          "wins": 0
+        },
+        "puct": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.94280205655527,
+          "neural_evaluations": 26363,
+          "nominal_neural_flops": 3340127510650.0,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 320.20137572288513,
+          "student_moves": 1556,
+          "wins": 0
+        }
+      },
+      "metrics_sha256": "f631201a3a899e83a8709b0a71d2c6670e312c2282534e0229844b8065714f7d",
+      "model": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "seed": 3,
+        "steps": 4,
+        "threads": 7
+      },
+      "optimizer_updates": 512,
+      "run": "tpu-confirm-v0-fly-s3-learner",
+      "seed": 3,
+      "stored_parameter_scalars": 15514402,
+      "study": "matched-confirm-followup-v1",
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {}
+      },
+      "training_position_exposures": 1048576,
+      "validation": {
+        "decisive": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.0771776060253115,
+              2.1035308949493037
+            ],
+            "mean": 2.090738814686757
+          },
+          "positions": 19892,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.15779931073666412,
+              0.1667793327121383
+            ],
+            "mean": 0.16217574904484214
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4763934265223264,
+              0.5070132653761475
+            ],
+            "mean": 0.4918367350112735
+          }
+        },
+        "late": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.8022188894580425,
+              0.875763938129806
+            ],
+            "mean": 0.8373503954592705
+          },
+          "positions": 30430,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.35107538053048065,
+              0.3804441467711793
+            ],
+            "mean": 0.36638186000657247
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3945652868922956,
+              0.46207099616372466
+            ],
+            "mean": 0.42612448971083544
+          }
+        },
+        "middle": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.0823304414373656,
+              2.131018758375045
+            ],
+            "mean": 2.1075052293748957
+          },
+          "positions": 27195,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.06521783088235293,
+              0.07300536489458362
+            ],
+            "mean": 0.06913035484464056
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.7978223066643738,
+              0.8581889737141227
+            ],
+            "mean": 0.8268020190978618
+          }
+        },
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.4730343589011994,
+              1.5374789545155385
+            ],
+            "mean": 1.5054210947337239
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.21847408034440793,
+              0.23356723877854932
+            ],
+            "mean": 0.22594249201277955
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5406931808002599,
+              0.5873161064750604
+            ],
+            "mean": 0.5632437094461787
+          }
+        },
+        "near_even": {
+          "games": 304,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              2.313223914661272,
+              2.3766967787825912
+            ],
+            "mean": 2.343883557335911
+          },
+          "positions": 2077,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.09107725331067021,
+              0.11784808436790815
+            ],
+            "mean": 0.1044776119402985
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.18107246136777594,
+              0.22275439110566947
+            ],
+            "mean": 0.20114000779330724
+          }
+        },
+        "novel_d4_input": {
+          "games": 799,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.4578710549101606,
+              1.5323344234692613
+            ],
+            "mean": 1.49476680067423
+          },
+          "positions": 63354,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.20950388769349845,
+              0.22843991748102976
+            ],
+            "mean": 0.2190232660921173
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5743474493807659,
+              0.6283283289648528
+            ],
+            "mean": 0.6009917580457539
+          }
+        },
+        "opening": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.803581073604705,
+              1.825995094230338
+            ],
+            "mean": 1.8144611992145796
+          },
+          "positions": 12800,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.21796679687499998,
+              0.23234375
+            ],
+            "mean": 0.225234375
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.3073464825022972,
+              0.3521137129664706
+            ],
+            "mean": 0.32926477394375553
+          }
+        },
+        "opponent_lower": {
+          "games": 179,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9573252002772101,
+              1.0476966291912146
+            ],
+            "mean": 1.001348812844537
+          },
+          "positions": 20164,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.3237536277148969,
+              0.3454750671640895
+            ],
+            "mean": 0.335102162269391
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.36379725134059854,
+              0.44889211906456244
+            ],
+            "mean": 0.4054825482188629
+          }
+        },
+        "opponent_middle": {
+          "games": 339,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.5338754928080456,
+              1.5977157957249446
+            ],
+            "mean": 1.5663139368333734
+          },
+          "positions": 30717,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.203012564620604,
+              0.22353764358769326
+            ],
+            "mean": 0.2128137513429046
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5753736806582767,
+              0.6464713347079698
+            ],
+            "mean": 0.6115474460046654
+          }
+        },
+        "opponent_upper": {
+          "games": 282,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.9103721030788876,
+              1.94759417979958
+            ],
+            "mean": 1.9297798780553899
+          },
+          "positions": 19544,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.12887797147738755,
+              0.1392046627133276
+            ],
+            "mean": 0.1339541547277937
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.6119719373599625,
+              0.6884174177699824
+            ],
+            "mean": 0.650091344481001
+          }
+        },
+        "saturated": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2014605373336862,
+              1.2595675683799665
+            ],
+            "mean": 1.2291988184391376
+          },
+          "positions": 48456,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.24810718841668528,
+              0.26632828692382254
+            ],
+            "mean": 0.257326234109295
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.5780534054101181,
+              0.6402841219196148
+            ],
+            "mean": 0.6080785477281697
+          }
+        },
+        "teacher_pass": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.2851104023279955,
+              0.3066880991422882
+            ],
+            "mean": 0.29516825534296964
+          },
+          "positions": 12340,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.7884685808732327,
+              0.8141532452545386
+            ],
+            "mean": 0.8007293354943273
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.1856546722578277,
+              0.22761415984797626
+            ],
+            "mean": 0.20637315822044958
+          }
+        }
+      }
+    },
+    {
+      "adopted_reference": true,
+      "batch_size": 2048,
+      "checkpoint_sha256": "6431ccaff048b2aeed9ace5e7aa6ed2d1ac9710c8d15367c3e850e32da3c91c4",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "family": "cnn",
+      "inference_cost": {
+        "arithmetic_flops": 8361890,
+        "convention": "Standard SAME-convolution count includes boundary zero padding; accelerator channel/tile padding is additional",
+        "nominal_3x3_site_pairs": 729,
+        "nonpadding_3x3_site_pairs": 625,
+        "parts": {
+          "pass_head": 35,
+          "policy_hidden": 422739,
+          "policy_projection": 2835,
+          "pooling": 2754,
+          "residual_blocks": 7634088,
+          "stem": 298809,
+          "value_head": 630
+        },
+        "relu_comparisons": 27557,
+        "tanh_evaluations": 1
+      },
+      "matches": {
+        "gumbel": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 16.941523341523343,
+          "neural_evaluations": 34476,
+          "nominal_neural_flops": 288284519640,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 35.56304478645325,
+          "student_moves": 2035,
+          "wins": 31
+        },
+        "prior": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 1.0,
+          "neural_evaluations": 1982,
+          "nominal_neural_flops": 16573265980,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 34.25872755050659,
+          "student_moves": 1982,
+          "wins": 28
+        },
+        "puct": {
+          "capped": 0,
+          "completed": 32,
+          "evaluations_per_student_move": 15.895890410958904,
+          "neural_evaluations": 29010,
+          "nominal_neural_flops": 242578428900,
+          "opening_pairs": 16,
+          "opening_seed": 684209,
+          "seconds": 31.7556049823761,
+          "student_moves": 1825,
+          "wins": 29
+        }
+      },
+      "metrics_sha256": "b164ef086373cb7fbaed7c671bd83f774ebe5d5a23a693007c332b157d0f7080",
+      "model": {
+        "actions": 82,
+        "blocks": 9,
+        "channels": 17,
+        "features": 972,
+        "seed": 3,
+        "threads": 7
+      },
+      "optimizer_updates": 512,
+      "run": "tpu-small-confirm-v0-lr01-s3-learner",
+      "seed": 3,
+      "stored_parameter_scalars": 51955,
+      "study": "small-control-confirm-followup-v1",
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {},
+        "schedule": {
+          "decay_until": 0,
+          "final_ratio": 0.1,
+          "peak": 0.01,
+          "version": "absolute-update-rate-v1",
+          "warmup_steps": 0
+        }
+      },
+      "training_position_exposures": 1048576,
+      "validation": {
+        "decisive": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2121888495303603,
+              1.2342611421351404
+            ],
+            "mean": 1.2235669180304454
+          },
+          "positions": 19892,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.38598139687775485,
+              0.401869211208961
+            ],
+            "mean": 0.39407802131510156
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4093348847143583,
+              0.4523780641779425
+            ],
+            "mean": 0.43044512365109505
+          }
+        },
+        "late": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.5334424829826323,
+              0.5867440389771953
+            ],
+            "mean": 0.5581726183256508
+          },
+          "positions": 30430,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.49859666404910497,
+              0.5225101089930624
+            ],
+            "mean": 0.5109760105159382
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.2850265338956819,
+              0.3496513260379371
+            ],
+            "mean": 0.31587118278178705
+          }
+        },
+        "middle": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.2387919862698729,
+              1.2727155384984004
+            ],
+            "mean": 1.2550671116560668
+          },
+          "positions": 27195,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.33997728966441204,
+              0.35541043791781146
+            ],
+            "mean": 0.34822577679720534
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.630504985909692,
+              0.7158273563488879
+            ],
+            "mean": 0.673317369029884
+          }
+        },
+        "natural": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.8979489646796234,
+              0.9411894935875693
+            ],
+            "mean": 0.9193856482242176
+          },
+          "positions": 70425,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4236743686108969,
+              0.4387845799977024
+            ],
+            "mean": 0.43146609868654595
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.40551648854833006,
+              0.4619284318381704
+            ],
+            "mean": 0.43397754519885406
+          }
+        },
+        "near_even": {
+          "games": 304,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.347222898332075,
+              1.4167736505600752
+            ],
+            "mean": 1.3803444076110696
+          },
+          "positions": 2077,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.34484327481616167,
+              0.3922563656459895
+            ],
+            "mean": 0.3678382282137699
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.31661297011069617,
+              0.35918835311143626
+            ],
+            "mean": 0.33712689385751204
+          }
+        },
+        "novel_d4_input": {
+          "games": 799,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9068039260522001,
+              0.9584048728178317
+            ],
+            "mean": 0.9318886678918548
+          },
+          "positions": 63354,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4194079328027562,
+              0.43596136125656065
+            ],
+            "mean": 0.42769201628942133
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.43298397536940103,
+              0.49612171984699566
+            ],
+            "mean": 0.4633892233030053
+          }
+        },
+        "opening": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.0498655924553784,
+              1.0790898367478503
+            ],
+            "mean": 1.0649212030511117
+          },
+          "positions": 12800,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.409765625,
+              0.42828515625
+            ],
+            "mean": 0.419296875
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.19361033990982057,
+              0.21960902465965323
+            ],
+            "mean": 0.20625333420404868
+          }
+        },
+        "opponent_lower": {
+          "games": 179,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.5395611316756752,
+              0.5940921555158953
+            ],
+            "mean": 0.5665460339539217
+          },
+          "positions": 20164,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.5023850501265116,
+              0.5264537516289459
+            ],
+            "mean": 0.51507637373537
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.0736914885719813,
+              0.116116257429034
+            ],
+            "mean": 0.09400084217199563
+          }
+        },
+        "opponent_middle": {
+          "games": 339,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.9699188349349146,
+              1.01432896707075
+            ],
+            "mean": 0.9932618316496332
+          },
+          "positions": 30717,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.3913597537647169,
+              0.40930183053695807
+            ],
+            "mean": 0.40003906631506986
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.4504083125942191,
+              0.5303614522312005
+            ],
+            "mean": 0.49217461717758776
+          }
+        },
+        "opponent_upper": {
+          "games": 282,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              1.1548348160156747,
+              1.1806625995156832
+            ],
+            "mean": 1.1673084509190472
+          },
+          "positions": 19544,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.3845751840387445,
+              0.40369344554518505
+            ],
+            "mean": 0.39459680720425705
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.6400415553709526,
+              0.744580039089255
+            ],
+            "mean": 0.6932719977092314
+          }
+        },
+        "saturated": {
+          "games": 800,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.7550870292420491,
+              0.797611271396179
+            ],
+            "mean": 0.7747557744783042
+          },
+          "positions": 48456,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.4401791839404496,
+              0.45770926686554836
+            ],
+            "mean": 0.4495418524021793
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.40281122182398593,
+              0.4762506533841483
+            ],
+            "mean": 0.439579033812524
+          }
+        },
+        "teacher_pass": {
+          "games": 798,
+          "policy_kl": {
+            "game_bootstrap_95": [
+              0.17472199237120942,
+              0.19463760968723745
+            ],
+            "mean": 0.18404290308787535
+          },
+          "positions": 12340,
+          "teacher_top1_agreement": {
+            "game_bootstrap_95": [
+              0.8274326677239323,
+              0.8534038046088586
+            ],
+            "mean": 0.8401134521880065
+          },
+          "value_mse": {
+            "game_bootstrap_95": [
+              0.13494060526485438,
+              0.18069304964013172
+            ],
+            "mean": 0.15674802502082139
+          }
+        }
+      }
+    }
+  ],
+  "status": "complete",
+  "study": "small-control-confirm-recovery-followup-v2"
+}

@@ -1,0 +1,68 @@
+{
+  "name": "epsilon-recovery-v2",
+  "release": "v0-1m",
+  "rate": 0.03,
+  "rate_scales": {
+    "bias": 0.01
+  },
+  "updates": 1000,
+  "batch_size": 32,
+  "clip": 1,
+  "eval_every": 500,
+  "checkpoint_every": 500,
+  "diagnostics_every": 500,
+  "diagnostic_batch_size": 32,
+  "feature_cache": true,
+  "training_exposures_per_case": 32000,
+  "matches": null,
+  "hypothesis": "Larger Adam epsilon attenuates tiny-gradient updates that otherwise approach a full learning-rate step. Test numerical/optimization conditioning of weak synapses without altering topology, forward equations or adding parameters.",
+  "comparison": "Hard and softness .01, each at epsilon 1e-6 and 1e-4, versus their existing epsilon 1e-8 controls. Global .03, bias multiplier .01; output weight multipliers remain one. No warmup or decay.",
+  "selection": "All four final full validations and paired one-seed differences; no best-step or test-label selection. A useful result needs a separately registered longer multi-seed confirmation before a general claim.",
+  "qualification": "Do not launch until all four full-graph independent CPU parity cases and actual six-update/fresh-continuation checks pass. Keep original tolerances; checkpoint epsilon is explicit and incompatible resume settings are rejected. TPU epsilon qualification remains a later gate.",
+  "additional_references": [
+    "optimizer-screen-adopted-v3/bias-v0-lr03-scale001-s1",
+    "smooth-rate-validation-v1/smooth-v0-s01-lr03-bias001-seed1"
+  ],
+  "execution": "Released 92-115 CPU lanes after every head-rate screen validation. Source must be frozen after qualification. No dependence on the measured head-rate outcomes.",
+  "jobs": [
+    {
+      "host": 2,
+      "run_id": "epsilon-v0-hard-e6-s1-attempt2",
+      "passes": 4,
+      "groups": 656,
+      "seed": 1,
+      "epsilon": 1e-06,
+      "rate_softness": 0.0,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "epsilon-validation-v1/epsilon-v0-smooth01-e6-s1"
+      ]
+    }
+  ],
+  "recovery": "Primary-host original hard-e6 failed during the initial checkpoint admission, before optimizer updates. Preserve the attempt; identical source c65c9808cdf39ee16587, seed/data/model/optimizer/exposures on the released host-2 lane. Missing-only deployment avoids redundant large cache archives without changing budgets."
+}

@@ -1,0 +1,101 @@
+{
+  "status": "complete",
+  "reference": {
+    "batch_size": 128,
+    "checkpoint_sha256": null,
+    "cold_seconds": 6.8907838110026205,
+    "cpus": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+    "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+    "input_sha256": "660007a200b329c518af34f1f7ba893ebcb38622e4eac178b4310ef96f64099b",
+    "loaded_peak_rss_bytes": 1088618496,
+    "passes": 32,
+    "peak_rss_bytes": 4004872192,
+    "prediction_sha256": {
+      "logits": "5919ef801320aecdf428f7086de4a467fd4620a753b555d426b397ea24f5e9a5",
+      "value": "fa983687f4f4ec495aa38b4434e4daab2f2abf4151389987932ae2e3af16aa1e"
+    },
+    "scope": "Fresh process high-water RSS includes model/data initialization. Warm prediction excludes loading and first cache preparation. Any depth override is an implementation probe, not a trained architecture or playing-strength result.",
+    "source_native_sha256": "364eda44e800b2239ae8d961a653edc29575dc0de3173eba70a1f531c22174fc",
+    "status": "complete",
+    "warm_seconds": [
+      6.400246008997783,
+      6.302582365999115
+    ]
+  },
+  "streaming": {
+    "batch_size": 128,
+    "checkpoint_sha256": null,
+    "cold_seconds": 6.495290341990767,
+    "cpus": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+    "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+    "input_sha256": "660007a200b329c518af34f1f7ba893ebcb38622e4eac178b4310ef96f64099b",
+    "loaded_peak_rss_bytes": 1088143360,
+    "passes": 32,
+    "peak_rss_bytes": 1434501120,
+    "prediction_sha256": {
+      "logits": "5919ef801320aecdf428f7086de4a467fd4620a753b555d426b397ea24f5e9a5",
+      "value": "fa983687f4f4ec495aa38b4434e4daab2f2abf4151389987932ae2e3af16aa1e"
+    },
+    "reference_sha256": "1a9954df66175f620c2a69b59aeab6438043e454e2e3bf45cadb41925b3619b0",
+    "scope": "Fresh process high-water RSS includes model/data initialization. Warm prediction excludes loading and first cache preparation. Any depth override is an implementation probe, not a trained architecture or playing-strength result.",
+    "source_native_sha256": "6d23692102de8e232062afa4dff10cf0cfcaea1899f675af5d203bb7f8349e02",
+    "status": "complete",
+    "warm_seconds": [
+      6.352229183001327,
+      6.440350966004189
+    ]
+  },
+  "scope": "K32/B128 implementation-only probe from initial parameters. Identical output hashes; no claim about trained depth or playing strength."
+}

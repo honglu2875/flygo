@@ -5,6 +5,12 @@ registered nominal prediction cost and training horizon. This is a result for
 these adapters, dynamics and training settings. It does not establish the best
 performance attainable with the fixed fly topology.
 
+These are FLOP/exposure comparisons. Checkpoints contain 15,514,402 stored
+learned scalars for the fly, 786,819 for the large CNN and 51,955 for the
+small CNN. Optimizer moments and fixed graph/port arrays are excluded; the
+count includes stored parameters on routes with zero gradients.
+[Exact checkpoint counts](results/control-parameter-counts-v1.json).
+
 ## Matched neural control, three seeds
 
 Both families receive 1,048,576 labeled-position exposures: 512 Adam updates at
@@ -79,6 +85,36 @@ by 0.020626 at K4 and 0.023528 at K8, while mean MSE worsens by 0.005907 and
 Evidence: `prototype-followup-v1/{depth-g656,depth-g2624,width-k4,width-k8}-report-v1.json`.
 These results motivate testing informative spatial adapters and optimization
 before simply increasing recurrent depth.
+
+## Optimizer confirmation on V0
+
+All nine runs completed 4,000 updates at B32: 128,000 exposures, K4, G656,
+random ports and paired seeds 1/2/3. Each final checkpoint received the same
+full validation. These CPU runs use one immutable source and compare within
+this smaller-batch protocol.
+
+| Global rate / bias multiplier | Mean policy KL | Mean value MSE | Mean teacher agreement |
+|---|---:|---:|---:|
+| .003 / 1 | 1.594022 | .529932 | 19.49% |
+| .01 / 1 | 1.538219 | .564571 | 20.89% |
+| .03 / .01 | 1.517230 | .565524 | 22.84% |
+
+Both larger rates improve policy in all three seeds, but worsen value MSE
+relative to .003. The paired .01-minus-.003 differences are −.055804 KL
+[−.059186, −.052607] and +.034640 MSE [.028237, .040670]. Bias-scaled
+.03-minus-.003 gives −.076793 KL [−.080588, −.072895] and +.035593 MSE
+[.024479, .046810]. These intervals bootstrap complete games conditional on
+the trained checkpoints; corresponding paired-seed standard deviations are
+.007589/.012436 and .016940/.008737 for KL/MSE.
+
+Compared with .01, bias-scaled .03 improves KL by .020989
+[.019169, .022894], with no resolved mean value difference: candidate-minus-
+reference MSE +.000953 [−.010527, .013319]. Policy and value therefore remain
+separate selection criteria, and playing strength requires its own panel.
+All individual seeds, slices, source hashes and contrasts are in
+[the complete optimizer report](results/optimizer-confirm-v1.json).
+The schedule and smooth-rate confirmations test whether these tradeoffs can
+be improved without changing the fixed topology.
 
 ## Schedule screen on V0
 
@@ -200,3 +236,142 @@ and 557.2 to 545.8 ms. These are three-repeat implementation measurements
 under concurrent fleet work, not training outcomes or universal speedups;
 initial-fixture gradient timing is slightly worse. Evidence:
 `cpu-validation-lane-v1` and its four named profile directories.
+
+## Schedule confirmation, three seeds
+
+All six scheduled cases and three adopted constant controls now have full
+70,425-position validation at 128,000 training exposures. K4/G656/B32 and
+global rate .03 with bias multiplier .01 are fixed. Each contrast pairs the
+same seeds and sampled training positions.
+
+| Schedule | Mean KL | Mean value MSE | Paired KL change vs constant | Paired MSE change |
+|---|---:|---:|---:|---:|
+| Constant | 1.517230 | .565524 | — | — |
+| Cosine to .1 of peak | 1.510981 | .561142 | −.006248 | −.004382 |
+| 500-update warmup | 1.506564 | .538036 | −.010666 | −.027489 |
+
+Warmup's conditional game-bootstrap 95% intervals are [−.012368, −.008975]
+for KL and [−.035881, −.019969] for MSE. Cosine's MSE interval includes zero.
+Warmup improves both losses on average, but its seed-3 policy loss is slightly
+worse than the paired constant control. The intervals condition on these
+checkpoints; the [paired report](results/schedule-confirm-v1.json) separately
+reports variation across the three seeds. These are optimizer findings, not
+an established playing-strength improvement.
+
+## Output-weight rate screen
+
+At 32,000 exposures and seed 1, multiplying only value-head weights' learning
+rate by 1/sqrt(656) improves the hard-rate control from KL 1.649547 / MSE .571104
+to 1.626361 / .549680. Scaling both policy and value weights gives 1.639104 /
+.571380. Bias multipliers remain unchanged. The value-only paired differences
+are −.023186 KL and −.021424 MSE, with conditional game-bootstrap intervals
+[−.025757, −.020519] and [−.030861, −.013168].
+
+The same changes do not transfer to smooth .01 firing: value-only scaling
+worsens KL by .003832 and MSE by .012894; scaling both heads worsens KL by
+.020725 with no resolved MSE change. Keep the factors isolated. These are
+single-seed screens requiring a separately registered confirmation before
+adoption. [All four comparisons](results/head-rate-screen-v1.json).
+
+## Small CNN control: screen completed
+
+The 17-channel, nine-block CNN passes the actual four-host TPU shape gate:
+states, losses, gradients and three checkpoint-aligned updates meet the
+original tolerances. A free-running CPU/TPU trajectory match is not claimed.
+The declared 256-update/B2048 rate screen gives final fixed-slice KL+MSE
+2.024164 at .001, 1.667881 at .003, and 1.557839 at .01. Thus .01 advances to
+three new 512-update initializations under the original selection rule.
+[Screen records](results/small-control-screen-v1.json).
+
+The 8,361,890 nominal FLOP architecture was chosen before training against
+the fly seed-1 counted warm CPU mean of 8,339,945 operations. Its count is
+0.263% higher. This compares expected arithmetic under the declared rules,
+not exact per-position work, hardware instructions, or accelerator padding.
+Both controls receive 1,048,576 confirmation exposures; final full validation
+and the same 32-game prior/PUCT/Gumbel panels are complete for all three seeds.
+Operational zero-update failed attempts are retained separately.
+
+| Seed | Small CNN KL | Small CNN MSE | Prior wins | PUCT wins | Gumbel wins |
+|---|---:|---:|---:|---:|---:|
+| 1 | .892922 | .447026 | 30/32 | 27/32 | 22/32 |
+| 2 | .903868 | .477781 | 31/32 | 31/32 | 31/32 |
+| 3 | .919386 | .433978 | 28/32 | 29/32 | 31/32 |
+
+Mean small-CNN minus fly differences are **−.599074 KL** and **−.102891 MSE**.
+Conditional game-bootstrap 95% intervals are [−.612615, −.584832] and
+[−.128282, −.077328]; paired-seed sample SDs are .012656 and .030507.
+The smaller CNN wins 89/96 direct-prior games, 87/96 PUCT and 84/96 Gumbel,
+with no caps, compared with fly 0/96, 3/96 and 0/95 plus one cap respectively.
+The same early KataGo checkpoint, 16 teacher visits and paired openings are
+used throughout. These panels are not Elo and do not establish that search
+always improves a given learned prior. [Complete paired evidence](results/small-control-confirm-v1.json).
+
+## Spatial input, three seeds
+
+At 1,048,576 exposures, preserving the audited visual attachment improves
+policy KL by .003015 versus the original ports and .005344 versus the
+matched shuffled attachment. The latter's conditional game-bootstrap interval
+is [−.006180, −.004445]. Value differences remain unresolved: spatial minus
+shuffle is +.001262 MSE with interval [−.002509, +.005230]. The spatial prior
+still wins 0/96 games; PUCT wins 1/96 and Gumbel 3/96.
+
+This supports a small policy effect of the specific retained spatial ordering.
+It does not close the CNN gap, establish general retinotopic Go transfer, or
+validate all inferred retinal geometry. The complete report includes all
+baseline/spatial/shuffled seeds, weighted matched position differences and
+raw common-opening panels. [Evidence](results/spatial-input-confirm-v1.json).
+
+## CPU prediction timing and memory
+
+These measurements use the same 24 pinned physical cores on host 0, the same
+seeded training-only inputs, and final seed-1 checkpoints. Each batch size
+has one fixed input batch and ten warm repetitions after cold preparation.
+The fleet continues other work on its assigned cores.
+
+| Model | B1 median latency | B32 median batch time |
+|---|---:|---:|
+| Rust fly | 23.735 ms | 76.234 ms |
+| JAX CPU large CNN | 2.425 ms | 10.134 ms |
+| JAX CPU small CNN | 1.298 ms | 5.423 ms |
+
+Latency includes each implementation's kernel launches, indexing, validation
+and memory effects; Go feature construction and search are outside the timed
+call. It is separate from theoretical FLOPs and does not characterize all Go
+positions. [Inputs, repetitions, cold times and RSS](results/prediction-latency-v1.json).
+Streaming prediction reduces long-unroll memory without a resolved speedup:
+the K32/B128 initial-model probe uses 1.435 GB peak RSS versus 4.005 GB for
+the traced path. [Memory comparison](results/streaming-memory-v1.json).
+
+A source-driven sparse-multiply candidate also preserves every output bit,
+but takes 13.42 ms versus 6.36 ms on the trained hard-rate B1 fixture and
+25.12 ms versus 10.06 ms at B32. Initial and smooth fixtures also regress.
+These are individual recurrent-kernel timings, not complete predictions.
+The candidate visits active sources in order and partitions destinations
+between threads; its traversal and gathers outweigh the saved index scans
+in these measurements. It was never enabled in production and has been removed
+from the engine. The immutable source, patch and all repetitions are retained.
+[Negative profiling result](results/sparse-source-profile-v1.json).
+
+## Adam epsilon screen
+
+All four seed-1 cases have full 70,425-position validation after 32,000 training
+exposures, with the same K4/G656/B32, global rate .03 and bias multiplier .01.
+Each is compared with its hard or smooth-.01 epsilon-1e-8 control.
+
+| Firing rule | Epsilon | Policy KL | Value MSE |
+|---|---:|---:|---:|
+| Hard control | 1e-8 | 1.649547 | .571104 |
+| Hard | 1e-6 | 1.659809 | .567759 |
+| Hard | 1e-4 | 1.741155 | .619257 |
+| Smooth .01 control | 1e-8 | 1.623348 | .570713 |
+| Smooth .01 | 1e-6 | 1.707159 | .580606 |
+| Smooth .01 | 1e-4 | 1.716843 | .590718 |
+
+Every larger-epsilon case worsens policy KL. Hard 1e-6 has no resolved value
+change: candidate-minus-control MSE is −.003345 with conditional game-bootstrap
+95% interval [−.011485, +.004130]. Its top-1 agreement improves by 1.360
+percentage points, showing that agreement and distribution loss can diverge.
+The other three cases worsen both losses. Keep the default epsilon 1e-8;
+this single-seed screen does not justify a larger-epsilon confirmation.
+The hard-1e-6 operational retry consumed no extra optimizer updates before
+its successful restart. [All records and paired comparisons](results/epsilon-screen-v1.json).
