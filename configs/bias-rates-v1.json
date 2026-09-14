@@ -1,0 +1,19 @@
+{
+  "name": "optimizer-v0-bias-rates-v1",
+  "release": "v0-1m",
+  "feature_cache": true,
+  "updates": 1000,
+  "batch_size": 32,
+  "rate": 0.03,
+  "clip": 1,
+  "eval_every": 100,
+  "checkpoint_every": 500,
+  "diagnostics_every": 100,
+  "question": "Does reducing the shared type-bias step preserve activity and learning at global rate 0.03? Change only the final bias learning-rate multiplier; global clipping and moment estimation are unchanged.",
+  "controls": ["opt-v0-k4-g656-lr03-s1", "opt-v0-k4-g656-lr003-s1"],
+  "qualification": "Identity multipliers and frozen-bias behavior pass Rust/JAX CPU tests; full real-data spatial-port/bias-scale TPU parity passes. Existing controls use identical model equations and sampler contracts.",
+  "jobs": [
+    {"host": 0, "run_id": "bias-v0-lr03-scale01-s1", "passes": 4, "groups": 656, "seed": 1, "rate_scales": {"bias": 0.1}, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"host": 3, "run_id": "bias-v0-lr03-scale001-s1", "passes": 4, "groups": 656, "seed": 1, "rate_scales": {"bias": 0.01}, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]}
+  ]
+}

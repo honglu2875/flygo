@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+from email.parser import Parser
+import fcntl
 import hashlib
 import json
 import os
@@ -12,6 +14,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 
 REPO = Path(__file__).resolve().parents[1]
@@ -34,25 +37,44 @@ def remote(host, code, *, timeout=30):
 def snapshot(root):
     installed = root / 'venv/lib/python3.12/site-packages'
     native = next((installed / 'flygo').glob('_native*.so'))
-    digest = hashlib.sha256(native.read_bytes())
-    for path in sorted((REPO / 'python/flygo').rglob('*.py')):
-        digest.update(str(path.relative_to(REPO)).encode()); digest.update(path.read_bytes())
+    # Freeze the bytes before hashing/copying: editing source during deployment
+    # must not produce different content under the same source identity.
+    native_bytes = native.read_bytes()
+    sources = {path.relative_to(REPO): path.read_bytes()
+               for path in sorted((REPO / 'python/flygo').rglob('*.py'))}
+    numpy_metadata = next(installed.glob('numpy-*.dist-info/METADATA')).read_bytes()
+    digest = hashlib.sha256(b'flygo-snapshot-v2\0' + native_bytes + numpy_metadata)
+    for path, content in sources.items():
+        digest.update(str(path).encode()); digest.update(content)
     key = digest.hexdigest()[:20]
-    target = root / 'environments' / key
-    if target.exists():
-        return target
-    with StorageBudget(root).reserve(files=GIB, heap=GIB, purpose='freeze data worker environment'):
-        site = target / 'site-packages'
-        site.mkdir(parents=True)
-        for name in ('numpy', 'numpy.libs', 'flygo'):
-            shutil.copytree(installed / name, site / name, ignore=shutil.ignore_patterns('__pycache__'))
-        shutil.copytree(REPO / 'python/flygo', site / 'flygo', dirs_exist_ok=True,
-                        ignore=shutil.ignore_patterns('__pycache__'))
-        (target / 'entry.py').write_text("import sys\nfrom pathlib import Path\nsys.path.insert(0,str(Path(__file__).parent/'site-packages'))\nfrom flygo.data.service import main\nmain()\n")
-        (target / 'snapshot.json').write_text(json.dumps(dict(snapshot=key, created=time.time(),
-                native_sha256=hashlib.sha256(native.read_bytes()).hexdigest(), numpy='2.5.3'), indent=2)+'\n')
-        if (root / 'venv/build.json').exists():
-            shutil.copyfile(root / 'venv/build.json', target / 'build.json')
+    parent = root / 'environments'; parent.mkdir(parents=True, exist_ok=True)
+    target = parent / key
+    with (parent / (key + '.lock')).open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if target.exists():
+            if not (target / 'snapshot.json').is_file():
+                raise ValueError('Incomplete environment retained for inspection: ' + str(target))
+            return target
+        with StorageBudget(root).reserve(files=GIB, heap=GIB, purpose='freeze worker environment'):
+            staging = Path(tempfile.mkdtemp(prefix='.' + key + '.', dir=parent))
+            try:
+                site = staging / 'site-packages'; (site / 'flygo').mkdir(parents=True)
+                for name in ('numpy', 'numpy.libs'):
+                    shutil.copytree(installed / name, site / name, ignore=shutil.ignore_patterns('__pycache__'))
+                (site / 'flygo' / native.name).write_bytes(native_bytes)
+                for path, content in sources.items():
+                    destination = site / path.relative_to('python')
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_bytes(content)
+                (staging / 'entry.py').write_text("import sys\nfrom pathlib import Path\nsys.path.insert(0,str(Path(__file__).parent/'site-packages'))\nfrom flygo.data.service import main\nmain()\n")
+                (staging / 'snapshot.json').write_text(json.dumps(dict(snapshot=key, created=time.time(),
+                    native_sha256=hashlib.sha256(native_bytes).hexdigest(),
+                    numpy=Parser().parsestr(numpy_metadata.decode())['Version']), indent=2)+'\n')
+                if (root / 'venv/build.json').exists():
+                    shutil.copyfile(root / 'venv/build.json', staging / 'build.json')
+                staging.rename(target)
+            finally:
+                if staging.exists(): shutil.rmtree(staging)
     return target
 
 
@@ -136,7 +158,7 @@ print(json.dumps(dict(supervisor=json.loads((p/'supervisor.json').read_text()) i
         print(f"w{record['host'][-1]}    {active}/{len(workers)} {states:<9} {record['published_games']:>10,}"
               f" {sum(w['positions'] for w in workers):>18,} {record['shm_free']/GIB:>9.1f} {record['ram_available']/GIB:>14.1f}")
         for learner in record['learners']:
-            if learner.get('state') not in ('complete','stopped'):
+            if learner.get('state') and learner.get('state') not in ('complete','stopped'):
                 detail=(f" at update {learner['step']}" if learner.get('step') is not None
                         else ': '+learner['reason'] if learner.get('reason') else '')
                 print(f"      {learner['run']}: {learner.get('state')}{detail}")

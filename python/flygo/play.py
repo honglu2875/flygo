@@ -3,13 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 
 import numpy as np
 
 from .checkpoint import load_checkpoint
-from .fly import FlyConfig,RustFly,load_graph
+from .fly import FlyConfig,RustFly,load_graph,MODEL_VERSION
 from .go import Game,GameConfig,GumbelConfig
 from .gtp import action_to_vertex,vertex_to_action
 from .runtime import cpu_profile,pin
@@ -19,10 +20,18 @@ from .storage import StorageBudget,GIB
 def load_player(checkpoint:Path,graph_path:Path,*,threads=16):
     with np.load(checkpoint,allow_pickle=False) as data:
         metadata=json.loads(data['metadata'].tobytes())
-    config=FlyConfig(**{**metadata['model_config'],'threads':threads})
+        ports={key:data['port/'+key].copy() for key in ('input_index','output_group','output_scale')
+               if 'port/'+key in data}
+    if metadata.get('model_version',MODEL_VERSION)=='residual-cnn-v1':
+        os.environ['JAX_PLATFORMS']='cpu'
+        from .jax.cnn import CNNConfig,JaxCNN
+        config=CNNConfig(**{**metadata['model_config'],'threads':threads})
+        model=JaxCNN(config)
+    else:
+        config=FlyConfig(**{**metadata['model_config'],'threads':threads})
+        model=RustFly(load_graph(graph_path),config,ports=ports)
     if (config.features,config.actions)!=(972,82):
         raise ValueError('This GTP profile requires a trained 9x9 Go model')
-    model=RustFly(load_graph(graph_path),config)
     load_checkpoint(checkpoint,model)
     return model,metadata
 

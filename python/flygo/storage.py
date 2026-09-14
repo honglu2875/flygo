@@ -117,10 +117,12 @@ class StorageBudget:
             raise StoragePressure("Available RAM headroom would be too small")
         return {**snapshot, "reserved_files": pending_files, "reserved_heap": pending_heap}
 
-    def check(self) -> dict:
-        """Recheck live pressure at safe boundaries; never evict another job's data."""
+    def check(self, *, files: int = 0, heap: int = 0) -> dict:
+        """Check live pressure plus a proposed allocation, without reserving it."""
+        if files < 0 or heap < 0:
+            raise ValueError("Allocations must be nonnegative")
         with self._ledger() as ledger:
-            return self._check(ledger, 0, 0)
+            return self._check(ledger, files, heap)
 
     @contextmanager
     def reserve(self, *, files: int, heap: int, purpose: str):

@@ -7,7 +7,8 @@ dynamics, sensory attachment, readout and internal passes are research variables
 The repository now runs expert generation on four CPU hosts, complete Rust
 inference/backpropagation/Adam, offline teacher distillation, portable
 checkpoints, and prior/PUCT/Gumbel play. JAX supplies an independent CPU
-reference. TPU execution is pending qualification when the hardware is free.
+reference and a qualified four-host, 16-device TPU learner with exact sparse
+forward/backward kernels. A separate residual CNN provides a compute-matched control.
 The early trained models are weak; working training is not a strength claim.
 
 - [Interactive model guide](docs/model.html): illustrated graph, Go adapters,
@@ -17,6 +18,7 @@ The early trained models are weak; working training is not a strength claim.
 - [DESIGN.md](DESIGN.md): equations, module boundaries and extension rules.
 - [DATASET.md](DATASET.md): teacher, targets, splits and RAM storage policy.
 - [MILESTONES.md](MILESTONES.md): acceptance criteria and research sequence.
+- [RESEARCH.md](RESEARCH.md): comparison budgets, optimizer and biology hypotheses.
 
 **Everyday commands**
 
@@ -56,6 +58,11 @@ python3 -B scripts/cluster.py restart --run-id expert-v1 --concurrent-games 16
 /dev/shm/flygo/venv/bin/python scripts/deploy_research.py \
   --config configs/screen-v1.json
 
+# Qualified four-host TPU learner: one immutable SPMD cohort per run.
+/dev/shm/flygo/venv/bin/python scripts/tpu.py launch \
+  --run-id my-tpu-trial --mode train --train-plan configs/tpu-v0-b2048-v1.json
+/dev/shm/flygo/venv/bin/python scripts/tpu.py status --run-id my-tpu-trial
+
 # Interactive GTP; --simulations 0 uses the prior, positive budgets use search.
 /dev/shm/flygo/venv/bin/flygo gtp \
   --checkpoint /dev/shm/flygo/runs/my-k8-seed1/checkpoints/step-00001000.npz \
@@ -73,6 +80,13 @@ pass the same release/model settings, `--resume <checkpoint>` and a larger
 total `--steps`. Creating `<run>/stop` requests a checkpoint at the next safe
 boundary. `status.json`, `metrics.jsonl`, `latest.json` and the last two
 checkpoints are the run's small operational interface.
+
+Fly trials accept `--ports <qualified.npz>` and `--rate-scales '{"bias":0.01}'`.
+Rate multipliers affect the final Adam step after common global clipping and
+moment estimation. The defaults preserve the baseline. `--model cnn` selects
+the separate control; it uses the same data, loss, sampler and JAX optimizer.
+TPU launch performs source/runtime replication and collective setup; do not
+start unrelated cohorts on the same devices concurrently.
 
 The active snapshot study is specified in
 [configs/prototype-v1.json](configs/prototype-v1.json): four depth/readout
@@ -125,12 +139,15 @@ The fly numerical crate does not depend on Go, Python or JAX.
 | Sparse forward, transpose, edge gradients | `crates/fly-core/src/sparse.rs` |
 | Neuron equation and its backward rule | `crates/fly-core/src/recurrent.rs`, `python/flygo/jax/model.py`, `tests/test_fly.py` |
 | Sensory/readout maps and initialization | `python/flygo/fly.py`; generic Rust composition in `fly-core/src/model.rs` |
+| Audited spatial ports and shuffled controls | `python/flygo/ports.py`, `scripts/retinotopy.py` |
 | Loss and CPU Adam | `fly-core/src/model.rs`, `optim.rs`; matching JAX functions |
+| TPU sparse kernels and common learner | `python/flygo/jax/{sparse,numerics,learner}.py` |
+| Independent residual-CNN control and FLOP ledger | `python/flygo/jax/cnn.py`, `python/flygo/cost.py` |
 | Frozen data and learner | `python/flygo/data/loader.py`, `train.py` |
 | Shared immutable feature cache | `python/flygo/data/cache.py` |
 | Teacher protocol and production | `python/flygo/data/{katago,label,generate,corpus,service}.py` |
 | Checkpoint portability and peer copies | `python/flygo/{checkpoint,replication}.py` |
-| Placement, shared RAM and launch | `runtime.py`, `storage.py`, `scripts/{cluster,deploy_research}.py` |
+| Placement, shared RAM and launch | `runtime.py`, `storage.py`, `scripts/{cluster,deploy_research,tpu}.py` |
 
 The initial equation is
 `v[k+1] = (1-a)*v[k] + a*(W*ReLU(v[k]) + bias + sensory_input)`.
@@ -160,7 +177,10 @@ The bounded loader accepts up to two million positions and preallocates typed
 arrays once. Trials share a read-only memory-mapped cache under
 `/dev/shm/flygo/cache/features/`, verified against its dataset identity and file
 hashes. Cache construction has shared RAM admission and atomic publication;
-there is no automatic eviction of active caches.
+reader leases protect live arrays, including NumPy views and readers in other
+processes. Only registered, unused v2 caches may be reclaimed under pressure.
+`scripts/cache.py` exposes inspection and reclamation. Corpus and checkpoint
+files are not cache-eviction candidates.
 
 Checkpoints contain canonical parameters, Adam moments/step, port assignments,
 model configuration, graph/dataset IDs and sampler state. Local publication
@@ -175,8 +195,11 @@ copies; RAM remains volatile across reboot or common cleanup. Owned persistent
 SSH sessions are part of the current job lifetime arrangement.
 
 The runtime package requires NumPy, Python 3.12 and the Rust extension. Optional
-`jax` is for numerical qualification and `data` adds PyArrow for graph preparation.
+`jax` adds the CPU reference/CNN, `tpu` adds the pinned accelerator runtime and
+`data` adds PyArrow for graph preparation.
 Build tooling can reuse Python/Rust and verified KataGo artifacts from `~/go`;
-the installed engine does not import that framework. JAX CPU parity does not
-qualify TPU execution: the current reference materializes edge-by-batch
-messages, so TPU memory and kernels remain an explicit next gate.
+the installed engine does not import that framework. The TPU path replicates
+graph/parameters and shards the batch. Degree buckets, bounded gather tiles and
+an explicit transpose/edge VJP avoid a full edge-by-batch message array. Actual
+device ownership, all-group updates and fresh-process recovery are qualified;
+new precision or dynamics still require their own checks.

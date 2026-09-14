@@ -50,7 +50,7 @@ def summarize(metrics, games, *, seed=709, bootstrap=1000):
         for i, name in enumerate(names)})
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path('/dev/shm/flygo'))
     parser.add_argument('--release', default='pilot-v1')
@@ -59,7 +59,7 @@ def main():
     parser.add_argument('--threads', type=int, default=24)
     parser.add_argument('--cpus')
     parser.add_argument('--batch-size', type=int, default=32)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     cpus = list(map(int, args.cpus.split(','))) if args.cpus else cpu_profile()['research_cpus'][:args.threads]
     if not 0 < args.threads <= len(cpus) or args.batch_size <= 0:
         parser.error('Positive thread and batch sizes must fit the CPU allocation')
@@ -90,6 +90,9 @@ def main():
                 raise ValueError('Checkpoint and evaluation release must match for this comparison')
             metrics = predict_metrics(model, arrays, indices, args.batch_size)
             groups = arrays['game_index'][indices]
+            # Keep aligned per-position evidence for later paired comparisons.
+            np.savez(args.output / (checkpoint.stem + '-' + sha256(checkpoint)[:12] + '-metrics.npz'),
+                     indices=indices, game_index=groups, metrics=metrics)
             record = dict(checkpoint=str(checkpoint), sha256=sha256(checkpoint),
                           model=metadata['model_config'], dataset_id=metadata['dataset_id'],
                           optimizer_step=int(model.checkpoint_arrays()['optimizer_step']),

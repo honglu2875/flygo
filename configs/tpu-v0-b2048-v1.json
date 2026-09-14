@@ -1,0 +1,18 @@
+{
+  "name": "tpu-v0-b2048-lr003-s1",
+  "question": "Bounded large-batch V0 learning and end-to-end throughput gate; separate from the CPU batch-32 optimizer screen.",
+  "release": "v0-1m",
+  "passes": 4,
+  "groups": 656,
+  "seed": 1,
+  "updates": 256,
+  "batch_size": 2048,
+  "rate": 0.003,
+  "clip": 1,
+  "eval_every": 64,
+  "eval_batch_size": 2048,
+  "eval_positions": 2048,
+  "checkpoint_every": 64,
+  "training_exposures": 524288,
+  "selection": "Report the final predeclared horizon and all intermediate diagnostics. Any new rate/batch trial gets a separate run ID and matched exposure accounting."
+}

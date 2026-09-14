@@ -1,0 +1,17 @@
+{
+  "name": "matched-control-v1",
+  "release": "v0-1m",
+  "fly": {"passes": 4, "groups": 656, "ports": "seeded all-sensory random baseline"},
+  "cnn": {"channels": 64, "blocks": 10, "policy_hidden": "3x3 convolution with 64 channels", "normalization": "none; residual branch scale 1/sqrt(20)"},
+  "rates": [0.001, 0.003, 0.01],
+  "clip": 1,
+  "seeds": [1],
+  "batch_size": 2048,
+  "updates": 256,
+  "training_exposures": 524288,
+  "evaluation": {"positions": 2048, "seed": 912099, "every": 64},
+  "arithmetic": "Choose the CNN from the explicit operation ledger before training. Match nominal arithmetic within 1%; report sparse/dense padding, transforms, precision and measured latency separately.",
+  "selection": "Equal three-rate screen for both families; rank final validation KL+value MSE, retain every failure. Confirm each selected rate with seeds 1/2/3 and a longer equal exposure horizon before any strength claim.",
+  "existing_trial": "Adopt the completed tpu-v0-b2048-lr003-s1 fly trial as the 0.003 point; its final 2048-position validation is already known. No CNN learning result has been observed at registration.",
+  "scope": "First matched comparison under this declared tuning budget, not proof of globally optimal tuning or a connectome advantage. Earlier CPU engineering/optimizer screens are separate and reported."
+}

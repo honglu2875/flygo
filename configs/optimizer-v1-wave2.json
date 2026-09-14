@@ -1,0 +1,16 @@
+{
+  "name": "optimizer-v0-lr-screen-v1-wave2",
+  "registration": "configs/optimizer-v1.json",
+  "release": "v0-1m",
+  "feature_cache": true,
+  "updates": 1000,
+  "batch_size": 32,
+  "rate": 0.01,
+  "clip": 1,
+  "eval_every": 100,
+  "checkpoint_every": 500,
+  "diagnostics_every": 100,
+  "jobs": [
+    {"host": 0, "run_id": "opt-v0-k4-g656-lr01-s1", "passes": 4, "groups": 656, "seed": 1, "rate": 0.01, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]}
+  ]
+}

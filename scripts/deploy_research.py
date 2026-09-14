@@ -13,7 +13,7 @@ import subprocess
 from cluster import snapshot, SSH, PYTHON
 from flygo.data.corpus import atomic_json
 from flygo.data.loader import load_release
-from flygo.data.cache import CACHE_VERSION
+from flygo.data.cache import cache_directory
 from flygo.replication import replicate_bundle
 from flygo.runtime import cpu_profile,pin
 
@@ -52,11 +52,15 @@ def main():
     graph_record = root / 'runs/m4/graph.json'
     graph_path = Path(json.loads(graph_record.read_text())['path'])
     files = {graph_record, *(root / record['path'] for record in manifest['records'])}
+    for job in plan['jobs']:
+        if job.get('ports'):
+            path=root/job['ports'];files.update((path,path.with_suffix('.json')))
     for directory in (environment, graph_path, release):
         files.update(path for path in directory.rglob('*') if path.is_file())
     if plan.get('feature_cache',False):
-        load_release(root,release/'manifest.json',cache=True)
-        cache=root/'cache/features'/CACHE_VERSION/manifest['dataset_id']
+        # Retain the maps and their reader leases through bundle replication.
+        cached_data=load_release(root,release/'manifest.json',cache=True)
+        cache=cache_directory(root,manifest['dataset_id'])
         files.update(path for path in cache.iterdir() if path.is_file())
     output = root / 'runs' / plan['name']
     if output.exists():
@@ -88,10 +92,15 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                     config=old['config'];arguments=config.get('arguments',{})
                     expected=dict(run_id=run_id,release=plan['release'],passes=job['passes'],
                         groups=job.get('groups',plan.get('groups',656)),seed=job['seed'],
-                        steps=plan['updates'],batch_size=plan['batch_size'],rate=plan['rate'],
+                        steps=plan['updates'],batch_size=plan['batch_size'],rate=job.get('rate',plan['rate']),
+                        clip=job.get('clip',plan.get('clip',1.0)),backend='cpu',
+                        diagnostics_every=plan.get('diagnostics_every',0),
+                        ports=str(root/job['ports']) if job.get('ports') else None,
+                        rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),
                         threads=len(job['cpus']),eval_every=plan['eval_every'],checkpoint_every=plan['checkpoint_every'])
                     valid=(config.get('dataset_id')==manifest['dataset_id'] and config.get('cpus')==job['cpus']
-                           and all(arguments.get(key)==value for key,value in expected.items()))
+                           and all(arguments.get(key,dict(clip=1.0,backend='cpu',diagnostics_every=0,rate_scales={}).get(key))==value
+                                   for key,value in expected.items()))
                     if not valid or not (old['status'].get('state')=='complete' or
                             (old['live'] and 'flygo.train' in old['command'] and run_id in old['command'])):
                         raise ValueError('Cannot adopt a mismatched or stopped trial: '+run_id)
@@ -107,10 +116,14 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                        '--passes', str(job['passes']), '--seed', str(job['seed']),
                        '--groups',str(job.get('groups',plan.get('groups',656))),
                        '--steps', str(plan['updates']), '--batch-size', str(plan['batch_size']),
-                       '--rate', str(plan['rate']), '--threads', str(len(job['cpus'])),
+                       '--rate', str(job.get('rate',plan['rate'])), '--threads', str(len(job['cpus'])),
+                       '--clip',str(job.get('clip',plan.get('clip',1.0))),
+                       '--rate-scales',json.dumps(job.get('rate_scales',plan.get('rate_scales',{}))),
+                       '--diagnostics-every',str(plan.get('diagnostics_every',0)),
                        '--cpus', ','.join(map(str, job['cpus'])), '--peer', '',
                        '--eval-every', str(plan['eval_every']),
                        '--checkpoint-every', str(plan['checkpoint_every'])]
+            if job.get('ports'):command+=['--ports',str(root/job['ports'])]
             if host:
                 command = SSH + [f'cubic27@t1v-n-a09f5679-w-{host}', shlex.join(command)]
             else:

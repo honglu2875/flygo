@@ -86,13 +86,21 @@ def main(argv=None):
             records=matches(model,opponent,games=args.games,seed=args.seed,simulations=args.simulations,search=args.search)
         completed=[g for g in records if g['terminal']]
         wins=sum((g['white_score']>0)==(g['fly_color']==2) for g in completed)
+        evaluations=sum(g['fly_neural_evaluations'] for g in records)
+        # Retain the legacy fields for existing study collectors. Neutral names
+        # allow the same match interface to evaluate the separate CNN control.
+        for row in records:
+            row['student_color']=row['fly_color']
+            row['student_neural_evaluations']=row['fly_neural_evaluations']
         result=dict(status='passed',kind='prior_only_9x9' if not args.simulations else args.search+'_9x9',
-                    simulations=args.simulations,fly_neural_evaluations=sum(g['fly_neural_evaluations'] for g in records),
+                    simulations=args.simulations,fly_neural_evaluations=evaluations,
+                    student_neural_evaluations=evaluations,student_wins=wins,
+                    model_family='cnn' if metadata.get('model_version')=='residual-cnn-v1' else 'fly',
                     checkpoint_sha256=checkpoint_hash,
                     graph_id=metadata['graph_id'],dataset_id=metadata['dataset_id'],model_config=metadata['model_config'],
                     opponent=opponent_record,opponent_visits=16,seed=args.seed,games=records,
                     completed=len(completed),truncated=len(records)-len(completed),fly_wins=wins,
-                    cpus=cpus,seconds=time.time()-start,
+                    cpus=cpus,inference_threads=args.threads,seconds=time.time()-start,
                     scope='Fresh shared four-move openings with swapped colors; small screening panel, no Elo claim')
         atomic_json(args.output/'result.json',result)
         print(json.dumps({k:v for k,v in result.items() if k!='games'},indent=2),flush=True)

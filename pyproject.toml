@@ -11,6 +11,7 @@ dependencies = ["numpy==2.5.3"]
 
 [project.optional-dependencies]
 jax = ["jax==0.11.1", "jaxlib==0.11.1"]
+tpu = ["jax[tpu]==0.11.1", "jaxlib==0.11.1", "libtpu==0.0.46.1"]
 data = ["pyarrow==25.0.1"]
 
 [project.scripts]

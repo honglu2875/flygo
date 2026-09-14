@@ -1,5 +1,5 @@
 //! Thin NumPy boundary for the owned Rust model and optimizer.
-use fly_core::{CoreParams, Graph, Model, Params, Ports, Targets, optim::Adam};
+use fly_core::{optim::Adam, CoreParams, Graph, Model, Params, Ports, Targets};
 use numpy::{IntoPyArray, PyArray1, PyReadonlyArray1, PyReadonlyArray2, PyUntypedArrayMethods};
 use pyo3::{
     exceptions::{PyRuntimeError, PyValueError},
@@ -196,6 +196,7 @@ impl FlyModel {
         Ok((pl, vl, export(py, &grad)))
     }
     #[allow(clippy::too_many_arguments)]
+    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None))]
     fn train_step(
         &self,
         py: Python<'_>,
@@ -206,6 +207,7 @@ impl FlyModel {
         value: PyReadonlyArray1<'_, f32>,
         rate: f32,
         clip: f32,
+        rate_scales: Option<Vec<f32>>,
     ) -> PyResult<(f64, f64, f64, u64)> {
         let batch = input.shape()[1];
         let (input, legal, policy, value) = (
@@ -233,7 +235,10 @@ impl FlyModel {
                     value: &value,
                 },
             )?;
-            let norm = adam.update(model, params, &grad, rate, clip)?;
+            let norm = match rate_scales {
+                Some(ref scales) => adam.update_scaled(model, params, &grad, rate, clip, scales)?,
+                None => adam.update(model, params, &grad, rate, clip)?,
+            };
             *prepared = None;
             Ok::<_, String>((pl, vl, norm, adam.step))
         })

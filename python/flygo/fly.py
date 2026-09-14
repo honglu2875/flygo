@@ -105,10 +105,13 @@ class RustFly:
             np.ascontiguousarray(value,dtype=np.float32))
         return dict(policy_loss=pl,value_loss=vl),dict(zip(PARAMETERS,grad))
 
-    def train_step(self, features, legal, policy, value, *, rate=0.003,clip=1.0):
+    def train_step(self, features, legal, policy, value, *, rate=0.003,clip=1.0,rate_scales=None):
+        if rate_scales is not None and set(rate_scales)-set(PARAMETERS):
+            raise ValueError('Unknown parameter group in learning-rate multipliers')
+        extra=() if rate_scales is None else ([rate_scales.get(name,1.0) for name in PARAMETERS],)
         pl,vl,norm,step = self.native.train_step(self._input(features),self.config.steps,
             np.ascontiguousarray(legal,dtype=np.uint8),np.ascontiguousarray(policy,dtype=np.float32),
-            np.ascontiguousarray(value,dtype=np.float32),rate,clip)
+            np.ascontiguousarray(value,dtype=np.float32),rate,clip,*extra)
         return dict(policy_loss=pl,value_loss=vl,gradient_norm=norm,step=step)
 
     def checkpoint_arrays(self):

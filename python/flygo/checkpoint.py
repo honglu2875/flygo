@@ -20,8 +20,9 @@ def save_checkpoint(model,sampler,path:Path,metadata:dict,*,root:Path,peer:str|N
     with StorageBudget(root).reserve(files=GIB,heap=GIB,purpose='training checkpoint and peer staging'):
         arrays=model.checkpoint_arrays()
         info=dict(schema_version=1,model_config=asdict(model.config),sampler=sampler.state(),
-                  graph_id=model.graph['manifest']['graph_id'],model_version=MODEL_VERSION,
+                  graph_id=model.graph['manifest']['graph_id'],model_version=getattr(model,'model_version',MODEL_VERSION),
                   optimizer_version=OPTIMIZER_VERSION,**metadata)
+        info['numerical_runtime']=getattr(model,'numerical_runtime','rust-fp32-f64-norm-v1')
         arrays['metadata']=np.frombuffer(json.dumps(info,sort_keys=True,allow_nan=False).encode(),np.uint8)
         for name,array in model.ports.items():
             arrays['port/'+name]=array
@@ -62,7 +63,7 @@ def load_checkpoint(path:Path,model,sampler=None,*,dataset_id=None):
         info=json.loads(arrays['metadata'].tobytes())
         # Early schema-1 checkpoints predate explicit names and contain this same
         # first model/optimizer. Future variants must use distinct version names.
-        if info.get('schema_version')!=1 or info.get('model_version',MODEL_VERSION)!=MODEL_VERSION \
+        if info.get('schema_version')!=1 or info.get('model_version',MODEL_VERSION)!=getattr(model,'model_version',MODEL_VERSION) \
                 or info.get('optimizer_version',OPTIMIZER_VERSION)!=OPTIMIZER_VERSION:
             raise ValueError('Unsupported checkpoint model or optimizer contract')
         if info['graph_id']!=model.graph['manifest']['graph_id']:

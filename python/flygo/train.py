@@ -1,4 +1,4 @@
-"""Offline teacher-policy/value distillation; the complete train step runs in Rust."""
+"""Offline teacher-policy/value distillation with interchangeable Rust/JAX learners."""
 from __future__ import annotations
 
 import argparse
@@ -43,6 +43,7 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
     parser.add_argument('--graph',type=Path)
+    parser.add_argument('--ports',type=Path,help='Qualified sensory/readout artifact; defaults to seeded random ports')
     parser.add_argument('--release',default='pilot-v1')
     parser.add_argument('--run-id',default='fly-baseline-k8-seed1')
     parser.add_argument('--steps',type=int,default=1000,help='Total optimizer steps, including restored steps')
@@ -52,33 +53,60 @@ def main(argv=None):
     parser.add_argument('--threads',type=int,default=24)
     parser.add_argument('--cpus',help='Explicit allocation; defaults to spare physical cores')
     parser.add_argument('--rate',type=float,default=.003)
+    parser.add_argument('--rate-scales',type=json.loads,default={},help='JSON parameter-group multipliers, e.g. {"bias":0.1}')
+    parser.add_argument('--backend',choices=('cpu','tpu'),default='cpu')
+    parser.add_argument('--model',choices=('fly','cnn'),default='fly')
+    parser.add_argument('--channels',type=int,default=64,help='CNN control width')
+    parser.add_argument('--blocks',type=int,default=10,help='CNN control residual blocks')
+    parser.add_argument('--clip',type=float,default=1.0)
+    parser.add_argument('--diagnostics-every',type=int,default=0,help='Zero disables extra gradient/activity measurements')
     parser.add_argument('--seed',type=int,default=1)
     parser.add_argument('--eval-every',type=int,default=100)
+    parser.add_argument('--eval-batch-size',type=int,default=32)
+    parser.add_argument('--eval-positions',type=int,default=2048)
     parser.add_argument('--checkpoint-every',type=int,default=250)
     parser.add_argument('--resume',type=Path)
     parser.add_argument('--peer',default='cubic27@t1v-n-a09f5679-w-1')
     args=parser.parse_args(argv)
-    if min(args.steps,args.passes,args.groups,args.batch_size,args.threads,args.eval_every,args.checkpoint_every)<=0:
+    if min(args.steps,args.passes,args.groups,args.batch_size,args.threads,args.eval_every,
+           args.eval_batch_size,args.eval_positions,args.checkpoint_every)<=0:
         parser.error('Step, batch, thread and interval counts must be positive')
+    if not np.isfinite(args.rate) or args.rate<=0 or not np.isfinite(args.clip) or args.clip<=0 or args.diagnostics_every<0:
+        parser.error('Finite positive learning rate/clip and a nonnegative diagnostic interval are required')
+    if args.model=='cnn' and (args.ports or args.diagnostics_every):
+        parser.error('Fly ports/activity diagnostics apply only to the fly model')
     cpus=[int(x) for x in args.cpus.split(',')] if args.cpus else cpu_profile()['research_cpus'][:args.threads]
     if args.threads>len(cpus):
         parser.error('Thread count exceeds allocated physical CPUs')
     pin(cpus)
     root=args.root;run=root/'runs'/args.run_id
     run.mkdir(parents=True,exist_ok=bool(args.resume))
+    owns_distributed=False
     try:
+        if args.backend=='tpu':
+            os.environ['JAX_PLATFORMS']='tpu'
+            import jax
+            if not jax.distributed.is_initialized():
+                jax.distributed.initialize(initialization_timeout=90)
+                owns_distributed=True
+        elif args.model=='cnn':os.environ['JAX_PLATFORMS']='cpu'
         run_training(args,cpus,run)
     except BaseException as error:
         previous=json.loads((run/'status.json').read_text()) if (run/'status.json').exists() else {}
         atomic_json(run/'status.json',dict(state='failed',step=previous.get('step'),
                     pid=os.getpid(),error=repr(error),updated=time.time()))
         raise
+    finally:
+        if owns_distributed:jax.distributed.shutdown()
 
 
 def run_training(args,cpus,run):
     root=args.root
-    config=FlyConfig(steps=args.passes,groups=args.groups,threads=args.threads,seed=args.seed)
-    graph_path=args.graph or Path(json.loads((root/'runs/m4/graph.json').read_text())['path'])
+    if args.model=='cnn':
+        from .jax.cnn import CNNConfig,JaxCNN
+        config=CNNConfig(channels=args.channels,blocks=args.blocks,threads=args.threads,seed=args.seed)
+    else:config=FlyConfig(steps=args.passes,groups=args.groups,threads=args.threads,seed=args.seed)
+    graph_path=(args.graph or Path(json.loads((root/'runs/m4/graph.json').read_text())['path'])) if args.model=='fly' else None
     started=time.time()
     budget=StorageBudget(root)
     with budget.reserve(files=64*1024**2,heap=24*GIB,purpose='offline training '+args.run_id), \
@@ -86,31 +114,55 @@ def run_training(args,cpus,run):
         atomic_json(run/'status.json',dict(state='loading_data',pid=os.getpid(),cpus=cpus,updated=time.time()))
         manifest,arrays,indexes=load_release(root,root/'releases'/args.release/'manifest.json',cache=True)
         sampler=Sampler(arrays,indexes,args.seed)
-        model=RustFly(load_graph(graph_path),config)
+        graph=load_graph(graph_path) if args.model=='fly' else None
+        ports=None;port_contract=None
+        if args.ports:
+            from .ports import load_ports
+            ports,port_contract=load_ports(args.ports,graph_id=graph['manifest']['graph_id'],
+                features=config.features,groups=config.groups,seed=config.seed)
+        if args.model=='cnn':model=JaxCNN(config)
+        elif args.backend=='tpu':
+            from .jax.learner import JaxFly
+            model=JaxFly(graph,config,ports=ports)
+        else:
+            model=RustFly(graph,config,ports=ports)
+        any_host=getattr(model,'collective_any',bool)
         step=0
         if args.resume:
             load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'])
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
-                    dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,
+                    dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,
                     split_counts={k:len(v) for k,v in indexes.items()}))
         # Common fixed random slices, independent of model/sampler seed. Avoid
         # repeatedly reporting only the first few complete games in file order.
         evaluation={key:np.random.default_rng(912099).choice(indexes[key],
-                    size=min(2048,len(indexes[key])),replace=False)
+                    size=min(args.eval_positions,len(indexes[key])),replace=False)
                     for key in ('train','validation','validation_novel')}
         def validation(step):
             result=dict(kind='validation',step=step,unix=time.time(),
-                natural=evaluate(model,arrays,evaluation['validation'],limit=2048),
-                novel=evaluate(model,arrays,evaluation['validation_novel'],limit=2048),
-                train=evaluate(model,arrays,evaluation['train'],limit=2048))
+                natural=evaluate(model,arrays,evaluation['validation'],limit=args.eval_positions,batch_size=args.eval_batch_size),
+                novel=evaluate(model,arrays,evaluation['validation_novel'],limit=args.eval_positions,batch_size=args.eval_batch_size),
+                train=evaluate(model,arrays,evaluation['train'],limit=args.eval_positions,batch_size=args.eval_batch_size))
             log.write(json.dumps(result)+'\n');log.flush();print(json.dumps(result),flush=True)
             return result
         validation(step)
         checkpoints=sorted((run/'checkpoints').glob('step-*.npz'))
         def checkpoint(metrics):
             path=run/'checkpoints'/f'step-{step:08d}.npz'
-            receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics),root=root,peer=args.peer or None)
+            error=None
+            try:
+                receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics,
+                    port_contract=port_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
+                        clip=args.clip,rate_scales=args.rate_scales)),
+                    root=root,peer=args.peer or None)
+            except Exception as failure:
+                error=failure
+            if any_host(error is not None):
+                raise RuntimeError('A controller could not publish its checkpoint: '+str(error or 'peer failure')) from error
+            if hasattr(model,'verify_checkpoint_copies'):
+                receipt=model.verify_checkpoint_copies(receipt)
+                atomic_json(path.with_suffix('.json'),receipt)
             checkpoints.append(path)
             atomic_json(run/'latest.json',receipt)
             # Keep two recovery points. Selected models live in a separate directory.
@@ -119,21 +171,41 @@ def run_training(args,cpus,run):
                 old.unlink();old.with_suffix('.json').unlink(missing_ok=True)
 
         metrics={'step':step}
+        clipped_updates=observed_updates=0
         if not args.resume:checkpoint(metrics)
-        while step<args.steps and not (run/'stop').exists():
+        while step<args.steps and not any_host((run/'stop').exists()):
             if step%25==0:
+                pressure=None
                 try:
                     budget.check()
                 except StoragePressure as error:
-                    atomic_json(run/'status.json',dict(state='paused_storage',reason=str(error),step=step,updated=time.time()))
+                    pressure=str(error)
+                if any_host(pressure is not None):
+                    atomic_json(run/'status.json',dict(state='paused_storage',reason=pressure or 'Peer storage pressure',step=step,updated=time.time()))
                     time.sleep(20);continue
-            batch=sampler.batch(args.batch_size)
-            begin=time.perf_counter();metrics=model.train_step(*batch,rate=args.rate)
+            sample_begin=time.perf_counter();batch=sampler.batch(args.batch_size)
+            sample_seconds=time.perf_counter()-sample_begin
+            diagnostic=args.diagnostics_every and (step+1)%args.diagnostics_every==0
+            before=model.parameters() if diagnostic else None
+            begin=time.perf_counter();metrics=model.train_step(*batch,rate=args.rate,clip=args.clip,
+                                                              rate_scales=args.rate_scales or None)
             elapsed=time.perf_counter()-begin;step=metrics['step']
-            record=dict(kind='train',**metrics,seconds=elapsed,positions_per_second=args.batch_size/elapsed,unix=time.time())
+            observed_updates+=1;clipped_updates+=int(metrics['gradient_norm']>args.clip)
+            record=dict(kind='train',**metrics,clipped=metrics['gradient_norm']>args.clip,
+                        clipping_fraction=clipped_updates/observed_updates,
+                        clipping_scope='updates since this process started',
+                        seconds=elapsed,positions_per_second=args.batch_size/elapsed,
+                        sample_seconds=sample_seconds,
+                        sample_and_update_positions_per_second=args.batch_size/(sample_seconds+elapsed),
+                        training_exposures=step*args.batch_size,unix=time.time())
             if step%10==0 or step==1:
                 log.write(json.dumps(record)+'\n');log.flush()
                 atomic_json(run/'status.json',dict(state='training',pid=os.getpid(),updated=time.time(),**record))
+            if diagnostic:
+                from .diagnostics import measure
+                report=measure(model,batch,before,metrics,clip=args.clip)
+                log.write(json.dumps(report,allow_nan=False)+'\n');log.flush()
+                del before
             if step%args.eval_every==0 or step==args.steps:
                 validation(step)
             if step%args.checkpoint_every==0 or step==args.steps:
@@ -141,6 +213,7 @@ def run_training(args,cpus,run):
         if step and (not checkpoints or checkpoints[-1].name!=f'step-{step:08d}.npz'):
             checkpoint(metrics)
         atomic_json(run/'status.json',dict(state='complete' if step==args.steps else 'stopped',step=step,
+                    training_exposures=step*args.batch_size,numerical_runtime=getattr(model,'numerical_runtime','rust-fp32-f64-norm-v1'),
                     updated=time.time(),elapsed_seconds=time.time()-started))
 
 
