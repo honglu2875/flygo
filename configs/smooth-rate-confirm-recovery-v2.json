@@ -1,0 +1,150 @@
+{
+  "name": "smooth-rate-confirm-recovery-v2",
+  "release": "v0-1m",
+  "rate": 0.03,
+  "updates": 4000,
+  "batch_size": 32,
+  "clip": 1,
+  "eval_every": 500,
+  "checkpoint_every": 500,
+  "diagnostics_every": 500,
+  "diagnostic_batch_size": 32,
+  "feature_cache": true,
+  "training_exposures_per_case": 128000,
+  "matches": null,
+  "comparison": "Confirm softness .01 versus the original hard rate at global .03 with bias multiplier .01, K4/G656/B32, paired seeds 1/2/3 and 128,000 exposures from initialization.",
+  "additional_references": [
+    "confirm-v0-lr03-bias001-s1",
+    "confirm-v0-lr03-bias001-s2",
+    "confirm-v0-lr03-bias001-s3"
+  ],
+  "selection": "All four 32k-exposure softness screen candidates completed full validation before this registration. The .01/bias-scaled case has the lowest policy KL and KL+MSE; advance it to all three seeds at the longer fixed horizon. Report every final validation and paired seed, without best-step or final-test selection.",
+  "qualification": "Reuse source 6d9b14c70b154a5cb821, qualified smooth rates and scaled Adam, with exact full-V0 fresh continuation. No mean-conditioning transform. Scientific screen and confirmation exposures remain separate.",
+  "execution": "Use released 32-55 lanes with explicit dependencies on previous complete evaluation workers; one immutable source across all three seeds.",
+  "jobs": [
+    {
+      "host": 1,
+      "run_id": "smooth-confirm-v0-s01-lr03-bias001-s1",
+      "passes": 4,
+      "groups": 656,
+      "seed": 1,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "rate_softness": 0.01,
+      "cpus": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "wait_for": [
+        "spatial-input-followup-v1/tpu-spatial-v0-shuffled-s1-learner"
+      ]
+    },
+    {
+      "host": 2,
+      "run_id": "smooth-confirm-v0-s01-lr03-bias001-s2",
+      "passes": 4,
+      "groups": 656,
+      "seed": 2,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "rate_softness": 0.01,
+      "cpus": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "wait_for": [
+        "spatial-input-recovery-followup-v2/tpu-spatial-v0-shuffled-s2-attempt2-learner"
+      ]
+    },
+    {
+      "host": 0,
+      "run_id": "smooth-confirm-v0-s01-lr03-bias001-s3",
+      "passes": 4,
+      "groups": 656,
+      "seed": 3,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "rate_softness": 0.01,
+      "cpus": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "wait_for": [
+        "optimizer-confirm-validation-v1/confirm-v0-lr03-bias001-s3"
+      ]
+    }
+  ],
+  "recovery": "Original queue failed before launching any learners because shuffled seed 2 evaluation failed. Keep all three original scientific run IDs; update only the seed 2 lane dependency to its recorded operational retry. Other existing validation waiters remain active."
+}

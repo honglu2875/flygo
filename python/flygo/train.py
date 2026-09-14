@@ -49,6 +49,7 @@ def main(argv=None):
     parser.add_argument('--run-id',default='fly-baseline-k8-seed1')
     parser.add_argument('--steps',type=int,default=1000,help='Total optimizer steps, including restored steps')
     parser.add_argument('--passes',type=int,default=8)
+    parser.add_argument('--readout-mean-scale',type=float,default=1.0,help='Fixed common readout component scale in (0,1]; one preserves the baseline')
     parser.add_argument('--rate-softness',type=float,default=0.0,help='Fixed smooth firing-rate scale; zero uses the original ReLU')
     parser.add_argument('--groups',type=int,default=656,help='Number of disjoint readout pools')
     parser.add_argument('--batch-size',type=int,default=32)
@@ -79,7 +80,7 @@ def main(argv=None):
         parser.error('Step, batch, thread and interval counts must be positive')
     if not np.isfinite(args.rate) or args.rate<=0 or not np.isfinite(args.clip) or args.clip<=0 or args.diagnostics_every<0:
         parser.error('Finite positive learning rate/clip and a nonnegative diagnostic interval are required')
-    if args.model=='cnn' and (args.ports or args.diagnostics_every or args.rate_softness):
+    if args.model=='cnn' and (args.ports or args.diagnostics_every or args.rate_softness or args.readout_mean_scale!=1):
         parser.error('Fly ports, firing rates and activity diagnostics apply only to the fly model')
     try:Schedule(args.rate,args.warmup_steps,args.decay_until,args.final_rate_ratio)
     except ValueError as error:parser.error(str(error))
@@ -114,7 +115,7 @@ def run_training(args,cpus,run):
     if args.model=='cnn':
         from .jax.cnn import CNNConfig,JaxCNN
         config=CNNConfig(channels=args.channels,blocks=args.blocks,threads=args.threads,seed=args.seed)
-    else:config=FlyConfig(steps=args.passes,groups=args.groups,threads=args.threads,seed=args.seed,rate_softness=args.rate_softness)
+    else:config=FlyConfig(steps=args.passes,groups=args.groups,threads=args.threads,seed=args.seed,rate_softness=args.rate_softness,readout_mean_scale=args.readout_mean_scale)
     graph_path=(args.graph or Path(json.loads((root/'runs/m4/graph.json').read_text())['path'])) if args.model=='fly' else None
     started=time.time()
     budget=StorageBudget(root)

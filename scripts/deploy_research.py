@@ -101,11 +101,11 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                         ports=str(root/job['ports']) if job.get('ports') else None,
                         rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),
                         threads=len(job['cpus']),eval_every=plan['eval_every'],checkpoint_every=plan['checkpoint_every'])
-                    for key,default in (('warmup_steps',0),('decay_until',0),('final_rate_ratio',.1),('diagnostic_batch_size',32),('rate_softness',0.0)):
+                    for key,default in (('warmup_steps',0),('decay_until',0),('final_rate_ratio',.1),('diagnostic_batch_size',32),('rate_softness',0.0),('readout_mean_scale',1.0)):
                         expected[key]=job.get(key,plan.get(key,default))
                     valid=(config.get('dataset_id')==manifest['dataset_id'] and config.get('cpus')==job['cpus']
                            and all(arguments.get(key,dict(clip=1.0,backend='cpu',diagnostics_every=0,rate_scales={},
-                                    warmup_steps=0,decay_until=0,final_rate_ratio=.1,diagnostic_batch_size=32,rate_softness=0.0).get(key))==value
+                                    warmup_steps=0,decay_until=0,final_rate_ratio=.1,diagnostic_batch_size=32,rate_softness=0.0,readout_mean_scale=1.0).get(key))==value
                                    for key,value in expected.items()))
                     if not valid or not (old['status'].get('state')=='complete' or
                             (old['live'] and 'flygo.train' in old['command'] and run_id in old['command'])):
@@ -129,7 +129,7 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                        '--cpus', ','.join(map(str, job['cpus'])), '--peer', '',
                        '--eval-every', str(plan['eval_every']),
                        '--checkpoint-every', str(plan['checkpoint_every'])]
-            for key in ('warmup_steps','decay_until','final_rate_ratio','diagnostic_batch_size','rate_softness'):
+            for key in ('warmup_steps','decay_until','final_rate_ratio','diagnostic_batch_size','rate_softness','readout_mean_scale'):
                 if key in job or key in plan:
                     command+=['--'+key.replace('_','-'),str(job.get(key,plan.get(key)))]
             if job.get('ports'):command+=['--ports',str(root/job['ports'])]

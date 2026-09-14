@@ -3,10 +3,10 @@ from __future__ import annotations
 
 import jax
 import jax.numpy as jnp
-from .numerics import softplus, sigmoid, log_softmax, firing_rate, HIGHEST
+from .numerics import softplus, sigmoid, log_softmax, firing_rate, condition_readout, HIGHEST
 
 
-def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0):
+def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0):
     # Reference uses edge messages. Production Rust avoids this E*B allocation.
     # Keep full-graph JAX parity batches small until a TPU kernel is qualified.
     n = graph['type_id'].shape[0]
@@ -33,6 +33,8 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
     contributions = jnp.where((readout >= 0)[:,None],
         (ports['output_scale']*params['readout_gain'])[:,None]*firing_rate(state,rate_softness),0)
     pooled = jax.ops.segment_sum(contributions,jnp.maximum(readout,0),num_segments=groups)
+    if readout_mean_scale!=1:
+        pooled=condition_readout(pooled,readout_mean_scale)
     logits = jnp.matmul(pooled.T,params['policy_weight'].reshape(actions,groups).T,
                         precision=jax.lax.Precision.HIGHEST) + params['policy_bias']
     value = jax.lax.tanh(jnp.matmul(pooled.T,params['value_weight'],precision=jax.lax.Precision.HIGHEST)
@@ -41,8 +43,9 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
     return dict(logits=logits,value=value,states=jnp.concatenate([initial,states],axis=0))
 
 
-def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions,rate_softness=0.0):
-    result=forward(params,graph,ports,features,steps=steps,groups=groups,actions=actions,rate_softness=rate_softness)
+def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions,rate_softness=0.0,readout_mean_scale=1.0):
+    result=forward(params,graph,ports,features,steps=steps,groups=groups,actions=actions,
+                   rate_softness=rate_softness,readout_mean_scale=readout_mean_scale)
     return teacher_loss(result,legal,policy,value)
 
 

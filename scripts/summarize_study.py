@@ -66,7 +66,8 @@ def main():
                     readout=int(np.count_nonzero(saved['port/output_group']>=0))
             cost=(cnn_cost(channels=config['channels'],blocks=config['blocks']) if family=='cnn' else
                   fly_cost(graph['neurons'],graph['edges'],graph['sensory_neurons'],passes=config['steps'],
-                           groups=config['groups'],readout_neurons=readout,rate_softness=config.get('rate_softness',0.0)))
+                           groups=config['groups'],readout_neurons=readout,rate_softness=config.get('rate_softness',0.0),
+                           readout_mean_scale=config.get('readout_mean_scale',1.0)))
             panels={}
             for mode in ('prior','puct','gumbel'):
                 match=row['results'].get(mode)

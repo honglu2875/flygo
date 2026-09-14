@@ -391,3 +391,112 @@ before any new training. Analyze separate paired three-seed contrasts, retain
 all outcomes, and do not reinterpret the result-driven choice as equal total
 family tuning compute. The same seed-1 source environment executes the new
 trials, after each host's smooth-rate validation releases its lane.
+
+## Readout conditioning after the offset audit
+
+The retained initial B32 fixture has 99.923% of pooled squared magnitude in
+the component common to all 656 groups. Pooled RMS is .3082, centered RMS
+.00855 and across-input variation RMS .00308. Six-update smooth qualification
+fixtures retain 99.46% / 99.79% common energy and saturate every value output.
+The trained hard-rate bias-scaled fixture instead has 5.20% common energy.
+This read-only audit reconstructs the pools and checks policy/value against
+native outputs; it adds no optimization exposures. Evidence:
+`next-gates/readout-offset-audit-v1.json`. These fixtures suggest an early
+conditioning problem, not a demonstrated general training failure.
+
+Before training a new variant, define an external readout transform
+
+\[
+ \bar z=G^{-1}\sum_g z_g,\qquad
+ z'_g=z_g-(1-\lambda)\bar z,\qquad \lambda=G^{-1/2}.
+\]
+
+This symmetric linear map leaves group differences unchanged and scales the
+common component by lambda. It is invertible for positive lambda and introduces
+no learned parameters, new recurrent edges, extra recurrent passes or direct
+board-to-head path. Its transpose is itself. The baseline lambda=1 bypasses
+all new arithmetic. The mean is per prediction, independent of other batch
+members; it is not a running statistic or batch normalization. It costs 3G+4
+additional counted arithmetic operations per prediction, excluding constant
+configuration preparation.
+
+`configs/readout-conditioning-v1.json` registers four seed-1, 32k-exposure
+cases: hard-rate mean damping at .01 and bias-scaled .03; an unchanged hard
+readout with only policy/value weight learning rates multiplied by G^-1/2 at
+bias-scaled .03; and mean damping with softness .01 at bias-scaled .03. Adopt
+the matching hard/smooth screen controls. This distinguishes a readout
+reparameterization from merely slowing the output weights, and explores one
+explicit smooth-rate interaction. Keep initial parameter draws, data, all
+ports, topology and parameter shapes unchanged. All final full validations
+precede selection. Require independent finite differences, Rust/JAX states,
+all gradients, three updates, legacy byte identity and fresh actual-trainer
+continuation before launch. Actual TPU qualification remains a separate gate.
+
+The first full-graph free-running conditioning qualification passed states,
+losses and gradients, but at the third update 38/53,792 policy weights exceeded
+the original tolerance (maximum error 7.42e-5). The nearly common pooled values
+made direct FP32 mean subtraction sensitive to reduction error near zero
+features; Adam amplified that error. The failure remains in
+`readout-mean-hard-cpu-parity-v1`. Evaluate the same linear map by first
+subtracting one pool, summing those deviations, then restoring the scaled
+common term. Both implementations use the same stable algebra, and the declared
+symmetric transpose in backward. The revised cost is 3G+4, with unchanged
+parameters, mathematical hypothesis and tolerances. Repeat qualification before
+any scientific trial; do not weaken the acceptance threshold.
+
+The stable formula's B1 attempt also fails the unchanged parameter tolerance:
+one leak variable differs by 8.15e-6 at the first update, despite passing full
+states, losses and gradients. Stable mean evaluation alone therefore does not
+resolve every Adam sensitivity. Retain both failures. Before deciding whether
+this variant can enter the registered B32 screen, qualify all three updates at
+the actual training batch of 32 with the same tolerances and a separately
+reserved full-reference memory budget. This is an additional qualification
+scope, not evidence that B1 cross-backend training trajectories agree. Do not
+launch any dependent trial if that B32 gate fails; actual TPU remains separate.
+
+The actual-B32 hard-rate mean-conditioning gate fails at its first update:
+5/53,792 policy weights exceed the unchanged tolerance, with maximum error
+2.13e-4. No dependent scientific trial is launched. The source, tests, all
+failures and configuration remain retained for future investigation; this
+variant has not met the declared cross-backend update gate. Mean conditioning
+is deferred rather than promoted from its small-fixture results.
+
+`configs/head-rate-v1.json` advances the simpler optimizer hypothesis from the
+same offset audit: multiply value weights alone, or both policy/value weights,
+by G^-1/2 in the existing post-moment learning-rate mechanism. Cross these two
+choices with hard rates and softness .01, at global .03 / bias multiplier .01,
+32,000 exposures, seed 1. The original biases of both output heads keep their
+rates. Adopt both matching existing controls. Reuse source
+`6d9b14c70b154a5cb821`, which predates mean conditioning, and qualify the
+specific output-group scaling plus fresh V0 continuation before launch.
+
+## Exact CPU parameter-validation work
+
+`Model::validate` checked core parameter values, then checked those same arrays
+again with the adapters/heads. Warm inference and each optimizer validation
+therefore scanned the full edge vector twice. Its nine shape checks already
+cover all core dimensions. Remove the redundant core scan and parallelize the
+single finite-value check through the model's assigned executor. Preserve all
+rejections, atomic failed restore, parameter values and numerical reductions.
+Before accepting a performance claim, require original/trained full B1/B32
+outputs, losses and all gradients to match prior fixture bytes, plus fresh
+checkpoint continuation. Keep this implementation change separate from the
+deferred mean-conditioning hypothesis and from frozen scientific trial sources.
+
+## Smooth-rate confirmation after the full screen
+
+All four final full validations are complete before registering
+`configs/smooth-rate-confirm-v1.json`. At global .03 / bias multiplier .01,
+softness .01 reaches KL 1.623348 / MSE .570713, versus hard-rate 1.649547 /
+.571104. It has the lowest KL and KL+MSE among the four new candidates. Advance
+this case from initialization to 128,000 exposures, B32, seeds 1/2/3, with all
+matching hard-rate confirmations adopted. Source `6d9b14c70b154a5cb821`, original
+ports and no mean-conditioning transform. Queues use released 32-55 lanes;
+other settings and the million-exposure TPU comparisons retain their contracts.
+This extra result-driven tuning is reported as project research compute.
+
+### Operational recovery, 2026-09-14 06:35 UTC
+
+The shuffled-input seed 2 TPU cohort stopped at step-zero checkpoint admission: w0 would have crossed the unchanged 96 GiB available-RAM floor after conservative reservations, during an overlapping short CPU qualification. All four workers exited and every learner log contains only step-zero validation, so this failed attempt consumed zero optimizer updates. The qualification has finished. Each host now passes an additional 58 GiB heap plus 4 GiB files preflight for the outer TPU reservation, trainer and checkpoint overhead. No storage floor is reduced.
+
+`spatial-input-recovery-v2` adopts the seven successful cohorts, restarts shuffled seed 2 as `tpu-spatial-v0-shuffled-s2-attempt2` with unchanged source `0d4e6e6ea6298d22370c` and scientific contract, then runs the original unstarted shuffled seed 3. A new seed 2 evaluation follows its original full validation and common 32-game panels. The smooth confirmation queue failed before launching anything; its recovery changes only this failed lane dependency, keeping the original three training run IDs and qualified source. Existing healthy seed 1/3 validation waiters remain. The small CNN launcher is separately retried after the recovery study. Failed queue/cohort/evaluation records remain intact. Avoid additional large CPU qualification reservations while these cohorts run.

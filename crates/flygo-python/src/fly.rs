@@ -61,7 +61,7 @@ fn export<'py>(py: Python<'py>, params: &Params) -> Arrays<'py> {
 impl FlyModel {
     #[new]
     #[pyo3(signature = (indptr, src, type_id, sign, input_index, output_group, output_scale,
-                       features, groups, actions, threads, params, rate_softness=0.0))]
+                       features, groups, actions, threads, params, rate_softness=0.0, readout_mean_scale=1.0))]
     #[allow(clippy::too_many_arguments)]
     fn new(
         py: Python<'_>,
@@ -78,6 +78,7 @@ impl FlyModel {
         threads: usize,
         params: Vec<PyReadonlyArray1<'_, f32>>,
         rate_softness: f32,
+        readout_mean_scale: f32,
     ) -> PyResult<Self> {
         let (indptr, src, type_id, sign) = (
             indptr.as_slice()?.to_vec(),
@@ -97,7 +98,8 @@ impl FlyModel {
         let state = py
             .detach(|| {
                 let graph = Graph::new(&indptr, &src, &type_id, &sign)?;
-                let model = Model::with_rate(graph, ports, threads, Rate::new(rate_softness)?)?;
+                let model = Model::with_rate(graph, ports, threads, Rate::new(rate_softness)?)?
+                    .with_readout_mean_scale(readout_mean_scale)?;
                 model.validate(&params)?;
                 let adam = Adam::new(&model);
                 Ok::<_, String>(State {

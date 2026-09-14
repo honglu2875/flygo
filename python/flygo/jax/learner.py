@@ -173,4 +173,4 @@ class JaxFly(JaxLearner):
             params=initial_params if params is None else params,compute_graph=compute_graph,
             forward_function=forward,loss_function=loss,
             kwargs=dict(steps=config.steps,groups=config.groups,actions=config.actions,
-                        rate_softness=config.rate_softness),mesh=mesh)
+                        rate_softness=config.rate_softness,readout_mean_scale=config.readout_mean_scale),mesh=mesh)

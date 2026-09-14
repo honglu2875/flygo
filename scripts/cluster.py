@@ -130,20 +130,27 @@ def start(root, run_id, selection):
     print(json.dumps(launched,indent=2))
 
 
-def status(root, run_id, *, as_json=False):
+def status(root, run_id, *, as_json=False, details=False):
     code = '''import pathlib,json,os,hashlib
 root=pathlib.Path(ROOT);p=root/'runs'/RUN_ID
 config=json.loads((p/'config.json').read_text())
 contract_id=hashlib.sha256(json.dumps(config['contract'],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 memory={line.split(':')[0]:int(line.split()[1])*1024 for line in pathlib.Path('/proc/meminfo').read_text().splitlines()}
 fs=os.statvfs(root)
+def learner(path):
+ row=json.loads(path.read_text())
+ if not DETAILS:
+  keys=('state','status','pid','step','training_exposures','positions_per_second',
+        'elapsed_seconds','updated','error','reason','completed','launched','cpus','numerical_runtime')
+  row={k:row[k] for k in keys if k in row}
+ return dict(row,run=path.parent.name,detail_path=str(path))
 print(json.dumps(dict(supervisor=json.loads((p/'supervisor.json').read_text()) if (p/'supervisor.json').exists() else None,
  workers=[json.loads(x.read_text()) for x in sorted(p.glob('worker-*/status.json'))],
  concurrent_games=config['concurrent_games'],
  published_games=sum(1 for _ in (root/'corpora'/contract_id).glob('host-'+str(config['host_index'])+'/worker-*/*.npz')),
  ram_available=memory['MemAvailable'],shm_free=fs.f_bavail*fs.f_frsize,
- learners=[dict(json.loads(x.read_text()),run=x.parent.name) for x in sorted((root/'runs').glob('*/status.json'))])))
-'''.replace('ROOT',repr(str(root))).replace('RUN_ID',repr(run_id))
+ learners=[learner(x) for x in sorted((root/'runs').glob('*/status.json'))])))
+'''.replace('ROOT',repr(str(root))).replace('RUN_ID',repr(run_id)).replace('DETAILS',repr(details))
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(lambda h: dict(host=h, **json.loads(remote(h, code))), HOSTS))
     if as_json:
@@ -158,10 +165,11 @@ print(json.dumps(dict(supervisor=json.loads((p/'supervisor.json').read_text()) i
         print(f"w{record['host'][-1]}    {active}/{len(workers)} {states:<9} {record['published_games']:>10,}"
               f" {sum(w['positions'] for w in workers):>18,} {record['shm_free']/GIB:>9.1f} {record['ram_available']/GIB:>14.1f}")
         for learner in record['learners']:
-            if learner.get('state') and learner.get('state') not in ('complete','stopped'):
+            phase=learner.get('state',learner.get('status'))
+            if phase and phase not in ('complete','stopped','passed'):
                 detail=(f" at update {learner['step']}" if learner.get('step') is not None
                         else ': '+learner['reason'] if learner.get('reason') else '')
-                print(f"      {learner['run']}: {learner.get('state')}{detail}")
+                print(f"      {learner['run']}: {phase}{detail}")
     print('Session positions reset when a worker restarts; published game counts include earlier work.')
 
 
@@ -233,14 +241,15 @@ def main():
     parser.add_argument('--run-id', default='expert-v1')
     parser.add_argument('--selection', type=Path, default=Path('/dev/shm/flygo/runs/m2/data-qualification/teacher-panel.json'))
     parser.add_argument('--concurrent-games', type=int, default=16, help='Runtime concurrency for restart; cores and corpus contract stay fixed')
-    parser.add_argument('--json',action='store_true',help='Detailed machine-readable status')
+    parser.add_argument('--json',action='store_true',help='Compact machine-readable status')
+    parser.add_argument('--details',action='store_true',help='Include complete learner/accelerator records in JSON status')
     args = parser.parse_args()
     if not 1 <= args.concurrent_games <= 32:
         parser.error('Concurrent games must be in 1..32')
     if args.action == 'start':
         start(args.root, args.run_id, args.selection)
     elif args.action == 'status':
-        status(args.root,args.run_id,as_json=args.json)
+        status(args.root,args.run_id,as_json=args.json,details=args.details)
     elif args.action == 'restart':
         restart(args.root,args.run_id,args.concurrent_games)
     else:

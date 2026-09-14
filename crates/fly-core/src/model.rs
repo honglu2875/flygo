@@ -34,6 +34,7 @@ pub struct Model {
     pub executor: Executor,
     pub rate: Rate,
     readout_nodes: Vec<Vec<usize>>,
+    readout_mean_scale: f32,
 }
 pub struct Output {
     pub logits: Vec<f32>,
@@ -120,10 +121,39 @@ impl Model {
             executor: Executor::new(threads)?,
             rate,
             readout_nodes,
+            readout_mean_scale: 1.0,
         })
     }
+    /// Fixed, invertible conditioning of pooled features before the heads.
+    pub fn with_readout_mean_scale(mut self, scale: f32) -> Result<Self, String> {
+        if !scale.is_finite() || scale <= 0.0 || scale > 1.0 {
+            return Err("Readout mean scale must be finite and in (0, 1]".into());
+        }
+        self.readout_mean_scale = scale;
+        Ok(self)
+    }
+    // This symmetric linear transform is also its own transpose, so the same
+    // operation applies to the pooled cotangent. It is per prediction, not a
+    // batch statistic. The baseline bypass preserves every existing bit.
+    fn condition_readout(&self, pooled: &mut [f32], batch: usize) {
+        if self.readout_mean_scale == 1.0 { return; }
+        let groups = self.ports.groups;
+        for b in 0..batch {
+            // Sum deviations from one pool before restoring the scaled common
+            // term. Summing hundreds of nearly equal positive pools directly
+            // loses low-order bits that Adam can amplify near a zero feature.
+            let origin = pooled[b];
+            let mut sum = 0.0;
+            for group in 0..groups {
+                pooled[group * batch + b] -= origin;
+                sum += pooled[group * batch + b];
+            }
+            let correction = self.readout_mean_scale * origin
+                - (1.0 - self.readout_mean_scale) * (sum / groups as f32);
+            for group in 0..groups { pooled[group * batch + b] += correction; }
+        }
+    }
     pub fn validate(&self, params: &Params) -> Result<(), String> {
-        params.core.validate(&self.graph)?;
         let p = &self.ports;
         let lengths = [
             self.graph.edges(),
@@ -136,12 +166,13 @@ impl Model {
             p.groups,
             1,
         ];
-        if params
-            .arrays()
-            .iter()
-            .zip(lengths)
-            .any(|(v, n)| v.len() != n || v.iter().any(|x| !x.is_finite()))
-        {
+        let arrays = params.arrays();
+        // These lengths include the core arrays. Check every value once using
+        // this model's pinned executor; the old core check scanned E twice.
+        if arrays.iter().zip(lengths).any(|(v, n)| v.len() != n)
+            || self.executor.pool.install(|| {
+                arrays.par_iter().any(|v| v.par_iter().any(|x| !x.is_finite()))
+            }) {
             return Err("Invalid model parameter array".into());
         }
         Ok(())
@@ -213,6 +244,7 @@ impl Model {
                 }
             })
         });
+        self.condition_readout(&mut pooled, batch);
         let mut logits = vec![0.0; batch * p.actions];
         let mut values = vec![0.0; batch];
         for b in 0..batch {
@@ -272,6 +304,7 @@ impl Model {
                 dpool[group * batch + b] += g * params.value_weight[group];
             }
         }
+        self.condition_readout(&mut dpool, batch);
         let state = output.tape.states.last().unwrap();
         let mut dstate = vec![0.0; state.len()];
         self.executor.pool.install(|| {

@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 05:31 UTC**. Autonomous work is authorized until about
+Updated **2026-09-14 06:45 UTC**. Autonomous work is authorized until about
 09:02 UTC. The goal is an efficient Go engine with fixed fly topology and
 learned strengths. The current baseline is substantially weaker than the CNN
 control; no fly advantage has been established.
@@ -24,16 +24,18 @@ control; no fly advantage has been established.
 |---|---|---|
 | Expert generation | 8 workers × 16 games per host; 64 pinned physical cores | All 32 workers healthy; continues independently |
 | CPU optimizer confirmation | Three rates × three seeds; 128k exposures, B32 | Eight runs and their full validations complete; final bias-scaled seed 3 on w0 `32–55` |
-| Spatial input, TPU | Baseline/spatial/shuffled × three seeds; 1,048,576 exposures, B2048 | All baseline and spatial training done or finishing; shuffled cases next |
-| Spatial input followups | Full validation + 32 prior/PUCT/Gumbel games per case | Queued on w1–w3 `32–55` after optimizer validation; panels share declared openings |
-| Visual readout, CPU | Input-only/spatial-output/shuffled-output; 128k exposures, B32, seed 1 | Final training/full validation on w0/w2/w3 `92–115` |
-| Smooth rate, CPU | Softness .01/.05 × two optimizer choices; 32k exposures, B32, seed 1 | First case training on w1 `92–115`; others wait for visual validation |
-| Schedule confirmation | Warmup/cosine, bias-scaled .03, seeds 2/3; 128k exposures | Queued on all `92–115` lanes after smooth validation; adopts seed 1 and constant controls |
-| Smaller CNN, TPU | 8.362M nominal FLOPs; same three-rate screen and exposure budgets | Queued after spatial cohort; actual TPU shape parity must pass first |
+| Spatial input, TPU | Baseline/spatial/shuffled × three seeds; 1,048,576 exposures, B2048 | Seven cohorts complete; shuffled seed 2 retry training after zero-update RAM admission failure; original seed 3 follows |
+| Spatial input followups | Full validation + 32 prior/PUCT/Gumbel games per case | All spatial and shuffled seed 1 panels complete; replacement seed 2 and original seed 3 waiters active |
+| Visual readout, CPU | Input-only/spatial-output/shuffled-output; 128k exposures, B32, seed 1 | All three final full validations complete; spatial output beats its shuffle but loses to broad output |
+| Smooth rate, CPU | Softness .01/.05 × two optimizer choices; 32k exposures, B32, seed 1 | All four final validations complete; selected .01/bias-scaled variant advances to three-seed 128k confirmation |
+| Schedule confirmation | Warmup/cosine, bias-scaled .03, seeds 2/3; 128k exposures | All four additional seeds training on `92–115`; adopts seed 1 and constant controls |
+| Readout conditioning | Fixed common-mean damping; registered 32k exposures | Deferred: B1 and actual-B32 parameter-update parity fail; no learning trials launched |
+| Head-rate controls | Value-only / policy+value weight rates × hard / smooth .01; 32k exposures | All four specific rate/recovery gates pass; queued after schedule-confirmation validation |
+| Smaller CNN, TPU | 8.362M nominal FLOPs; same three-rate screen and exposure budgets | Replacement launcher waits for recovered spatial study; actual TPU shape parity must pass first |
 
-Runtime artifacts live under `/dev/shm/flygo`. At **05:23**, production had
-**80,391 games**, free shared memory was **125–176 GiB**, and available RAM
-**297–351 GiB**. Floors remain 64 GiB free shared memory, 96 GiB available RAM,
+Runtime artifacts live under `/dev/shm/flygo`. At **06:23**, production had
+**87,107 games**, free shared memory was **117–174 GiB**, and available RAM
+**295–355 GiB**. Floors remain 64 GiB free shared memory, 96 GiB available RAM,
 and a 100 GiB own-file cap with reservations. Generation owns `0–31,60–91`;
 research uses `32–55` and `92–115`; TPU/development uses spare cores and waiting
 coordinators use 116. Peer copies and RAM remain volatile. Keep generation,
@@ -53,9 +55,10 @@ outside tuning. Earlier releases and failed attempts remain retained.
 | `0d4e6e6ea6298d22370c` | Matched TPU studies and spatial-input study |
 | `c149278eda30697520f9` | All schedule and visual-readout trials |
 | `7a9c190de16ddd46f739` | Constant-state cache, smaller CNN preparation/queued TPU work |
-| `6d9b14c70b154a5cb821` | Qualified parallel smooth-rate CPU trials |
+| `6d9b14c70b154a5cb821` | Qualified smooth-rate, confirmation and head-rate CPU trials |
+| `599a1030d1aaf214fd8c` | Exact parallel parameter validation; experimental mean transform remains deferred |
 
-Current regression: **48 Rust and 60 Python tests pass**. Full-graph Rust/JAX
+Current regression: **48 Rust and 62 Python tests pass**. Full-graph Rust/JAX
 CPU parity passes both smooth scales, including all gradients and three
 free-running updates. Actual full-V0 smooth trainer checkpoints reproduce all
 28 arrays and sampler across three fresh scheduled, scaled updates. The
@@ -85,6 +88,10 @@ free-running ReLU-boundary cases are retained, with tolerances unchanged.
 - **Schedule screen:** at 128k exposures and seed 1, bias-scaled cosine reaches
   KL 1.5071 / MSE .5347; warmup reaches 1.5180 / .5219; constant reaches
   1.5343 / .5422. Both advance to paired seeds 2/3 before a general claim.
+- **Smooth screen:** at 32k exposures, softness .01 with bias-scaled .03
+  improves KL from 1.6495 to 1.6233, with essentially unchanged value MSE.
+  Three-seed longer confirmation is active/queued; other optimizer choices
+  do not share this improvement.
 - **Prototype depth:** K8 does not consistently improve on K4. Wider readout
   helps policy but has mixed value effects; all eight runs and panels complete.
 - **Spatial structure:** inferred input columns cover 57/81 board points;
@@ -98,7 +105,10 @@ backward call, skips exact-zero rows and parallelizes independent rate/readout
 work while preserving reduction order. On 24 cores, trained smooth B32
 inference falls from .558/.673 s to .239/.242 s; gradients from 1.711/1.945 s
 to .916/.925 s at softness .01/.05. Raw full-array parity and recovery evidence:
-`runs/cpu-smooth-lane-v1`. Frozen running studies keep their original binaries.
+`runs/cpu-smooth-lane-v1`. Frozen running studies keep their original binaries. Parallel parameter
+validation additionally reduces trained hard B1 median inference from 54.6 to
+35.2 ms and B32 from 130.7 to 105.6 ms on 24 cores, with exact numerical
+parity. Training timing gains are smaller and workload-sensitive.
 
 1. Collect every optimizer, visual and smooth final validation; compare aligned
    positions and paired seeds without best-step selection.
@@ -108,11 +118,20 @@ to .916/.925 s at softness .01/.05. Raw full-array parity and recovery evidence:
    Keep new adapter/dynamics/plasticity factors isolated and record revisions
    before dependent experiments. Online distillation follows prior selection.
 
-`queue_cpu.py` freezes scripts/plans and waits for all lane dependencies and
-worker exits. Its first launch failed before training because of inherited
-housekeeping affinity; corrected attempt `smooth-rate-launch-v2` is running.
-The original failure remains recorded. `dev.py` now preserves the installed
-native package during rebuilds, preventing transient maintenance import failures.
+`queue_cpu.py` freezes scripts/plans and waits for lane dependencies and
+worker exits. The original affinity failure and zero-update TPU admission
+failure remain recorded. Recovery studies change only operational attempt IDs
+and failed dependencies. Shuffled seed 2 is training; smooth confirmation seed 1
+has started, with seeds 2/3 waiting. `small-control-launch-v2` follows the
+recovered TPU study. Keep large CPU qualification allocations out of this
+TPU window; the original storage floors remain enforced.
+
+Readout conditioning remains deferred after two B1 and one actual-B32
+parameter-parity failures, with unchanged tolerances. Its isolated default
+bypass preserves the baseline. Head-rate controls pass their specific gates
+on the earlier qualified model and are queued. The offline
+HTML guide now includes completed comparisons and interactive firing curves;
+browser interactions, offline loading and widths 320–1,440 pass.
 
 Local implementation and commits continue. Upstream remains at `772db92`:
 automatic approval review rejected publication and requires explicit user

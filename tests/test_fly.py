@@ -28,6 +28,27 @@ def fixture():
 
 
 class FlyCore(unittest.TestCase):
+    def test_invalid_parameter_restore_is_atomic_for_every_group(self):
+        graph,cfg,ports,params,*batch=fixture()
+        model=RustFly(graph,cfg,ports=ports,params=params)
+        model.train_step(*batch)
+        saved=model.checkpoint_arrays()
+        expected=model.infer(batch[0])
+        for name in PARAMETERS:
+            for bad_value in (np.nan,np.inf,-np.inf):
+                bad={k:v.copy() for k,v in saved.items()}
+                bad['param/'+name][-1]=bad_value
+                with self.assertRaisesRegex(ValueError,'Invalid model parameter'):
+                    model.restore_arrays(bad)
+            bad={k:v.copy() for k,v in saved.items()}
+            bad['param/'+name]=bad['param/'+name][:-1]
+            with self.assertRaisesRegex(ValueError,'Invalid model parameter'):
+                model.restore_arrays(bad)
+        for key,value in model.checkpoint_arrays().items():
+            np.testing.assert_array_equal(value,saved[key])
+        for key,value in model.infer(batch[0]).items():
+            np.testing.assert_array_equal(value,expected[key])
+
     def test_checkpoint_survives_failed_replica(self):
         from flygo.checkpoint import save_checkpoint, load_checkpoint
         from flygo.data.loader import Sampler

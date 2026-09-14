@@ -434,3 +434,73 @@ Local commit `ee520ac` contains qualified schedules, visual readouts and analysi
 Upstream remains at `772db92`: automatic approval review rejected the next push
 and requires explicit user confirmation of `git@github.com:honglu2875/flygo.git`.
 Local implementation and experiments continue; no further push is attempted.
+
+## Readout offset investigation — 2026-09-14
+
+A read-only reconstruction of retained B32 fixtures found 99.923% common
+pooled energy at initialization, versus 5.20% in the trained bias-scaled
+checkpoint. The six-update smooth fixtures retained over 99% common energy
+and saturated all value outputs. The audit checks reconstructed heads against
+saved native outputs and adds no optimization exposures:
+`next-gates/readout-offset-audit-v1.json`.
+
+A fixed invertible mean-damping transform was implemented and passed independent
+small-fixture derivatives, Rust/JAX updates, batch independence and portable
+checkpoint checks. Source `a5c061aba55a5f50cf64` uses direct mean subtraction;
+source `2d7c3ad5728e93e20125` uses a more stable deviation-based evaluation of
+the same linear map and its symmetric transpose. Neither source met the strict
+full-model parameter-trajectory gate. At unchanged rtol .003 / atol 5e-6:
+
+| Attempt | Failure |
+|---|---|
+| `readout-mean-hard-cpu-parity-v1`, B1 | Third update: 38/53,792 policy weights; max error 7.42e-5 |
+| `readout-mean-hard-cpu-parity-v2`, B1 | First update: one leak parameter; max error 8.15e-6 |
+| `readout-mean-hard-b32-cpu-parity-v2`, B32 on w3 | First update: 5/53,792 policy weights; max error 2.13e-4 |
+
+States, losses and gradients passed before these failures. Near-cancelled
+gradients and Adam's epsilon sensitivity are the working explanation, not a
+claim that every discrepancy has been fully resolved. The local B32 attempt
+was refused by the existing RAM budget before allocation. The bounded w3
+attempt used the released spatial-evaluation lane and exited before its next
+owner. Evidence was pulled through the primary host's established SSH path;
+no host-key policy was changed. Scientific mean-conditioning trials remain
+unlaunched. The simpler head-rate screen advances on source
+`6d9b14c70b154a5cb821`, which predates the mean transform.
+
+The updated offline HTML guide passes all interactions, graph/data consistency,
+reduced motion, no external requests and widths 320–1,440. Hard/smooth rate
+selectors include the correct threshold derivative and negative-state response.
+Desktop and mobile figures were visually reviewed. Evidence:
+`runs/model-guide/20260914-smooth/render-checks.json`.
+
+## Head-rate and CPU validation gates — 2026-09-14 06:40 UTC
+
+All four combinations of hard/smooth .01 and value-only/all-output-weight
+rate scaling pass the independent learner gate and actual V0 six-update
+training plus fresh update 3→6 recovery. Every one of 28 checkpoint arrays and
+the sampler matches; peer w1 recovery also passes. Each qualification consumes
+288 separately counted position exposures. Evidence:
+`next-gates/head-rate-{parity-v1.log,recovery-v1.json}`. The registered 32k
+screen waits on the four schedule-confirmation validations and uses immutable
+source `6d9b14c70b154a5cb821`, without mean conditioning.
+
+Source `599a1030d1aaf214fd8c` removes the duplicate core-parameter finite scan
+and parallelizes the remaining scan on the pinned model executor. Shape checks
+remain, and invalid restoration of every parameter family is atomic. All
+48 Rust and 62 Python tests pass. Initial and trained B1/B32 outputs, losses
+and gradients match the previous source byte-for-byte; three actual fresh
+scheduled continuation updates match all arrays and sampler. The completed
+w3 24-core profiles also retain matching numerical artifact hashes. Runtime
+reports/provenance were copied to w0; large reference arrays remain on w3.
+Evidence: `next-gates/parallel-validation-{check-v1.log,recovery-v1.json}`,
+`parallel-validation-{initial,trained}-v1`, `cpu-validation-lane-v1`.
+
+The first shuffled seed 2 TPU attempt failed before any optimizer update when
+a step-zero checkpoint reserve would cross the unchanged available-RAM floor.
+All four workers exited; an overlapping bounded CPU qualification had ended
+before recovery. `spatial-input-recovery-v2` retains the failure, adopts seven
+successful cohorts and restarts only seed 2 under an attempt-specific ID before
+the original unstarted seed 3. Every host passed a 58 GiB heap plus 4 GiB file
+preflight. The retry has published its initial checkpoint and is training.
+Dependent smooth-confirmation and small-CNN launchers use new attempt records;
+scientific contracts and qualified source versions remain unchanged.

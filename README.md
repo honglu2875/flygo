@@ -103,6 +103,9 @@ when the training batch is large. Constant-rate defaults preserve the baseline.
 `s*softplus(v/s)` in recurrence and readout. The default zero keeps hard ReLU
 and existing checkpoints. This factor has full CPU numerical qualification;
 actual TPU qualification must precede its first TPU training run.
+The optional `readout_mean_scale` experiment is retained for numerical
+investigation: it fails strict full-model parameter-update parity, and its
+learning trials are deferred. The normal value 1 preserves the qualified model.
 `scripts/queue_cpu.py --plan <plan.json> --source <frozen-environment> --run-id
 <queue-id>` freezes a one-case-per-host plan and waits for every declared lane
 dependency before launch. `finish_study.py` supplies matching validation gates.

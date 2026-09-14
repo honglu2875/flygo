@@ -25,7 +25,8 @@ class Learner(unittest.TestCase):
         rust=RustFly(graph,cfg,ports=ports,params=params)
         model=JaxFly(graph,cfg,ports=ports,params=params)
         for _ in range(3):
-            scales=dict(bias=0,edge=.2,input_gain=2)
+            scales=dict(bias=0,edge=.2,input_gain=2,policy_weight=.03904344047215152,
+                        value_weight=.03904344047215152)
             rust.train_step(*batch,rate_scales=scales)
             model.train_step(*batch,rate_scales=scales)
             for key,want in rust.checkpoint_arrays().items():

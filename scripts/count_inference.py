@@ -70,7 +70,8 @@ def main():
             for batch in batches:
                 nominal=fly_cost(len(degree),len(graph['src']),len(graph['sensory']),
                     passes=model.config.steps,groups=model.config.groups,batch_size=batch,
-                    readout_neurons=int(np.count_nonzero(model.ports['output_group']>=0)))
+                    readout_neurons=int(np.count_nonzero(model.ports['output_group']>=0)),
+                    readout_mean_scale=model.config.readout_mean_scale)
                 other=nominal['arithmetic_flops']-nominal['parts']['sparse_aggregation']
                 # Cold preparation is explicitly outside the measured warm call.
                 started=time.perf_counter();model.infer(arrays['features'][indices[:batch]])

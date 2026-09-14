@@ -1,0 +1,195 @@
+{
+  "name": "head-rate-v1",
+  "release": "v0-1m",
+  "rate": 0.03,
+  "updates": 1000,
+  "batch_size": 32,
+  "clip": 1,
+  "eval_every": 250,
+  "checkpoint_every": 250,
+  "diagnostics_every": 250,
+  "diagnostic_batch_size": 32,
+  "feature_cache": true,
+  "training_exposures_per_case": 32000,
+  "matches": null,
+  "comparison": "Scale only output weight update rates by 1/sqrt(G), either value weights alone or policy plus value weights. Cross with hard rate and softness .01. All use global .03 and bias multiplier .01, original ports, unchanged optimizer equations and model computation.",
+  "additional_references": [
+    "bias-v0-lr03-scale001-s1",
+    "smooth-v0-s01-lr03-bias001-seed1"
+  ],
+  "selection": "All four final full natural/novel validations and diagnostics before selecting a candidate. Equal 32,000 exposures, seed 1. Extra project tuning compute, separate from the matched million-exposure comparisons.",
+  "qualification": "Independent Rust/JAX learner checks pass with the output-weight multipliers. All four actual full-V0 six-update cases and three fresh continuation updates match all 28 arrays and sampler, with verified peer copies. Source 6d9b14c70b154a5cb821; 288 qualification exposures per case, outside the scientific horizon. Evidence: next-gates/head-rate-{parity,recovery}-v1.",
+  "execution": "Start after each host schedule confirmation releases 92-115; one immutable source and no readout-mean transform.",
+  "jobs": [
+    {
+      "host": 0,
+      "run_id": "heads-v0-hard-all-s1",
+      "passes": 4,
+      "groups": 656,
+      "seed": 1,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01,
+        "value_weight": 0.03904344047215152,
+        "policy_weight": 0.03904344047215152
+      },
+      "rate_softness": 0,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "optimizer-schedules-confirm-validation-v1/schedule-v0-lr03-bias001-cosine-s3"
+      ]
+    },
+    {
+      "host": 1,
+      "run_id": "heads-v0-hard-value-s1",
+      "passes": 4,
+      "groups": 656,
+      "seed": 1,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01,
+        "value_weight": 0.03904344047215152
+      },
+      "rate_softness": 0,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "optimizer-schedules-confirm-validation-v1/schedule-v0-lr03-bias001-warmup-s2"
+      ]
+    },
+    {
+      "host": 2,
+      "run_id": "heads-v0-smooth01-all-s1",
+      "passes": 4,
+      "groups": 656,
+      "seed": 1,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01,
+        "value_weight": 0.03904344047215152,
+        "policy_weight": 0.03904344047215152
+      },
+      "rate_softness": 0.01,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "optimizer-schedules-confirm-validation-v1/schedule-v0-lr03-bias001-cosine-s2"
+      ]
+    },
+    {
+      "host": 3,
+      "run_id": "heads-v0-smooth01-value-s1",
+      "passes": 4,
+      "groups": 656,
+      "seed": 1,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01,
+        "value_weight": 0.03904344047215152
+      },
+      "rate_softness": 0.01,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "optimizer-schedules-confirm-validation-v1/schedule-v0-lr03-bias001-warmup-s3"
+      ]
+    }
+  ]
+}

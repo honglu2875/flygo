@@ -130,3 +130,73 @@ full-graph six-update fixtures, not long-trained playing-strength results.
 Every output, loss and gradient byte matches, as do three fresh scheduled,
 scaled continuation updates. Evidence: `cpu-smooth-lane-v1` and
 `cpu-smooth-lane-s{01,05}-{serial,parallel}-v1`.
+
+## Visual readout screen
+
+The input-only reference and both visual-output variants use the same spatial
+input, K4, G656, B32, seed 1 and 128,000 exposures. Visual variants pool 23,565
+annotated cells at 60 board points; all recurrent neurons and edges still
+execute. The shuffled control preserves cell populations and group counts.
+
+| Readout | Policy KL | Value MSE |
+|---|---:|---:|
+| Broad original readout | 1.544321 | .553408 |
+| Spatial visual readout | 1.670303 | .579456 |
+| Shuffled visual readout | 1.693978 | .628023 |
+
+Spatial-minus-shuffled changes favor spatial ordering: −.023675 KL with
+conditional game-bootstrap interval [−.026308, −.020890], and −.048567 MSE
+[−.060980, −.035817]. However, spatial-minus-broad readout is worse by .125982
+KL [.120460, .131583] and .026048 MSE [.008390, .043387]. Restricting output to
+these visual cells loses useful information under this protocol. This one-seed
+result motivates preserving broader output access in future adapter studies;
+it does not establish a general spatial benefit across training seeds.
+
+Changing only the input from random to this spatial overlay changes KL by
+−.002024 [−.003426, −.000703] and MSE by −.005211 [−.013780, .003497]. The
+three-seed large-batch input study remains independent. Evidence:
+`visual-readout-validation-v1/{spatial-readout,readout-order,input-only}-report-v1.json`.
+
+## Smooth firing-rate screen
+
+The hard rate is ReLU. The smooth alternative is
+`r_s(h) = max(h,0) + s log(1 + exp(-abs(h)/s))`, with derivative
+`sigmoid(h/s)`. It changes recurrent transmission and final readout together,
+without adding parameters or edges. All cases use V0, K4, G656, B32, seed 1
+and 32,000 training exposures; validation uses all 70,425 held-out positions.
+
+| Global rate / bias multiplier | Rate softness | Policy KL | Value MSE |
+|---|---:|---:|---:|
+| .01 / 1 | Hard | 1.655283 | .608872 |
+| .01 / 1 | .01 | 1.656904 | .685284 |
+| .01 / 1 | .05 | 1.727510 | .615426 |
+| .03 / .01 | Hard | 1.649547 | .571104 |
+| .03 / .01 | .01 | 1.623348 | .570713 |
+| .03 / .01 | .05 | 1.639406 | .571395 |
+
+Smoothness helps only with the bias-scaled optimizer in this screen. At
+softness .01 and global rate .03, candidate-minus-hard KL is −.026199,
+with conditional game-bootstrap 95% interval [−.028442, −.024079]. Value MSE
+changes by −.000391 [−.008248, .007407], and teacher agreement improves by
+1.532 percentage points [1.241, 1.824]. Softness .05 gives a smaller KL
+improvement, −.010140 [−.012578, −.007591], with no resolved value benefit.
+At global .01, softness .01 instead worsens MSE by .076411
+[.062115, .089928]; smooth rates are not an unconditional improvement.
+
+The best screen candidate advances to paired seeds 1/2/3 at 128,000 exposures
+from initialization, against the existing hard-rate controls. Screen exposures
+remain separate from confirmation exposures. This one-seed observation does
+not establish a benefit over training seeds or playing strength. The original
+hard screen uses a verified compatibility view of its legacy result layout;
+no metrics, checkpoints or selection were recomputed. Evidence:
+[complete paired reports](results/smooth-rate-screen-v1.json),
+[confirmation contract](../configs/smooth-rate-confirm-v1.json).
+
+The subsequent parameter-validation optimization preserves every output/loss/
+gradient byte and three fresh scheduled continuation updates. On 24 pinned
+cores, the trained hard fixture's median warm B1 inference falls from 54.6 to
+35.2 ms, and B32 from 130.7 to 105.6 ms. Gradient times are 200.8 to 180.0 ms
+and 557.2 to 545.8 ms. These are three-repeat implementation measurements
+under concurrent fleet work, not training outcomes or universal speedups;
+initial-fixture gradient timing is slightly worse. Evidence:
+`cpu-validation-lane-v1` and its four named profile directories.

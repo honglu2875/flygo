@@ -25,15 +25,20 @@ class FlyConfig:
     threads: int = 16
     seed: int = 1
     rate_softness: float = 0.0
+    readout_mean_scale: float = 1.0
 
     def __post_init__(self):
         s=self.rate_softness
         if not math.isfinite(s) or s<0 or s>np.finfo(np.float32).max or (s>0 and np.float32(s)==0):
             raise ValueError('Rate softness must be a finite, nonnegative FP32 value')
+        m=self.readout_mean_scale
+        if not math.isfinite(m) or not 0<m<=1 or np.float32(m)==0:
+            raise ValueError('Readout mean scale must be an FP32 value in (0, 1]')
 
     @property
     def model_version(self):
-        return 'leaky-rate-softplus-v1' if self.rate_softness else MODEL_VERSION
+        return ('leaky-rate'+('-softplus' if self.rate_softness else '')+
+                ('-mean-scaled' if self.readout_mean_scale!=1 else '')+'-v1')
 
 
 def firing_rate(voltage,softness=0.0):
@@ -104,7 +109,8 @@ class RustFly:
         params = initial_params if params is None else params
         self.native = _native.FlyModel(graph['indptr'],graph['src'],graph['type_id'],graph['sign'],
             self.ports['input_index'],self.ports['output_group'],self.ports['output_scale'],
-            config.features,config.groups,config.actions,config.threads,packed(params),config.rate_softness)
+            config.features,config.groups,config.actions,config.threads,packed(params),
+            config.rate_softness,config.readout_mean_scale)
 
     def _input(self, features):
         array = np.asarray(features,dtype=np.float32)

@@ -1,4 +1,4 @@
-"""A smooth neuron rule needs independent derivatives and explicit checkpoint identity."""
+"""Rate/readout variants need independent derivatives and checkpoint identity."""
 from dataclasses import replace
 import hashlib
 import json
@@ -32,6 +32,8 @@ class SmoothDynamics(unittest.TestCase):
             np.testing.assert_array_equal(reference(jnp.asarray(huge),softness),[0,huge[1]])
         for bad in (-.1,float('inf'),float('nan'),1e-99):
             with self.assertRaises(ValueError):FlyConfig(rate_softness=bad)
+        for bad in (0,-1,1.1,float('inf'),float('nan'),1e-99):
+            with self.assertRaises(ValueError):FlyConfig(readout_mean_scale=bad)
 
     def test_all_derivatives_and_three_updates_with_negative_states(self):
         try:
@@ -40,8 +42,9 @@ class SmoothDynamics(unittest.TestCase):
         except ImportError:self.skipTest('JAX optional dependency')
         from flygo.jax.model import forward,loss,adam
         jax.config.update('jax_enable_x64',True)
-        for softness in (.01,.05):
-            graph,cfg,ports,params,*batch=fixture();cfg=replace(cfg,rate_softness=softness)
+        for softness,mean_scale in ((.01,1),(.05,1),(0,.25),(.01,.25)):
+            graph,cfg,ports,params,*batch=fixture()
+            cfg=replace(cfg,rate_softness=softness,readout_mean_scale=mean_scale)
             params['bias']=np.array([-.12,.08],np.float32)
             model=RustFly(graph,cfg,ports=ports,params=params)
             states=model.infer(batch[0],trace=True)['states']
@@ -66,8 +69,9 @@ class SmoothDynamics(unittest.TestCase):
                         value_loss=np.square(prediction['value'].astype(float)-batch[3]).mean()
                         values.append(policy_loss+value_loss)
                     self.assertAlmostEqual(float(gradient[name][index]),(values[1]-values[0])/.002,
-                                           delta=5e-5,msg=f'{softness}/{name}/{index}')
-            kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,rate_softness=softness)
+                                           delta=5e-5,msg=f'{softness}/{mean_scale}/{name}/{index}')
+            kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,
+                        rate_softness=softness,readout_mean_scale=mean_scale)
             derivative=jax.jit(jax.value_and_grad(lambda p:loss(p,graph,ports,*batch,**kwargs),has_aux=True))
             jp=jax.tree.map(jnp.asarray,params);first=jax.tree.map(jnp.zeros_like,jp);second=jax.tree.map(jnp.zeros_like,jp)
             for step in range(1,4):
@@ -106,10 +110,42 @@ class SmoothDynamics(unittest.TestCase):
             save_checkpoint(baseline,Sampler({},{}),legacy,dict(dataset_id='fixture'),root=root)
             with np.load(legacy) as data:arrays={k:data[k].copy() for k in data}
             info=json.loads(arrays['metadata'].tobytes());info['model_config'].pop('rate_softness');info.pop('model_version')
+            info['model_config'].pop('readout_mean_scale')
             arrays['metadata']=np.frombuffer(json.dumps(info).encode(),np.uint8);np.savez(legacy,**arrays)
             receipt=json.loads(legacy.with_suffix('.json').read_text());receipt['sha256']=hashlib.sha256(legacy.read_bytes()).hexdigest()
             legacy.with_suffix('.json').write_text(json.dumps(receipt))
             load_checkpoint(legacy,baseline)
+
+    def test_readout_conditioning_preserves_states_and_has_a_portable_contract(self):
+        from flygo.checkpoint import save_checkpoint,load_checkpoint
+        from flygo.data.loader import Sampler
+        graph,cfg,ports,params,*batch=fixture();graph['manifest']={'graph_id':'fixture'}
+        # Independent special case: identical head weights read only the common
+        # component. Conditioning must multiply the pre-bias outputs by lambda.
+        params['policy_weight'][:]=.2;params['value_weight'][:]=.3
+        params['policy_bias'][:]=0;params['value_bias'][:]=0
+        base=RustFly(graph,cfg,ports=ports,params=params)
+        config=replace(cfg,readout_mean_scale=.25)
+        model=RustFly(graph,config,ports=ports,params=params)
+        a=base.infer(batch[0],trace=True);b=model.infer(batch[0],trace=True)
+        np.testing.assert_array_equal(a['states'],b['states'])
+        np.testing.assert_allclose(b['logits'],.25*a['logits'],rtol=1e-6,atol=1e-8)
+        np.testing.assert_allclose(b['value'],np.tanh(.25*np.arctanh(a['value'])),rtol=1e-6,atol=1e-8)
+        # A prediction does not depend on other batch members' pooled means.
+        np.testing.assert_allclose(model.infer(batch[0][:1])['logits'],b['logits'][:1],rtol=1e-6,atol=1e-8)
+        model.train_step(*batch)
+        with tempfile.TemporaryDirectory() as directory,patch('flygo.checkpoint.StorageBudget'):
+            root=Path(directory);path=root/'conditioned.npz'
+            save_checkpoint(model,Sampler({},{}),path,dict(dataset_id='fixture'),root=root)
+            restored=RustFly(graph,config,ports=ports,params=params)
+            info=load_checkpoint(path,restored)
+            self.assertEqual(info['model_version'],'leaky-rate-mean-scaled-v1')
+            model.train_step(*batch);restored.train_step(*batch)
+            for key,value in model.checkpoint_arrays().items():
+                self.assertEqual(value.tobytes(),restored.checkpoint_arrays()[key].tobytes())
+            with self.assertRaisesRegex(ValueError,'Unsupported checkpoint model'):load_checkpoint(path,base)
+            other=RustFly(graph,replace(cfg,readout_mean_scale=.5),ports=ports,params=params)
+            with self.assertRaisesRegex(ValueError,'numerical model configuration'):load_checkpoint(path,other)
 
 
 if __name__=='__main__':unittest.main()
