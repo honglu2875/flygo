@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -23,6 +24,25 @@ class FlyConfig:
     actions: int = 82
     threads: int = 16
     seed: int = 1
+    rate_softness: float = 0.0
+
+    def __post_init__(self):
+        s=self.rate_softness
+        if not math.isfinite(s) or s<0 or s>np.finfo(np.float32).max or (s>0 and np.float32(s)==0):
+            raise ValueError('Rate softness must be a finite, nonnegative FP32 value')
+
+    @property
+    def model_version(self):
+        return 'leaky-rate-softplus-v1' if self.rate_softness else MODEL_VERSION
+
+
+def firing_rate(voltage,softness=0.0):
+    """NumPy rate for diagnostics; learning uses independent Rust/JAX equations."""
+    voltage=np.asarray(voltage,np.float32)
+    if not softness:return np.maximum(voltage,np.float32(0))
+    scale=np.float32(softness)
+    with np.errstate(over='ignore',under='ignore'):
+        return np.maximum(voltage,np.float32(0))+scale*np.log1p(np.exp(-np.abs(voltage)/scale))
 
 
 def load_graph(path: Path) -> dict:
@@ -73,6 +93,10 @@ def packed(params):
 
 
 class RustFly:
+    @property
+    def model_version(self):
+        return self.config.model_version
+
     def __init__(self, graph: dict, config: FlyConfig = FlyConfig(), *, ports=None, params=None):
         self.graph, self.config = graph, config
         initial_ports, initial_params = initialize(graph, config)
@@ -80,7 +104,7 @@ class RustFly:
         params = initial_params if params is None else params
         self.native = _native.FlyModel(graph['indptr'],graph['src'],graph['type_id'],graph['sign'],
             self.ports['input_index'],self.ports['output_group'],self.ports['output_scale'],
-            config.features,config.groups,config.actions,config.threads,packed(params))
+            config.features,config.groups,config.actions,config.threads,packed(params),config.rate_softness)
 
     def _input(self, features):
         array = np.asarray(features,dtype=np.float32)

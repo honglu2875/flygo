@@ -1,6 +1,6 @@
-//! v[t+1] = (1-a[type])*v[t] + a[type]*(W relu(v[t]) + b[type] + I).
+//! v[t+1] = (1-a[type])*v[t] + a[type]*(W rate(v[t]) + b[type] + I).
 //! W[e] = sign[src[e]]*softplus(theta[e]); a = .01 + .98*sigmoid(leak).
-use crate::{Executor, Graph, sigmoid, softplus};
+use crate::{Executor, Graph, Rate, sigmoid, softplus};
 use rayon::prelude::*;
 use std::sync::Arc;
 
@@ -16,6 +16,7 @@ pub struct Tape {
     pub weights: Arc<Vec<f32>>,
     pub alpha: Arc<Vec<f32>>,
     pub batch: usize,
+    pub rate: Rate,
 }
 
 /// Reusable transforms for unchanged parameters. Rebuild after any parameter update.
@@ -24,12 +25,14 @@ pub struct Prepared {
     weights: Arc<Vec<f32>>,
     alpha: Arc<Vec<f32>>,
     initial_message: Arc<Vec<f32>>,
+    rate: Rate,
 }
 
 pub fn prepare(
     graph: &Graph,
     executor: &Executor,
     params: &CoreParams,
+    rate: Rate,
 ) -> Result<Prepared, String> {
     params.validate(graph)?;
     let weights: Vec<f32> = executor.pool.install(|| {
@@ -48,11 +51,12 @@ pub fn prepare(
     // Every prediction starts at the same state. Compute its message once at
     // B=1, retaining the canonical edge summation order, then broadcast it.
     // Training rebuilds this cache after each parameter update.
-    let initial_message = executor.multiply(graph, &weights, &vec![0.01; graph.neurons()], 1);
+    let initial_message = executor.multiply(graph, &weights, &vec![rate.value(0.01); graph.neurons()], 1);
     Ok(Prepared {
         weights: Arc::new(weights),
         alpha: Arc::new(alpha),
         initial_message: Arc::new(initial_message),
+        rate,
     })
 }
 
@@ -88,8 +92,9 @@ pub fn forward(
     drive: &[f32],
     batch: usize,
     steps: usize,
+    rate: Rate,
 ) -> Result<Tape, String> {
-    let prepared = prepare(graph, executor, params)?;
+    let prepared = prepare(graph, executor, params, rate)?;
     forward_prepared(graph, executor, params, drive, batch, steps, &prepared)
 }
 
@@ -127,7 +132,9 @@ pub fn forward_prepared(
             });
             message
         } else {
-            let rate: Vec<_> = previous.iter().map(|&x| x.max(0.0)).collect();
+            let rate: Vec<_> = executor.pool.install(|| {
+                previous.par_iter().map(|&x| prepared.rate.value(x)).collect()
+            });
             executor.multiply(graph, &weights, &rate, batch)
         };
         executor.pool.install(|| {
@@ -155,6 +162,7 @@ pub fn forward_prepared(
         weights,
         alpha,
         batch,
+        rate: prepared.rate,
     })
 }
 
@@ -176,7 +184,9 @@ pub fn backward(
     for step in (0..tape.states.len() - 1).rev() {
         let previous = &tape.states[step];
         let next = &tape.states[step + 1];
-        let rate: Vec<_> = previous.iter().map(|&x| x.max(0.0)).collect();
+        let rate: Vec<_> = executor.pool.install(|| {
+            previous.par_iter().map(|&x| tape.rate.value(x)).collect()
+        });
         let mut message_grad = vec![0.0; state_grad.len()];
         for node in 0..graph.neurons() {
             let group = graph.type_id[node];
@@ -203,12 +213,7 @@ pub fn backward(
                     let a = tape.alpha[graph.type_id[node]];
                     for (b, g) in row.iter_mut().enumerate() {
                         let index = node * batch + b;
-                        *g = (1.0 - a) * *g
-                            + if previous[index] > 0.0 {
-                                propagated[index]
-                            } else {
-                                0.0
-                            };
+                        *g = (1.0 - a) * *g + tape.rate.pullback(previous[index], propagated[index]);
                     }
                 })
         });

@@ -83,6 +83,7 @@ crates/
     lib.rs                    Public Rust numerical API
     graph.rs                  Validated CSR and canonical transpose edge IDs
     sparse.rs                 Forward, transpose and edge-gradient kernels
+    rate.rs                   Hard/smooth firing rate and scalar pullback
     recurrent.rs              Core parameters, rate equation, K-step tape and VJP
     model.rs                  Generic ports, pooling, heads, losses and derivatives
     optim.rs                  Complete CPU Adam update
@@ -110,6 +111,7 @@ scripts/
   cluster.py                  Generation start/status/drain/restart
   freeze_corpus.py             Balanced releases or current-data clones, with peer verification
   deploy_research.py           Immutable environment/data and disjoint CPU trials
+  queue_cpu.py                Frozen per-host dependencies and bounded CPU launch
   replicate_checkpoints.py    Star-topology checkpoint coordinator
   compare_checkpoints.py      Common validation slices and game-level uncertainty
   fit_subset.py               Small real-training-data optimization diagnostic
@@ -118,9 +120,9 @@ tests/                        Rules, numerical parity, targets, restore and budg
 README.md, DESIGN.md, DATASET.md, MILESTONES.md, PROGRESS.md
 ```
 
-A separate dynamics module will be introduced with the first additional neuron
-model. Online replay, a TPU-specific sparse kernel and auxiliary heads are
-added only when their milestones require them.
+The scalar rate module now supports the first additional neuron model. The TPU
+degree-bucket kernel and its custom sparse VJP live in `jax/sparse.py`. Online
+replay and auxiliary heads are added when their milestones require them.
 
 Source and configuration stay in this repository. Graph artifacts, datasets,
 checkpoints, logs, caches and temporary files resolve under the configurable
@@ -306,6 +308,19 @@ communication stay separate. Add named variants such as `rate_v1` and
 `adaptive_rate_v1`, with corresponding JAX functions and fixture tests. Do not
 hide unimplemented features behind silently ignored flags. A capability check
 rejects a model unsupported by the selected backend.
+
+The first implemented extension is `leaky-rate-softplus-v1`: positive fixed
+`rate_softness=s` replaces ReLU with `max(v,0)+s*log1p(exp(-abs(v)/s))` in both
+messages and readout. Its derivative is `sigmoid(v/s)`. Zero softness retains
+the original model and exact CPU behavior; checkpoints reject incompatible
+softness. This is a deterministic threshold-noise surrogate, with no extra
+parameters or altered edges. It does not claim biological fidelity by itself.
+
+CPU inference caches the constant initial message at fixed parameters, then
+executes independent destinations, rate elements and readout groups in
+parallel. Each reduction retains canonical order. The transpose packs weights
+once per backward call. Exact all-zero-row skipping can reduce executed work;
+the nominal topology cost and an input-dependent work audit are both reported.
 
 For the sparse primitive `Y = W H`, use the identities
 

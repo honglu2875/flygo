@@ -1,5 +1,5 @@
 //! Thin NumPy boundary for the owned Rust model and optimizer.
-use fly_core::{CoreParams, Graph, Model, Params, Ports, Targets, optim::Adam};
+use fly_core::{CoreParams, Graph, Model, Params, Ports, Rate, Targets, optim::Adam};
 use numpy::{IntoPyArray, PyArray1, PyReadonlyArray1, PyReadonlyArray2, PyUntypedArrayMethods};
 use pyo3::{
     exceptions::{PyRuntimeError, PyValueError},
@@ -60,6 +60,8 @@ fn export<'py>(py: Python<'py>, params: &Params) -> Arrays<'py> {
 #[pymethods]
 impl FlyModel {
     #[new]
+    #[pyo3(signature = (indptr, src, type_id, sign, input_index, output_group, output_scale,
+                       features, groups, actions, threads, params, rate_softness=0.0))]
     #[allow(clippy::too_many_arguments)]
     fn new(
         py: Python<'_>,
@@ -75,6 +77,7 @@ impl FlyModel {
         actions: usize,
         threads: usize,
         params: Vec<PyReadonlyArray1<'_, f32>>,
+        rate_softness: f32,
     ) -> PyResult<Self> {
         let (indptr, src, type_id, sign) = (
             indptr.as_slice()?.to_vec(),
@@ -94,7 +97,7 @@ impl FlyModel {
         let state = py
             .detach(|| {
                 let graph = Graph::new(&indptr, &src, &type_id, &sign)?;
-                let model = Model::new(graph, ports, threads)?;
+                let model = Model::with_rate(graph, ports, threads, Rate::new(rate_softness)?)?;
                 model.validate(&params)?;
                 let adam = Adam::new(&model);
                 Ok::<_, String>(State {
@@ -126,6 +129,7 @@ impl FlyModel {
                         &state.model.graph,
                         &state.model.executor,
                         &state.params.core,
+                        state.model.rate,
                     )?);
                 }
                 state.model.forward_prepared(
@@ -183,7 +187,7 @@ impl FlyModel {
                 .last()
                 .unwrap()
                 .iter()
-                .map(|x| x.max(0.0))
+                .map(|&x| model.rate.value(x))
                 .collect();
             let cotangent: Vec<_> = rate.iter().map(|x| 0.01 + 0.001 * x).collect();
             let transpose_weights = model

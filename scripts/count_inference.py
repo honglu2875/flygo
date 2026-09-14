@@ -64,6 +64,8 @@ def main():
                 model,metadata=load_player(checkpoint,graph_path,threads=len(cpus))
                 if metadata['dataset_id']!=manifest['dataset_id']:raise ValueError('Checkpoint release mismatch')
             else:model=RustFly(graph,FlyConfig(steps=4,threads=len(cpus)))
+            if model.config.rate_softness:
+                raise ValueError('This byte-qualified zero-row ledger currently supports the hard-rate model only')
             before=model.checkpoint_arrays();records=[]
             for batch in batches:
                 nominal=fly_cost(len(degree),len(graph['src']),len(graph['sensory']),

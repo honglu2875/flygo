@@ -1,5 +1,6 @@
 //! Sparse sensory attachment and disjoint readout; all learned computation uses the graph.
-use crate::{CoreGrad, CoreParams, Executor, Graph, recurrent};
+use crate::{CoreGrad, CoreParams, Executor, Graph, Rate, recurrent};
+use rayon::prelude::*;
 
 #[derive(Clone)]
 pub struct Ports {
@@ -31,6 +32,8 @@ pub struct Model {
     pub graph: Graph,
     pub ports: Ports,
     pub executor: Executor,
+    pub rate: Rate,
+    readout_nodes: Vec<Vec<usize>>,
 }
 pub struct Output {
     pub logits: Vec<f32>,
@@ -82,6 +85,9 @@ impl Params {
 
 impl Model {
     pub fn new(graph: Graph, ports: Ports, threads: usize) -> Result<Self, String> {
+        Self::with_rate(graph, ports, threads, Rate::default())
+    }
+    pub fn with_rate(graph: Graph, ports: Ports, threads: usize, rate: Rate) -> Result<Self, String> {
         let n = graph.neurons();
         if ports.features == 0
             || ports.groups == 0
@@ -104,10 +110,16 @@ impl Model {
                 return Err("Invalid or overlapping sensory/readout ports".into());
             }
         }
+        let mut readout_nodes = vec![Vec::new(); ports.groups];
+        for (node, &group) in ports.output_group.iter().enumerate() {
+            if group >= 0 { readout_nodes[group as usize].push(node); }
+        }
         Ok(Self {
             graph,
             ports,
             executor: Executor::new(threads)?,
+            rate,
+            readout_nodes,
         })
     }
     pub fn validate(&self, params: &Params) -> Result<(), String> {
@@ -184,19 +196,23 @@ impl Model {
                 &drive,
                 batch,
                 steps,
+                self.rate,
             )?,
         };
         let state = tape.states.last().unwrap();
         let mut pooled = vec![0.0; p.groups * batch];
-        for (node, &group) in p.output_group.iter().enumerate() {
-            if group >= 0 {
-                let group = group as usize;
-                let scale = p.output_scale[node] * params.readout_gain[node];
-                for b in 0..batch {
-                    pooled[group * batch + b] += scale * state[node * batch + b].max(0.0);
+        // Pools are independent; each retains the original ascending neuron
+        // order, so parallel execution does not change floating-point sums.
+        self.executor.pool.install(|| {
+            pooled.par_chunks_mut(batch).enumerate().for_each(|(group, row)| {
+                for &node in &self.readout_nodes[group] {
+                    let scale = p.output_scale[node] * params.readout_gain[node];
+                    for b in 0..batch {
+                        row[b] += scale * self.rate.value(state[node * batch + b]);
+                    }
                 }
-            }
-        }
+            })
+        });
         let mut logits = vec![0.0; batch * p.actions];
         let mut values = vec![0.0; batch];
         for b in 0..batch {
@@ -258,18 +274,19 @@ impl Model {
         }
         let state = output.tape.states.last().unwrap();
         let mut dstate = vec![0.0; state.len()];
-        for (node, &group) in p.output_group.iter().enumerate() {
-            if group >= 0 {
-                let group = group as usize;
-                for b in 0..batch {
-                    let g = dpool[group * batch + b] * p.output_scale[node];
-                    grad.readout_gain[node] += g * state[node * batch + b].max(0.0);
-                    if state[node * batch + b] > 0.0 {
-                        dstate[node * batch + b] = g * params.readout_gain[node];
+        self.executor.pool.install(|| {
+            grad.readout_gain.par_iter_mut().zip(dstate.par_chunks_mut(batch))
+                .enumerate().for_each(|(node, (gain_grad, row))| {
+                let group = p.output_group[node];
+                if group >= 0 {
+                    for b in 0..batch {
+                        let g = dpool[group as usize * batch + b] * p.output_scale[node];
+                        *gain_grad += g * self.rate.value(state[node * batch + b]);
+                        row[b] = self.rate.pullback(state[node * batch + b], g * params.readout_gain[node]);
                     }
                 }
-            }
-        }
+            })
+        });
         let (core, ddrive) = recurrent::backward(
             &self.graph,
             &self.executor,

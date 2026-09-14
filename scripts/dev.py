@@ -63,7 +63,10 @@ def main():
         if cached.is_dir() and not (runtime / "cache/cargo/registry").exists():
             shutil.copytree(cached, runtime / "cache/cargo/registry")
         extras=[value for name in ('jax','data') if getattr(args,name) for value in ('--extra',name)]
-        run([uv, "sync", "--locked", "--no-install-project", "--python", python] + extras)
+        # Preserve the last installed project while compiling its replacement.
+        # Operational jobs use immutable snapshots; this also keeps local CLI
+        # imports available during the dependency/build phase.
+        run([uv, "sync", "--locked", "--inexact", "--no-install-project", "--python", python] + extras)
         run([cargo, "build", "--release", "--workspace", "--all-targets", "--locked", "-j", args.jobs])
         budget.check()
         run([venv / "bin/maturin", "build", "--release", "--locked", "--out", wheels])

@@ -79,3 +79,54 @@ by 0.020626 at K4 and 0.023528 at K8, while mean MSE worsens by 0.005907 and
 Evidence: `prototype-followup-v1/{depth-g656,depth-g2624,width-k4,width-k8}-report-v1.json`.
 These results motivate testing informative spatial adapters and optimization
 before simply increasing recurrent depth.
+
+## Schedule screen on V0
+
+All four seed-1 schedule trials use K4, G656, B32 and 128,000 position
+exposures. Warmup reaches the declared peak at update 500; cosine alone reaches
+0.1 times peak at update 4,000. This is a one-seed screen, separate from the
+large-batch matched-control study.
+
+| Peak rate / bias multiplier | Schedule | Full policy KL | Full value MSE |
+|---|---|---:|---:|
+| .01 / 1 | Constant | 1.546345 | .558619 |
+| .01 / 1 | Warmup | 1.528106 | .555978 |
+| .01 / 1 | Cosine | 1.536014 | .567042 |
+| .03 / .01 | Constant | 1.534333 | .542177 |
+| .03 / .01 | Warmup | 1.518023 | .521903 |
+| .03 / .01 | Cosine | 1.507110 | .534657 |
+
+For the bias-scaled family, warmup-minus-constant changes are −.016311 KL
+and −.020274 MSE; conditional game-bootstrap intervals are [−.019363,
+−.013529] and [−.032393, −.007823]. Cosine changes are −.027223 KL and
+−.007520 MSE; intervals are [−.029696, −.024830] and [−.017281, .001782].
+The value interval for cosine includes zero. Both candidates advance to seeds
+2/3 because they trade policy and value quality; neither is declared a general
+winner from this seed. Plans:
+[schedule screen](../configs/optimizer-schedules-v1.json),
+[confirmation](../configs/optimizer-schedules-confirm-v1.json).
+Evidence: `optimizer-schedules-validation-v1/*-report-v1.json`.
+
+## CPU cost and implementation
+
+On 256 predeclared validation inputs, the three matched fly checkpoints use
+8.340M, 8.312M and 8.874M counted warm B1 operations after exact zero skipping
+and caching the constant initial message. At B32, the corresponding per-position
+counts are 9.969M, 10.174M and 10.510M because a source row executes when any
+batch element is active. The initial network is much denser; learning changes
+execution cost. The ledger counts arithmetic under stated conventions, rather
+than hardware instructions, and excludes memory traffic and nonlinear costs.
+An 8.362M-FLOP CNN shape was selected from cost before its first training trial;
+its rate screen and confirmation will test a closer cost scale. See
+[the registered smaller control](../configs/small-control-screen-v1.json).
+
+The optimized CPU keeps the same node/edge arrays and reduction order. A
+constant-state message cache costs 660,488 bytes; transpose indices cost
+122.2 MB, and packed weights use 61.1 MB during backward. Independent rate
+entries and readout groups now execute in parallel. At 24 cores and B32,
+softness .01 inference/gradient time changes from .558/1.711 s to .239/.916 s;
+softness .05 changes from .673/1.945 s to .242/.925 s. These are warmed,
+full-graph six-update fixtures, not long-trained playing-strength results.
+Every output, loss and gradient byte matches, as do three fresh scheduled,
+scaled continuation updates. Evidence: `cpu-smooth-lane-v1` and
+`cpu-smooth-lane-s{01,05}-{serial,parallel}-v1`.

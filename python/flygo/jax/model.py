@@ -3,10 +3,10 @@ from __future__ import annotations
 
 import jax
 import jax.numpy as jnp
-from .numerics import softplus, sigmoid, log_softmax, HIGHEST
+from .numerics import softplus, sigmoid, log_softmax, firing_rate, HIGHEST
 
 
-def forward(params, graph, ports, features, *, steps, groups, actions):
+def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0):
     # Reference uses edge messages. Production Rust avoids this E*B allocation.
     # Keep full-graph JAX parity batches small until a TPU kernel is qualified.
     n = graph['type_id'].shape[0]
@@ -22,16 +22,16 @@ def forward(params, graph, ports, features, *, steps, groups, actions):
     def step(state,_):
         if 'layout' in graph:
             from .sparse import multiply
-            total=multiply(weight,jax.nn.relu(state),graph['layout'])
+            total=multiply(weight,firing_rate(state,rate_softness),graph['layout'])
         else:
-            messages = weight[:,None]*jax.nn.relu(state[source])
+            messages = weight[:,None]*firing_rate(state[source],rate_softness)
             total = jax.ops.segment_sum(messages,destination,num_segments=n,indices_are_sorted=True)
         next_state = (1-alpha[:,None])*state+alpha[:,None]*(total+bias[:,None]+drive)
         return next_state,next_state
     state,states = jax.lax.scan(step,state,None,length=steps)
     readout = ports['output_group']
     contributions = jnp.where((readout >= 0)[:,None],
-        (ports['output_scale']*params['readout_gain'])[:,None]*jax.nn.relu(state),0)
+        (ports['output_scale']*params['readout_gain'])[:,None]*firing_rate(state,rate_softness),0)
     pooled = jax.ops.segment_sum(contributions,jnp.maximum(readout,0),num_segments=groups)
     logits = jnp.matmul(pooled.T,params['policy_weight'].reshape(actions,groups).T,
                         precision=jax.lax.Precision.HIGHEST) + params['policy_bias']
@@ -41,8 +41,8 @@ def forward(params, graph, ports, features, *, steps, groups, actions):
     return dict(logits=logits,value=value,states=jnp.concatenate([initial,states],axis=0))
 
 
-def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions):
-    result=forward(params,graph,ports,features,steps=steps,groups=groups,actions=actions)
+def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions,rate_softness=0.0):
+    result=forward(params,graph,ports,features,steps=steps,groups=groups,actions=actions,rate_softness=rate_softness)
     return teacher_loss(result,legal,policy,value)
 
 

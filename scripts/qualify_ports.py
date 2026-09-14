@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Qualify full-circuit port variants against an independent JAX CPU reference."""
+"""Qualify full-circuit adapters and rate rules against an independent JAX CPU reference."""
+from dataclasses import asdict
 import argparse
 import json
 import os
@@ -20,7 +21,8 @@ from flygo.storage import GIB,StorageBudget
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
-    p.add_argument('--ports',type=Path,nargs='+',required=True)
+    p.add_argument('--ports',type=Path,nargs='+',help='Omit for the original seeded random adapters')
+    p.add_argument('--rate-softness',type=float,default=0.0)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--cpus',default='117,118,119')
     args=p.parse_args();cpus=list(map(int,args.cpus.split(',')));pin(cpus)
@@ -35,14 +37,16 @@ def main():
         root=args.root;graph=load_graph(Path(json.loads((root/'runs/m4/graph.json').read_text())['path']))
         manifest,arrays,indexes=load_release(root,root/'releases/v0-1m/manifest.json',cache=True)
         jgraph={key:jnp.asarray(graph[key]) for key in ('src','dst','type_id','sign')}
-        for path in args.ports:
-            receipt=json.loads(path.with_suffix('.json').read_text())
-            cfg=FlyConfig(steps=4,threads=len(cpus),seed=receipt['seed'],groups=receipt['groups'])
-            ports,_=load_ports(path,graph_id=graph['manifest']['graph_id'],features=cfg.features,groups=cfg.groups,seed=cfg.seed)
-            _,params=initialize(graph,cfg);rust=RustFly(graph,cfg,ports=ports,params=params)
+        variants=args.ports or [None]
+        for path in variants:
+            receipt=json.loads(path.with_suffix('.json').read_text()) if path else dict(seed=1,groups=656,sha256=None)
+            cfg=FlyConfig(steps=4,threads=len(cpus),seed=receipt['seed'],groups=receipt['groups'],rate_softness=args.rate_softness)
+            ports,params=initialize(graph,cfg)
+            if path:ports,_=load_ports(path,graph_id=graph['manifest']['graph_id'],features=cfg.features,groups=cfg.groups,seed=cfg.seed)
+            rust=RustFly(graph,cfg,ports=ports,params=params)
             sampler=Sampler(arrays,indexes,cfg.seed);jports=jax.tree.map(jnp.asarray,ports)
             jp=jax.tree.map(jnp.asarray,params);first=jax.tree.map(jnp.zeros_like,jp);second=jax.tree.map(jnp.zeros_like,jp)
-            kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions)
+            kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,rate_softness=cfg.rate_softness)
             infer=jax.jit(lambda p,g,a,x:forward(p,g,a,x,**kwargs))
             derivative=jax.jit(jax.value_and_grad(lambda p,g,a,*batch:loss(p,g,a,*batch,**kwargs),has_aux=True))
             update=jax.jit(lambda p,g,m,v,step:adam(p,g,m,v,step,rate=np.float32(.01),clip=np.float32(1),norm_dtype=jnp.float64))
@@ -71,9 +75,9 @@ def main():
                 for prefix,group in [('param/',jp),('first/',first),('second/',second)]:
                     for key,value in group.items():check(saved[prefix+key],value,f'{step}/'+prefix+key)
                 atomic_json(args.output/'status.json',dict(state='qualifying',port=str(path),completed_updates=step+1))
-            records.append(dict(ports=str(path),ports_sha256=receipt['sha256'],readout_neurons=int((ports['output_group']>=0).sum()),
+            records.append(dict(ports=str(path) if path else None,ports_sha256=receipt['sha256'],model=asdict(cfg),readout_neurons=int((ports['output_group']>=0).sum()),
                                 updates=3,batch_size=1,errors=errors))
-            atomic_json(args.output/'result.json',dict(status='complete' if len(records)==len(args.ports) else 'running',
+            atomic_json(args.output/'result.json',dict(status='complete' if len(records)==len(variants) else 'running',
                 graph_id=graph['manifest']['graph_id'],dataset_id=manifest['dataset_id'],records=records,cpus=cpus,
                 script_sha256=sha256(Path(__file__)),seconds=time.time()-begin,
                 scope='Full states, losses, every gradient and three free-running parameter/moment updates on real V0 inputs; independent E-by-B JAX CPU reference, no TPU use.'))

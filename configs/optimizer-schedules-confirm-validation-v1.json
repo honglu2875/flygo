@@ -1,0 +1,203 @@
+{
+  "name": "optimizer-schedules-confirm-validation-v1",
+  "release": "v0-1m",
+  "rate": 0.03,
+  "updates": 4000,
+  "batch_size": 32,
+  "clip": 1,
+  "eval_every": 500,
+  "checkpoint_every": 500,
+  "diagnostics_every": 500,
+  "diagnostic_batch_size": 32,
+  "feature_cache": true,
+  "training_exposures_per_case": 128000,
+  "comparison": "Confirm both seed-1 bias-scaled schedule candidates against constant schedules with paired seeds 1/2/3. Adopt seed 1; run seeds 2/3 from initialization. Warmup and cosine trade policy and value quality, so both advance without best-seed selection.",
+  "controls": [
+    "confirm-v0-lr03-bias001-s1",
+    "confirm-v0-lr03-bias001-s2",
+    "confirm-v0-lr03-bias001-s3"
+  ],
+  "adopted": [
+    "schedule-v0-lr03-bias001-cosine-s1",
+    "schedule-v0-lr03-bias001-warmup-s1"
+  ],
+  "selection": "All four new final checkpoints and aligned full natural/novel validation. Separate three-seed contrasts for warmup and cosine against the matching constant baseline. This result-driven confirmation does not equalize previous family-specific tuning compute.",
+  "qualification": "Reuse the same qualified immutable source c149278eda30697520f9 as the seed-1 schedule screen; unchanged schedule, model, sampler, optimizer and exposure contract.",
+  "execution": "One 24-core lane per host, after its smooth-rate final validation exits. Original constant controls retain source 2185746d8cb5a7b93d1c; exact execution parity and both source IDs remain reported.",
+  "jobs": [
+    {
+      "host": 1,
+      "run_id": "schedule-v0-lr03-bias001-warmup-s2",
+      "passes": 4,
+      "groups": 656,
+      "seed": 2,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "warmup_steps": 500,
+      "decay_until": 0,
+      "final_rate_ratio": 0.1,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "smooth-rate-validation-v1/smooth-v0-s01-lr01-seed1"
+      ]
+    },
+    {
+      "host": 2,
+      "run_id": "schedule-v0-lr03-bias001-cosine-s2",
+      "passes": 4,
+      "groups": 656,
+      "seed": 2,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "warmup_steps": 0,
+      "decay_until": 4000,
+      "final_rate_ratio": 0.1,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "smooth-rate-validation-v1/smooth-v0-s05-lr01-seed1"
+      ]
+    },
+    {
+      "host": 3,
+      "run_id": "schedule-v0-lr03-bias001-warmup-s3",
+      "passes": 4,
+      "groups": 656,
+      "seed": 3,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "warmup_steps": 500,
+      "decay_until": 0,
+      "final_rate_ratio": 0.1,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "smooth-rate-validation-v1/smooth-v0-s01-lr03-bias001-seed1"
+      ]
+    },
+    {
+      "host": 0,
+      "run_id": "schedule-v0-lr03-bias001-cosine-s3",
+      "passes": 4,
+      "groups": 656,
+      "seed": 3,
+      "rate": 0.03,
+      "rate_scales": {
+        "bias": 0.01
+      },
+      "warmup_steps": 0,
+      "decay_until": 4000,
+      "final_rate_ratio": 0.1,
+      "cpus": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "wait_for": [
+        "smooth-rate-validation-v1/smooth-v0-s05-lr03-bias001-seed1"
+      ]
+    }
+  ],
+  "matches": null,
+  "registration": "configs/optimizer-schedules-confirm-v1.json"
+}

@@ -2,6 +2,7 @@
 from __future__ import annotations
 import time
 import numpy as np
+from .fly import firing_rate
 
 
 def norm(array):
@@ -27,10 +28,14 @@ def measure(model,batch,before,training_metrics,*,clip,training_batch_size=None)
     output=model.infer(batch[0],trace=True)
     states=[]
     for state in output['states']:
-        states.append(dict(active_fraction=float(np.mean(state>0)),
+        rate=firing_rate(state,model.config.rate_softness)
+        states.append(dict(active_fraction=float(np.mean(rate!=0)),
+                           positive_voltage_fraction=float(np.mean(state>0)),
+                           rate_mean=float(rate.mean(dtype=np.float64)),rate_max=float(rate.max()),
                            rms=norm(state)/np.sqrt(state.size),
                            min=float(state.min()),max=float(state.max())))
     return dict(kind='diagnostics',step=training_metrics['step'],
+                rate_softness=model.config.rate_softness,
                 training_gradient_norm=training_metrics['gradient_norm'],
                 clipped=bool(training_metrics['gradient_norm']>clip),clip=clip,groups=groups,
                 edge_strength=dict(mean=float(strength.mean(dtype=np.float64)),max=float(strength.max()),

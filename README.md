@@ -99,6 +99,14 @@ the endpoint stays fixed across restarts. Resume validates the stored schedule.
 `--diagnostic-batch-size 32` bounds extra activity/gradient measurements even
 when the training batch is large. Constant-rate defaults preserve the baseline.
 
+`--rate-softness 0.01` selects the experimental smooth rate
+`s*softplus(v/s)` in recurrence and readout. The default zero keeps hard ReLU
+and existing checkpoints. This factor has full CPU numerical qualification;
+actual TPU qualification must precede its first TPU training run.
+`scripts/queue_cpu.py --plan <plan.json> --source <frozen-environment> --run-id
+<queue-id>` freezes a one-case-per-host plan and waits for every declared lane
+dependency before launch. `finish_study.py` supplies matching validation gates.
+
 The active snapshot study is specified in
 [configs/prototype-v1.json](configs/prototype-v1.json): four depth/readout
 configurations, two paired seeds, 10,000 updates each. Periodic validation uses
@@ -149,6 +157,7 @@ The fly numerical crate does not depend on Go, Python or JAX.
 | Go rules, search, actors | `crates/go-core`, `go-search`, `go-actors`; imported unchanged with source hashes |
 | Sparse forward, transpose, edge gradients | `crates/fly-core/src/sparse.rs` |
 | Neuron equation and its backward rule | `crates/fly-core/src/recurrent.rs`, `python/flygo/jax/model.py`, `tests/test_fly.py` |
+| Hard/smooth scalar rate and derivative | `crates/fly-core/src/rate.rs`, `python/flygo/jax/numerics.py`, `tests/test_dynamics.py` |
 | Sensory/readout maps and initialization | `python/flygo/fly.py`; generic Rust composition in `fly-core/src/model.rs` |
 | Audited spatial ports and shuffled controls | `python/flygo/ports.py`, `scripts/retinotopy.py` |
 | Sensory path lengths and annotated visual types | `scripts/audit_circuit.py` |
@@ -160,7 +169,7 @@ The fly numerical crate does not depend on Go, Python or JAX.
 | Shared immutable feature cache | `python/flygo/data/cache.py` |
 | Teacher protocol and production | `python/flygo/data/{katago,label,generate,corpus,service}.py` |
 | Checkpoint portability and peer copies | `python/flygo/{checkpoint,replication}.py` |
-| Placement, shared RAM and launch | `runtime.py`, `storage.py`, `scripts/{cluster,deploy_research,tpu}.py` |
+| Placement, shared RAM and launch | `runtime.py`, `storage.py`, `scripts/{cluster,deploy_research,queue_cpu,tpu}.py` |
 | Validation, dependent panels and paired analysis | `scripts/{compare_checkpoints,finish_study,summarize_study}.py` |
 
 The initial equation is

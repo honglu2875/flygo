@@ -329,3 +329,65 @@ memory traffic and latency remain explicit limitations of this arithmetic
 match. Preserve the original nominal 126.7M study unchanged. Qualify the small
 CNN shape before its first TPU training run, and queue it after the active
 spatial study so a single cohort continues to own all devices.
+
+## Smooth firing-rate screen
+
+The trained hard-rectifier baseline spends little arithmetic on later passes
+because many rates are exactly zero. Together with the high-rate gradient
+collapse, this motivates one explicit neuron-rule factor while existing
+optimizer and adapter studies continue unchanged. Flyvis's dynamics interface
+also exposes softplus as an activation option for its graded-release model.
+[Flyvis dynamics source](https://github.com/TuragaLab/flyvis/blob/main/flyvis/network/dynamics.py).
+
+Define a fixed softness `s >= 0`, with `r_0(v) = max(v,0)`. For `s > 0`,
+
+```
+r_s(v) = max(v,0) + s * log1p(exp(-abs(v)/s))
+dr_s/dv = sigmoid(v/s).
+```
+
+Use this same rate in recurrent messages and output pooling. The leaky state
+update, h0=0.01, signed softplus edge strengths, initialization, ports and all
+trainable arrays retain their existing definitions. This smooth function is
+also the expected rectified response under additive zero-mean logistic noise
+of scale s; our implementation evaluates the expectation deterministically.
+Treat it as a hypothesis about threshold variability and gradient flow.
+FP32 underflow can still produce zero at sufficiently negative voltages.
+
+Register softness 0.01/0.05 crossed with global rate 0.01 or rate 0.03 plus
+bias multiplier 0.01. Each starts from initialization at K4/G656, seed 1,
+batch 32 and 1,000 updates (32,000 exposures), on V0 with original random
+ports. Adopt the corresponding completed hard-rate screen checkpoints as
+controls. Keep all four final natural/novel validations and diagnostics before
+selecting longer or additional-seed work. These are exploratory one-seed
+screens, separate from the matched million-exposure comparisons.
+
+Keep the scalar rate rule in one Rust module with an independent JAX function.
+The baseline configuration must retain old-checkpoint readability and exact
+output/update bytes. Give smooth models a distinct checkpoint model version
+and serialize softness. Require finite differences through negative, zero
+and positive states, all-group Rust/JAX derivative/update checks, full-graph
+V0 parity for both softness values and fresh-process continuation before
+training. Report nonlinear functions and loss of zero-skipping opportunities
+in performance figures; a better loss does not imply better compute efficiency.
+
+The first smooth implementation passes full-graph CPU parity but exposes serial
+rate evaluation and readout work. Parallelize independent rate elements and
+readout groups, retaining ascending canonical neuron order inside every pool
+and the original per-neuron gradient sum order. Cache only readout membership
+indices, not new learned state. Require byte-identical baseline and both smooth
+models' full outputs/gradients against the preceding implementation, plus
+fresh continuation, before launching the smooth screen. Measure the extra
+readout-index memory and timings under the same CPU allocation.
+
+## Schedule confirmation after the seed-1 screen
+
+All four schedule cases completed full validation before this revision. At
+rate 0.03 with bias multiplier 0.01, cosine improves policy KL more, while
+warmup improves value MSE more. Both advance to seeds 2/3 at the unchanged
+128,000-exposure horizon; seed 1 and all three constant-rate controls are
+adopted. `configs/optimizer-schedules-confirm-v1.json` records this decision
+before any new training. Analyze separate paired three-seed contrasts, retain
+all outcomes, and do not reinterpret the result-driven choice as equal total
+family tuning compute. The same seed-1 source environment executes the new
+trials, after each host's smooth-rate validation releases its lane.

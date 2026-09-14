@@ -71,6 +71,7 @@ def load_checkpoint(path:Path,model,sampler=None,*,dataset_id=None):
         if dataset_id is not None and info['dataset_id']!=dataset_id:
             raise ValueError('Checkpoint dataset differs from the frozen training release')
         expected=asdict(model.config);stored=info['model_config'].copy()
+        if 'rate_softness' in expected:stored.setdefault('rate_softness',0.0)
         expected.pop('threads');stored.pop('threads')
         if expected!=stored:
             raise ValueError('Checkpoint numerical model configuration differs')

@@ -161,6 +161,10 @@ class JaxLearner:
 class JaxFly(JaxLearner):
     numerical_runtime='jax-highest-fp32-norm-buckets-v1'
 
+    @property
+    def model_version(self):
+        return self.config.model_version
+
     def __init__(self,graph,config=FlyConfig(),*,ports=None,params=None,mesh=None):
         initial_ports,initial_params=initialize(graph,config)
         compute_graph={k:graph[k] for k in ('src','dst','type_id','sign')}
@@ -168,4 +172,5 @@ class JaxFly(JaxLearner):
         super().__init__(graph,config,ports=initial_ports if ports is None else ports,
             params=initial_params if params is None else params,compute_graph=compute_graph,
             forward_function=forward,loss_function=loss,
-            kwargs=dict(steps=config.steps,groups=config.groups,actions=config.actions),mesh=mesh)
+            kwargs=dict(steps=config.steps,groups=config.groups,actions=config.actions,
+                        rate_softness=config.rate_softness),mesh=mesh)
