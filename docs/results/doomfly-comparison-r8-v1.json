@@ -1,0 +1,46 @@
+{
+  "ame12_body_ids": [
+    12211,
+    12517,
+    12737,
+    12740,
+    13190,
+    532334
+  ],
+  "ame12_cells": 6,
+  "created_utc": "2026-09-14 18:34 UTC",
+  "edge_indices_sha256": "962f9505fb57ab7d9255ee61ea81c304e5bfbbfd116ed60853030c430356b20c",
+  "edge_sign_counts": {
+    "-1": 312
+  },
+  "edges_by_presynaptic_type": {
+    "R8_unclear": 71,
+    "R8d": 4,
+    "R8p": 224,
+    "R8y": 13
+  },
+  "edges_from_spherical_illuminated_receptors": 220,
+  "edges_from_spherical_mapped_receptors": 312,
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "illuminated_edge_types": {
+    "R8_unclear": 34,
+    "R8p": 177,
+    "R8y": 9
+  },
+  "interpretation": "Candidate target-specific transmission audit. Includes R8_unclear and R8d; not proof every negative sign is wrong or a cause of weak motor responses.",
+  "presynaptic_transmitters": {
+    "histamine": 299
+  },
+  "presynaptic_types": {
+    "R8_unclear": 68,
+    "R8d": 4,
+    "R8p": 214,
+    "R8y": 13
+  },
+  "query": "Retained edges whose presynaptic annotation type starts with R8 and postsynaptic type equals aMe12; initial sign[pre]. Illumination uses spherical-pairs-v5 renderer row weight sum > 0.",
+  "r8_cells": 1329,
+  "r8_to_ame12_edges": 312,
+  "reviewed_doomfly_commit": "71ecf53d78eaffaf1a57ed7b0ccf5d458abc9f33",
+  "scope": "Initial sign prior on fixed topology; no weights changed and no run launched",
+  "synaptic_contacts": 2022
+}

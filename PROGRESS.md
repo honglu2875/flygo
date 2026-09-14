@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 13:13 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 18:34 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -86,6 +86,12 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   response variation barely moves. Loss remains near ln(3) + ln(2). These
   weights are not substantially trained, so no functional groups are fitted.
   [Protocol, numerical gates and results](docs/embedding-study.md).
+- [Doomfly source review](docs/doomfly-review.md): inferred planar eye viewports,
+  four fixed descending-neuron controls, and experimental local dopamine
+  plasticity; published checks do not establish learned survival. Our read-only
+  comparison finds 312 R8→aMe12 edges with negative initial signs, including
+  uncertain subtypes. Target-specific transmission is a candidate physiology
+  audit; no sign change or training experiment was made from this finding.
 
 ## Runtime and next work
 
@@ -127,7 +133,13 @@ leak/bias by cell type. Dense groups motivate hypotheses, not an established
 functional advantage. [Regrowth](docs/structural-plasticity.md) is a proposed
 later relaxation; no connection has been added.
 
-The approved history through **e5803a1** is published to `master` at
+**Deferred input study:** the user proposes the two most recent moves/states
+through the two eyes, and older sequence/captures/komi/context through other
+input nodes. Audit zero-in-degree candidates against sensory labels and source
+filtering; freeze the exact encoding and matched controls before launch. This
+does not replace the current signal/optimization gate.
+
+The approved history through **ab4c7b9** is published to `master` at
 `git@github.com:honglu2875/flygo.git`. This phase adds the spherical adapter,
 embedding interface and its completed pilot records. Deployment and artifact
 replication preserve prior checkpoints and immutable sources.
