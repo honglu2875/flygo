@@ -1,0 +1,452 @@
+{
+  "build": {
+    "cpus": [
+      56,
+      57,
+      58,
+      59,
+      117,
+      118
+    ],
+    "seconds": 69.58694338798523,
+    "status": "passed",
+    "wheel_sha256": "c829e4f4e5c805026f3494e03027730c92d2a4a4c301325958618f2dc6d07545"
+  },
+  "coverage_scan": [
+    {
+      "centers": [
+        [
+          -25,
+          -30
+        ],
+        [
+          -25,
+          30
+        ]
+      ],
+      "condition": 30.877985348083364,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.13783848216417194,
+      "neighbors": 4,
+      "rank": 324,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -25,
+          -30
+        ],
+        [
+          -25,
+          30
+        ]
+      ],
+      "condition": 55.37323027569004,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.07440468645073801,
+      "neighbors": 7,
+      "rank": 324,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -30,
+          -25
+        ],
+        [
+          -30,
+          25
+        ]
+      ],
+      "condition": 39.18366156236385,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.08635225838986656,
+      "neighbors": 4,
+      "rank": 324,
+      "width": 20
+    },
+    {
+      "centers": [
+        [
+          -30,
+          -25
+        ],
+        [
+          -30,
+          25
+        ]
+      ],
+      "condition": 58.61359305529912,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.056359824683242916,
+      "neighbors": 7,
+      "rank": 324,
+      "width": 20
+    },
+    {
+      "centers": [
+        [
+          -30,
+          -30
+        ],
+        [
+          -30,
+          30
+        ]
+      ],
+      "condition": 33.35411487352795,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.12476680495691875,
+      "neighbors": 4,
+      "rank": 324,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -30,
+          -30
+        ],
+        [
+          -30,
+          30
+        ]
+      ],
+      "condition": 53.52945649686794,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.07626248465535983,
+      "neighbors": 7,
+      "rank": 324,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -35,
+          -35
+        ],
+        [
+          -35,
+          35
+        ]
+      ],
+      "coverage": [
+        81,
+        80,
+        81,
+        80
+      ],
+      "neighbors": 4,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -35,
+          -35
+        ],
+        [
+          -35,
+          35
+        ]
+      ],
+      "condition": 60.32360732963354,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.06501965219015884,
+      "neighbors": 7,
+      "rank": 324,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -25,
+          -25
+        ],
+        [
+          -25,
+          25
+        ]
+      ],
+      "condition": 44.1723627857511,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.08355233400344621,
+      "neighbors": 4,
+      "rank": 324,
+      "width": 20
+    },
+    {
+      "centers": [
+        [
+          -25,
+          -25
+        ],
+        [
+          -25,
+          25
+        ]
+      ],
+      "condition": 64.09367065834897,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.05609196480632665,
+      "neighbors": 7,
+      "rank": 324,
+      "width": 20
+    },
+    {
+      "centers": [
+        [
+          -20,
+          -35
+        ],
+        [
+          -20,
+          35
+        ]
+      ],
+      "condition": 32.83570402205463,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.12836369975266163,
+      "neighbors": 4,
+      "rank": 324,
+      "width": 25
+    },
+    {
+      "centers": [
+        [
+          -20,
+          -35
+        ],
+        [
+          -20,
+          35
+        ]
+      ],
+      "condition": 53.135003247320334,
+      "coverage": [
+        81,
+        81,
+        81,
+        81
+      ],
+      "minimum_singular": 0.07811529343487209,
+      "neighbors": 7,
+      "rank": 324,
+      "width": 25
+    }
+  ],
+  "numerical_screen": [
+    {
+      "completed_updates": 0,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n0/param/bias\\nMismatched elements: 10 / 11752 (0.0851%)\\nFirst 5 mismatches are at indices:\\n [1321]: 0.02004355378448963 (ACTUAL), 0.019967537373304367 (DESIRED)\\n [3279]: 0.019963033497333527 (ACTUAL), 0.02003609389066696 (DESIRED)\\n [3536]: 0.020037196576595306 (ACTUAL), 0.01994265988469124 (DESIRED)\\n [3540]: 0.019966254010796547 (ACTUAL), 0.020052151754498482 (DESIRED)\\n [3567]: 0.019957568496465683 (ACTUAL), 0.02003367990255356 (DESIRED)\\nMax absolute difference among violations: 0.00012145\\nMax relative difference among violations: 0.00605363\\n ACTUAL: array([0.019999, 0.02    , 0.020068, ..., 0.019999, 0.020001, 0.02    ],\\n      shape=(11752,), dtype=float32)\\n DESIRED: array([0.019999, 0.02    , 0.020068, ..., 0.019999, 0.020001, 0.02    ],\\n      shape=(11752,), dtype=float32)')",
+      "optimizer": null,
+      "path": "/dev/shm/flygo/runs/embedding-qualification-v1/result.json",
+      "seconds": 6.223423004150391,
+      "sha256": "40ee0d9d063deaee9493d994bc47414911c96edf77a637a9d7871bcd2ed6a485",
+      "status": "failed"
+    },
+    {
+      "completed_updates": 1,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n1/param/value_bias\\nMismatched elements: 1 / 1 (100%)\\nMismatch at index:\\n [0]: 0.0 (ACTUAL), 1.2527222679636907e-05 (DESIRED)\\nMax absolute difference among violations: 1.2527223e-05\\nMax relative difference among violations: 1.\\n ACTUAL: array([0.], dtype=float32)\\n DESIRED: array([1.252722e-05], dtype=float32)')",
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 0.0001,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v1/epsilon-0.0001/result.json",
+      "seconds": 10.714616537094116,
+      "sha256": "ea93e8a3b59c2e32d08ad6ec505473c56f8022e798d703f294000a5c027cabf5",
+      "status": "failed"
+    },
+    {
+      "completed_updates": 0,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n0/param/value_weight\\nMismatched elements: 55 / 2129 (2.58%)\\nFirst 5 mismatches are at indices:\\n [37]: 0.0010240399278700352 (ACTUAL), 0.0010059378109872341 (DESIRED)\\n [70]: -0.004028798080980778 (ACTUAL), -0.004006815142929554 (DESIRED)\\n [79]: -0.0059261806309223175 (ACTUAL), -0.005899961106479168 (DESIRED)\\n [100]: -0.006613337900489569 (ACTUAL), -0.006583324167877436 (DESIRED)\\n [128]: 0.003088384633883834 (ACTUAL), 0.003070925595238805 (DESIRED)\\nMax absolute difference among violations: 3.648759e-05\\nMax relative difference among violations: 9.118471\\n ACTUAL: array([-0.009652,  0.006462,  0.021674, ...,  0.024976, -0.034956,\\n       -0.012343], shape=(2129,), dtype=float32)\\n DESIRED: array([-0.009653,  0.006474,  0.021682, ...,  0.02498 , -0.03496 ,\\n       -0.012347], shape=(2129,), dtype=float32)')",
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 1e-05,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v1/epsilon-1e-05/result.json",
+      "seconds": 6.3902740478515625,
+      "sha256": "4843a65c6a02a97480e6c5b6a085745820186778a198875e576aa3ca97e3af9e",
+      "status": "failed"
+    },
+    {
+      "completed_updates": 0,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n0/param/leak\\nMismatched elements: 6 / 11752 (0.0511%)\\nFirst 5 mismatches are at indices:\\n [3130]: 2.2818844627181534e-06 (ACTUAL), -3.999105047114426e-06 (DESIRED)\\n [3224]: -1.4205993466021027e-06 (ACTUAL), 4.314976649766322e-06 (DESIRED)\\n [3330]: -4.439273766365659e-07 (ACTUAL), -7.42086922400631e-06 (DESIRED)\\n [3418]: 9.329524800705258e-06 (ACTUAL), 3.1514402962784516e-06 (DESIRED)\\n [3478]: 6.660827057203278e-05 (ACTUAL), 6.027281779097393e-05 (DESIRED)\\nMax absolute difference among violations: 6.9769417e-06\\nMax relative difference among violations: 1.9604003\\n ACTUAL: array([ 3.936391e-08, -1.438849e-09,  6.088092e-07, ...,  8.919523e-09,\\n        1.806552e-08, -2.835946e-08], shape=(11752,), dtype=float32)\\n DESIRED: array([ 4.118786e-08, -2.289190e-09,  6.081273e-07, ...,  3.391353e-09,\\n        1.620002e-08, -2.980945e-08], shape=(11752,), dtype=float32)')",
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 1e-06,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v1/epsilon-1e-06/result.json",
+      "seconds": 6.2795915603637695,
+      "sha256": "5226d11aa3212157dc24e571ebbc66e648e958aece7309705e3bc785ff3c4371",
+      "status": "failed"
+    },
+    {
+      "completed_updates": 3,
+      "error": null,
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 0.0001,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0,
+          "value_bias": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v2/epsilon-0.0001/result.json",
+      "seconds": 14.908302545547485,
+      "sha256": "1703d32cbe9c97a5155977b2153eea5fb2c48f10c343e87d0921d40dffb69dd9",
+      "status": "passed"
+    },
+    {
+      "completed_updates": 0,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n0/param/value_weight\\nMismatched elements: 54 / 2129 (2.54%)\\nFirst 5 mismatches are at indices:\\n [15]: 0.0007620312389917672 (ACTUAL), 0.0007541564991697669 (DESIRED)\\n [37]: 0.0010240399278700352 (ACTUAL), 0.0010084506357088685 (DESIRED)\\n [54]: 0.004644943401217461 (ACTUAL), 0.004625559784471989 (DESIRED)\\n [70]: -0.004028798080980778 (ACTUAL), -0.004006833769381046 (DESIRED)\\n [100]: -0.006613337900489569 (ACTUAL), -0.0065826368518173695 (DESIRED)\\nMax absolute difference among violations: 3.6030542e-05\\nMax relative difference among violations: 0.4133373\\n ACTUAL: array([-0.009652,  0.006462,  0.021678, ...,  0.024976, -0.03496 ,\\n       -0.012343], shape=(2129,), dtype=float32)\\n DESIRED: array([-0.009652,  0.006475,  0.021682, ...,  0.024983, -0.03496 ,\\n       -0.012347], shape=(2129,), dtype=float32)')",
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 1e-05,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0,
+          "value_bias": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v2/epsilon-1e-05/result.json",
+      "seconds": 6.178934574127197,
+      "sha256": "462494360a4aa0e197e77e70668e8d0dfd1f130b0c14f3c86380b25f9693df2d",
+      "status": "failed"
+    },
+    {
+      "completed_updates": 0,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n0/param/leak\\nMismatched elements: 5 / 11752 (0.0425%)\\nMismatch at indices:\\n [3130]: 2.2649815036857035e-06 (ACTUAL), -4.520213224168401e-06 (DESIRED)\\n [3330]: -4.442115653091605e-07 (ACTUAL), -7.727068805252202e-06 (DESIRED)\\n [3418]: 9.314772796642501e-06 (ACTUAL), 3.864540758513613e-06 (DESIRED)\\n [3478]: 6.659351492999122e-05 (ACTUAL), 6.088440932217054e-05 (DESIRED)\\n [3534]: -0.00011750255362130702 (ACTUAL), -0.00012307945871725678 (DESIRED)\\nMax absolute difference among violations: 7.282857e-06\\nMax relative difference among violations: 1.5010785\\n ACTUAL: array([ 4.217053e-08, -1.172395e-09,  6.090756e-07, ...,  8.657511e-09,\\n        1.818098e-08, -2.877690e-08], shape=(11752,), dtype=float32)\\n DESIRED: array([ 4.470431e-08, -1.427480e-09,  6.081676e-07, ...,  3.802625e-09,\\n        1.548846e-08, -3.014455e-08], shape=(11752,), dtype=float32)')",
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 1e-06,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0,
+          "value_bias": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v2/epsilon-1e-06/result.json",
+      "seconds": 6.2601318359375,
+      "sha256": "19e37fdecd706b5687e3e6c4ab96ce6489dd3c885fc2ebdf33a648551ea2f2d0",
+      "status": "failed"
+    },
+    {
+      "completed_updates": 0,
+      "error": "AssertionError('\\nNot equal to tolerance rtol=0.003, atol=5e-06\\n0/param/bias\\nMismatched elements: 7 / 11752 (0.0596%)\\nFirst 5 mismatches are at indices:\\n [3170]: 0.019970539957284927 (ACTUAL), 0.020035697147250175 (DESIRED)\\n [3225]: 0.019954703748226166 (ACTUAL), 0.020039357244968414 (DESIRED)\\n [3279]: 0.01995760388672352 (ACTUAL), 0.020038114860653877 (DESIRED)\\n [3471]: 0.020041022449731827 (ACTUAL), 0.019956735894083977 (DESIRED)\\n [8546]: 0.0199574064463377 (ACTUAL), 0.020024364814162254 (DESIRED)\\nMax absolute difference among violations: 8.46535e-05\\nMax relative difference among violations: 0.00422436\\n ACTUAL: array([0.02    , 0.02    , 0.020068, ..., 0.019999, 0.020001, 0.02    ],\\n      shape=(11752,), dtype=float32)\\n DESIRED: array([0.02    , 0.02    , 0.020068, ..., 0.020001, 0.020001, 0.02    ],\\n      shape=(11752,), dtype=float32)')",
+      "optimizer": {
+        "clip": 1.0,
+        "epsilon": 1e-08,
+        "rate": 0.01,
+        "rate_scales": {
+          "bias": 0.01,
+          "policy_bias": 0.0,
+          "policy_weight": 0.0,
+          "readout_gain": 0.0,
+          "value_bias": 0.0
+        }
+      },
+      "path": "/dev/shm/flygo/runs/embedding-epsilon-screen-v2/epsilon-1e-08/result.json",
+      "seconds": 6.218544960021973,
+      "sha256": "f8f851fad705e5f0d3b1bbadfba19ae588384ee0d03d86d594b2a2df31d04079",
+      "status": "failed"
+    }
+  ],
+  "python_tests": 84,
+  "revisions": [
+    "Adjacent-history candidate sampling left too few probe examples; expanded label-independent pairing inside exact shared prefixes.",
+    "A 10% hash split yielded two eligible probe families; froze exactly 25% of eligible families before training.",
+    "Side-by-side spherical patches failed coverage; an anatomy-only placement scan restored full 324-dimensional input rank.",
+    "Removed five probe pairs containing seven endpoint images overlapping training under D4; no teacher-gap/prefix threshold was relaxed.",
+    "Made JAX embedding outputs optional after the existing SPMD output-structure test caught incompatibility.",
+    "Replaced the bounded ranking score with a linear score and froze its unidentifiable intercept before any pilot training.",
+    "Qualified epsilon 1e-4 with unchanged tolerances after smaller values failed numerical update checks.",
+    "An initial worker-copy review rejection was resolved after verifying the user-owned hosts and their existing identical graph/dataset."
+  ],
+  "rust_tests": 48,
+  "schema_version": 1,
+  "scope": "Engineering failures and pretraining contract revisions, all before the two completed 64-update pilots."
+}

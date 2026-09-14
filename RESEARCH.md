@@ -53,6 +53,10 @@ Follow the [B0–B5 contract](docs/biological-interfaces.md) within the delibera
 [neuron-group study](docs/group-study.md). The initial atlas/correlation pilot
 is complete; it establishes neither biological tuning nor improved learnability.
 Earlier studies and the FLOP/exposure comparison contract remain intact.
+The user's subsequent proposal puts [quality-aware motor embedding training](docs/embedding-study.md)
+before functional partitioning. Coherent spherical views, genuine shared-prefix
+branches and a frozen-circuit control form a bounded pipeline pilot. Its
+engineering gate and selected branch probes do not constitute Go validation.
 
 ## Optimization study contracts
 

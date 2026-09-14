@@ -6,7 +6,7 @@ import jax.numpy as jnp
 from .numerics import softplus, sigmoid, log_softmax, firing_rate, condition_readout, HIGHEST
 
 
-def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0):
+def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0,return_embedding=False):
     # Reference uses edge messages. Production Rust avoids this E*B allocation.
     # Keep full-graph JAX parity batches small until a TPU kernel is qualified.
     n = graph['type_id'].shape[0]
@@ -37,10 +37,12 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
         pooled=condition_readout(pooled,readout_mean_scale)
     logits = jnp.matmul(pooled.T,params['policy_weight'].reshape(actions,groups).T,
                         precision=jax.lax.Precision.HIGHEST) + params['policy_bias']
-    value = jax.lax.tanh(jnp.matmul(pooled.T,params['value_weight'],precision=jax.lax.Precision.HIGHEST)
-                         + params['value_bias'][0],accuracy=HIGHEST)
+    score = jnp.matmul(pooled.T,params['value_weight'],precision=jax.lax.Precision.HIGHEST)+params['value_bias'][0]
+    value = jax.lax.tanh(score,accuracy=HIGHEST)
     initial = jnp.full((1,n,x.shape[1]),0.01,dtype=jnp.float32)
-    return dict(logits=logits,value=value,states=jnp.concatenate([initial,states],axis=0))
+    result = dict(logits=logits,value=value,states=jnp.concatenate([initial,states],axis=0))
+    if return_embedding: result.update(embedding=pooled.T,score=score)
+    return result
 
 
 def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions,rate_softness=0.0,readout_mean_scale=1.0):

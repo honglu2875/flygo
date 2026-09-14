@@ -1,0 +1,1053 @@
+{
+  "bank_path": "/dev/shm/flygo/runs/spherical-pairs-v5/result.json",
+  "bank_receipt_sha256": "27ed7c4d3c12e5eb8838e125243ae78d88c2b479692c1223fc4a7bf23e8a6e15",
+  "checkpoint_continuation_scope": "Fresh model in the same process, all checkpoint arrays and next sampler batch/update exact; two extra diagnostic updates and 64 extra view exposures per arm, beyond the step-64 published checkpoint.",
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "decision": "Do not fit motor groups or extend this uncalibrated loss blindly. Qualify training-only centering/scaling and visual evoked-response calibration before substantial pretraining; preserve raw motor responses and matched frozen controls.",
+  "environment": "a64f480502a5b26d3fb7",
+  "geometry": {
+    "axial_convention": "120 degrees: (1,0), (0,1), (1,1) are neighbors; orientation unregistered",
+    "context": "No legality, turn, komi or pass channels in visual drive. Pair members match ply and global context. This ordinal representation pilot does not produce calibrated values or a legal Go policy.",
+    "excluded_photoreceptors": 617,
+    "input_range": [
+      0.050000011920928955,
+      0.949999988079071
+    ],
+    "kind": "engineered common hex exponential chart, not measured optical axes",
+    "luminance": "own .95, opponent .05, empty/missing/uncovered .5; same current-player perspective in both eyes",
+    "minimum_singular": 0.13783848216417194,
+    "motors": 2129,
+    "origin": [
+      18.5,
+      20.0
+    ],
+    "patch_spec": {
+      "halfwidth_degrees": 25.0,
+      "neighbors": 4,
+      "patch_centers_degrees": [
+        [
+          -25.0,
+          -30.0
+        ],
+        [
+          -25.0,
+          30.0
+        ]
+      ],
+      "sigma_degrees": 5.0
+    },
+    "patches": [
+      {
+        "covered_board_points": 81,
+        "eye": "L",
+        "illuminated_sensors": 329,
+        "lag": 0,
+        "point_mass_max": 6.802724599838257,
+        "point_mass_min": 1.8326732367277145,
+        "sensors": 391
+      },
+      {
+        "covered_board_points": 81,
+        "eye": "L",
+        "illuminated_sensors": 449,
+        "lag": 2,
+        "point_mass_max": 22.124244317412376,
+        "point_mass_min": 1.5626357793807983,
+        "sensors": 937
+      },
+      {
+        "covered_board_points": 81,
+        "eye": "R",
+        "illuminated_sensors": 607,
+        "lag": 1,
+        "point_mass_max": 16.07526382803917,
+        "point_mass_min": 2.649323970079422,
+        "sensors": 802
+      },
+      {
+        "covered_board_points": 81,
+        "eye": "R",
+        "illuminated_sensors": 692,
+        "lag": 3,
+        "point_mass_max": 27.904699087142944,
+        "point_mass_min": 3.1252715587615967,
+        "sensors": 1360
+      }
+    ],
+    "per_eye_rescaling": false,
+    "radians_per_column": 0.08245474279272597,
+    "reference_cap_degrees": 80,
+    "reference_columns": 892,
+    "reflection": false,
+    "sampling_condition": 30.877985348083364,
+    "sampling_rank": 324,
+    "sensors": 3490
+  },
+  "native_sha256": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+  "pair_audit": {
+    "candidate_branches": 1555,
+    "divergence_counts": {
+      "1": 107,
+      "2": 102,
+      "3": 117,
+      "4": 95,
+      "5": 111,
+      "6": 102
+    },
+    "families_by_split": {
+      "probe": 12,
+      "train": 39
+    },
+    "game_comparisons": 7897,
+    "games": 9049,
+    "identical_visual_pairs_rejected": 0,
+    "max_divergence": 6,
+    "max_game_pairs_per_prefix": 256,
+    "min_gap": 0.2,
+    "min_prefix": 20,
+    "pairs": 9435,
+    "pairs_by_split": {
+      "probe": 94,
+      "train": 540
+    },
+    "ply_quantiles": [
+      21.0,
+      24.0,
+      30.0,
+      45.0,
+      65.0
+    ],
+    "probe_families": [
+      "00a137d60cd8e30a439065fb744edbc429b0d3cbf9ca7ad398f743dd0039c27d",
+      "07a0b85c8140afac1dd600afbcbb682c7fbc9c47decbee0a39f8772108a1275d",
+      "0fc9049f62df0c4531c31d27580ab301e5f98a9a1456afec7ebc2a0886991de8",
+      "1128463a0ce5bf443c061e34b8b18c2c2362444da67a9b9010d718fa0be9fba8",
+      "214d500ddec89c62b7ec8c992ff60b0b7f586ee1c540019194ddaeaf015235da",
+      "308bf953d63adb36dad8ceaaca081fec4f9f489f232df5200f69386608947264",
+      "4fd38ad0f15f96ab47d4e4011897b1832e07429b0bdc97c87adbe345b4387161",
+      "70e6639e3ab26dea99fa469a23f94d19bd12c9a354f6973a3ec352d21dd55cd1",
+      "b29827de7d03010c2994dd4372733ec01eb31a949cc22608252ce926d8f1778a",
+      "cca989116fbe407023c0590cc78abf0614f563d58f19dd49a5e891a4298c136b",
+      "d732b9fa55a6d1f73436e50a3fbdafaea68b5957bf93da27c833c3b64247754b",
+      "d95af7e7b0b370bf4a6d99e9f98a95aa4bc8a8f8a5f05e02b4109d061a7d16dc",
+      "dd3fe1964aa8bb224ceca8b6021b6baf63e4d7671da82bc4872001ee61240ea6"
+    ],
+    "probe_pairs_rejected_for_training_visual_overlap": 5,
+    "probe_rule": "exact quarter of eligible families by fixed hash order, frozen before training",
+    "probe_visual_D4_overlap": 0,
+    "retained": 634,
+    "seed": 918420
+  },
+  "qualification_sha256": "eab44758200973547865fa7dc9a97f6ef56e81872aa2311af90729c0e25ed04d",
+  "replication": {
+    "copies": [
+      {
+        "bytes": 268724762,
+        "destination_host": 0,
+        "files": 11,
+        "manifest": [
+          {
+            "bytes": 36283698,
+            "path": "after-correlations.npz",
+            "sha256": "36f40d7ddf5dde0cc3793dc82a077b275cc07e7116d76adac1a91a42ff796298"
+          },
+          {
+            "bytes": 809542,
+            "path": "after-responses.npz",
+            "sha256": "55489120bc0ec76a9b88d1b6fafb2e2522298756360a820f6d757a2e470bf0e7"
+          },
+          {
+            "bytes": 36283698,
+            "path": "before-correlations.npz",
+            "sha256": "fb2cb635836db2539b94beaff466670ffc92dc2f896358c009fdd081d137bdb5"
+          },
+          {
+            "bytes": 809542,
+            "path": "before-responses.npz",
+            "sha256": "ad0de37e217a74d37ab4693b080752e92d9fc54e16e78c2f3d528aee622340b4"
+          },
+          {
+            "bytes": 419,
+            "path": "checkpoints/step-00000064.json",
+            "sha256": "b55f331f0b0e4c255f13fdbcb38c06dd6b71e264f911d8e9c3db153ae562d575"
+          },
+          {
+            "bytes": 187592900,
+            "path": "checkpoints/step-00000064.npz",
+            "sha256": "4b45ec6d22f76f346b151231b0ff31be2afeb94377990b51218272b80264dbca"
+          },
+          {
+            "bytes": 3210,
+            "path": "contract.json",
+            "sha256": "ba30310e9a996922737cf71267eb5ab1488241db8e4a6aac4f4d9fcd65544764"
+          },
+          {
+            "bytes": 1074,
+            "path": "parameter-audit.json",
+            "sha256": "4fd4907f02c660964d8af23fc23b26b15d03670da7224771c927a5db2a8aacf6"
+          },
+          {
+            "bytes": 6909580,
+            "path": "probe-inputs.npz",
+            "sha256": "929566f657078ccaa151548472a39e1ca2f8c73016b9513ca8564eda1c443ffa"
+          },
+          {
+            "bytes": 30833,
+            "path": "result.json",
+            "sha256": "ad04798f1fee8097f5ce9de89b7b05e82069128c3347f3d80b9dc7796c3268e8"
+          },
+          {
+            "bytes": 266,
+            "path": "status.json",
+            "sha256": "724c7b03709cef94832701b965a0ffc33ba8568d21ebbfb35af72fd3490c8fd5"
+          }
+        ],
+        "run": "embedding-learned-v1",
+        "source_host": 2,
+        "status": "passed"
+      },
+      {
+        "bytes": 268724745,
+        "destination_host": 0,
+        "files": 11,
+        "manifest": [
+          {
+            "bytes": 36283698,
+            "path": "after-correlations.npz",
+            "sha256": "fb2cb635836db2539b94beaff466670ffc92dc2f896358c009fdd081d137bdb5"
+          },
+          {
+            "bytes": 809542,
+            "path": "after-responses.npz",
+            "sha256": "ad0de37e217a74d37ab4693b080752e92d9fc54e16e78c2f3d528aee622340b4"
+          },
+          {
+            "bytes": 36283698,
+            "path": "before-correlations.npz",
+            "sha256": "fb2cb635836db2539b94beaff466670ffc92dc2f896358c009fdd081d137bdb5"
+          },
+          {
+            "bytes": 809542,
+            "path": "before-responses.npz",
+            "sha256": "ad0de37e217a74d37ab4693b080752e92d9fc54e16e78c2f3d528aee622340b4"
+          },
+          {
+            "bytes": 418,
+            "path": "checkpoints/step-00000064.json",
+            "sha256": "ffd0535b6a9d95c5cec26b15051b4380745b813d985b2cd5d25290f2b6a3aadf"
+          },
+          {
+            "bytes": 187592943,
+            "path": "checkpoints/step-00000064.npz",
+            "sha256": "2029e1e0492cc9e518b51dac71625c3a3ada3b1802679d983558e19ff9cb746e"
+          },
+          {
+            "bytes": 3271,
+            "path": "contract.json",
+            "sha256": "423833b0040e3f0746f221bf9d1fc8c90bb5abf6c56d118f87a5405f14ee91ef"
+          },
+          {
+            "bytes": 916,
+            "path": "parameter-audit.json",
+            "sha256": "8ebb37141913a139e2b7f578ba6f4741c511c47389865dcd863be161ffbf5037"
+          },
+          {
+            "bytes": 6909580,
+            "path": "probe-inputs.npz",
+            "sha256": "929566f657078ccaa151548472a39e1ca2f8c73016b9513ca8564eda1c443ffa"
+          },
+          {
+            "bytes": 30871,
+            "path": "result.json",
+            "sha256": "fc06b9f3fc51c5f67c73fc841afde415d06574cf72d5ca1de5f9ae5a62c74b63"
+          },
+          {
+            "bytes": 266,
+            "path": "status.json",
+            "sha256": "58e9b6f3bf2c07b0a0cdeea69f037068a14f6cda026aab59bdfdc89e1898bb4a"
+          }
+        ],
+        "run": "embedding-frozen-v1",
+        "source_host": 3,
+        "status": "passed"
+      }
+    ],
+    "receipt_path": "/dev/shm/flygo/runs/embedding-pilot-launch-v1/replicas.json",
+    "receipt_sha256": "fcd04919d0a3b2c61210cc980f238424f0abd6955a2d602052247a2b560ba56e",
+    "scope": "All original result and checkpoint receipts retained unchanged; these manifests record their subsequent verified second copies on w0. Storage is volatile.",
+    "status": "passed"
+  },
+  "schema_version": 1,
+  "scope": "Single-seed pipeline pilot; 64 updates, 2048 views per arm. No playing-strength or learned-group claim.",
+  "source_graph": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "status": "complete",
+  "variants": {
+    "frozen": {
+      "after": {
+        "conditioned_response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.309932736618196,
+          "first_pc_variance_fraction": 0.356018039980763,
+          "observations": 93,
+          "rms_input_variation": 8.715939773210691e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            1.912056237578947e-10,
+            1.3540569172813019e-09,
+            1.3716569914197223e-08,
+            2.3375950574792318e-07,
+            2.117172059587311e-05
+          ],
+          "varying_cells": 58
+        },
+        "contrastive_loss": 1.0986122881654228,
+        "loss": 1.7917594666499186,
+        "macro_family_accuracy": 0.46915509259259264,
+        "mean_score_gap": 1.0378302094784188e-09,
+        "nuisance_rank": 5,
+        "pair_accuracy": 0.5,
+        "pair_accuracy_by_family": {
+          "00a137d60cd8e30a439065fb744edbc429b0d3cbf9ca7ad398f743dd0039c27d": 0.0,
+          "0fc9049f62df0c4531c31d27580ab301e5f98a9a1456afec7ebc2a0886991de8": 0.5,
+          "1128463a0ce5bf443c061e34b8b18c2c2362444da67a9b9010d718fa0be9fba8": 0.46875,
+          "214d500ddec89c62b7ec8c992ff60b0b7f586ee1c540019194ddaeaf015235da": 1.0,
+          "308bf953d63adb36dad8ceaaca081fec4f9f489f232df5200f69386608947264": 0.4444444444444444,
+          "4fd38ad0f15f96ab47d4e4011897b1832e07429b0bdc97c87adbe345b4387161": 0.0,
+          "70e6639e3ab26dea99fa469a23f94d19bd12c9a354f6973a3ec352d21dd55cd1": 0.5,
+          "b29827de7d03010c2994dd4372733ec01eb31a949cc22608252ce926d8f1778a": 0.5,
+          "cca989116fbe407023c0590cc78abf0614f563d58f19dd49a5e891a4298c136b": 0.0,
+          "d732b9fa55a6d1f73436e50a3fbdafaea68b5957bf93da27c833c3b64247754b": 0.75,
+          "d95af7e7b0b370bf4a6d99e9f98a95aa4bc8a8f8a5f05e02b4109d061a7d16dc": 0.6666666666666666,
+          "dd3fe1964aa8bb224ceca8b6021b6baf63e4d7671da82bc4872001ee61240ea6": 0.8
+        },
+        "pair_tie_fraction": 0.0,
+        "ranking_loss": 0.6931471784844958,
+        "response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.011731349036382,
+          "first_pc_variance_fraction": 0.4180928708081954,
+          "observations": 93,
+          "rms_input_variation": 9.998607113355924e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            1.9314730441764467e-10,
+            1.551093134610173e-09,
+            1.5675330859227878e-08,
+            2.7609361306041363e-07,
+            2.5716024101146323e-05
+          ],
+          "varying_cells": 73
+        },
+        "rms_rate": 0.02361003487611297,
+        "varying_by_superclass": {
+          "cb_motor": 0,
+          "descending_neuron": 73,
+          "vnc_motor": 0
+        }
+      },
+      "before": {
+        "conditioned_response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.309932736618196,
+          "first_pc_variance_fraction": 0.356018039980763,
+          "observations": 93,
+          "rms_input_variation": 8.715939773210691e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            1.912056237578947e-10,
+            1.3540569172813019e-09,
+            1.3716569914197223e-08,
+            2.3375950574792318e-07,
+            2.117172059587311e-05
+          ],
+          "varying_cells": 58
+        },
+        "contrastive_loss": 1.0986122881654228,
+        "loss": 1.7917594624688924,
+        "macro_family_accuracy": 0.4490933641975308,
+        "mean_score_gap": 3.128352158881248e-09,
+        "nuisance_rank": 5,
+        "pair_accuracy": 0.46808510638297873,
+        "pair_accuracy_by_family": {
+          "00a137d60cd8e30a439065fb744edbc429b0d3cbf9ca7ad398f743dd0039c27d": 0.0,
+          "0fc9049f62df0c4531c31d27580ab301e5f98a9a1456afec7ebc2a0886991de8": 0.3333333333333333,
+          "1128463a0ce5bf443c061e34b8b18c2c2362444da67a9b9010d718fa0be9fba8": 0.46875,
+          "214d500ddec89c62b7ec8c992ff60b0b7f586ee1c540019194ddaeaf015235da": 1.0,
+          "308bf953d63adb36dad8ceaaca081fec4f9f489f232df5200f69386608947264": 0.37037037037037035,
+          "4fd38ad0f15f96ab47d4e4011897b1832e07429b0bdc97c87adbe345b4387161": 0.0,
+          "70e6639e3ab26dea99fa469a23f94d19bd12c9a354f6973a3ec352d21dd55cd1": 0.5,
+          "b29827de7d03010c2994dd4372733ec01eb31a949cc22608252ce926d8f1778a": 0.5,
+          "cca989116fbe407023c0590cc78abf0614f563d58f19dd49a5e891a4298c136b": 0.0,
+          "d732b9fa55a6d1f73436e50a3fbdafaea68b5957bf93da27c833c3b64247754b": 0.75,
+          "d95af7e7b0b370bf4a6d99e9f98a95aa4bc8a8f8a5f05e02b4109d061a7d16dc": 0.6666666666666666,
+          "dd3fe1964aa8bb224ceca8b6021b6baf63e4d7671da82bc4872001ee61240ea6": 0.8
+        },
+        "pair_tie_fraction": 0.0,
+        "ranking_loss": 0.6931471743034697,
+        "response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.011731349036382,
+          "first_pc_variance_fraction": 0.4180928708081954,
+          "observations": 93,
+          "rms_input_variation": 9.998607113355924e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            1.9314730441764467e-10,
+            1.551093134610173e-09,
+            1.5675330859227878e-08,
+            2.7609361306041363e-07,
+            2.5716024101146323e-05
+          ],
+          "varying_cells": 73
+        },
+        "rms_rate": 0.02361003487611297,
+        "varying_by_superclass": {
+          "cb_motor": 0,
+          "descending_neuron": 73,
+          "vnc_motor": 0
+        }
+      },
+      "checkpoint": {
+        "bytes": 187592943,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "path": "/dev/shm/flygo/runs/embedding-frozen-v1/checkpoints/step-00000064.npz",
+        "peer": null,
+        "replica_status": "local_only",
+        "sha256": "2029e1e0492cc9e518b51dac71625c3a3ada3b1802679d983558e19ff9cb746e",
+        "step": 64
+      },
+      "contract": {
+        "bank_sha256": "27ed7c4d3c12e5eb8838e125243ae78d88c2b479692c1223fc4a7bf23e8a6e15",
+        "contract_id": "da519f8886dace0c39649a0fe5e726761e8d8fc9f956c612116fe488dd5e6e88",
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "model": {
+          "actions": 1,
+          "features": 3490,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 1,
+          "steps": 8,
+          "threads": 24
+        },
+        "native_sha256": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+        "objective": {
+          "norm_floor": 0.001,
+          "rank_temperature": 0.25,
+          "rank_weight": 1.0,
+          "temperature": 0.1
+        },
+        "objective_version": "branch-contrast-and-linear-rank-v2",
+        "optimizer": {
+          "clip": 1.0,
+          "epsilon": 0.0001,
+          "rate": 0.01,
+          "rate_scales": {
+            "bias": 0.0,
+            "edge": 0.0,
+            "input_gain": 0.0,
+            "leak": 0.0,
+            "policy_bias": 0.0,
+            "policy_weight": 0.0,
+            "readout_gain": 0.0,
+            "value_bias": 0.0
+          }
+        },
+        "pair_draws": 512,
+        "pairs_per_update": 8,
+        "probe_families": 12,
+        "probe_indices": [
+          76,
+          280,
+          524,
+          105,
+          102,
+          281,
+          298,
+          107,
+          291,
+          98,
+          277,
+          104,
+          88,
+          96,
+          523,
+          279,
+          290,
+          332,
+          416,
+          75,
+          198,
+          299,
+          517,
+          278,
+          287,
+          100,
+          301,
+          418,
+          296,
+          521,
+          81,
+          293,
+          106,
+          79,
+          80,
+          285,
+          77,
+          413,
+          99,
+          32,
+          197,
+          74,
+          82,
+          292,
+          90,
+          286,
+          527,
+          531,
+          72,
+          200,
+          73,
+          519,
+          91,
+          92,
+          530,
+          533,
+          83,
+          295,
+          84,
+          288,
+          103,
+          276,
+          78,
+          297,
+          89,
+          101,
+          289,
+          199,
+          415,
+          525,
+          71,
+          532,
+          333,
+          520,
+          95,
+          518,
+          294,
+          86,
+          93,
+          300,
+          284,
+          97,
+          526,
+          529,
+          414,
+          417,
+          522,
+          94,
+          282,
+          275,
+          283,
+          85,
+          70,
+          87
+        ],
+        "probe_positions": 93,
+        "python_sha256": {
+          "contrastive.py": "8d6cd3af1f64d20ba8872b926466f4210493a206ac5bcfa59683e8f03ad4ea1a",
+          "data/branches.py": "c0bce48cdd2df13cf521f4d51b1a9956fef11dfba6487df614af3a841199dc10",
+          "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+          "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+          "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+        },
+        "qualification_sha256": "eab44758200973547865fa7dc9a97f6ef56e81872aa2311af90729c0e25ed04d",
+        "sampler_seed": 918425,
+        "schema_version": 1,
+        "scope": "Single-seed pipeline pilot. Teacher-selected branch probes are not general validation or playing strength.",
+        "script_sha256": "4142ea18b3f93cef4dda79fca9ff35c55da24f33b6b73364772050787c7015b6",
+        "source_path": "/dev/shm/flygo/environments/a64f480502a5b26d3fb7/site-packages/flygo",
+        "training_work": "two forwards and one backward per update; no TPU",
+        "updates": 64,
+        "variant": "frozen",
+        "view_exposures": 2048
+      },
+      "exact_continuation": true,
+      "gradient_norm_max": 6.40143284387964e-05,
+      "gradient_norm_min": 1.1190647616350491e-05,
+      "mean_update_seconds": 1.619769375771284,
+      "parameter_changes": {
+        "bias": {
+          "changed": 0,
+          "elements": 11752,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "edge": {
+          "changed": 0,
+          "elements": 15270273,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "input_gain": {
+          "changed": 0,
+          "elements": 3490,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "leak": {
+          "changed": 0,
+          "elements": 11752,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "policy_bias": {
+          "changed": 0,
+          "elements": 1,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "policy_weight": {
+          "changed": 0,
+          "elements": 2129,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "readout_gain": {
+          "changed": 0,
+          "elements": 165122,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "value_bias": {
+          "changed": 0,
+          "elements": 1,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "value_weight": {
+          "changed": 2128,
+          "elements": 2129,
+          "max_abs": 0.002941431477665901,
+          "rms": 0.00016926724007742275
+        }
+      },
+      "seconds": 120.61046648025513,
+      "source_summary_path": "/dev/shm/flygo/runs/embedding-pilot-launch-v1/embedding-frozen-v1-summary.json",
+      "source_summary_sha256": "d906ab9f8facf313243341a1d90462439911c6232fdafd819c4e3cde4e2b0287"
+    },
+    "learned": {
+      "after": {
+        "conditioned_response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.316375807573804,
+          "first_pc_variance_fraction": 0.35549340556592707,
+          "observations": 93,
+          "rms_input_variation": 8.71605274188399e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            2.423846475704917e-18,
+            1.365736868209098e-09,
+            1.3655781643973422e-08,
+            2.3374733165050618e-07,
+            2.1154831857780563e-05
+          ],
+          "varying_cells": 58
+        },
+        "contrastive_loss": 1.0986122881643456,
+        "loss": 1.791759465038842,
+        "macro_family_accuracy": 0.46915509259259264,
+        "mean_score_gap": 1.8428297753029682e-09,
+        "nuisance_rank": 5,
+        "pair_accuracy": 0.5,
+        "pair_accuracy_by_family": {
+          "00a137d60cd8e30a439065fb744edbc429b0d3cbf9ca7ad398f743dd0039c27d": 0.0,
+          "0fc9049f62df0c4531c31d27580ab301e5f98a9a1456afec7ebc2a0886991de8": 0.5,
+          "1128463a0ce5bf443c061e34b8b18c2c2362444da67a9b9010d718fa0be9fba8": 0.46875,
+          "214d500ddec89c62b7ec8c992ff60b0b7f586ee1c540019194ddaeaf015235da": 1.0,
+          "308bf953d63adb36dad8ceaaca081fec4f9f489f232df5200f69386608947264": 0.4444444444444444,
+          "4fd38ad0f15f96ab47d4e4011897b1832e07429b0bdc97c87adbe345b4387161": 0.0,
+          "70e6639e3ab26dea99fa469a23f94d19bd12c9a354f6973a3ec352d21dd55cd1": 0.5,
+          "b29827de7d03010c2994dd4372733ec01eb31a949cc22608252ce926d8f1778a": 0.5,
+          "cca989116fbe407023c0590cc78abf0614f563d58f19dd49a5e891a4298c136b": 0.0,
+          "d732b9fa55a6d1f73436e50a3fbdafaea68b5957bf93da27c833c3b64247754b": 0.75,
+          "d95af7e7b0b370bf4a6d99e9f98a95aa4bc8a8f8a5f05e02b4109d061a7d16dc": 0.6666666666666666,
+          "dd3fe1964aa8bb224ceca8b6021b6baf63e4d7671da82bc4872001ee61240ea6": 0.8
+        },
+        "pair_tie_fraction": 0.0,
+        "ranking_loss": 0.6931471768744962,
+        "response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.019634892784154,
+          "first_pc_variance_fraction": 0.41734733062264956,
+          "observations": 93,
+          "rms_input_variation": 1.000157722398425e-06,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            0.0,
+            1.550676454299074e-09,
+            1.5605563222640784e-08,
+            2.7603370243258973e-07,
+            2.56959963629084e-05
+          ],
+          "varying_cells": 73
+        },
+        "rms_rate": 0.023610089935030693,
+        "varying_by_superclass": {
+          "cb_motor": 0,
+          "descending_neuron": 73,
+          "vnc_motor": 0
+        }
+      },
+      "before": {
+        "conditioned_response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.309932736618196,
+          "first_pc_variance_fraction": 0.356018039980763,
+          "observations": 93,
+          "rms_input_variation": 8.715939773210691e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            1.912056237578947e-10,
+            1.3540569172813019e-09,
+            1.3716569914197223e-08,
+            2.3375950574792318e-07,
+            2.117172059587311e-05
+          ],
+          "varying_cells": 58
+        },
+        "contrastive_loss": 1.0986122881654228,
+        "loss": 1.7917594624688924,
+        "macro_family_accuracy": 0.4490933641975308,
+        "mean_score_gap": 3.128352158881248e-09,
+        "nuisance_rank": 5,
+        "pair_accuracy": 0.46808510638297873,
+        "pair_accuracy_by_family": {
+          "00a137d60cd8e30a439065fb744edbc429b0d3cbf9ca7ad398f743dd0039c27d": 0.0,
+          "0fc9049f62df0c4531c31d27580ab301e5f98a9a1456afec7ebc2a0886991de8": 0.3333333333333333,
+          "1128463a0ce5bf443c061e34b8b18c2c2362444da67a9b9010d718fa0be9fba8": 0.46875,
+          "214d500ddec89c62b7ec8c992ff60b0b7f586ee1c540019194ddaeaf015235da": 1.0,
+          "308bf953d63adb36dad8ceaaca081fec4f9f489f232df5200f69386608947264": 0.37037037037037035,
+          "4fd38ad0f15f96ab47d4e4011897b1832e07429b0bdc97c87adbe345b4387161": 0.0,
+          "70e6639e3ab26dea99fa469a23f94d19bd12c9a354f6973a3ec352d21dd55cd1": 0.5,
+          "b29827de7d03010c2994dd4372733ec01eb31a949cc22608252ce926d8f1778a": 0.5,
+          "cca989116fbe407023c0590cc78abf0614f563d58f19dd49a5e891a4298c136b": 0.0,
+          "d732b9fa55a6d1f73436e50a3fbdafaea68b5957bf93da27c833c3b64247754b": 0.75,
+          "d95af7e7b0b370bf4a6d99e9f98a95aa4bc8a8f8a5f05e02b4109d061a7d16dc": 0.6666666666666666,
+          "dd3fe1964aa8bb224ceca8b6021b6baf63e4d7671da82bc4872001ee61240ea6": 0.8
+        },
+        "pair_tie_fraction": 0.0,
+        "ranking_loss": 0.6931471743034697,
+        "response": {
+          "cells": 2129,
+          "covariance_participation_rank": 4.011731349036382,
+          "first_pc_variance_fraction": 0.4180928708081954,
+          "observations": 93,
+          "rms_input_variation": 9.998607113355924e-07,
+          "sample_rank_ceiling": 92,
+          "std_floor": 1e-06,
+          "std_quantiles": [
+            1.9314730441764467e-10,
+            1.551093134610173e-09,
+            1.5675330859227878e-08,
+            2.7609361306041363e-07,
+            2.5716024101146323e-05
+          ],
+          "varying_cells": 73
+        },
+        "rms_rate": 0.02361003487611297,
+        "varying_by_superclass": {
+          "cb_motor": 0,
+          "descending_neuron": 73,
+          "vnc_motor": 0
+        }
+      },
+      "checkpoint": {
+        "bytes": 187592900,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "path": "/dev/shm/flygo/runs/embedding-learned-v1/checkpoints/step-00000064.npz",
+        "peer": null,
+        "replica_status": "local_only",
+        "sha256": "4b45ec6d22f76f346b151231b0ff31be2afeb94377990b51218272b80264dbca",
+        "step": 64
+      },
+      "contract": {
+        "bank_sha256": "27ed7c4d3c12e5eb8838e125243ae78d88c2b479692c1223fc4a7bf23e8a6e15",
+        "contract_id": "5f0d370e1e2f436ce874763eec32f0b4134802f07a843bc8e2e2e9531d3a5c6f",
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "model": {
+          "actions": 1,
+          "features": 3490,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 1,
+          "steps": 8,
+          "threads": 24
+        },
+        "native_sha256": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+        "objective": {
+          "norm_floor": 0.001,
+          "rank_temperature": 0.25,
+          "rank_weight": 1.0,
+          "temperature": 0.1
+        },
+        "objective_version": "branch-contrast-and-linear-rank-v2",
+        "optimizer": {
+          "clip": 1.0,
+          "epsilon": 0.0001,
+          "rate": 0.01,
+          "rate_scales": {
+            "bias": 0.01,
+            "policy_bias": 0.0,
+            "policy_weight": 0.0,
+            "readout_gain": 0.0,
+            "value_bias": 0.0
+          }
+        },
+        "pair_draws": 512,
+        "pairs_per_update": 8,
+        "probe_families": 12,
+        "probe_indices": [
+          76,
+          280,
+          524,
+          105,
+          102,
+          281,
+          298,
+          107,
+          291,
+          98,
+          277,
+          104,
+          88,
+          96,
+          523,
+          279,
+          290,
+          332,
+          416,
+          75,
+          198,
+          299,
+          517,
+          278,
+          287,
+          100,
+          301,
+          418,
+          296,
+          521,
+          81,
+          293,
+          106,
+          79,
+          80,
+          285,
+          77,
+          413,
+          99,
+          32,
+          197,
+          74,
+          82,
+          292,
+          90,
+          286,
+          527,
+          531,
+          72,
+          200,
+          73,
+          519,
+          91,
+          92,
+          530,
+          533,
+          83,
+          295,
+          84,
+          288,
+          103,
+          276,
+          78,
+          297,
+          89,
+          101,
+          289,
+          199,
+          415,
+          525,
+          71,
+          532,
+          333,
+          520,
+          95,
+          518,
+          294,
+          86,
+          93,
+          300,
+          284,
+          97,
+          526,
+          529,
+          414,
+          417,
+          522,
+          94,
+          282,
+          275,
+          283,
+          85,
+          70,
+          87
+        ],
+        "probe_positions": 93,
+        "python_sha256": {
+          "contrastive.py": "8d6cd3af1f64d20ba8872b926466f4210493a206ac5bcfa59683e8f03ad4ea1a",
+          "data/branches.py": "c0bce48cdd2df13cf521f4d51b1a9956fef11dfba6487df614af3a841199dc10",
+          "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+          "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+          "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+        },
+        "qualification_sha256": "eab44758200973547865fa7dc9a97f6ef56e81872aa2311af90729c0e25ed04d",
+        "sampler_seed": 918425,
+        "schema_version": 1,
+        "scope": "Single-seed pipeline pilot. Teacher-selected branch probes are not general validation or playing strength.",
+        "script_sha256": "4142ea18b3f93cef4dda79fca9ff35c55da24f33b6b73364772050787c7015b6",
+        "source_path": "/dev/shm/flygo/environments/a64f480502a5b26d3fb7/site-packages/flygo",
+        "training_work": "two forwards and one backward per update; no TPU",
+        "updates": 64,
+        "variant": "learned",
+        "view_exposures": 2048
+      },
+      "exact_continuation": true,
+      "gradient_norm_max": 6.18410321581097e-05,
+      "gradient_norm_min": 1.0792313007889796e-05,
+      "mean_update_seconds": 1.5447546727955341,
+      "parameter_changes": {
+        "bias": {
+          "changed": 691,
+          "elements": 11752,
+          "max_abs": 6.844662129878998e-05,
+          "rms": 1.016040633994193e-06
+        },
+        "edge": {
+          "changed": 1759,
+          "elements": 15270273,
+          "max_abs": 0.0001430511474609375,
+          "rms": 8.189909799571899e-08
+        },
+        "input_gain": {
+          "changed": 2382,
+          "elements": 3490,
+          "max_abs": 0.0007003694772720337,
+          "rms": 1.8977850681572515e-05
+        },
+        "leak": {
+          "changed": 11745,
+          "elements": 11752,
+          "max_abs": 3.005694452440366e-05,
+          "rms": 5.753251107956309e-07
+        },
+        "policy_bias": {
+          "changed": 0,
+          "elements": 1,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "policy_weight": {
+          "changed": 0,
+          "elements": 2129,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "readout_gain": {
+          "changed": 0,
+          "elements": 165122,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "value_bias": {
+          "changed": 0,
+          "elements": 1,
+          "max_abs": 0.0,
+          "rms": 0.0
+        },
+        "value_weight": {
+          "changed": 2128,
+          "elements": 2129,
+          "max_abs": 0.0029422305524349213,
+          "rms": 0.00016919614100532247
+        }
+      },
+      "seconds": 115.77024221420288,
+      "source_summary_path": "/dev/shm/flygo/runs/embedding-pilot-launch-v1/embedding-learned-v1-summary.json",
+      "source_summary_sha256": "aca382b0815083652bafe31f02a79a90329a5d38750fd575d7ee490d38753c4b"
+    }
+  }
+}

@@ -12,6 +12,7 @@ struct State {
     params: Params,
     adam: Adam,
     prepared: Option<fly_core::recurrent::Prepared>,
+    revision: u64,
 }
 #[pyclass]
 pub struct FlyModel {
@@ -107,6 +108,7 @@ impl FlyModel {
                     params,
                     adam,
                     prepared: None,
+                    revision: 0,
                 })
             })
             .map_err(PyValueError::new_err)?;
@@ -159,6 +161,64 @@ impl FlyModel {
             .lock()
             .map_err(|e| PyRuntimeError::new_err(e.to_string()))?;
         Ok(export(py, &state.params))
+    }
+    /// Streaming readout with a revision token for an external objective.
+    fn embedding<'py>(
+        &self, py: Python<'py>, input: PyReadonlyArray2<'py, f32>, steps: usize,
+    ) -> PyResult<(Bound<'py, PyArray1<f32>>, Bound<'py, PyArray1<f32>>, u64)> {
+        let batch = input.shape()[1];
+        let input = input.as_slice()?.to_vec();
+        let (pooled, values, revision) = py.detach(|| {
+            let mut state = self.state.lock().map_err(|e| e.to_string())?;
+            if state.prepared.is_none() {
+                state.prepared = Some(fly_core::recurrent::prepare(
+                    &state.model.graph, &state.model.executor, &state.params.core, state.model.rate,
+                )?);
+            }
+            let output = state.model.predict_prepared(
+                &state.params, &input, batch, steps, state.prepared.as_ref(),
+            )?;
+            Ok::<_, String>((output.pooled, output.scores, state.revision))
+        }).map_err(PyValueError::new_err)?;
+        Ok((pooled.into_pyarray(py), values.into_pyarray(py), revision))
+    }
+    /// Recompute a tape, apply external readout cotangents, optionally update.
+    /// No full-CNS tape crosses Python. Revisions reject intervening updates or restores.
+    #[allow(clippy::too_many_arguments)]
+    #[pyo3(signature=(input, steps, cotangent, value_cotangent, revision, update=None))]
+    fn embedding_backward<'py>(
+        &self, py: Python<'py>, input: PyReadonlyArray2<'py, f32>, steps: usize,
+        cotangent: PyReadonlyArray2<'py, f32>, value_cotangent: PyReadonlyArray1<'py, f32>,
+        revision: u64, update: Option<(f32, f32, Vec<f32>, f32)>,
+    ) -> PyResult<(Arrays<'py>, Option<(f64, u64)>)> {
+        let batch = input.shape()[1];
+        let cotangent_shape = cotangent.shape().to_vec();
+        let (input, cotangent, value_cotangent) = (
+            input.as_slice()?.to_vec(), cotangent.as_slice()?.to_vec(),
+            value_cotangent.as_slice()?.to_vec(),
+        );
+        let (grad, result) = py.detach(|| {
+            let mut state = self.state.lock().map_err(|e| e.to_string())?;
+            if revision != state.revision { return Err("Stale embedding revision".into()); }
+            if cotangent_shape != [state.model.ports.groups, batch] {
+                return Err("Expected group-major embedding cotangent [G,B]".into());
+            }
+            let State { model, params, adam, prepared, revision } = &mut *state;
+            let output = model.forward_prepared(params, &input, batch, steps, prepared.as_ref())?;
+            let grad = model.backward_with_embedding(
+                params, &input, &output, &vec![0.0; batch * model.ports.actions],
+                &vec![0.0; batch], Some(&cotangent), Some(&value_cotangent),
+            )?;
+            if let Some((rate, clip, scales, epsilon)) = update {
+                let norm = adam.update_with_epsilon(model, params, &grad, rate, clip, &scales, epsilon)?;
+                *prepared = None;
+                *revision += 1;
+                Ok::<_, String>((None, Some((norm, adam.step))))
+            } else {
+                Ok((Some(grad), None))
+            }
+        }).map_err(PyValueError::new_err)?;
+        Ok((grad.as_ref().map(|g| export(py, g)).unwrap_or_default(), result))
     }
     /// Read-only kernel timings on this graph and a real recurrent state.
     fn profile_sparse(
@@ -326,6 +386,7 @@ impl FlyModel {
                 params,
                 adam,
                 prepared,
+                revision,
             } = &mut *state;
             let (pl, vl, grad) = model.loss_and_grad(
                 params,
@@ -341,6 +402,7 @@ impl FlyModel {
             let norm = adam.update_with_epsilon(model, params, &grad, rate, clip,
                 rate_scales.as_deref().unwrap_or(&[1.0; 9]), epsilon)?;
             *prepared = None;
+            *revision += 1;
             Ok::<_, String>((pl, vl, norm, adam.step))
         })
         .map_err(PyValueError::new_err)
@@ -383,6 +445,7 @@ impl FlyModel {
             }
             state.params = params;
             state.prepared = None;
+            state.revision += 1;
             state.adam = Adam {
                 first,
                 second,

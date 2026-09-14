@@ -12,7 +12,11 @@ an acceptance record. CPU work and dataset production do not wait for TPU.
 After the first M6 batch, the active research sequence is
 [B0–B5: biological interfaces](docs/biological-interfaces.md), within the
 [G1–G5 neuron-group study](docs/group-study.md). B0's bounded atlas/response
-pilot is complete; coherent retinal input is the next implementation gate.
+pilot is complete. The coherent spherical input and bounded
+[motor-embedding pilot](docs/embedding-study.md) are now CPU-qualified. That
+pilot barely changes circuit weights and shows no benefit over a frozen
+representation. Signal and optimizer conditioning precede substantial
+pretraining; functional output groups remain downstream of trained responses.
 
 | Milestone | Deliverable | Depends on |
 |---|---|---|

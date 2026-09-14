@@ -22,6 +22,8 @@ The early trained models are weak; working training is not a strength claim.
 - [Controlled results](docs/research-results.md): completed comparisons and their limits.
 - [Neuron-group study](docs/group-study.md): next-phase milestones, with the
   [measured density and regrowth proposal](docs/structural-plasticity.md).
+- [Motor embeddings](docs/embedding-study.md): coherent spherical inputs,
+  causal contrastive pairs and trained-response probes before grouping.
 - [Biological interfaces](docs/biological-interfaces.md): active retinal/history
   and response-correlation programme, including the completed CPU pilot.
 

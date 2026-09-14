@@ -130,6 +130,39 @@ class RustFly:
     def parameters(self):
         return dict(zip(PARAMETERS,self.native.parameters()))
 
+    def embedding(self, features):
+        """Batch-major individual/pool rates, without exporting recurrent states."""
+        pooled, _, _ = self.native.embedding(self._input(features), self.config.steps)
+        return pooled.reshape(self.config.groups, -1).T.copy()
+
+    def _embedding_objective(self, features, objective, update=None):
+        x = self._input(features)
+        pooled, value, revision = self.native.embedding(x, self.config.steps)
+        embedding = pooled.reshape(self.config.groups, -1).T
+        metrics, de, dv = objective(embedding, value)
+        de, dv = np.asarray(de, np.float32), np.asarray(dv, np.float32)
+        if de.shape != embedding.shape or dv.shape != value.shape:
+            raise ValueError('Objective cotangents must match the embedding and value shapes')
+        grad, result = self.native.embedding_backward(x, self.config.steps,
+            np.ascontiguousarray(de.T), np.ascontiguousarray(dv), revision, update)
+        return metrics, grad, result
+
+    def embedding_loss_and_grad(self, features, objective):
+        """Objective returns (metrics, d_embedding, d_linear_score). Recomputes the tape."""
+        metrics, grad, _ = self._embedding_objective(features, objective)
+        return metrics, dict(zip(PARAMETERS, grad))
+
+    def train_embedding(self, features, objective, *, rate=0.003, clip=1.0,
+                        rate_scales=None, epsilon=DEFAULT_EPSILON):
+        """Prototype external objective: two forwards, one backward, one Rust Adam update."""
+        validate_epsilon(epsilon)
+        if rate_scales is not None and set(rate_scales)-set(PARAMETERS):
+            raise ValueError('Unknown parameter group in learning-rate multipliers')
+        scales = [1.0 if rate_scales is None else rate_scales.get(name, 1.0) for name in PARAMETERS]
+        metrics, _, (norm, step) = self._embedding_objective(features, objective,
+            (rate, clip, scales, epsilon))
+        return dict(metrics, gradient_norm=norm, step=step)
+
     def loss_and_grad(self, features, legal, policy, value):
         pl,vl,grad = self.native.loss_and_grad(self._input(features),self.config.steps,
             np.ascontiguousarray(legal,dtype=np.uint8),np.ascontiguousarray(policy,dtype=np.float32),

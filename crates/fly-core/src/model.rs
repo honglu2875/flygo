@@ -40,11 +40,13 @@ pub struct Model {
 pub struct Prediction {
     pub logits: Vec<f32>,
     pub values: Vec<f32>,
+    pub scores: Vec<f32>,
     pub pooled: Vec<f32>,
 }
 pub struct Output {
     pub logits: Vec<f32>,
     pub values: Vec<f32>,
+    pub scores: Vec<f32>,
     pub pooled: Vec<f32>,
     pub tape: recurrent::Tape,
 }
@@ -226,6 +228,7 @@ impl Model {
         Ok(Output {
             logits: prediction.logits,
             values: prediction.values,
+            scores: prediction.scores,
             pooled: prediction.pooled,
             tape,
         })
@@ -295,6 +298,7 @@ impl Model {
         self.condition_readout(&mut pooled, batch);
         let mut logits = vec![0.0; batch * p.actions];
         let mut values = vec![0.0; batch];
+        let mut scores = vec![0.0; batch];
         for b in 0..batch {
             for action in 0..p.actions {
                 let mut value = params.policy_bias[action];
@@ -308,9 +312,10 @@ impl Model {
             for group in 0..p.groups {
                 value += params.value_weight[group] * pooled[group * batch + b];
             }
+            scores[b] = value;
             values[b] = value.tanh();
         }
-        Prediction { logits, values, pooled }
+        Prediction { logits, values, scores, pooled }
     }
     pub fn backward(
         &self,
@@ -320,11 +325,29 @@ impl Model {
         dlogits: &[f32],
         dvalues: &[f32],
     ) -> Result<Grad, String> {
+        self.backward_with_embedding(params, input, output, dlogits, dvalues, None, None)
+    }
+    /// Add a cotangent at the individual/pool readout, before the task heads.
+    /// The optional array is group-major [G,B], matching Output::pooled.
+    #[allow(clippy::too_many_arguments)]
+    pub fn backward_with_embedding(
+        &self,
+        params: &Params,
+        input: &[f32],
+        output: &Output,
+        dlogits: &[f32],
+        dvalues: &[f32],
+        dembedding: Option<&[f32]>,
+        dscores: Option<&[f32]>,
+    ) -> Result<Grad, String> {
         let p = &self.ports;
         let batch = output.tape.batch;
         if dlogits.len() != batch * p.actions
             || dvalues.len() != batch
             || input.len() != p.features * batch
+            || dembedding.is_some_and(|x| x.len() != p.groups * batch || x.iter().any(|v| !v.is_finite()))
+            || dscores.is_some_and(|x| x.len() != batch || x.iter().any(|v| !v.is_finite()))
+            || dlogits.iter().chain(dvalues).any(|v| !v.is_finite())
         {
             return Err("Invalid model cotangent shapes".into());
         }
@@ -340,12 +363,16 @@ impl Model {
                     dpool[group * batch + b] += g * params.policy_weight[action * p.groups + group];
                 }
             }
-            let g = dvalues[b] * (1.0 - output.values[b] * output.values[b]);
+            let g = dvalues[b] * (1.0 - output.values[b] * output.values[b])
+                + dscores.map_or(0.0, |g| g[b]);
             grad.value_bias[0] += g;
             for group in 0..p.groups {
                 grad.value_weight[group] += g * output.pooled[group * batch + b];
                 dpool[group * batch + b] += g * params.value_weight[group];
             }
+        }
+        if let Some(extra) = dembedding {
+            for (g, &value) in dpool.iter_mut().zip(extra) { *g += value; }
         }
         self.condition_readout(&mut dpool, batch);
         let state = output.tape.states.last().unwrap();

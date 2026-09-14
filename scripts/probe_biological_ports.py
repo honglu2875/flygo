@@ -16,7 +16,6 @@ from pathlib import Path
 import time
 
 import numpy as np
-import pyarrow.feather as feather
 
 from flygo import _native
 from flygo.data.corpus import atomic_json
@@ -129,6 +128,7 @@ def policy_summary(logits, legal):
 
 
 def anatomy(graph_path, graph, columns_path, output):
+    import pyarrow.feather as feather
     annotation_path = graph_path/'annotations.feather'
     table = feather.read_table(annotation_path)
     body = np.load(graph_path/'body_id.npy', mmap_mode='r')

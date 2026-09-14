@@ -6,6 +6,17 @@ correlation-based action groups. This becomes the first application of
 MaleCNS neurons and edges remain the substrate; strengths remain learnable.
 The engineering gates and completed study records are preserved.
 
+**Subsequent user steering:** first train spherical-input-to-individual-motor
+embeddings on genuine recent-divergence pairs, then probe trained responses
+before grouping. The [embedding study](embedding-study.md) specifies the
+coherent renderer, quality-aware contrastive loss, controls and qualification.
+This changes the order of B2/B3, not the fixed-topology constraint.
+The coherent adapter and a 64-update CPU pilot are complete. The learned and
+frozen arms both reach 50% held-out branch ranking; circuit weights barely
+move. Signal and optimization calibration therefore precede substantial
+pretraining and group fitting. This result does not settle the capacity of
+trained motor representations.
+
 **Question:** does respecting sensory organization, signal propagation and
 functional readout structure improve learning at the same prediction FLOPs
 and labeled-position horizon? Anatomical plausibility, sharper policies and
@@ -299,7 +310,8 @@ HTML example is not a diagnosis of the current checkpoint.
 | Step | Deliverable | Gate |
 |---|---|---|
 | B0: interface/response audit | Canonical candidate atlas, raw/conditioned response matrices, missingness and sharpness measurements | **Pilot complete**; provisional correlations do not become production groups |
-| B1: coherent retinal input | Versioned local sampling map, orientation/coverage report, four-board bilateral and matched shuffled adapters | Check local distinguishability, perspective, history, drive scale and missingness; qualify Rust/JAX forward/gradient/update parity for any new operator |
+| B1: coherent retinal input | Versioned local sampling map, orientation/coverage report, four-board bilateral and matched shuffled adapters | Spherical adapter has full rank for 324 points and CPU parity; measured optical registration, drive calibration and matched shuffle remain |
+| B1.5: motor embeddings | Quality-aware contrastive pretraining on shared-prefix branches, individual outputs and frozen-circuit control | [Bounded CPU pilot complete](embedding-study.md#completed-cpu-pilot); no representation gain, so calibrate learning signals before a larger run |
 | B2: propagation and response atlas | Biological stimulus probes, per-group amplitude/delay/adaptation/gradient measurements; initial and trained ensembles | Distinguish attenuated, silent and redundant paths; assess held-out probe and seed stability |
 | B3: readout partition | Consensus candidates, anatomical and matched random controls, explicit pass/value interfaces | Group tables fit only on training discovery probes; verify on disjoint training families; qualify both backends |
 | B4: learnability screen | Input-only, readout-only, then combined comparison; one added factor at a time | Same contents, sample stream, exposures and tuning opportunity; compare learning curves, validation KL/value and paired games |
