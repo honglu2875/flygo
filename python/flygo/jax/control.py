@@ -14,9 +14,9 @@ from ..data.loader import load_release,Sampler
 from ..qualify import sha256
 
 
-def prepare(root,out,*,threads=3):
+def prepare(root,out,*,threads=3,channels=64,blocks=10):
     out.mkdir(parents=True,exist_ok=False)
-    cfg=CNNConfig(threads=threads)
+    cfg=CNNConfig(threads=threads,channels=channels,blocks=blocks)
     manifest,arrays,indexes=load_release(root,root/'releases/v0-1m/manifest.json',cache=True)
     sampler=Sampler(arrays,indexes,1);model=JaxCNN(cfg)
     timings=[]
@@ -33,7 +33,7 @@ def prepare(root,out,*,threads=3):
         reference='JAX CPU FP32, highest precision, complete model and all parameter groups',updates=timings,
         jax=jax.__version__,devices=jax.device_count(),processes=jax.process_count(),
         source_module=__file__,per_device_batch=32//jax.device_count(),
-        arithmetic=dict(fly=fly_cost(165122,15270273,15912),cnn=cnn_cost()),
+        arithmetic=dict(fly=fly_cost(165122,15270273,15912),cnn=cnn_cost(channels=channels,blocks=blocks)),
         files={p.name:sha256(p) for p in sorted(out.glob('*.npz'))})
     atomic_json(out/'reference.json',report)
     return report

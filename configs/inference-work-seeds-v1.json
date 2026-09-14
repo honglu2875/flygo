@@ -1,0 +1,22 @@
+{
+  "name": "inference-work-seeds-v1",
+  "release": "v0-1m",
+  "positions": 256,
+  "sample_seed": 451019,
+  "batches": [
+    1,
+    32
+  ],
+  "selection": "Uniform validation positions without replacement, no augmentation or label-based selection. Identical ordered inputs for all cases and batch sizes. Full original topology; final test labels are not evaluated.",
+  "cases": [
+    {
+      "name": "matched-fly-s2",
+      "checkpoint": "runs/tpu-confirm-v0-fly-s2-learner/checkpoints/step-00000512.npz"
+    },
+    {
+      "name": "matched-fly-s3",
+      "checkpoint": "runs/tpu-confirm-v0-fly-s3-learner/checkpoints/step-00000512.npz"
+    }
+  ],
+  "additional_reference": "Seed 1 already audited with identical inputs in inference-work-v1; reuse that evidence."
+}

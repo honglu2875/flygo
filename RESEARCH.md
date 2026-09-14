@@ -289,3 +289,43 @@ Rust/JAX update parity before launching these cases.
 This is a recorded change in ordering: ordinary optimizer calibration remains
 the prerequisite for a meaningful zeroth-order comparison. The existing
 constant-rate and spatial-input studies continue unchanged.
+
+## Constant-state execution and counted work
+
+The first recurrent state is always 0.01 for every neuron and board. Cache
+`W * relu(h0)` alongside the existing transformed weights, computing it once
+at B=1 in canonical edge order. Broadcast that message across a batch before
+the unchanged bias/drive update. Rebuild after every parameter update or
+restore. This removes a redundant first sparse multiply from warm inference;
+training still computes the message once per update. Backward arithmetic and
+all neuron/edge identities remain unchanged. Require byte-identical real V0
+initial/trained B=1/32 outputs, states, losses and all gradients, next-update
+recovery and the existing regression suite before adoption. Record the extra
+N FP32 cache, cold preparation and warm latency separately. Frozen studies
+keep their original binaries.
+
+This also motivates an explicit execution ledger. On a declared sample of V0
+validation positions, count active source rows at each pass using the actual
+CPU batch-wide 80% threshold, then count the corresponding traversed-edge
+multiply-adds. Report B=1 and B=32 distributions, with constant-state caching
+separate. Add adapter, dynamics and head arithmetic under the existing nominal
+convention; do not call this a hardware instruction counter. Masks, memory
+traffic, nonlinear operations and latency remain separate. The current CNN
+comparison matches nominal architecture FLOPs; it does not establish equal
+executed CPU work. Any smaller executed-cost control needs its own registered
+training comparison, without retrospectively replacing the original study.
+
+The completed 256-position seed-1 audit gives 8,339,945 mean warm B=1
+operations for the matched fly checkpoint (range 7,594,014–9,084,738), under
+that accounting convention. Register an additional 17-channel, nine-block
+CNN: 8,361,890 nominal operations, +0.263% relative to that mean. Width/depth
+were chosen from cost before any new training outcome. The same three rates
+(0.001/0.003/0.01) receive 256 updates at B=2,048, seed 1; minimum final
+validation KL+MSE selects the rate, then confirm from initialization at 512
+updates for seeds 1/2/3. Adopt the already completed fly comparison cases at
+the same horizons. Audit the other fly seeds' work separately and report their
+variation; no per-position equality is claimed. CNN boundary/channel padding,
+memory traffic and latency remain explicit limitations of this arithmetic
+match. Preserve the original nominal 126.7M study unchanged. Qualify the small
+CNN shape before its first TPU training run, and queue it after the active
+spatial study so a single cohort continues to own all devices.

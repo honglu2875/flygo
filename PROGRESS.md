@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 03:51 UTC**. Autonomous work is authorized until about
+Updated **2026-09-14 04:25 UTC**. Autonomous work is authorized until about
 09:02 UTC. The target is an efficient fixed-fly Go engine, compared with a
 conventional neural engine at matched prediction FLOPs and training-position
 exposure. No fly strength advantage has been established.
@@ -15,7 +15,7 @@ Earlier qualification detail remains in [history](docs/qualification-history.md)
 | M3 — corpus | V0 complete; production continues | Balanced million-position release and cache verified on all four hosts |
 | M4 — fly forward | Complete | All 165,122 nodes / 15,270,273 edges; CPU and actual TPU parity |
 | M5 — CPU learning | Complete | V0 training, bitwise fresh local/peer recovery and exported legal Go games |
-| M6 — studies | Active | Screens complete; longer three-seed optimizer and matched CNN confirmation running |
+| M6 — studies | Active | Three-seed matched CNN confirmation complete; optimizer and adapter refinements running |
 | M7 — TPU | Qualified and in use | Four-host SPMD; full-model updates, matching copies and bitwise full-trainer replay |
 | M8 — online refinement | Pending model selection | Offline prior/PUCT/Gumbel works; stronger prior and controlled comparison first |
 
@@ -36,12 +36,14 @@ Earlier qualification detail remains in [history](docs/qualification-history.md)
   registered KL+MSE rule selects fly rate 0.01 and CNN rate 0.003.
   `matched-confirm-v1` completed three seeds per family at 512 updates × B=2,048
   (1,048,576 exposures each). Full validation and common 32-game
-  prior/PUCT/Gumbel panels run on CPU. The registered `spatial-input-v1`
+  prior/PUCT/Gumbel panels are complete. The registered `spatial-input-v1`
   adopted all three fly baselines and is training spatial/shuffled ports at
-  identical settings/horizons. One cohort owns all 16 devices.
+  identical settings/horizons; spatial seed 1 finished and seed 2 runs.
+  All six full-validation/match followups are queued on `32–55` after optimizer
+  validation releases those lanes. One cohort owns all 16 devices.
 - **Schedule screen:** four seed-1 warmup/decay cases are registered at 128,000
-  exposures. Each starts after its matched panels leave `92–115`; two have
-  started. All use source `c149278eda30697520f9` and queued full validation.
+  exposures. All four started after their matched panels left `92–115`.
+  They use source `c149278eda30697520f9` and queued full validation.
 - **Visual readout:** a separate input-fixed, visual-output spatial/shuffled
   screen is queued after schedule validation. Both variants pass full-state,
   all-gradient and three-update JAX CPU parity on real V0 inputs. They retain
@@ -51,8 +53,8 @@ Earlier qualification detail remains in [history](docs/qualification-history.md)
 
 Runtime artifacts stay under `/dev/shm/flygo`. Floors remain **64 GiB free
 shared memory**, **96 GiB available RAM**, and a **100 GiB own-file cap** with
-reservations. At 03:41, free shared memory was 142–178 GiB and available RAM
-315–353 GiB. All 32 generation workers are healthy; 69,153 games are published. Generation uses 256 physical cores across the fleet; CPU trials
+reservations. At 04:19, free shared memory was 137–177 GiB and available RAM
+308–351 GiB. All 32 generation workers are healthy; 73,296 games are published. Generation uses 256 physical cores across the fleet; CPU trials
 and evaluations use up to another 192. TPU runtime/development uses spare cores;
 waiting coordinators use core 116. Owned SSH keepalives remain active. RAM and
 peer copies remain volatile across reboot or common cleanup.
@@ -72,7 +74,7 @@ All releases exclude truncated games; final test labels remain outside tuning.
 Registered unused v2 feature caches are evictable, while live mmap readers,
 NumPy views, corpus, checkpoints and legacy caches remain protected.
 
-- **Regression:** 47 Rust tests and all 56 current Python tests pass. Includes
+- **Regression:** 47 Rust tests and all 57 current Python tests pass. Includes
   sparse VJPs, recurrence gradients, scaled Adam, port controls, CNN equations,
   storage, cache leases and portable checkpoints.
 - **V0 CPU:** `v0-cpu-recovery-v1` reproduces the next update bitwise in fresh
@@ -156,11 +158,13 @@ matched CNN control alongside measured screens. Browser checks pass all
 interactions, offline loading and widths 320–1,440 px; desktop/mobile figures
 were visually reviewed. Evidence: `runs/model-guide/20260914/render-checks.json`.
 
-**Current playing evidence:** matched CNN seeds 2/3 each win 32/32 prior games
-against opponent 0 at 16 visits. Their PUCT panels win 31/32 each and Gumbel
-31/32, 32/32. Fly seed 1 wins 0/32 prior and 1/32 PUCT. This is a substantial
-current strength gap; the remaining panels are still running. These fixed
-openings are for this registered screening comparison, not an Elo estimate.
+**Completed matched confirmation:** full-validation KL is 0.7401–0.7556 for
+CNN versus 1.5037–1.5054 for fly. Mean paired differences favor CNN by 0.7559
+KL and 0.1540 MSE. Prior wins are CNN 94/96 versus fly 0/96; PUCT 93/96 versus
+3/96; Gumbel 92/95 versus 0/95, with one capped game per family. This is a
+substantial current gap. [Controlled results](docs/research-results.md) records
+all seeds, nominal compute/exposure contracts and uncertainty; raw counted
+panels are not Elo. Final test labels remain outside tuning.
 
 **Schedules:** absolute-update warmup/cosine settings are stored in checkpoints
 and validated on resume. Full V0 replay across warmup and decay boundaries
@@ -178,6 +182,14 @@ the failed first readout-artifact attempt are retained.
 **Readout qualification:** `visual-readout-cpu-parity-v2` passes both new port
 maps with the original tolerances. V1 exposed a zero-based step passed to the
 one-based Adam reference in the new harness; only the harness was corrected.
+
+**Constant-state cache:** the first `W * relu(h0)` message is now reusable at
+fixed parameters, costing another 660,488 bytes. Full initial/trained B=1/32
+states, outputs, losses, all gradients and the next V0 update remain byte-identical.
+Three-core warm inference improves from 0.138 to 0.111 s at trained B=1 and
+0.445 to 0.302 s at B=32. Training timings remain workload-sensitive; original
+studies keep their binaries. `inference-work-v1` audits executed arithmetic on
+256 declared validation inputs separately from nominal architecture FLOPs.
 
 ## Next gates and deliberate revisions
 
@@ -202,7 +214,7 @@ before zeroth-order work. The measured strength gap, short sensory path lengths
 and repeated visual columns motivated testing output aggregation. These
 revisions retain original study contracts, topology and final test isolation.
 
-Local commit `51d6110` contains the qualified CPU speedup and updated guide.
+Local commit `ee520ac` contains qualified schedules, visual readouts and analysis.
 Upstream remains at `772db92`: automatic approval review rejected the next push
 and requires explicit user confirmation of `git@github.com:honglu2875/flygo.git`.
 Local implementation and experiments continue; no further push is attempted.

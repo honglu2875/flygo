@@ -1,0 +1,19 @@
+{
+  "name": "inference-work-v1",
+  "release": "v0-1m",
+  "positions": 256,
+  "sample_seed": 451019,
+  "batches": [1, 32],
+  "selection": "Uniform validation positions without replacement, no augmentation or label-based selection. Identical ordered inputs for all cases and batch sizes. Full original topology; final test labels are not evaluated.",
+  "cases": [
+    {"name": "initial-k4-s1"},
+    {
+      "name": "matched-fly-s1",
+      "checkpoint": "runs/tpu-confirm-v0-fly-s1-learner/checkpoints/step-00000512.npz"
+    },
+    {
+      "name": "bias-scaled-screen-s1",
+      "checkpoint": "runs/bias-v0-lr03-scale001-s1/checkpoints/step-00001000.npz"
+    }
+  ]
+}

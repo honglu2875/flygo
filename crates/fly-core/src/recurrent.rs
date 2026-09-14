@@ -23,6 +23,7 @@ pub struct Tape {
 pub struct Prepared {
     weights: Arc<Vec<f32>>,
     alpha: Arc<Vec<f32>>,
+    initial_message: Arc<Vec<f32>>,
 }
 
 pub fn prepare(
@@ -31,7 +32,7 @@ pub fn prepare(
     params: &CoreParams,
 ) -> Result<Prepared, String> {
     params.validate(graph)?;
-    let weights = executor.pool.install(|| {
+    let weights: Vec<f32> = executor.pool.install(|| {
         params
             .edge
             .par_iter()
@@ -44,9 +45,14 @@ pub fn prepare(
         .iter()
         .map(|&x| 0.01 + 0.98 * sigmoid(x))
         .collect();
+    // Every prediction starts at the same state. Compute its message once at
+    // B=1, retaining the canonical edge summation order, then broadcast it.
+    // Training rebuilds this cache after each parameter update.
+    let initial_message = executor.multiply(graph, &weights, &vec![0.01; graph.neurons()], 1);
     Ok(Prepared {
         weights: Arc::new(weights),
         alpha: Arc::new(alpha),
+        initial_message: Arc::new(initial_message),
     })
 }
 
@@ -103,16 +109,27 @@ pub fn forward_prepared(
         || drive.iter().any(|x| !x.is_finite())
         || prepared.weights.len() != graph.edges()
         || prepared.alpha.len() != graph.types
+        || prepared.initial_message.len() != graph.neurons()
     {
         return Err("Invalid recurrent input or step count".into());
     }
     let weights = prepared.weights.clone();
     let alpha = prepared.alpha.clone();
     let mut states: Vec<Vec<f32>> = vec![vec![0.01; drive.len()]];
-    for _ in 0..steps {
+    for step in 0..steps {
         let previous = states.last().unwrap();
-        let rate: Vec<_> = previous.iter().map(|&x| x.max(0.0)).collect();
-        let mut next = executor.multiply(graph, &weights, &rate, batch);
+        let mut next = if step == 0 {
+            let mut message = vec![0.0; drive.len()];
+            executor.pool.install(|| {
+                message.par_chunks_mut(batch).enumerate().for_each(|(node, row)| {
+                    row.fill(prepared.initial_message[node]);
+                })
+            });
+            message
+        } else {
+            let rate: Vec<_> = previous.iter().map(|&x| x.max(0.0)).collect();
+            executor.multiply(graph, &weights, &rate, batch)
+        };
         executor.pool.install(|| {
             next.par_chunks_mut(batch)
                 .enumerate()

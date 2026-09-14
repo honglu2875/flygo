@@ -19,6 +19,7 @@ The early trained models are weak; working training is not a strength claim.
 - [DATASET.md](DATASET.md): teacher, targets, splits and RAM storage policy.
 - [MILESTONES.md](MILESTONES.md): acceptance criteria and research sequence.
 - [RESEARCH.md](RESEARCH.md): comparison budgets, optimizer and biology hypotheses.
+- [Controlled results](docs/research-results.md): completed comparisons and their limits.
 
 **Everyday commands**
 
