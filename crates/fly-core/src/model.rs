@@ -36,6 +36,12 @@ pub struct Model {
     readout_nodes: Vec<Vec<usize>>,
     readout_mean_scale: f32,
 }
+/// Prediction has no backward tape and cannot accidentally enter backward.
+pub struct Prediction {
+    pub logits: Vec<f32>,
+    pub values: Vec<f32>,
+    pub pooled: Vec<f32>,
+}
 pub struct Output {
     pub logits: Vec<f32>,
     pub values: Vec<f32>,
@@ -195,21 +201,7 @@ impl Model {
         steps: usize,
         prepared: Option<&recurrent::Prepared>,
     ) -> Result<Output, String> {
-        self.validate(params)?;
-        let p = &self.ports;
-        if batch == 0 || input.len() != p.features * batch || input.iter().any(|x| !x.is_finite()) {
-            return Err("Input must be finite feature-major [F,B]".into());
-        }
-        let mut drive = vec![0.0; self.graph.neurons() * batch];
-        for (node, &feature) in p.input_index.iter().enumerate() {
-            if feature >= 0 {
-                let feature = feature as usize;
-                for b in 0..batch {
-                    drive[node * batch + b] =
-                        params.input_gain[feature] * input[feature * batch + b];
-                }
-            }
-        }
+        let drive = self.input_drive(params, input, batch)?;
         let tape = match prepared {
             Some(prepared) => recurrent::forward_prepared(
                 &self.graph,
@@ -230,7 +222,63 @@ impl Model {
                 self.rate,
             )?,
         };
-        let state = tape.states.last().unwrap();
+        let prediction = self.readout(params, tape.states.last().unwrap(), batch);
+        Ok(Output {
+            logits: prediction.logits,
+            values: prediction.values,
+            pooled: prediction.pooled,
+            tape,
+        })
+    }
+    pub fn predict(
+        &self,
+        params: &Params,
+        input: &[f32],
+        batch: usize,
+        steps: usize,
+    ) -> Result<Prediction, String> {
+        self.predict_prepared(params, input, batch, steps, None)
+    }
+    /// Same equations as forward, without retaining a differentiation tape.
+    pub fn predict_prepared(
+        &self,
+        params: &Params,
+        input: &[f32],
+        batch: usize,
+        steps: usize,
+        prepared: Option<&recurrent::Prepared>,
+    ) -> Result<Prediction, String> {
+        let drive = self.input_drive(params, input, batch)?;
+        let state = match prepared {
+            Some(prepared) => recurrent::predict_prepared(
+                &self.graph, &self.executor, &params.core, &drive, batch, steps, prepared,
+            )?,
+            None => recurrent::predict(
+                &self.graph, &self.executor, &params.core, &drive, batch, steps, self.rate,
+            )?,
+        };
+        Ok(self.readout(params, &state, batch))
+    }
+    fn input_drive(&self, params: &Params, input: &[f32], batch: usize) -> Result<Vec<f32>, String> {
+        self.validate(params)?;
+        let p = &self.ports;
+        if batch == 0 || input.len() != p.features * batch || input.iter().any(|x| !x.is_finite()) {
+            return Err("Input must be finite feature-major [F,B]".into());
+        }
+        let mut drive = vec![0.0; self.graph.neurons() * batch];
+        for (node, &feature) in p.input_index.iter().enumerate() {
+            if feature >= 0 {
+                let feature = feature as usize;
+                for b in 0..batch {
+                    drive[node * batch + b] =
+                        params.input_gain[feature] * input[feature * batch + b];
+                }
+            }
+        }
+        Ok(drive)
+    }
+    fn readout(&self, params: &Params, state: &[f32], batch: usize) -> Prediction {
+        let p = &self.ports;
         let mut pooled = vec![0.0; p.groups * batch];
         // Pools are independent; each retains the original ascending neuron
         // order, so parallel execution does not change floating-point sums.
@@ -262,12 +310,7 @@ impl Model {
             }
             values[b] = value.tanh();
         }
-        Ok(Output {
-            logits,
-            values,
-            pooled,
-            tape,
-        })
+        Prediction { logits, values, pooled }
     }
     pub fn backward(
         &self,

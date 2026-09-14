@@ -45,8 +45,14 @@ def main():
             for _ in range(args.repetitions):
                 begin=time.perf_counter();result=model.infer(batch[0],trace=True)
                 inference=time.perf_counter()-begin
+                begin=time.perf_counter();prediction=model.infer(batch[0])
+                prediction_seconds=time.perf_counter()-begin
+                for key in prediction:
+                    if prediction[key].tobytes()!=result[key].tobytes():
+                        raise AssertionError('Prediction differs from trace: '+key)
                 begin=time.perf_counter();loss,gradient=model.loss_and_grad(*batch)
-                samples.append(dict(inference=inference,loss_and_grad=time.perf_counter()-begin))
+                samples.append(dict(inference=inference,prediction=prediction_seconds,
+                                    loss_and_grad=time.perf_counter()-begin))
             actual={**result,**{'gradient/'+k:v for k,v in gradient.items()},
                     'loss':np.asarray([loss['policy_loss'],loss['value_loss']])}
             name=f'batch-{batch_size}.npz'

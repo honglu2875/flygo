@@ -8,7 +8,7 @@ pub mod recurrent;
 pub mod sparse;
 
 pub use graph::Graph;
-pub use model::{Grad, Model, Output, Params, Ports, Targets};
+pub use model::{Grad, Model, Output, Params, Ports, Prediction, Targets};
 pub use rate::Rate;
 pub use recurrent::{CoreGrad, CoreParams, Tape};
 pub use sparse::Executor;

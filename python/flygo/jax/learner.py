@@ -14,6 +14,7 @@ import numpy as np
 from .model import forward,loss,adam
 from .sparse import build_layout
 from ..fly import FlyConfig,initialize
+from ..optimizer import DEFAULT_EPSILON,validate_epsilon
 
 
 class JaxLearner:
@@ -46,12 +47,12 @@ class JaxLearner:
             (_,parts),gradient=jax.value_and_grad(loss_function,has_aux=True)(p,g,a,*b,**kwargs)
             return jax.lax.pmean(parts,'data'),jax.lax.pmean(gradient,'data')
         self._gradient=mapped(derivative,(P(),P(),P(),(P('data'),)*4),(P(),P()))
-        def update(p,first,second,g,a,b,corrections,rate,clip):
+        def update(p,first,second,g,a,b,corrections,rate,clip,epsilon):
             parts,gradient=derivative(p,g,a,b)
             p,first,second,norm=adam(p,gradient,first,second,0,rate=rate,clip=clip,
-                                    corrections=corrections,norm_dtype=jnp.float32)
+                                    corrections=corrections,norm_dtype=jnp.float32,epsilon=epsilon)
             return p,first,second,(*parts,norm)
-        self._update=mapped(update,(P(),P(),P(),P(),P(),(P('data'),)*4,P(),P(),P()),(P(),P(),P(),P()))
+        self._update=mapped(update,(P(),P(),P(),P(),P(),(P('data'),)*4,P(),P(),P(),P()),(P(),P(),P(),P()))
 
     def _put(self,tree,sharding=None):
         sharding=self.replicated if sharding is None else sharding
@@ -115,7 +116,8 @@ class JaxLearner:
         parts,gradient=jax.block_until_ready(self._gradient(self._params,self._graph,self._ports,self._batch(*batch)))
         return dict(policy_loss=float(parts[0]),value_loss=float(parts[1])),self._host(gradient)
 
-    def train_step(self,*batch,rate=.003,clip=1.0,rate_scales=None):
+    def train_step(self,*batch,rate=.003,clip=1.0,rate_scales=None,epsilon=DEFAULT_EPSILON):
+        validate_epsilon(epsilon)
         if not np.isfinite(rate) or rate<=0 or not np.isfinite(clip) or clip<=0:
             raise ValueError('Finite positive learning rate and clip required')
         if rate_scales is not None:
@@ -128,7 +130,8 @@ class JaxLearner:
         corrections=self._put(np.asarray([1-.9**(self.step+1),1-.999**(self.step+1)],np.float32))
         self._params,self._first,self._second,parts=jax.block_until_ready(self._update(
             self._params,self._first,self._second,self._graph,self._ports,self._batch(*batch),
-            corrections,self._put(rate),self._put(np.asarray(clip,np.float32))))
+            corrections,self._put(rate),self._put(np.asarray(clip,np.float32)),
+            self._put(np.asarray(epsilon,np.float32))))
         self.step+=1
         metrics=dict(policy_loss=float(parts[0]),value_loss=float(parts[1]),gradient_norm=float(parts[2]),step=self.step)
         if not all(np.isfinite(v) for v in metrics.values()):

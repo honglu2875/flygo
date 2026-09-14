@@ -107,6 +107,60 @@ pub fn forward_prepared(
     steps: usize,
     prepared: &Prepared,
 ) -> Result<Tape, String> {
+    validate_input(graph, drive, batch, steps, prepared)?;
+    let mut states: Vec<Vec<f32>> = vec![vec![0.01; drive.len()]];
+    for step in 0..steps {
+        states.push(next_state(graph, executor, params, drive, batch,
+            states.last().unwrap(), step == 0, prepared)?);
+    }
+    Ok(Tape {
+        states,
+        weights: prepared.weights.clone(),
+        alpha: prepared.alpha.clone(),
+        batch,
+        rate: prepared.rate,
+    })
+}
+
+/// Prediction retains only the current state; memory does not grow with depth.
+pub fn predict(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    rate: Rate,
+) -> Result<Vec<f32>, String> {
+    let prepared = prepare(graph, executor, params, rate)?;
+    predict_prepared(graph, executor, params, drive, batch, steps, &prepared)
+}
+
+/// Cached transforms must correspond to these unchanged parameters.
+pub fn predict_prepared(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    prepared: &Prepared,
+) -> Result<Vec<f32>, String> {
+    validate_input(graph, drive, batch, steps, prepared)?;
+    let mut state = vec![0.01; drive.len()];
+    for step in 0..steps {
+        state = next_state(graph, executor, params, drive, batch, &state, step == 0, prepared)?;
+    }
+    Ok(state)
+}
+
+fn validate_input(
+    graph: &Graph,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    prepared: &Prepared,
+) -> Result<(), String> {
     if batch == 0
         || steps == 0
         || steps > 1024
@@ -118,52 +172,55 @@ pub fn forward_prepared(
     {
         return Err("Invalid recurrent input or step count".into());
     }
-    let weights = prepared.weights.clone();
-    let alpha = prepared.alpha.clone();
-    let mut states: Vec<Vec<f32>> = vec![vec![0.01; drive.len()]];
-    for step in 0..steps {
-        let previous = states.last().unwrap();
-        let mut next = if step == 0 {
-            let mut message = vec![0.0; drive.len()];
-            executor.pool.install(|| {
-                message.par_chunks_mut(batch).enumerate().for_each(|(node, row)| {
-                    row.fill(prepared.initial_message[node]);
-                })
-            });
-            message
-        } else {
-            let rate: Vec<_> = executor.pool.install(|| {
-                previous.par_iter().map(|&x| prepared.rate.value(x)).collect()
-            });
-            executor.multiply(graph, &weights, &rate, batch)
-        };
+    Ok(())
+}
+
+// Both prediction and differentiation use this exact arithmetic and reduction
+// order. Only the caller decides whether previous states remain in a tape.
+#[allow(clippy::too_many_arguments)]
+fn next_state(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    previous: &[f32],
+    initial: bool,
+    prepared: &Prepared,
+) -> Result<Vec<f32>, String> {
+    let mut next = if initial {
+        let mut message = vec![0.0; drive.len()];
         executor.pool.install(|| {
-            next.par_chunks_mut(batch)
-                .enumerate()
-                .for_each(|(node, out)| {
-                    let group = graph.type_id[node];
-                    let a = alpha[group];
-                    for (b, value) in out.iter_mut().enumerate() {
-                        let index = node * batch + b;
-                        *value = (1.0 - a) * previous[index]
-                            + a * (*value + params.bias[group] + drive[index]);
-                    }
-                })
+            message.par_chunks_mut(batch).enumerate().for_each(|(node, row)| {
+                row.fill(prepared.initial_message[node]);
+            })
         });
-        if next.iter().any(|x| !x.is_finite()) {
-            return Err(
-                "Non-finite recurrent state; reduce the update rate or recurrent depth".into(),
-            );
-        }
-        states.push(next);
+        message
+    } else {
+        let rate: Vec<_> = executor.pool.install(|| {
+            previous.par_iter().map(|&x| prepared.rate.value(x)).collect()
+        });
+        executor.multiply(graph, &prepared.weights, &rate, batch)
+    };
+    executor.pool.install(|| {
+        next.par_chunks_mut(batch)
+            .enumerate()
+            .for_each(|(node, out)| {
+                let group = graph.type_id[node];
+                let a = prepared.alpha[group];
+                for (b, value) in out.iter_mut().enumerate() {
+                    let index = node * batch + b;
+                    *value = (1.0 - a) * previous[index]
+                        + a * (*value + params.bias[group] + drive[index]);
+                }
+            })
+    });
+    if next.iter().any(|x| !x.is_finite()) {
+        return Err(
+            "Non-finite recurrent state; reduce the update rate or recurrent depth".into(),
+        );
     }
-    Ok(Tape {
-        states,
-        weights,
-        alpha,
-        batch,
-        rate: prepared.rate,
-    })
+    Ok(next)
 }
 
 pub fn backward(

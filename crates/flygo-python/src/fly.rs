@@ -123,7 +123,7 @@ impl FlyModel {
     ) -> PyResult<Infer<'py>> {
         let batch = input.shape()[1];
         let input = input.as_slice()?.to_vec();
-        let output = py
+        let (logits, values, states) = py
             .detach(|| {
                 let mut state = self.state.lock().map_err(|e| e.to_string())?;
                 if state.prepared.is_none() {
@@ -134,29 +134,23 @@ impl FlyModel {
                         state.model.rate,
                     )?);
                 }
-                state.model.forward_prepared(
-                    &state.params,
-                    &input,
-                    batch,
-                    steps,
-                    state.prepared.as_ref(),
-                )
+                if trace {
+                    let output = state.model.forward_prepared(
+                        &state.params, &input, batch, steps, state.prepared.as_ref(),
+                    )?;
+                    Ok::<_, String>((output.logits, output.values, output.tape.states))
+                } else {
+                    let output = state.model.predict_prepared(
+                        &state.params, &input, batch, steps, state.prepared.as_ref(),
+                    )?;
+                    Ok((output.logits, output.values, Vec::new()))
+                }
             })
             .map_err(PyValueError::new_err)?;
-        let states = if trace {
-            output
-                .tape
-                .states
-                .into_iter()
-                .map(|v| v.into_pyarray(py))
-                .collect()
-        } else {
-            Vec::new()
-        };
         Ok((
-            output.logits.into_pyarray(py),
-            output.values.into_pyarray(py),
-            states,
+            logits.into_pyarray(py),
+            values.into_pyarray(py),
+            states.into_iter().map(|v| v.into_pyarray(py)).collect(),
         ))
     }
     fn parameters<'py>(&self, py: Python<'py>) -> PyResult<Arrays<'py>> {
@@ -199,6 +193,7 @@ impl FlyModel {
             let mut records = Vec::new();
             for kernel in [
                 "multiply",
+                "parameter_validation",
                 "transpose",
                 "transpose_prepare",
                 "transpose_prepared",
@@ -209,6 +204,9 @@ impl FlyModel {
                     edge.fill(0.0);
                     let start = std::time::Instant::now();
                     match kernel {
+                        "parameter_validation" => {
+                            model.validate(&state.params)?;
+                        }
                         "multiply" => {
                             std::hint::black_box(model.executor.multiply(
                                 &model.graph,
@@ -297,7 +295,7 @@ impl FlyModel {
         Ok((pl, vl, export(py, &grad)))
     }
     #[allow(clippy::too_many_arguments)]
-    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None))]
+    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None, epsilon=1e-8))]
     fn train_step(
         &self,
         py: Python<'_>,
@@ -309,7 +307,11 @@ impl FlyModel {
         rate: f32,
         clip: f32,
         rate_scales: Option<Vec<f32>>,
+        epsilon: f32,
     ) -> PyResult<(f64, f64, f64, u64)> {
+        if !epsilon.is_finite() || epsilon <= 0.0 {
+            return Err(PyValueError::new_err("Adam epsilon must be finite and positive"));
+        }
         let batch = input.shape()[1];
         let (input, legal, policy, value) = (
             input.as_slice()?.to_vec(),
@@ -336,10 +338,8 @@ impl FlyModel {
                     value: &value,
                 },
             )?;
-            let norm = match rate_scales {
-                Some(ref scales) => adam.update_scaled(model, params, &grad, rate, clip, scales)?,
-                None => adam.update(model, params, &grad, rate, clip)?,
-            };
+            let norm = adam.update_with_epsilon(model, params, &grad, rate, clip,
+                rate_scales.as_deref().unwrap_or(&[1.0; 9]), epsilon)?;
             *prepared = None;
             Ok::<_, String>((pl, vl, norm, adam.step))
         })

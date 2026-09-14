@@ -37,6 +37,23 @@ impl Adam {
         clip: f32,
         rate_scales: &[f32],
     ) -> Result<f64, String> {
+        self.update_with_epsilon(model, params, grad, rate, clip, rate_scales, 1e-8)
+    }
+    /// Epsilon is outside the square root, after second-moment correction.
+    #[allow(clippy::too_many_arguments)]
+    pub fn update_with_epsilon(
+        &mut self,
+        model: &Model,
+        params: &mut Params,
+        grad: &Grad,
+        rate: f32,
+        clip: f32,
+        rate_scales: &[f32],
+        epsilon: f32,
+    ) -> Result<f64, String> {
+        if !epsilon.is_finite() || epsilon <= 0.0 {
+            return Err("Adam epsilon must be finite and positive".into());
+        }
         if !rate.is_finite() || rate <= 0.0 || !clip.is_finite() || clip <= 0.0 {
             return Err("Invalid optimizer settings".into());
         }
@@ -88,7 +105,7 @@ impl Adam {
                         *m = 0.9 * *m + 0.1 * g;
                         *v = 0.999 * *v + 0.001 * g * g;
                         if group_rate > 0.0 {
-                            *p -= group_rate * (*m / c1) / ((*v / c2).sqrt() + 1e-8);
+                            *p -= group_rate * (*m / c1) / ((*v / c2).sqrt() + epsilon);
                         }
                     })
             });

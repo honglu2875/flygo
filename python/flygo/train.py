@@ -16,6 +16,7 @@ from .data.loader import load_release,Sampler
 from .fly import FlyConfig,RustFly,load_graph
 from .runtime import cpu_profile,pin
 from .schedule import Schedule
+from .optimizer import DEFAULT_EPSILON,validate_epsilon,check_epsilon_resume
 from .storage import GIB,StorageBudget,StoragePressure
 
 
@@ -65,6 +66,7 @@ def main(argv=None):
     parser.add_argument('--channels',type=int,default=64,help='CNN control width')
     parser.add_argument('--blocks',type=int,default=10,help='CNN control residual blocks')
     parser.add_argument('--clip',type=float,default=1.0)
+    parser.add_argument('--epsilon',type=float,default=DEFAULT_EPSILON,help='Adam denominator epsilon, outside the square root')
     parser.add_argument('--diagnostics-every',type=int,default=0,help='Zero disables extra gradient/activity measurements')
     parser.add_argument('--diagnostic-batch-size',type=int,default=32,help='Bound extra full-state/gradient measurements independently of the training batch')
     parser.add_argument('--seed',type=int,default=1)
@@ -83,6 +85,8 @@ def main(argv=None):
     if args.model=='cnn' and (args.ports or args.diagnostics_every or args.rate_softness or args.readout_mean_scale!=1):
         parser.error('Fly ports, firing rates and activity diagnostics apply only to the fly model')
     try:Schedule(args.rate,args.warmup_steps,args.decay_until,args.final_rate_ratio)
+    except ValueError as error:parser.error(str(error))
+    try:validate_epsilon(args.epsilon)
     except ValueError as error:parser.error(str(error))
     cpus=[int(x) for x in args.cpus.split(',')] if args.cpus else cpu_profile()['research_cpus'][:args.threads]
     if args.threads>len(cpus):
@@ -144,6 +148,7 @@ def run_training(args,cpus,run):
         if args.resume:
             previous=load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'])
             schedule.check_resume(previous.get('training_contract',{}))
+            check_epsilon_resume(args.epsilon,previous.get('training_contract',{}))
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                     dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,
@@ -168,7 +173,7 @@ def run_training(args,cpus,run):
             try:
                 receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics,
                     port_contract=port_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
-                        clip=args.clip,rate_scales=args.rate_scales,schedule=schedule.contract())),
+                        clip=args.clip,rate_scales=args.rate_scales,schedule=schedule.contract(),epsilon=args.epsilon)),
                     root=root,peer=args.peer or None)
             except Exception as failure:
                 error=failure
@@ -203,7 +208,7 @@ def run_training(args,cpus,run):
             before=model.parameters() if diagnostic else None
             rate=schedule.rate(step+1)
             begin=time.perf_counter();metrics=model.train_step(*batch,rate=rate,clip=args.clip,
-                                                              rate_scales=args.rate_scales or None)
+                                                              rate_scales=args.rate_scales or None,epsilon=args.epsilon)
             elapsed=time.perf_counter()-begin;step=metrics['step']
             observed_updates+=1;clipped_updates+=int(metrics['gradient_norm']>args.clip)
             record=dict(kind='train',**metrics,learning_rate=rate,clipped=metrics['gradient_norm']>args.clip,

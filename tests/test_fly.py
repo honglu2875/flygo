@@ -4,6 +4,7 @@ os.environ.setdefault('JAX_PLATFORMS','cpu')
 
 import unittest
 import json
+from dataclasses import replace
 from pathlib import Path
 import tempfile
 from unittest.mock import patch
@@ -28,6 +29,38 @@ def fixture():
 
 
 class FlyCore(unittest.TestCase):
+    def test_streamed_prediction_matches_trace_after_update_and_restore(self):
+        graph,config,ports,params,x,legal,policy,value=fixture()
+        for softness in (0.,.01,.05):
+            for steps in (1,4,31,128):
+                model=RustFly(graph,replace(config,steps=steps,rate_softness=softness),
+                              ports=ports,params=params)
+                saved=model.checkpoint_arrays()
+                for phase in range(3):
+                    for batch in (x[:1],x):
+                        traced=model.infer(batch,trace=True)
+                        streamed=model.infer(batch)
+                        self.assertEqual(len(traced['states']),steps+1)
+                        self.assertEqual(set(streamed),{'logits','value'})
+                        for key in streamed:
+                            np.testing.assert_array_equal(streamed[key],traced[key])
+                    if phase==0:model.train_step(x,legal,policy,value)
+                    if phase==1:model.restore_arrays(saved)
+                for key,array in model.checkpoint_arrays().items():
+                    np.testing.assert_array_equal(array,saved[key])
+
+    def test_streamed_prediction_retains_input_and_depth_checks(self):
+        graph,config,ports,params,x,*_=fixture()
+        for trace in (False,True):
+            for steps in (0,1025):
+                model=RustFly(graph,replace(config,steps=steps),ports=ports,params=params)
+                with self.assertRaisesRegex(ValueError,'step count'):
+                    model.infer(x,trace=trace)
+            model=RustFly(graph,config,ports=ports,params=params)
+            for bad in (x[:0],np.full_like(x,np.nan),np.full_like(x,np.inf)):
+                with self.assertRaisesRegex(ValueError,'finite feature-major'):
+                    model.infer(bad,trace=trace)
+
     def test_invalid_parameter_restore_is_atomic_for_every_group(self):
         graph,cfg,ports,params,*batch=fixture()
         model=RustFly(graph,cfg,ports=ports,params=params)

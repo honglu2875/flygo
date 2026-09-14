@@ -40,7 +40,7 @@ def main():
         manifest,arrays,indexes=load_release(args.root,args.root/'releases'/args.release/'manifest.json',cache=True)
         sampler=Sampler(arrays,indexes,config.seed);model=RustFly(load_graph(graph_path),config,ports=ports)
         contract=metadata.get('training_contract',dict(batch_size=32,rate=.003,clip=1.0))
-        settings=dict(rate=contract['rate'],clip=contract['clip'])
+        settings=dict(rate=contract['rate'],clip=contract['clip'],epsilon=contract.get('epsilon',1e-8))
         saved_schedule=contract.get('schedule')
         if saved_schedule and saved_schedule.get('version')!='absolute-update-rate-v1':
             raise ValueError('Unknown checkpoint schedule version')

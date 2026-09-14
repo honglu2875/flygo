@@ -58,7 +58,7 @@ def teacher_loss(result,legal,policy,value):
 
 
 def adam(params,grad,first,second,step,*,rate=0.003,clip=1.0,
-         norm_dtype=jnp.float64,corrections=None):
+         norm_dtype=jnp.float64,corrections=None,epsilon=1e-8):
     # Enable x64 in the parity runner to match the Rust global norm reduction.
     norm=jnp.sqrt(sum(jnp.sum(jnp.square(g.astype(norm_dtype))) for g in grad.values()))
     scale=jnp.minimum(1.0,clip/jnp.maximum(norm,1e-30)).astype(jnp.float32)
@@ -70,5 +70,5 @@ def adam(params,grad,first,second,step,*,rate=0.003,clip=1.0,
     first={k:0.9*first[k]+0.1*(grad[k]*scale) for k in params}
     second={k:0.999*second[k]+0.001*jnp.square(grad[k]*scale) for k in params}
     rates=rate if isinstance(rate,dict) else {k:rate for k in params}
-    params={k:params[k]-rates[k]*(first[k]/c1)/(jnp.sqrt(second[k]/c2)+1e-8) for k in params}
+    params={k:params[k]-rates[k]*(first[k]/c1)/(jnp.sqrt(second[k]/c2)+epsilon) for k in params}
     return params,first,second,norm

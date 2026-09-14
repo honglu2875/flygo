@@ -13,6 +13,7 @@ from flygo.data.corpus import atomic_json
 from flygo.data.loader import load_release,Sampler
 from flygo.fly import FlyConfig,RustFly,initialize,load_graph
 from flygo.ports import load_ports
+from flygo.optimizer import validate_epsilon
 from flygo.qualify import sha256
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
@@ -25,10 +26,15 @@ def main():
     p.add_argument('--readout-mean-scale',type=float,default=1.0)
     p.add_argument('--batch-size',type=int,default=1,help='Bounded full-reference batch, 1..32')
     p.add_argument('--rate-softness',type=float,default=0.0)
+    p.add_argument('--epsilon',type=float,default=1e-8)
+    p.add_argument('--rate',type=float,default=.01)
+    p.add_argument('--rate-scales',type=json.loads,default={})
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--cpus',default='117,118,119')
     args=p.parse_args();cpus=list(map(int,args.cpus.split(',')));pin(cpus)
     if not 1<=args.batch_size<=32:p.error('Full CPU reference supports bounded batches 1..32')
+    validate_epsilon(args.epsilon)
+    if not np.isfinite(args.rate) or args.rate<=0:p.error('Rate must be finite and positive')
     os.environ['JAX_PLATFORMS']='cpu'
     import jax
     import jax.numpy as jnp
@@ -52,7 +58,8 @@ def main():
             kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,rate_softness=cfg.rate_softness,readout_mean_scale=cfg.readout_mean_scale)
             infer=jax.jit(lambda p,g,a,x:forward(p,g,a,x,**kwargs))
             derivative=jax.jit(jax.value_and_grad(lambda p,g,a,*batch:loss(p,g,a,*batch,**kwargs),has_aux=True))
-            update=jax.jit(lambda p,g,m,v,step:adam(p,g,m,v,step,rate=np.float32(.01),clip=np.float32(1),norm_dtype=jnp.float64))
+            rates={k:np.float32(args.rate)*np.float32(args.rate_scales.get(k,1)) for k in params}
+            update=jax.jit(lambda p,g,m,v,step:adam(p,g,m,v,step,rate=rates,clip=np.float32(1),norm_dtype=jnp.float64,epsilon=np.float32(args.epsilon)))
             errors={}
             def check(actual,expected,key,rtol=3e-3,atol=5e-6):
                 a,b=np.asarray(actual),np.asarray(expected)
@@ -73,13 +80,13 @@ def main():
                     check(native_loss[key],value,f'{step}/loss/{key}',3e-4,3e-6)
                 for key,value in native_gradient.items():check(value,gradient[key],f'{step}/gradient/{key}')
                 jp,first,second,_=jax.block_until_ready(update(jp,gradient,first,second,step+1))
-                rust.train_step(*batch,rate=.01)
+                rust.train_step(*batch,rate=args.rate,rate_scales=args.rate_scales or None,epsilon=args.epsilon)
                 saved=rust.checkpoint_arrays()
                 for prefix,group in [('param/',jp),('first/',first),('second/',second)]:
                     for key,value in group.items():check(saved[prefix+key],value,f'{step}/'+prefix+key)
                 atomic_json(args.output/'status.json',dict(state='qualifying',port=str(path),completed_updates=step+1))
             records.append(dict(ports=str(path) if path else None,ports_sha256=receipt['sha256'],model=asdict(cfg),readout_neurons=int((ports['output_group']>=0).sum()),
-                                updates=3,batch_size=args.batch_size,errors=errors))
+                                updates=3,batch_size=args.batch_size,optimizer=dict(rate=args.rate,rate_scales=args.rate_scales,epsilon=args.epsilon,clip=1),errors=errors))
             atomic_json(args.output/'result.json',dict(status='complete' if len(records)==len(variants) else 'running',
                 graph_id=graph['manifest']['graph_id'],dataset_id=manifest['dataset_id'],records=records,cpus=cpus,
                 script_sha256=sha256(Path(__file__)),seconds=time.time()-begin,

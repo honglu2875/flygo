@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from . import _native
+from .optimizer import DEFAULT_EPSILON,validate_epsilon
 
 PARAMETERS = ('edge', 'leak', 'bias', 'input_gain', 'readout_gain', 'policy_weight',
               'policy_bias', 'value_weight', 'value_bias')
@@ -135,13 +136,14 @@ class RustFly:
             np.ascontiguousarray(value,dtype=np.float32))
         return dict(policy_loss=pl,value_loss=vl),dict(zip(PARAMETERS,grad))
 
-    def train_step(self, features, legal, policy, value, *, rate=0.003,clip=1.0,rate_scales=None):
+    def train_step(self, features, legal, policy, value, *, rate=0.003,clip=1.0,rate_scales=None,epsilon=DEFAULT_EPSILON):
+        validate_epsilon(epsilon)
         if rate_scales is not None and set(rate_scales)-set(PARAMETERS):
             raise ValueError('Unknown parameter group in learning-rate multipliers')
-        extra=() if rate_scales is None else ([rate_scales.get(name,1.0) for name in PARAMETERS],)
+        scales=None if rate_scales is None else [rate_scales.get(name,1.0) for name in PARAMETERS]
         pl,vl,norm,step = self.native.train_step(self._input(features),self.config.steps,
             np.ascontiguousarray(legal,dtype=np.uint8),np.ascontiguousarray(policy,dtype=np.float32),
-            np.ascontiguousarray(value,dtype=np.float32),rate,clip,*extra)
+            np.ascontiguousarray(value,dtype=np.float32),rate,clip,scales,epsilon)
         return dict(policy_loss=pl,value_loss=vl,gradient_norm=norm,step=step)
 
     def profile_sparse(self,features,*,repetitions=5):
