@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 18:34 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 20:10 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -17,7 +17,7 @@ No fly advantage has been established.
 | M6: controlled studies | Current registered batch complete | Use the results to register the next isolated hypotheses |
 | M7: four-host TPU | Qualified | Nondefault epsilon and smooth-rate TPU gates remain separate |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
-| Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Calibrate signal/optimization → substantial pretraining → response validation → functional readouts |
+| Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
 
 ## Studies
 
@@ -95,9 +95,9 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Runtime and next work
 
-At **13:11 UTC**, all 32 generation workers were healthy and had published
-**133,247 games**. Free shared memory: **103–171 GiB**; available RAM:
-**282–353 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
+At **20:03 UTC**, all 32 generation workers were healthy and had published
+**181,064 games**. Free shared memory: **103–170 GiB**; available RAM:
+**282–352 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
 floor and 100 GiB own-file cap, including reservations. Runtime data and
 checkpoints live in volatile `/dev/shm/flygo`.
 The 18 biological-probe artifacts/source files (about 256 MB) have verified
@@ -112,34 +112,30 @@ Generation uses 64 pinned physical cores per host: `0–31,60–91`.
 Research lanes are `32–55` and `92–115`; TPU/development uses spare cores.
 Preserve production, checkpoint replicators and owned SSH keepalives.
 
-The current registered studies are closed. **Plan revision:** the user's
-proposal now puts [contrastive motor-embedding learning](docs/embedding-study.md)
-before response-guided groups within [G1–G3](docs/group-study.md). Random/prior
-weights alone cannot establish the capacity of trained responses. B0 is complete;
-**B1's coherent spherical adapter and the bounded B1.5 CPU pilot are complete.** The
-engineered chart has full rank for all 324 historical board points; measured
-optical registration remains a separate gate. Genuine 1–6-ply divergent replay
-pairs share at least 20 prior plies and use one teacher/current-player frame.
-The candidate miner and family holdout were revised before training after
-data-admission failures; the criteria and failed attempts are recorded in the
-study note. **Next:** measure neutral versus visually evoked response scales
-and group gradients, then qualify training-only centering/scaling or a separate
-adaptation intervention before extending pretraining. Preserve raw responses
-and the frozen-circuit control; do not treat flat loss as a reason simply to
-run longer. Longer history, temporal presentation, physiology changes and output
-grouping are separate factors. The isolated hard value-head rate confirmation
-remains a pending optimizer idea. The baseline already shares
-leak/bias by cell type. Dense groups motivate hypotheses, not an established
-functional advantage. [Regrowth](docs/structural-plasticity.md) is a proposed
-later relaxation; no connection has been added.
+The current registered studies are closed. B0, B1's coherent spherical adapter
+and the bounded B1.5 embedding pilot are complete. Random/prior responses and
+the minimally changed pilot weights cannot establish trained capacity. Keep
+signal amplitude and gradient diagnostics before fitting functional groups;
+flat contrastive loss does not justify simply extending that run.
 
-**Deferred input study:** the user proposes the two most recent moves/states
-through the two eyes, and older sequence/captures/komi/context through other
-input nodes. Audit zero-in-degree candidates against sensory labels and source
-filtering; freeze the exact encoding and matched controls before launch. This
-does not replace the current signal/optimization gate.
+**Plan revision:** the user's latest proposal gives both eyes the current
+board and carries history in neural state. The current model resets between
+positions. The [temporal vision design](docs/temporal-vision-study.md) orders
+four supervised comparisons: historical montage, current board in unchanged
+patches, one larger board per eye, then persistent state with the same input.
+Keep outputs and optimizer fixed within these input/execution comparisons.
+Trajectory training, consistent stone perspective and state-gradient parity
+are required before testing learned memory. These are planned studies;
+no new scientific training was launched by the Doomfly review or this revision.
+Captures/older history through nonvisual source nodes remain a separate input
+alternative. Source-graph degree, annotation and outgoing-path audits are gates.
 
-The approved history through **ab4c7b9** is published to `master` at
-`git@github.com:honglu2875/flygo.git`. This phase adds the spherical adapter,
-embedding interface and its completed pilot records. Deployment and artifact
-replication preserve prior checkpoints and immutable sources.
+Attachment, execution and optimization are separate research lines. The pending
+hard value-head rate confirmation, physiology/sign changes and
+[regrowth](docs/structural-plasticity.md) keep separate contracts. No edge was
+added. Persistent models require a history-matched conventional control before
+claiming an equi-FLOP algorithmic advantage.
+
+The approved history through **a0bc239** is published to `master` at
+`git@github.com:honglu2875/flygo.git`. Deployment and artifact replication
+preserve prior checkpoints and immutable sources.

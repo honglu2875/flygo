@@ -58,6 +58,13 @@ before functional partitioning. Coherent spherical views, genuine shared-prefix
 branches and a frozen-circuit control form a bounded pipeline pilot. Its
 engineering gate and selected branch probes do not constitute Go validation.
 
+The latest proposal simplifies both eyes to the current board and learns
+history through state carried across plies. The
+[temporal vision design](docs/temporal-vision-study.md) separates input removal,
+retinal allocation and persistent execution, with optimization held fixed in
+each comparison. This is a design revision, not a launched run or evidence of
+memory. Attachment, execution and optimization remain separate research lines.
+
 ## Optimization study contracts
 
 The existing 2×2 depth/readout study uses Adam at 0.003, batch 32 and 10,000

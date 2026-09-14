@@ -25,6 +25,30 @@ The left viewport covers horizontal screen coordinates 0–.6, and the mirrored
 right viewport .4–1. These are inferred display coordinates, not registered
 optical viewing directions. [Projection code](https://github.com/nftechie/doomfly/blob/71ecf53d78eaffaf1a57ed7b0ccf5d458abc9f33/doom/prepare.py).
 
+The visual-to-action loop is schematically:
+
+```mermaid
+flowchart LR
+  Frame[Current RGB frame] --> Map[Inferred hex-column samples]
+  Map --> Eye[R1-R6 brightness and R8 color drive]
+  Eye --> CNS[Persistent spiking MaleCNS circuit]
+  CNS --> DN[DNp20 and DNpe017 pairs]
+  DN --> Filter[100 ms spike-rate filter and fixed decoder]
+  Filter --> Action[Turn, forward, fire]
+  Action --> Game[Doom advances]
+  Game --> Frame
+  CNS --> CNS
+```
+
+Neural voltage, synaptic current, refractory state and queued spikes continue
+between frames. Their baseline integration uses 0.1 ms steps, a 20 ms membrane
+constant, 5 ms synaptic decay and 1.8 ms delay. A 10 ms low-pass visual filter,
+saturating luminance drive and tonic lamina current are additional chosen
+dynamics. The tonic drive matters because their photoreceptor outputs inhibit
+the lamina. These are model choices; the model explicitly treats normally
+graded early visual cells with a spiking proxy.
+[Neural engine](https://github.com/nftechie/doomfly/blob/71ecf53d78eaffaf1a57ed7b0ccf5d458abc9f33/doom/engine.py).
+
 The newer adapter separately stimulates 330 R8p and 481 R8y cells using blue
 and green display channels. It changes the sign of 390 existing R8→aMe12
 connections while preserving contact magnitudes. These remain explicit
@@ -59,6 +83,11 @@ within the existing propagation/physiology gate. It has not been run and is
 not an established cause of our weak motor responses.
 [Read-only graph audit](results/doomfly-comparison-r8-v1.json).
 
+Our current parameterization is `W[post,pre] = sign[pre] * softplus(theta[edge])`.
+Magnitude learning cannot express a sign that differs between two targets of
+the same source neuron. Target-specific sign rules therefore require a separate
+model intervention even though they do not add or remove a connection.
+
 aMe12 is associated with broad visual input to Kenyon cells; increasing this
 route need not preserve the board's spatial detail. Measure intermediate
 responses, spatial sensitivity and recovery as well as overall activity.
@@ -74,4 +103,12 @@ candidates against sensory annotations and the source graph: the current
 two-contact filter can create apparent source nodes. Preserve matched total
 information, input scale, exposure budgets, probe positions and frozen controls.
 This is a follow-up hypothesis, not a launched run or a change to the completed
-spherical pilot. Signal/optimizer calibration remains the active gate.
+spherical pilot.
+
+**Subsequent proposal:** both eyes receive the current board, with history
+carried in recurrent state. Our existing model resets state for each position;
+it does not yet implement this inter-move memory. The
+[temporal vision design](temporal-vision-study.md) separates historical-feature
+removal, larger retinal allocation and state persistence. Nonvisual older
+history remains a separate alternative. Signal and gradient diagnostics remain
+necessary, with optimizer interventions kept outside the attachment comparison.
