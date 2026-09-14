@@ -604,3 +604,20 @@ controllers then reproduce the step-2-to-step-3 checkpoint arrays and sampler
 exactly in fresh processes, with the portable Rust update checks also passing.
 No pointwise tolerance changes. [Complete evidence](results/current-tpu-default-v1.json).
 This does not qualify nondefault epsilon or smooth rates on the TPU.
+
+## Final smooth confirmation — 2026-09-14 09:14 UTC
+
+The recovered seed-2 learner completes all 4,000 updates and 128,000 exposures
+on its original immutable source `6d9b14c70b154a5cb821`. Its existing validator
+then completes the full held-out split. The new collected recovery study adopts
+the already completed seeds 1/3 and all three hard controls; no validation is
+rerun. All three paired comparisons verify the same dataset, seed, exposure
+horizon and position/game indices. The [complete report](results/smooth-rate-confirm-v1.json)
+retains checkpoint and metric hashes alongside conditional game-bootstrap
+uncertainty and variation across seeds. Original pre-launch failures remain.
+
+All currently registered scientific cases now have final reports, apart from
+the explicitly deferred mean-conditioning proposal, which never launched
+scientific training after its failed update gate. Generation and checkpoint
+replication remain active. At 09:10 the fleet has 105,902 published games,
+32 healthy workers and all original storage buffers intact.

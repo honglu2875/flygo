@@ -375,3 +375,33 @@ The other three cases worsen both losses. Keep the default epsilon 1e-8;
 this single-seed screen does not justify a larger-epsilon confirmation.
 The hard-1e-6 operational retry consumed no extra optimizer updates before
 its successful restart. [All records and paired comparisons](results/epsilon-screen-v1.json).
+
+## Smooth-rate confirmation, three seeds
+
+All three selected softness-.01 runs complete 4,000 updates / 128,000
+exposures at B32, global rate .03 and bias multiplier .01. The hard controls
+use the same seeds, inputs, exposure horizon and optimizer. Every final
+checkpoint has full 70,425-position validation; no final test labels are used.
+
+| Seed | Hard KL | Smooth KL | Hard MSE | Smooth MSE |
+|---|---:|---:|---:|---:|
+| 1 | 1.534333 | 1.493042 | .542177 | .552616 |
+| 2 | 1.513853 | 1.486574 | .576473 | .558474 |
+| 3 | 1.503502 | 1.491410 | .577922 | .571197 |
+| Mean | 1.517230 | 1.490342 | .565524 | .560762 |
+
+Policy KL improves in all three observed seeds. The mean paired difference
+is −.026887, with conditional game-bootstrap 95% interval [−.028444, −.025192]
+and paired-seed sample SD .014604. Mean value-MSE difference is −.004762
+[−.011764, +.001348], with sample SD .014321; it remains unresolved and
+seed 1 worsens. Teacher top-1 agreement increases by .796 percentage points
+on average. These bootstrap intervals condition on the three checkpoints,
+not a population of possible training seeds.
+
+This confirms a policy-loss benefit at equal exposures for this optimizer
+setting. It is not an equi-FLOP or playing-strength result. Smooth rates can
+keep more rows active, and the hard-only zero-skipping ledger must be extended
+and qualified before counting their effective work. Actual smooth-rate TPU
+qualification and fresh match panels remain separate gates. Do not combine
+this result with warmup or head-rate scaling without a new controlled study.
+[All seeds and paired evidence](results/smooth-rate-confirm-v1.json).

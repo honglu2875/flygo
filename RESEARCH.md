@@ -8,6 +8,14 @@ edge identities remain fixed in every fly variant.
 
 ## Comparison contract
 
+The primary comparison fixes prediction arithmetic and the labeled-position
+training horizon. For input-dependent work, report
+`C(f; Q) = mean_{x in Q} FLOPs(f, x)` on a declared input sample Q, together
+with its distribution and batch/cache convention. Freeze the counting rule,
+reference sample and candidate architecture before candidate training; report
+the achieved mismatch across seeds. Parameter count is descriptive, not the
+matching target. Wall time is a separate engineering comparison.
+
 - A training exposure is one labeled board position processed by the learner,
   including repeated samples. Also report unique games, unique positions,
   augmentation, optimizer updates, global batch and total training compute.
@@ -24,6 +32,11 @@ edge identities remain fixed in every fly variant.
   nonlinear operations and weight transforms separately. Report effective
   nonzero arithmetic, executed/padded arithmetic, precision, batch and latency.
   Compiler FLOP estimates and device occupancy alone are insufficient.
+- A change in firing rules can change effective arithmetic without changing
+  the topology. The current exact zero-skipping ledger supports hard rates
+  only and rejects smooth rates. Qualify an extended ledger before claiming
+  an equi-FLOP advantage for a new dynamics model; equal exposures alone do
+  not establish that advantage.
 - First compare prior-only predictions and paired fresh games. Then use the
   same native PUCT/Gumbel settings and count every neural evaluation per move.
   Search is not a free improvement under a prediction-compute budget.

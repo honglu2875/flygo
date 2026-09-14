@@ -409,8 +409,13 @@ Architecture studies start on frozen 9×9 data, with identical sampling and
 target contracts. Compare validation policy KL/value error and actual matches
 against several KataGo strengths, including held-out opponents and openings.
 Value-stratified and endgame metrics help expose misleading aggregate losses.
-Use equal tuning budgets and repeated seeds. Test both matched-data and
-matched-wall-time performance; validation loss alone does not establish play.
+Use equal tuning budgets and repeated seeds. The primary neural-control
+comparison matches prediction FLOPs and labeled-position training exposures.
+Report parameter counts, total training/tuning work, padding and latency
+separately. Input-dependent arithmetic needs a declared sample and counting
+convention; fixed-wall-time comparisons remain useful engineering evidence.
+Validation loss alone does not establish play. [RESEARCH.md](RESEARCH.md)
+defines the detailed comparison contract.
 
 After offline selection, use the learned fly prior with native PUCT/Gumbel.
 New targets can be relabeled by the teacher or generated through fly self-play.

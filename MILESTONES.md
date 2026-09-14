@@ -203,6 +203,9 @@ they do not replace the V0 confirmation gate or select a final architecture.
   sign constraints; then one adaptation, filtering or gating extension.
 - Give variants equal small tuning budgets. Track core/adapter parameters,
   neuron/gradient coverage, memory and training/inference throughput.
+- Match the conventional neural control on prediction FLOPs and training
+  exposures. Declare how input-dependent zero skipping is counted, report
+  achieved mismatch, and keep padding/latency and total project compute separate.
 - Compare held-out policy KL and value MSE by phase, value band and opponent
   band, plus pass/endgame/tactical slices and the novel-state subset.
 - Run periodic fresh KataGo panels for screened candidates. Test prior-only
@@ -212,8 +215,9 @@ they do not replace the V0 confirmation gate or select a final architecture.
   Keep final test positions and openings separate from tuning decisions.
 
 Acceptance: every claimed improvement has matched data/target provenance,
-measured resource use and uncertainty. Report fixed-data and fixed-wall-time
-results. Lower validation loss alone is not a playing-strength result. Freeze
+measured resource use and uncertainty. Primary algorithmic-efficiency claims
+require matched prediction arithmetic and exposure horizons; report fixed-time
+results separately. Lower validation loss alone is not a playing-strength result. Freeze
 a selected architecture/checkpoint before online refinement, while continuing
 useful larger-data confirmations.
 

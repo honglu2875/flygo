@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 08:55 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 09:14 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -14,7 +14,7 @@ No fly advantage has been established.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production continues | Freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Final smooth seed finishing | Collect its full validation and paired report |
+| M6: controlled studies | Current registered batch complete | Use the results to register the next isolated hypotheses |
 | M7: four-host TPU | Qualified | Nondefault epsilon and smooth-rate TPU gates remain separate |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Planned; descriptive audit complete | Anatomy → connectivity/dynamics → execution layout → group rules |
@@ -30,7 +30,7 @@ No fly advantage has been established.
 | Head rates and epsilon | Separate seed-1 screens; 32k exposures | Complete; keep epsilon 1e-8 |
 | Spatial input | Baseline/spatial/shuffled; three seeds, 1,048,576 exposures | Complete, including the operational retry |
 | Visual readout | Three seed-1 variants, 128k exposures | Complete |
-| Smooth firing | Softness .01, rate .03, bias multiplier .01; three seeds, 128k exposures | Seeds 1/3 validated; seed 2 training, validation worker ready |
+| Smooth firing | Softness .01, rate .03, bias multiplier .01; three seeds, 128k exposures | All training, full validations and paired analysis complete |
 | Mean conditioning | Fixed-topology readout transform | Deferred after full-update parity failure; no scientific training |
 
 All studies retain their declared immutable sources, failed attempts and fixed
@@ -46,6 +46,9 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   Spatial attachment gives a small policy benefit; value changes are unresolved.
   Hard value-head rate scaling helps its short screen; the smooth interaction
   is worse. Larger epsilon fails the loss-based screen.
+- Smooth .01 improves KL in all three observed seeds, by **.02689** on average
+  at 128k exposures. Mean value change remains unresolved. More active edges
+  can increase work; this is not yet an equi-FLOP or playing-strength benefit.
 - Same-lane CPU B1 medians: fly **23.73 ms**, large CNN **2.43 ms**, small CNN
   **1.30 ms**. Backend overhead and memory work remain separate from FLOPs.
 - Streaming prediction reduces the K32/B128 probe's peak RSS from **4.005 GB
@@ -63,9 +66,9 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Runtime and next work
 
-At **08:44 UTC**, all 32 generation workers were healthy and had published
-**102,966 games**. Free shared memory: **105–172 GiB**; available RAM:
-**285–353 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
+At **09:10 UTC**, all 32 generation workers were healthy and had published
+**105,902 games**. Free shared memory: **104–172 GiB**; available RAM:
+**283–354 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
 floor and 100 GiB own-file cap, including reservations. Runtime data and
 checkpoints live in volatile `/dev/shm/flygo`.
 
@@ -73,13 +76,15 @@ Generation uses 64 pinned physical cores per host: `0–31,60–91`.
 Research lanes are `32–55` and `92–115`; TPU/development uses spare cores.
 Preserve production, checkpoint replicators and owned SSH keepalives.
 
-Finish smooth confirmation and its report, then follow the deliberate
-[group-study milestones](docs/group-study.md). The baseline already shares
+The current registered studies are closed. Follow the deliberate
+[group-study milestones](docs/group-study.md); a useful next optimizer test is
+multi-seed confirmation of the isolated hard value-head rate screen.
+The baseline already shares
 leak/bias by cell type. Dense groups motivate hypotheses, not an established
 functional advantage. [Regrowth](docs/structural-plasticity.md) is a proposed
 later relaxation; no connection has been added.
 
-Local commits continue. Publication remains blocked by automatic approval
+Completed changes are committed locally. Publication remains blocked by automatic approval
 review, which requires explicit confirmation of
 `git@github.com:honglu2875/flygo.git`. Review also rejected removal of retired
 checkpoint replicas after copying them to another host's volatile RAM.
