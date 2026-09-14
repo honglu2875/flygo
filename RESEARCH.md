@@ -49,10 +49,14 @@ matching target. Wall time is a separate engineering comparison.
 The supervised spherical screen now has a separately registered
 [paired-seed confirmation](docs/attachment-confirmation.md): retain the exact
 32k-exposure input/optimizer contract, add seeds 2 and 3, and identify seed 1
-as exploratory. CPU numerical gates pass for both new seeds; six learners and
-their subsequent full-validation jobs are launched. Confirm value improvement
-and repeat the motor/cost diagnostics before changing retinal allocation or
-fitting output groups. TPU remains paused and is not required for this phase.
+as exploratory. All six learners, full validations and motor/cost probes are
+complete. In the two new seeds, history/current reduce mean value MSE versus
+neutral by .10320/.19931, while policy KL worsens by .04083/.03674. History's
+value benefit occurs in all three observed seeds; current versus history has
+substantial seed variation. Motor responses remain concentrated, with dominant
+cell identity changing across seeds. Do not infer permanent action groups from
+one fitted endpoint. The next input factor remains larger retinal allocation;
+TPU remains paused and is not required for this phase.
 
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,
@@ -72,9 +76,10 @@ history through state carried across plies. The
 retinal allocation and persistent execution, with optimization held fixed in
 each comparison. The [supervised attachment screen](docs/attachment-study.md)
 completes historical/current/neutral imagery with matched context and optimizer.
-Its seed-1 history arm improves value loss; neither visual arm establishes a
-policy benefit. Learned visual-response variance concentrates in one descending
-cell. Full validation, input-overlap audits and sparse work counts are retained.
+Its history arm improves value loss in all three observed seeds; neither visual
+arm establishes a policy benefit. Learned visual-response variance concentrates
+in a few descending cells, with seed-dependent identities. Full validation,
+input-overlap audits and sparse work counts are retained.
 Persistent state remains planned. Attachment, execution and optimization remain
 separate research lines.
 

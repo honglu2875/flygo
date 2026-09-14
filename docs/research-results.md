@@ -11,6 +11,13 @@ small CNN. Optimizer moments and fixed graph/port arrays are excluded; the
 count includes stored parameters on routes with zero gradients.
 [Exact checkpoint counts](results/control-parameter-counts-v1.json).
 
+The later [spherical-input confirmation](attachment-confirmation.md) evaluates
+history/current/neutral imagery at a separate 32k-exposure, K8 contract.
+Both visual arms improve value over neutral in the two new seeds, while policy
+loss worsens. Motor-response concentration persists with seed-dependent cell
+identity. These runs have different features and arithmetic and do not inherit
+the CNN comparison below. [Paired evidence](results/attachment-confirmation-v1.json).
+
 ## Matched neural control, three seeds
 
 Both families receive 1,048,576 labeled-position exposures: 512 Adam updates at

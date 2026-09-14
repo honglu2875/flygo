@@ -48,10 +48,11 @@ selection, neuronal physiology and optimizer changes remain separate studies.
 
 ## Engineering and launch status
 
-At 2026-09-14 22:04 UTC, all six CPU learners are training at updates 60–70
-of 1,000. Full-validation helpers in `attachment-confirmation-validation-v1`
-wait for each trainer to exit and its final checkpoint replica to be verified.
-No scientific confirmation endpoint is available yet.
+At 2026-09-14 23:05 UTC, all six CPU learners have completed 1,000 updates.
+Their initial/final checkpoints have verified recovery copies on another
+worker. All six full validations and subsequent motor/arithmetic probes have
+completed. The main node holds their small records and response/metric arrays;
+the new checkpoint payloads remain on workers.
 
 [Qualification and launch evidence](results/attachment-confirmation-engineering-v1.json)
 records successful B32/K8 full-circuit checks for seeds 2 and 3 in all three
@@ -77,3 +78,71 @@ The two unsuccessful readiness calls started no learners: one used the system
 Python interpreter instead of the qualified Python 3.12, and one hid the fleet
 CPU allocation by pinning the launcher before its inventory. Both were corrected
 without changing the study, numerical gates or resource limits.
+
+## Results
+
+Each row uses all 70,425 validation positions, grouped into 254 opening
+families. Lower KL and MSE are better. Seed 1 is the adopted exploratory screen;
+seeds 2 and 3 are the registered confirmations. The horizon remains 32,000
+labeled-position exposures per model.
+
+| Seed | Input | Policy KL | Value MSE | Teacher top-1 |
+|---|---|---:|---:|---:|
+| 1, exploratory | History | 1.66743 | .62807 | 19.13% |
+| 1, exploratory | Current | 1.65923 | .84937 | 20.44% |
+| 1, exploratory | Neutral | 1.65202 | .81902 | 21.33% |
+| 2 | History | 1.67927 | .65496 | 19.05% |
+| 2 | Current | 1.68454 | .59784 | 18.99% |
+| 2 | Neutral | 1.65559 | .80754 | 20.72% |
+| 3 | History | 1.70138 | .77722 | 18.04% |
+| 3 | Current | 1.68794 | .64212 | 18.24% |
+| 3 | Neutral | 1.64341 | .83104 | 20.30% |
+
+Across the **two new seeds**, history-minus-neutral changes KL by **+.04083**
+and value MSE by **−.10320**; current-minus-neutral gives **+.03674** and
+**−.19931**. Conditional paired-family 95% intervals for these MSE differences
+are [−.27266, −.02110] and [−.32599, −.14319]. Both visual inputs improve value
+in each new seed, while policy KL and top-1 agreement worsen. On the common
+61,541-position reduced-source-novel slice, the value reductions remain, but
+the conditional policy-difference intervals include zero.
+
+Including exploratory seed 1, mean history/current-minus-neutral MSE changes
+are −.13245/−.12276. Current versus history reverses its value ordering across
+seeds: +.22130, −.05712, −.13510. The three-seed average is +.00969, despite
+current doing better in both new seeds. Family intervals condition on fitted
+weights and do not resolve this training-seed variation. These observations
+support a visual value signal at this short horizon, without establishing that
+historical montage or current input is generally superior.
+
+The fixed training-family probe also repeats the concentration finding, but
+**the dominant cell is not invariant across seeds**. Raw rates are measured
+before learned readout gains, with identical nonvisual context in each visual
+perturbation.
+
+| Seed | Input | Varying motors, SD > 1e-6 | Dominant cell | Raw visual variance | Unit-variance rank |
+|---|---|---:|---|---:|---:|
+| 1 | History | 415 | DNg30, body 10123 | 99.9773% | 7.13 |
+| 1 | Current | 621 | DNg30, body 10123 | 99.9621% | 5.02 |
+| 2 | History | 306 | DNg30, body 10237 | 99.9898% | 5.20 |
+| 2 | Current | 336 | DNg30, body 10237 | 99.9908% | 5.07 |
+| 3 | History | 252 | DNpe018, body 69173 | 92.9414% | 4.26 |
+| 3 | Current | 243 | DNpe018, body 69173 | 96.3677% | 4.65 |
+
+These are model responses on 256 training positions, not physiological
+recordings or evidence for permanent action partitions. Head/sampler seeds
+vary; initial core weights do not. Weak distinct signals survive outside the
+dominant cell, but the present trained representation remains concentrated.
+
+Recounted unpruned K8 warm B1 arithmetic spans **171.2–184.9M FLOPs** across
+the nine endpoints; B32 means span 177.4–190.4M per position. Rendering is
+included. These runs cannot inherit the earlier small-CNN comparison, and
+the separate optional CPU dependency optimization has no complete FLOP ledger
+yet. No matches or final-test evaluation were performed.
+
+The [result and provenance](results/attachment-confirmation-v1.json) contain
+all paired contrasts, both seed aggregates, conditional intervals, seed
+variation, parameter changes, response hashes and arithmetic counts. The
+analysis reproduces the adopted seed-1 metrics and family intervals exactly.
+The next input factor remains one larger board per eye, followed by separately
+qualified persistent state. Output attachment and physiology keep separate
+contracts. TPU remains paused.

@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 22:05 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 23:10 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -14,7 +14,7 @@ No fly advantage has been established.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production continues | Freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Visual screen complete; six paired-seed confirmations running on CPU | Finish confirmation validation and motor/cost probes; then qualify larger retinal allocation and output attachment separately |
+| M6: controlled studies | Visual screen and paired-seed confirmations complete | Qualify larger retinal allocation; keep output attachment and persistent state separate |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -34,7 +34,7 @@ No fly advantage has been established.
 | Mean conditioning | Fixed-topology readout transform | Deferred after full-update parity failure; no scientific training |
 | Spherical motor embeddings | K8, 64 updates / 2,048 views per arm; learned versus frozen circuit | CPU pilot complete; both reach 50% branch ranking, with negligible circuit change |
 | Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | All endpoints, full validation, paired family analysis and signal/cost probes complete |
-| Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | Six CPU learners running; full validation queued after verified checkpoints |
+| Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | All six endpoints, full validations, motor/cost probes and paired analysis complete |
 
 All studies retain their declared immutable sources, failed attempts and fixed
 final horizons. V0 has 10,256 games / 1,000,201 positions: train 887,338,
@@ -112,24 +112,45 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   (unit-variance effective ranks 7.13/5.02). No action groups are fitted.
 - New K8 warm B1 arithmetic is **173–182M FLOPs**, including the renderer;
   these models cannot inherit the old 8.3–8.9M comparison with the small CNN.
-  A topology-only inference audit suggests about 22% fewer post-cache edge
-  evaluations through exact output dependencies, before zero skipping. No new
-  kernel or measured speedup is claimed.
+  Exact output dependencies allow about 22% fewer post-cache edge evaluations
+  before zero skipping; the optional implementation is now measured below.
 - [Confirmation gates](docs/results/attachment-confirmation-engineering-v1.json):
   both actual new seeds pass all three input modes at B32/K8, including states,
   losses, every gradient and three Adam updates at unchanged tolerances and
   epsilon 1e-6. Within each seed, all 31 initial checkpoint arrays, sampler and
-  training contract match across modes. No confirmation endpoint is available yet.
+  training contract match across modes. All six final endpoints are now available.
 - Worker checkpoint relay passes eight regression tests and an actual 190 MB
   w1-to-w2 transfer through root's pipes. It verifies byte counts/hashes and
   publishes the destination receipt first. Interrupted receipts can retry;
   root holds no checkpoint payload. Existing study artifacts remain intact.
+- [Confirmation results](docs/attachment-confirmation.md): in the two new seeds,
+  history/current improve mean value MSE versus neutral by **.10320/.19931**,
+  while policy KL worsens by **.04083/.03674**. History improves value in all
+  three observed seeds; current versus history reverses ordering across seeds.
+  Conditional family intervals and training-seed variation are reported separately.
+  All nine endpoints retain their fixed 32k-exposure horizon; no final-test or
+  playing-strength claim is made.
+- The repeated motor probes remain concentrated, but dominant cell identity
+  changes: DNg30 body 10123 in seed 1, DNg30 body 10237 in seed 2, DNpe018
+  body 69173 in seed 3. The leading cell carries **92.9–99.99%** of raw visual
+  variance across the six image-trained endpoints. Unit-variance ranks are
+  4.26–7.13. Do not infer permanent action groups from one fitted seed.
+  Recounted unpruned warm B1 arithmetic spans **171.2–184.9M FLOPs**.
+- [Optional CPU dependency execution](docs/prediction-dependencies.md) passes
+  **49 Rust / 95 Python tests** and all 12 full-CNS initial/final B1/B32 cases.
+  Predictions are exact; history cases also preserve every gradient and three
+  updates' parameter/moment arrays. The separate FP64 norm difference is at
+  most 1.78e-15. Balanced same-lane timing measures **14.7%/12.6%** median
+  warm latency reductions at B1/B32 versus the same binary with pruning off.
+  Cold preparation costs more. Default inference/training remain unchanged;
+  full traces/persistent state require full execution. A pruned FLOP ledger
+  and actual TPU qualification remain separate.
 
 ## Runtime and next work
 
-At **21:30 UTC**, all 32 generation workers were healthy and had published
-**191,213 games**. Free shared memory: **102–170 GiB**; available RAM:
-**281–352 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
+At **23:09 UTC**, all 32 generation workers were healthy and had published
+**202,496 games**. Free shared memory: **101–168 GiB**; available RAM:
+**280–350 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
 floor and 100 GiB own-file cap, including reservations. Runtime data and
 checkpoints live in volatile `/dev/shm/flygo`.
 The 18 biological-probe artifacts/source files (about 256 MB) have verified
@@ -144,17 +165,29 @@ The three attachment trainers and subsequent full validations completed on
 workers 1–3, pinned to `32–55`, with 32,000 exposures per arm. Their initial and
 final checkpoints (about 190 MB each) have verified copies on the owner and w0.
 The 22 signal/overlap/arithmetic files and six final analysis/source/status files
-have verified copies on w0/w1. The main node uses about 98.7 GiB of its own-file
+have verified copies on w0/w1. The main node uses about 99.0 GiB of its own-file
 budget; reserve actual known transfer sizes and preserve
 the cap when placing further artifacts. TPU use is paused pending fresh
 coordination with the user; current training and qualification use CPU only.
 
-At **22:04 UTC**, all six [confirmation learners](docs/attachment-confirmation.md)
-are training at updates 60–70/1,000, on `32–55` and `92–115` of workers 1–3.
-Their initial checkpoints have verified copies on another worker. All six
-full-validation helpers are waiting on core 116 for their learner and final
-replica; all 32 generation workers remain healthy. The launch/evidence records
-have verified copies on w0/w1. No TPU is used or reserved.
+All six [confirmation learners](docs/attachment-confirmation.md) completed
+1,000 updates on `32–55` and `92–115` of workers 1–3. Their initial and final
+checkpoints have verified copies on another worker; root stores no new
+checkpoint payload. Full validation and subsequent motor/arithmetic diagnostics
+have completed for every run. No TPU is used or reserved.
+The candidate CPU runtime and completed qualification, timing, validation,
+motor and analysis evidence—1,427 files, about 171 MB—have verified copies on
+w0/w1. Existing files were checked before transferring missing entries;
+resource limits and older artifacts were preserved.
+
+**TPU queue:** nothing urgent or blocking. The default hard-rate model already
+passes four-host checks. Before moving the newer spherical model to TPU,
+qualify its K8/2,129-readout input contract and epsilon 1e-6, including gradients,
+updates and fresh-process recovery. Then measure end-to-end larger-batch
+throughput, including encoding, loading and communication, under a separate
+batch/exposure contract. Smooth firing and later persistent-state models need
+their own gates if selected. Request a coordinated TPU window only when a
+specific experiment justifies it; current attachment analysis stays on CPU.
 
 Generation uses 64 pinned physical cores per host: `0–31,60–91`.
 Research lanes are `32–55` and `92–115`; TPU/development uses spare cores.
@@ -175,9 +208,10 @@ Keep outputs and optimizer fixed within these input/execution comparisons.
 Trajectory training, consistent stone perspective and state-gradient parity
 are required before testing learned memory. The first two inputs and a neutral
 visual control complete under the [registered attachment contract](docs/attachment-study.md).
-The registered paired seeds 2/3 are running to test the value finding at the
-same 32k horizon. Finish their full validation and motor/cost probes before interpreting
-the finding or qualifying larger retinal allocation. Persistent state remains
+The registered paired seeds 2/3 confirm a history-versus-neutral value signal
+at the same 32k horizon, with no policy improvement. Full validation and
+motor/cost probes are complete. Next qualify one larger current board per eye,
+with the optimizer and output attachment held fixed. Persistent state remains
 planned.
 Captures/older history through nonvisual source nodes remain a separate input
 alternative. Source-graph degree, annotation and outgoing-path audits are gates.
@@ -188,6 +222,6 @@ hard value-head rate confirmation, physiology/sign changes and
 added. Persistent models require a history-matched conventional control before
 claiming an equi-FLOP algorithmic advantage.
 
-The qualified attachment implementation **08db1de** is published to `master` at
+The authorized publication destination is `master` at
 `git@github.com:honglu2875/flygo.git`. Deployment and artifact replication
 preserve prior checkpoints and immutable sources.

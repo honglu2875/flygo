@@ -20,6 +20,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
     p.add_argument('--study',type=Path,required=True)
+    p.add_argument('--run-id',help='Probe one owner-local run from a multi-seed study')
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--cpus',default=','.join(map(str,range(32,56))))
     args=p.parse_args();cpus=list(map(int,args.cpus.split(',')));pin(cpus)
@@ -27,11 +28,16 @@ def main():
     with StorageBudget(args.root).reserve(files=48<<20,heap=4*GIB,purpose='trained attachment motor signal probe'):
         args.output.mkdir(parents=True,exist_ok=False);started=time.time()
         plan=json.loads((args.study/'plan.json').read_text())
+        jobs=[job for job in plan['jobs'] if not args.run_id or job['run_id']==args.run_id]
+        if not jobs or len({job['mode'] for job in jobs})!=len(jobs):
+            raise ValueError('Select one run when a study contains repeated input modes')
+        dataset_id=plan.get('dataset_id') or json.loads(
+            (args.root/'releases'/plan['release']/'manifest.json').read_text())['dataset_id']
         x,legal,nuisance,selection=probes(args.root,256,972091)
-        if selection['dataset_id']!=plan['dataset_id']:raise ValueError('Probe release differs')
+        if selection['dataset_id']!=dataset_id:raise ValueError('Probe release differs')
         atomic_json(args.output/'selection.json',selection)
         graph=Path(json.loads((args.root/'runs/m4/graph.json').read_text())['path'])
-        cases=[('initial',plan['jobs'][0]['run_id'],0)]+[(job['mode'],job['run_id'],plan['updates']) for job in plan['jobs']]
+        cases=[('initial',jobs[0]['run_id'],0)]+[(job['mode'],job['run_id'],plan['updates']) for job in jobs]
         results=[]
         for name,run_id,step in cases:
             path=args.root/'runs'/run_id/'checkpoints'/f'step-{step:08d}.npz'
@@ -39,9 +45,12 @@ def main():
             if receipt['replica_status']!='verified' or sha256(path)!=receipt['sha256']:
                 raise ValueError('Checkpoint lacks a verified recovery copy')
             player,metadata=load_player(path,graph,threads=len(cpus))
-            if (metadata['dataset_id']!=plan['dataset_id'] or player.config.steps!=plan['passes']
+            if (metadata['dataset_id']!=dataset_id or player.config.steps!=plan['passes']
                     or int(player.checkpoint_arrays()['optimizer_step'])!=step):
                 raise ValueError('Unexpected checkpoint contract')
+            job=next(job for job in jobs if job['run_id']==run_id)
+            if player.config.seed!=job.get('seed',plan.get('seed',1)) or player.config.rate_softness:
+                raise ValueError('Probe requires the declared seed and qualified hard firing rate')
             before=parameter_hash(player)
             selected=np.flatnonzero(player.ports['output_group']>=0)
             motors=selected[np.argsort(player.ports['output_group'][selected])]
@@ -74,7 +83,7 @@ def main():
                 response_file_sha256=sha256(args.output/(name+'-responses.npz'))))
             atomic_json(args.output/'result.json',dict(status='complete' if len(results)==len(cases) else 'running',
                 created=time.time(),seconds=time.time()-started,records=results,
-                dataset_id=plan['dataset_id'],plan_sha256=sha256(args.study/'plan.json'),
+                dataset_id=dataset_id,plan_sha256=sha256(args.study/'plan.json'),
                 source_sha256=sha256(Path(__file__)),probe_helpers_sha256=sha256(Path(__file__).with_name('probe_biological_ports.py')),
                 scope='256 positions, one per training family; same nonvisual context across visual perturbations. Raw motor rates precede learned readout gains. Correlation variance floor 1e-6; absolute amplitudes and response arrays retained. No labels, optimizer updates, grouping fit, topology changes, final-test examples or TPU use. Initial parameters are shared across the three qualified arms.'))
             print(json.dumps(dict(case=name,responses=summaries)),flush=True)

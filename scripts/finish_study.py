@@ -115,8 +115,20 @@ def worker(args):
                         rule='Final checkpoint at the predeclared exposure horizon; no validation selection'))
             cpus=','.join(map(str,job['cpus']));threads=str(len(job['cpus']))
             common=['--root',str(root),'--threads',threads,'--cpus',cpus]
-            stages=[('validation',[sys.executable,str(out/'compare_checkpoints.py'),*common,
-                    '--release',plan['release'],'--checkpoints',str(checkpoint),'--output',str(out/'validation')])]
+            stages=[]
+            for analysis in plan.get('analyses',['validation']):
+                if analysis=='validation':
+                    stages.append(('validation',[sys.executable,str(out/'compare_checkpoints.py'),*common,
+                        '--release',plan['release'],'--checkpoints',str(checkpoint),'--output',str(out/'validation')]))
+                elif analysis=='signal':
+                    stages.append(('signal',[sys.executable,str(out/'probe_attachment_signal.py'),
+                        '--root',str(root),'--cpus',cpus,'--study',str(root/'runs'/plan['name']),
+                        '--run-id',job['run_id'],'--output',str(out/'signal')]))
+                elif analysis=='count':
+                    stages.append(('count',[sys.executable,str(out/'count_inference.py'),
+                        '--root',str(root),'--cpus',cpus,'--plan',str(out/'count-plan.json'),
+                        '--output',str(out/'count')]))
+                else:raise ValueError('Unknown registered analysis: '+analysis)
             matches=plan.get('matches',dict(games=16,seed=229101,opponent=0,simulations=16,
                                          search_modes=['prior','puct','gumbel']))
             for name in matches.get('search_modes',[]) if matches else []:
@@ -153,6 +165,15 @@ def launch(args):
     from flygo.runtime import cpu_profile,pin
     root=args.root
     plan=json.loads(args.plan.read_text())
+    if args.analyses is not None:
+        if len(set(args.analyses))!=len(args.analyses):raise ValueError('Analysis stages must be unique')
+        plan['analyses']=args.analyses
+        if 'signal' in args.analyses and not plan.get('input_map'):
+            raise ValueError('Motor signal analysis requires an attachment study')
+    if args.after:
+        if Path(args.after).name!=args.after or args.after in ('.','..'):
+            raise ValueError('The preceding study must have a plain run ID')
+        plan['jobs']=[dict(job,wait_for=[*job.get('wait_for',[]),args.after+'/'+job['run_id']]) for job in plan['jobs']]
     allowed=set(cpu_profile()['research_cpus']);seen={}
     matches=plan.get('matches')
     if matches and (set(matches['search_modes'])-{'prior','puct','gumbel'}
@@ -180,16 +201,26 @@ def launch(args):
     atomic_json(out/'plan.json',plan)
     helper=Path(__file__).resolve()
     compare=helper.with_name('compare_checkpoints.py')
+    analysis_helpers=[]
+    if 'signal' in plan.get('analyses',[]):
+        analysis_helpers += [helper.with_name(name) for name in ('probe_attachment_signal.py','probe_biological_ports.py')]
+    if 'count' in plan.get('analyses',[]):analysis_helpers.append(helper.with_name('count_inference.py'))
     records=[]
     for job in plan['jobs']:
         directory=out/job['run_id'];directory.mkdir()
         config=dict(schema_version=1,root=str(root),plan={k:v for k,v in plan.items() if k!='jobs'},job=job,
                     environment=str(environment),runtime=str(runtime) if runtime else None,
                     helper_sha256=hashlib.sha256(helper.read_bytes()).hexdigest(),
-                    comparator_sha256=hashlib.sha256(compare.read_bytes()).hexdigest())
+                    comparator_sha256=hashlib.sha256(compare.read_bytes()).hexdigest(),
+                    analysis_helpers_sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in analysis_helpers})
         atomic_json(directory/'config.json',config)
         shutil.copyfile(helper,directory/'worker.py')
         shutil.copyfile(compare,directory/'compare_checkpoints.py')
+        for source in analysis_helpers:shutil.copyfile(source,directory/source.name)
+        if 'count' in plan.get('analyses',[]):
+            atomic_json(directory/'count-plan.json',dict(release=plan['release'],positions=64,batches=[1,32],
+                sample_seed=917271,cases=[dict(name=job['run_id'],
+                    checkpoint=str(Path('runs')/job['run_id']/'checkpoints'/f"step-{plan['updates']:08d}.npz"))]))
         records.append(dict(**job,config=str(directory/'config.json')))
     def deploy(host):
         peer=f'cubic27@t1v-n-a09f5679-w-{host}'
@@ -198,6 +229,7 @@ def launch(args):
             files=[p for p in environment.rglob('*') if p.is_file()]
             if runtime:files.extend(p for p in runtime.rglob('*') if p.is_file())
             files.extend(p for j in jobs for p in Path(j['config']).parent.iterdir() if p.is_file())
+            if 'signal' in plan.get('analyses',[]):files.append(root/'runs'/plan['name']/'plan.json')
             replicate_bundle(files,root,peer)
         result=[]
         for job in jobs:
@@ -235,7 +267,7 @@ def collect(args):
                 subprocess.run(['rsync','-a','--checksum','-e',shlex.join(SSH),
                                 f'cubic27@t1v-n-a09f5679-w-{host}:{directory}/',str(directory)+'/'],check=True)
         status=json.loads((directory/'status.json').read_text()) if (directory/'status.json').exists() else {}
-        records={name:json.loads((directory/name/'result.json').read_text()) for name in ('validation','prior','puct','gumbel')
+        records={name:json.loads((directory/name/'result.json').read_text()) for name in ('validation','prior','puct','gumbel','signal','count')
                  if (directory/name/'result.json').exists()}
         results.append(dict(run=job['run_id'],host=host,status=status,results=records))
     atomic_json(out/'summary.json',dict(updated=time.time(),records=results))
@@ -251,6 +283,8 @@ def main():
     p.add_argument('--config',type=Path)
     p.add_argument('--source',type=Path,help='Published immutable inference environment')
     p.add_argument('--runtime',type=Path,help='Published JAX dependency runtime for CNN evaluation')
+    p.add_argument('--analyses',nargs='+',choices=('validation','signal','count'),help='Explicit analysis stages; default is full validation')
+    p.add_argument('--after',help='Wait for the corresponding job in this earlier evaluation run')
     args=p.parse_args()
     if Path(args.run_id).name!=args.run_id or args.run_id in ('.','..'):
         p.error('Run ID must be a plain path component')
