@@ -1,5 +1,6 @@
 """A checkpoint payload alone is insufficient: interrupted receipt copies must retry."""
 import json
+import hashlib
 from pathlib import Path
 import shlex
 import shutil
@@ -9,12 +10,13 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.replicate_checkpoints import push_local
-from flygo.replication import replicate_bundle
+from scripts.replicate_checkpoints import push_local,relay
+from flygo.replication import replicate_bundle,replicate_stream
 from flygo.qualify import sha256
 from flygo.storage import StorageBudget,Limits
 
 RUN=subprocess.run
+POPEN=subprocess.Popen
 
 
 class BundleReplicas(unittest.TestCase):
@@ -76,8 +78,71 @@ class BundleReplicas(unittest.TestCase):
         p=self.root/'immutable';p.write_bytes(b'abc')
         with self.assertRaises(ValueError):self.replicate([p,p])
 
+    def send(self,payload,*,size=None,digest=None,path=Path('streamed checkpoint')):
+        with tempfile.TemporaryFile() as stream:
+            stream.write(payload);stream.seek(0)
+            with patch('flygo.replication.subprocess.run',side_effect=self.remote):
+                result=replicate_stream(stream,self.root,path,'fixture',size=len(payload) if size is None else size,
+                    digest=digest or hashlib.sha256(payload).hexdigest())
+            self.assertEqual(stream.tell(),len(payload))
+            return result
+
+    def test_stream_consumes_existing_replica_and_rejects_incomplete_or_extra_data(self):
+        payload=b'fixed neural weights'*(1<<16)
+        self.assertEqual(self.send(payload)['bytes'],len(payload))
+        self.assertEqual(self.send(payload)['status'],'passed')
+        self.assertEqual((self.peer/'streamed checkpoint').read_bytes(),payload)
+        for size,message in [(len(payload)+1,'Incomplete replica transfer'),(len(payload)-1,'exceeds declared size')]:
+            with self.assertRaisesRegex(RuntimeError,message):self.send(payload,size=size,path=Path('incomplete'))
+            self.assertFalse((self.peer/'incomplete').exists())
+        with self.assertRaisesRegex(RuntimeError,'hash mismatch'):
+            self.send(payload,digest='0'*64,path=Path('wrong hash'))
+        self.assertFalse((self.peer/'wrong hash').exists())
+        self.assertFalse(list(self.peer.glob('*.incoming')))
+
+    def test_stream_does_not_overwrite_a_conflict_or_escape_the_root(self):
+        (self.peer/'streamed checkpoint').write_bytes(b'existing')
+        with self.assertRaisesRegex(RuntimeError,'different contents'):self.send(b'new')
+        self.assertEqual((self.peer/'streamed checkpoint').read_bytes(),b'existing')
+        with self.assertRaises(ValueError):self.send(b'new',path=Path('../escaped'))
+
 
 class CheckpointReplicas(unittest.TestCase):
+    def test_worker_relay_recovers_receipt_failure_without_a_root_payload(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)/'root';source=Path(temporary)/'source';peer=Path(temporary)/'peer'
+            root.mkdir();relative=Path('runs/trial/checkpoints/step-00000042.npz')
+            payload=b'checkpoint arrays and sampler state'*(1<<15)
+            checkpoint=source/relative;checkpoint.parent.mkdir(parents=True);checkpoint.write_bytes(payload)
+            original=dict(path=str(root/relative),step=42,bytes=len(payload),sha256=sha256(checkpoint),replica_status='local_only')
+            checkpoint.with_suffix('.json').write_text(json.dumps(original))
+            (source/'runs/trial/latest.json').write_text(json.dumps(original))
+            (peer/'environments/fixture/site-packages').mkdir(parents=True)
+            interrupted=False
+            def ssh(command,*args,**kwargs):
+                nonlocal interrupted
+                self.assertEqual(command[0],'ssh')
+                destination=source if command[-2].endswith('-1') else peer
+                executable,flag,code=shlex.split(command[-1]);self.assertEqual(flag,'-c')
+                code=code.replace(str(root),str(destination))
+                code=code.replace('from flygo.storage import StorageBudget',
+                    'from flygo.storage import StorageBudget as Budget,Limits\n'
+                    'StorageBudget=lambda root: Budget(root,Limits(files_cap=1<<30,free_files_floor=0,available_memory_floor=0))')
+                if destination==source and "latest=p.parent.parent/'latest.json'" in code and not interrupted:
+                    code='raise RuntimeError("interrupted source receipt")';interrupted=True
+                return POPEN([sys.executable,'-c',code],*args,**kwargs)
+            budget=StorageBudget(root,Limits(files_cap=1<<30,free_files_floor=0,available_memory_floor=0))
+            with patch('subprocess.Popen',side_effect=ssh),patch('scripts.replicate_checkpoints.StorageBudget',return_value=budget):
+                with self.assertRaises(subprocess.CalledProcessError):relay(root,1,2,'trial')
+                self.assertEqual((peer/relative).read_bytes(),payload)
+                self.assertEqual(json.loads(checkpoint.with_suffix('.json').read_text())['replica_status'],'local_only')
+                self.assertEqual(relay(root,1,2,'trial'),[str(root/relative)])
+                self.assertEqual(relay(root,1,2,'trial'),[])
+            self.assertFalse((root/relative).exists())
+            self.assertEqual(json.loads(checkpoint.with_suffix('.json').read_text())['replica_status'],'verified')
+            self.assertEqual(json.loads((source/'runs/trial/latest.json').read_text())['replica_status'],'verified')
+            self.assertEqual(json.loads((peer/relative.with_suffix('.json')).read_text())['sha256'],original['sha256'])
+
     def test_interrupted_receipt_is_retried(self):
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary)

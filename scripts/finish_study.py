@@ -101,6 +101,9 @@ def worker(args):
                           rate_scales=job.get('rate_scales',plan.get('rate_scales',{})))
             expected.update({k:job[k] for k in ('model','backend','channels','blocks','ports') if k in job})
             if job.get('ports'):expected['ports']=str(root/job['ports'])
+            if plan.get('input_map'):
+                expected.update(input_map=str(root/plan['input_map']),input_mode=job['mode'],
+                    qualification=str(root/plan['qualifications'][str(job['seed'])]))
             for key in ('warmup_steps','decay_until','final_rate_ratio','rate_softness','readout_mean_scale','epsilon'):
                 if key in job or key in plan:expected[key]=job.get(key,plan.get(key))
             defaults=dict(rate_scales={},model='fly',backend='cpu',epsilon=1e-8)

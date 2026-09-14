@@ -13,11 +13,78 @@ import uuid
 
 from flygo.data.corpus import atomic_json
 from flygo.qualify import sha256
-from flygo.replication import replicate_file
+from flygo.replication import replicate_file,replicate_stream
 from flygo.runtime import pin
 from flygo.storage import StorageBudget,GIB
 
 SSH=['ssh','-F','/dev/null','-o','BatchMode=yes','-o','ConnectTimeout=10']
+
+
+def relay(root,host,replica_host,run_id,*,timeout=180):
+    """Copy between owned workers through root's pipes; reserve no payload file on root."""
+    if (host not in (1,2,3) or replica_host not in (1,2,3) or host==replica_host
+            or Path(run_id).name!=run_id or run_id in ('.','..')):
+        raise ValueError('Relay needs distinct owned workers and a plain run ID')
+    source=f'cubic27@t1v-n-a09f5679-w-{host}'
+    destination=f'cubic27@t1v-n-a09f5679-w-{replica_host}'
+    directory=root/'runs'/run_id/'checkpoints'
+    inventory='''import pathlib,json
+p=pathlib.Path(DIRECTORY)
+print(json.dumps([dict(name=f.name,receipt=json.loads(f.with_suffix('.json').read_text()))
+ for f in sorted(p.glob('step-*.npz')) if f.with_suffix('.json').is_file()]))
+'''.replace('DIRECTORY',repr(str(directory)))
+    records=json.loads(subprocess.check_output(SSH+[source,'python3 -c '+shlex.quote(inventory)],text=True,timeout=30))
+    copied=[]
+    for record in records:
+        path=directory/record['name'];receipt=record['receipt']
+        if path.parent!=directory or int(path.stem.removeprefix('step-'))!=receipt['step']:
+            raise ValueError('Checkpoint inventory escaped its declared run')
+        if receipt.get('replica_status')=='verified' and receipt.get('peer')==destination:
+            continue
+        producer_code='''import pathlib,sys,hashlib
+p=pathlib.Path(PATH);h=hashlib.sha256();count=0
+assert p.stat().st_size==SIZE,'Source checkpoint size changed'
+with p.open('rb') as stream:
+ for chunk in iter(lambda:stream.read(1024*1024),b''):
+  sys.stdout.buffer.write(chunk);h.update(chunk);count+=len(chunk)
+sys.stdout.buffer.flush()
+assert count==SIZE and h.hexdigest()==DIGEST,'Source checkpoint checksum failed'
+'''
+        for key,value in dict(PATH=str(path),SIZE=receipt['bytes'],DIGEST=receipt['sha256']).items():
+            producer_code=producer_code.replace(key,repr(value))
+        with StorageBudget(root).reserve(files=0,heap=8<<20,purpose='checkpoint relay '+run_id):
+            producer=subprocess.Popen(SSH+[source,'python3 -c '+shlex.quote(producer_code)],
+                stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            try:
+                replicate_stream(producer.stdout,root,path.relative_to(root),destination,
+                    size=receipt['bytes'],digest=receipt['sha256'],timeout=timeout)
+                producer.stdout.close();producer.stdout=None
+                _,errors=producer.communicate(timeout=timeout)
+                if producer.returncode:
+                    raise RuntimeError('Checkpoint source failed: '+errors.decode(errors='replace')[-2000:])
+            finally:
+                if producer.stdout is not None:producer.stdout.close();producer.stdout=None
+                if producer.poll() is None:producer.kill()
+                producer.communicate(timeout=10)
+        verified={**receipt,'origin_host':source,'peer':destination,'replica_status':'verified',
+                  'replica_method':'SHA-256 verified worker copy streamed through root; no root payload file'}
+        verified.pop('replica_error',None)
+        # Publish the destination receipt before marking the source recoverable.
+        for peer in (destination,source):
+            code='''import pathlib,json,os,uuid
+p=pathlib.Path(PATH);record=RECORD
+if p.exists():
+ old=json.loads(p.read_text());assert old['sha256']==record['sha256'] and old['bytes']==record['bytes'],'Receipt conflict'
+temporary=p.with_name(p.name+'.'+uuid.uuid4().hex+'.replicating')
+temporary.write_text(json.dumps(record,indent=2)+chr(10));os.replace(temporary,p)
+latest=p.parent.parent/'latest.json'
+if latest.exists() and json.loads(latest.read_text()).get('sha256')==record['sha256']:
+ temporary=latest.with_name(latest.name+'.'+uuid.uuid4().hex+'.replicating')
+ temporary.write_text(json.dumps(record,indent=2)+chr(10));os.replace(temporary,latest)
+'''.replace('PATH',repr(str(path.with_suffix('.json')))).replace('RECORD',repr(verified))
+            subprocess.run(SSH+[peer,'python3 -c '+shlex.quote(code)],check=True,timeout=30)
+        copied.append(str(path))
+    return copied
 
 
 def pull(root,host,run_id):
@@ -90,7 +157,8 @@ def main():
         for job in jobs:
             host,run_id=job['host'],job['run_id']
             try:
-                copied=pull(args.root,host,run_id) if host else push_local(args.root,run_id)
+                copied=(relay(args.root,host,job['replica_host'],run_id) if 'replica_host' in job else
+                        pull(args.root,host,run_id) if host else push_local(args.root,run_id))
                 results.append(dict(host=host,run_id=run_id,copied=copied,status='passed'))
             except Exception as error:results.append(dict(host=host,run_id=run_id,status='retry',error=repr(error)))
         atomic_json(out/'status.json',dict(pid=os.getpid(),updated=time.time(),hosts=results))

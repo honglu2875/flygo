@@ -1,0 +1,957 @@
+{
+  "status": "engineering_passed_training_running",
+  "updated": 1789423480.7329493,
+  "plan": {
+    "batch_size": 32,
+    "checkpoint_every": 1000,
+    "clip": 1.0,
+    "diagnostic_batch_size": 32,
+    "diagnostics_every": 250,
+    "environment": "environments/861175bf88bf1ba6b4f5",
+    "epsilon": 1e-06,
+    "eval_batch_size": 32,
+    "eval_every": 250,
+    "eval_positions": 2048,
+    "groups": 2129,
+    "input_map": "ports/spherical-context-v1/attachment.npz",
+    "jobs": [
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 2,
+        "mode": "history",
+        "passes": 8,
+        "replica_host": 3,
+        "run_id": "attachment-history-seed2-v1",
+        "seed": 2
+      },
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 3,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 1,
+        "run_id": "attachment-current-seed2-v1",
+        "seed": 2
+      },
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 1,
+        "mode": "neutral",
+        "passes": 8,
+        "replica_host": 2,
+        "run_id": "attachment-neutral-seed2-v1",
+        "seed": 2
+      },
+      {
+        "cpus": [
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "groups": 2129,
+        "host": 3,
+        "mode": "history",
+        "passes": 8,
+        "replica_host": 1,
+        "run_id": "attachment-history-seed3-v1",
+        "seed": 3
+      },
+      {
+        "cpus": [
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "groups": 2129,
+        "host": 1,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 2,
+        "run_id": "attachment-current-seed3-v1",
+        "seed": 3
+      },
+      {
+        "cpus": [
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "groups": 2129,
+        "host": 2,
+        "mode": "neutral",
+        "passes": 8,
+        "replica_host": 3,
+        "run_id": "attachment-neutral-seed3-v1",
+        "seed": 3
+      }
+    ],
+    "matches": null,
+    "name": "attachment-confirmation-v1",
+    "passes": 8,
+    "qualifications": {
+      "2": "runs/attachment-confirmation-qualification-v1/seed-2/result.json",
+      "3": "runs/attachment-confirmation-qualification-v1/seed-3/result.json"
+    },
+    "rate": 0.03,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "release": "v0-1m",
+    "scope": "Paired learner/sampler seeds 2 and 3 at the seed-1 screen's fixed 32k horizon. Same geometry, context, port seed, equations, optimizer and validation. No checkpoint selection, final-test evaluation or TPU use. Qualify each actual seed before launch. Seed 1 is an adopted exploratory reference; report the two new seeds separately and pooled with it.",
+    "seed1_analysis_sha256": "13ddf7c9aa71358bf7605945914e5733b7edb1a29b9838f34779d0cf5a45870a",
+    "seed1_reference": "runs/attachment-study-v1/final-analysis.json",
+    "updates": 1000,
+    "warmup_steps": 100
+  },
+  "qualifications": [
+    {
+      "seed": 2,
+      "status": "passed",
+      "path": "/dev/shm/flygo/runs/attachment-confirmation-qualification-v1/seed-2/result.json",
+      "sha256": "469fe2f8a2ebb59b0e3637395d03a23ac7449b1b3231eb99d35f3cd894d287d7",
+      "seconds": 195.70734453201294,
+      "records": [
+        {
+          "model": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 2,
+            "steps": 8,
+            "threads": 24
+          },
+          "input_contract": {
+            "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+            "mode": "history",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "batch_size": 32,
+          "updates": 3,
+          "optimizer": {
+            "clip": 1,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            }
+          },
+          "max_absolute_error_by_phase": {
+            "first": 1.73225998878479e-07,
+            "forward": 7.867813110351562e-06,
+            "gradient": 9.834766387939453e-06,
+            "loss": 5.976091728143729e-07,
+            "param": 6.377696990966797e-06,
+            "second": 5.966285243630409e-10
+          }
+        },
+        {
+          "model": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 2,
+            "steps": 8,
+            "threads": 24
+          },
+          "input_contract": {
+            "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+            "mode": "current",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "batch_size": 32,
+          "updates": 3,
+          "optimizer": {
+            "clip": 1,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            }
+          },
+          "max_absolute_error_by_phase": {
+            "first": 1.7695128917694092e-07,
+            "forward": 7.62939453125e-06,
+            "gradient": 9.894371032714844e-06,
+            "loss": 8.157602167102596e-07,
+            "param": 4.712492227554321e-06,
+            "second": 6.693881005048752e-10
+          }
+        },
+        {
+          "model": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 2,
+            "steps": 8,
+            "threads": 24
+          },
+          "input_contract": {
+            "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+            "mode": "neutral",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "batch_size": 32,
+          "updates": 3,
+          "optimizer": {
+            "clip": 1,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            }
+          },
+          "max_absolute_error_by_phase": {
+            "first": 1.695007085800171e-07,
+            "forward": 7.867813110351562e-06,
+            "gradient": 9.655952453613281e-06,
+            "loss": 8.447435391190083e-07,
+            "param": 4.209578037261963e-06,
+            "second": 6.402842700481415e-10
+          }
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "status": "passed",
+      "path": "/dev/shm/flygo/runs/attachment-confirmation-qualification-v1/seed-3/result.json",
+      "sha256": "0ee23c0ea9a9f6215e68a063dbb4079555d238828843663320f7996ee1ae63eb",
+      "seconds": 197.2357337474823,
+      "records": [
+        {
+          "model": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 3,
+            "steps": 8,
+            "threads": 24
+          },
+          "input_contract": {
+            "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+            "mode": "history",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "batch_size": 32,
+          "updates": 3,
+          "optimizer": {
+            "clip": 1,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            }
+          },
+          "max_absolute_error_by_phase": {
+            "first": 1.3373792171478271e-06,
+            "forward": 7.867813110351562e-06,
+            "gradient": 5.030632019042969e-05,
+            "loss": 1.4553813230122614e-06,
+            "param": 1.5363097190856934e-05,
+            "second": 7.4214767664670944e-09
+          }
+        },
+        {
+          "model": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 3,
+            "steps": 8,
+            "threads": 24
+          },
+          "input_contract": {
+            "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+            "mode": "current",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "batch_size": 32,
+          "updates": 3,
+          "optimizer": {
+            "clip": 1,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            }
+          },
+          "max_absolute_error_by_phase": {
+            "first": 1.3373792171478271e-06,
+            "forward": 1.2516975402832031e-05,
+            "gradient": 4.9948692321777344e-05,
+            "loss": 1.2937578901528468e-06,
+            "param": 9.987503290176392e-06,
+            "second": 7.4069248512387276e-09
+          }
+        },
+        {
+          "model": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 3,
+            "steps": 8,
+            "threads": 24
+          },
+          "input_contract": {
+            "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+            "mode": "neutral",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "batch_size": 32,
+          "updates": 3,
+          "optimizer": {
+            "clip": 1,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            }
+          },
+          "max_absolute_error_by_phase": {
+            "first": 1.389533281326294e-06,
+            "forward": 1.0848045349121094e-05,
+            "gradient": 5.125999450683594e-05,
+            "loss": 1.5140493019316636e-06,
+            "param": 9.758397936820984e-06,
+            "second": 7.668859325349331e-09
+          }
+        }
+      ]
+    }
+  ],
+  "initial_pairing": [
+    {
+      "seed": 2,
+      "status": "passed",
+      "arrays": 31,
+      "scope": "Initial parameters, moments, ports, optimizer step, sampler and training contract match across all three modes."
+    },
+    {
+      "seed": 3,
+      "status": "passed",
+      "arrays": 31,
+      "scope": "Initial parameters, moments, ports, optimizer step, sampler and training contract match across all three modes."
+    }
+  ],
+  "replica_coordinator": {
+    "hosts": [
+      {
+        "copied": [
+          "/dev/shm/flygo/runs/attachment-neutral-seed2-v1/checkpoints/step-00000000.npz"
+        ],
+        "host": 1,
+        "run_id": "attachment-neutral-seed2-v1",
+        "status": "passed"
+      },
+      {
+        "copied": [
+          "/dev/shm/flygo/runs/attachment-current-seed3-v1/checkpoints/step-00000000.npz"
+        ],
+        "host": 1,
+        "run_id": "attachment-current-seed3-v1",
+        "status": "passed"
+      },
+      {
+        "copied": [
+          "/dev/shm/flygo/runs/attachment-history-seed2-v1/checkpoints/step-00000000.npz"
+        ],
+        "host": 2,
+        "run_id": "attachment-history-seed2-v1",
+        "status": "passed"
+      },
+      {
+        "copied": [
+          "/dev/shm/flygo/runs/attachment-neutral-seed3-v1/checkpoints/step-00000000.npz"
+        ],
+        "host": 2,
+        "run_id": "attachment-neutral-seed3-v1",
+        "status": "passed"
+      },
+      {
+        "copied": [
+          "/dev/shm/flygo/runs/attachment-current-seed2-v1/checkpoints/step-00000000.npz"
+        ],
+        "host": 3,
+        "run_id": "attachment-current-seed2-v1",
+        "status": "passed"
+      },
+      {
+        "copied": [
+          "/dev/shm/flygo/runs/attachment-history-seed3-v1/checkpoints/step-00000000.npz"
+        ],
+        "host": 3,
+        "run_id": "attachment-history-seed3-v1",
+        "status": "passed"
+      }
+    ],
+    "pid": 2393128,
+    "updated": 1789423475.4661753
+  },
+  "relay": {
+    "bytes": 189666024,
+    "checks": [
+      {
+        "bytes": 189666024,
+        "host": "t1v-n-a09f5679-w-1",
+        "receipt": {
+          "bytes": 189666024,
+          "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "origin_host": "cubic27@t1v-n-a09f5679-w-1",
+          "path": "/dev/shm/flygo/runs/checkpoint-relay-qualification-v1/checkpoints/step-00001000.npz",
+          "peer": "cubic27@t1v-n-a09f5679-w-2",
+          "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+          "replica_status": "verified",
+          "sha256": "d5731ee3ead12ac640e8469219dbae7f6bda7a33d1720a6937f6d36684bca023",
+          "step": 1000
+        }
+      },
+      {
+        "bytes": 189666024,
+        "host": "t1v-n-a09f5679-w-2",
+        "receipt": {
+          "bytes": 189666024,
+          "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "origin_host": "cubic27@t1v-n-a09f5679-w-1",
+          "path": "/dev/shm/flygo/runs/checkpoint-relay-qualification-v1/checkpoints/step-00001000.npz",
+          "peer": "cubic27@t1v-n-a09f5679-w-2",
+          "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+          "replica_status": "verified",
+          "sha256": "d5731ee3ead12ac640e8469219dbae7f6bda7a33d1720a6937f6d36684bca023",
+          "step": 1000
+        }
+      }
+    ],
+    "coordinator_sha256": "1f7dbcb9d0de3c2d13d525f33804dda4e70b41897e72edbb6b899d5cacac937d",
+    "prior_receipt_unchanged": true,
+    "root_payload_present": false,
+    "scope": "User-owned w1 to w2 checkpoint relay through root pipes; no TPU, no root checkpoint file, unchanged old checkpoint and receipt.",
+    "seconds": 9.910808086395264,
+    "sha256": "d5731ee3ead12ac640e8469219dbae7f6bda7a33d1720a6937f6d36684bca023",
+    "status": "passed",
+    "utility_environment": "b6db2960698424122c5f"
+  },
+  "deployment": {
+    "different_seed_rejected": "Attachment qualification does not cover this actual seed and corpus",
+    "environment": "/dev/shm/flygo/environments/861175bf88bf1ba6b4f5",
+    "files": [
+      {
+        "path": "/dev/shm/flygo/ports/spherical-context-v1/attachment.json",
+        "sha256": "e5a826b12574514133f562d6a8ac2d8b295a3965b85a4dbbdd4f7faff0e741b1"
+      },
+      {
+        "path": "/dev/shm/flygo/ports/spherical-context-v1/attachment.npz",
+        "sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087"
+      },
+      {
+        "path": "/dev/shm/flygo/runs/attachment-confirmation-qualification-v1/seed-2/result.json",
+        "sha256": "469fe2f8a2ebb59b0e3637395d03a23ac7449b1b3231eb99d35f3cd894d287d7"
+      },
+      {
+        "path": "/dev/shm/flygo/runs/attachment-confirmation-qualification-v1/seed-3/result.json",
+        "sha256": "0ee23c0ea9a9f6215e68a063dbb4079555d238828843663320f7996ee1ae63eb"
+      }
+    ],
+    "hosts": [
+      {
+        "budget": {
+          "files_free": 157905715200,
+          "files_used": 57108992000,
+          "memory_available": 353074053120,
+          "reserved_files": 2415919104,
+          "reserved_heap": 124554051584
+        },
+        "host": "t1v-n-a09f5679-w-1",
+        "jobs": [
+          {
+            "cpus": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55
+            ],
+            "groups": 2129,
+            "host": 1,
+            "mode": "neutral",
+            "passes": 8,
+            "replica_host": 2,
+            "run_id": "attachment-neutral-seed2-v1",
+            "seed": 2
+          },
+          {
+            "cpus": [
+              92,
+              93,
+              94,
+              95,
+              96,
+              97,
+              98,
+              99,
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115
+            ],
+            "groups": 2129,
+            "host": 1,
+            "mode": "current",
+            "passes": 8,
+            "replica_host": 2,
+            "run_id": "attachment-current-seed3-v1",
+            "seed": 3
+          }
+        ],
+        "status": "passed",
+        "uid": 2002
+      },
+      {
+        "budget": {
+          "files_free": 182174658560,
+          "files_used": 32840024064,
+          "memory_available": 377498193920,
+          "reserved_files": 2415919104,
+          "reserved_heap": 124554051584
+        },
+        "host": "t1v-n-a09f5679-w-2",
+        "jobs": [
+          {
+            "cpus": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55
+            ],
+            "groups": 2129,
+            "host": 2,
+            "mode": "history",
+            "passes": 8,
+            "replica_host": 3,
+            "run_id": "attachment-history-seed2-v1",
+            "seed": 2
+          },
+          {
+            "cpus": [
+              92,
+              93,
+              94,
+              95,
+              96,
+              97,
+              98,
+              99,
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115
+            ],
+            "groups": 2129,
+            "host": 2,
+            "mode": "neutral",
+            "passes": 8,
+            "replica_host": 3,
+            "run_id": "attachment-neutral-seed3-v1",
+            "seed": 3
+          }
+        ],
+        "status": "passed",
+        "uid": 2001
+      },
+      {
+        "budget": {
+          "files_free": 178903572480,
+          "files_used": 36111134720,
+          "memory_available": 374544973824,
+          "reserved_files": 2415919104,
+          "reserved_heap": 124554051584
+        },
+        "host": "t1v-n-a09f5679-w-3",
+        "jobs": [
+          {
+            "cpus": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55
+            ],
+            "groups": 2129,
+            "host": 3,
+            "mode": "current",
+            "passes": 8,
+            "replica_host": 1,
+            "run_id": "attachment-current-seed2-v1",
+            "seed": 2
+          },
+          {
+            "cpus": [
+              92,
+              93,
+              94,
+              95,
+              96,
+              97,
+              98,
+              99,
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115
+            ],
+            "groups": 2129,
+            "host": 3,
+            "mode": "history",
+            "passes": 8,
+            "replica_host": 1,
+            "run_id": "attachment-history-seed3-v1",
+            "seed": 3
+          }
+        ],
+        "status": "passed",
+        "uid": 2002
+      }
+    ],
+    "operational_note": "The first read-only readiness call used system Python 3.8, which cannot import the qualified Python 3.12 native modules. No learner was launched. This call explicitly uses the qualified Python 3.12 interpreter.",
+    "plan_sha256": "3c12158bc466a0755b287b05d4c3e2957171670fa505d8d3782d7a4d15f5977e",
+    "scope": "Actual completed CPU seed qualifications, immutable learner bytes, paired launch seed, worker ownership, unused research lanes, and unchanged shared-memory floors. No TPU.",
+    "sources": {
+      "deploy_research.py": "117ca898c99b3e5f48801e0ec4573bfb8d7883a869ac447b471b1b614db2a420",
+      "finish_study.py": "ec1731e7c6f01b8892ea14d984d0b3cfb19e9ed074d3316b922d40dcb69ec636",
+      "replicate_checkpoints.py": "1f7dbcb9d0de3c2d13d525f33804dda4e70b41897e72edbb6b899d5cacac937d"
+    },
+    "status": "passed",
+    "updated": 1789423185.8029165
+  },
+  "tests": {
+    "status": "passed",
+    "count": 8,
+    "path": "/dev/shm/flygo/runs/attachment-confirmation-evidence-v1/replication-tests.log",
+    "sha256": "3153415e40d532896fa9757be10c38807e6f3b16e9753563d6b49db8b84dcb1f"
+  },
+  "jobs": [
+    {
+      "run_id": "attachment-neutral-seed2-v1",
+      "host": 1,
+      "pid": 1237714,
+      "state": "training",
+      "step": 60,
+      "seed": 2,
+      "mode": "neutral",
+      "checkpoint_replica": "verified"
+    },
+    {
+      "run_id": "attachment-current-seed3-v1",
+      "host": 1,
+      "pid": 1237722,
+      "state": "training",
+      "step": 60,
+      "seed": 3,
+      "mode": "current",
+      "checkpoint_replica": "verified"
+    },
+    {
+      "run_id": "attachment-history-seed2-v1",
+      "host": 2,
+      "pid": 1682948,
+      "state": "training",
+      "step": 60,
+      "seed": 2,
+      "mode": "history",
+      "checkpoint_replica": "verified"
+    },
+    {
+      "run_id": "attachment-neutral-seed3-v1",
+      "host": 2,
+      "pid": 1682953,
+      "state": "training",
+      "step": 60,
+      "seed": 3,
+      "mode": "neutral",
+      "checkpoint_replica": "verified"
+    },
+    {
+      "run_id": "attachment-current-seed2-v1",
+      "host": 3,
+      "pid": 1256837,
+      "state": "training",
+      "step": 60,
+      "seed": 2,
+      "mode": "current",
+      "checkpoint_replica": "verified"
+    },
+    {
+      "run_id": "attachment-history-seed3-v1",
+      "host": 3,
+      "pid": 1256820,
+      "state": "training",
+      "step": 70,
+      "seed": 3,
+      "mode": "history",
+      "checkpoint_replica": "verified"
+    }
+  ],
+  "generation_workers": 32,
+  "operational_note": "Two readiness/launcher calls failed before any scientific learner was created: system Python 3.8 was replaced with the qualified 3.12 interpreter, and the launcher was allowed to inventory CPUs before applying its own pinning. Model, plan, data and numerical tolerances were unchanged.",
+  "tolerances": {
+    "states_and_losses": {
+      "rtol": 0.0003,
+      "atol": 3e-06
+    },
+    "gradients_parameters_moments": {
+      "rtol": 0.003,
+      "atol": 5e-06
+    }
+  },
+  "scope": "CPU-only seed confirmation: engineering and launch evidence, not scientific endpoints or new TPU qualification."
+}

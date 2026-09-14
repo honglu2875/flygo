@@ -1,0 +1,37 @@
+{
+  "name": "attachment-confirmation-v1",
+  "release": "v0-1m",
+  "environment": "environments/861175bf88bf1ba6b4f5",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "updates": 1000,
+  "batch_size": 32,
+  "passes": 8,
+  "groups": 2129,
+  "rate": 0.03,
+  "warmup_steps": 100,
+  "epsilon": 0.000001,
+  "clip": 1.0,
+  "rate_scales": {"bias": 0.01},
+  "eval_every": 250,
+  "eval_positions": 2048,
+  "eval_batch_size": 32,
+  "checkpoint_every": 1000,
+  "diagnostics_every": 250,
+  "diagnostic_batch_size": 32,
+  "seed1_reference": "runs/attachment-study-v1/final-analysis.json",
+  "seed1_analysis_sha256": "13ddf7c9aa71358bf7605945914e5733b7edb1a29b9838f34779d0cf5a45870a",
+  "qualifications": {
+    "2": "runs/attachment-confirmation-qualification-v1/seed-2/result.json",
+    "3": "runs/attachment-confirmation-qualification-v1/seed-3/result.json"
+  },
+  "matches": null,
+  "scope": "Paired learner/sampler seeds 2 and 3 at the seed-1 screen's fixed 32k horizon. Same geometry, context, port seed, equations, optimizer and validation. No checkpoint selection, final-test evaluation or TPU use. Qualify each actual seed before launch. Seed 1 is an adopted exploratory reference; report the two new seeds separately and pooled with it.",
+  "jobs": [
+    {"run_id": "attachment-history-seed2-v1", "host": 2, "replica_host": 3, "mode": "history", "seed": 2, "passes": 8, "groups": 2129, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "attachment-current-seed2-v1", "host": 3, "replica_host": 1, "mode": "current", "seed": 2, "passes": 8, "groups": 2129, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "attachment-neutral-seed2-v1", "host": 1, "replica_host": 2, "mode": "neutral", "seed": 2, "passes": 8, "groups": 2129, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "attachment-history-seed3-v1", "host": 3, "replica_host": 1, "mode": "history", "seed": 3, "passes": 8, "groups": 2129, "cpus": [92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115]},
+    {"run_id": "attachment-current-seed3-v1", "host": 1, "replica_host": 2, "mode": "current", "seed": 3, "passes": 8, "groups": 2129, "cpus": [92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115]},
+    {"run_id": "attachment-neutral-seed3-v1", "host": 2, "replica_host": 3, "mode": "neutral", "seed": 3, "passes": 8, "groups": 2129, "cpus": [92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115]}
+  ]
+}

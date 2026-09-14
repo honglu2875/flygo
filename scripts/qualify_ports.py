@@ -24,6 +24,7 @@ def main():
     p.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
     p.add_argument('--ports',type=Path,nargs='+',help='Omit for the original seeded random adapters')
     p.add_argument('--input-map',type=Path,help='Visual/context attachment; replaces --ports')
+    p.add_argument('--seed',type=int,help='Learner seed for a fixed visual/context attachment')
     p.add_argument('--input-modes',nargs='+',choices=('history','current','neutral'),default=['history','current','neutral'])
     p.add_argument('--passes',type=int,default=4)
     p.add_argument('--readout-mean-scale',type=float,default=1.0)
@@ -36,6 +37,8 @@ def main():
     p.add_argument('--cpus',default='117,118,119')
     args=p.parse_args();cpus=list(map(int,args.cpus.split(',')));pin(cpus)
     if args.input_map and args.ports:p.error('An input map replaces --ports')
+    if args.seed is not None and (not args.input_map or args.seed<0):
+        p.error('A nonnegative learner seed requires --input-map')
     if not 1<=args.passes<=1024:p.error('Passes must be in 1..1024')
     if not 1<=args.batch_size<=32:p.error('Full CPU reference supports bounded batches 1..32')
     validate_epsilon(args.epsilon)
@@ -60,7 +63,7 @@ def main():
         variants=args.input_modes if adapter else args.ports or [None]
         for path in variants:
             visual_contract=input_contract(visual_receipt,path) if adapter else None
-            receipt=(dict(visual_receipt,seed=1) if adapter else
+            receipt=(dict(visual_receipt,seed=args.seed if args.seed is not None else 1) if adapter else
                 json.loads(path.with_suffix('.json').read_text()) if path else dict(seed=1,groups=656,sha256=None))
             cfg=FlyConfig(steps=args.passes,threads=len(cpus),seed=receipt['seed'],groups=receipt['groups'],
                 features=adapter.features if adapter else 972,rate_softness=args.rate_softness,readout_mean_scale=args.readout_mean_scale)

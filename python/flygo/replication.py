@@ -12,9 +12,17 @@ from .qualify import sha256
 from .storage import StorageBudget
 
 
-def replicate_file(path:Path,root:Path,peer:str,*,timeout=180):
-    relative=path.resolve().relative_to(root.resolve())
-    digest=sha256(path);size=path.stat().st_size
+def replicate_stream(stream,root:Path,relative:Path,peer:str,*,digest:str,size:int,timeout=180):
+    """Receive an exact immutable payload from a file or pipe, with bounded memory.
+
+    Existing replicas still consume and verify the stream so a producer cannot
+    block on a full pipe. The caller must also check its producer's exit status.
+    """
+    relative=Path(relative)
+    if (relative.is_absolute() or not relative.parts or '..' in relative.parts
+            or type(size) is not int or size<0 or not isinstance(digest,str)
+            or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest)):
+        raise ValueError('Expected a relative artifact path, nonnegative size and SHA-256')
     code='''import pathlib,sys,json,hashlib,uuid,os
 root=pathlib.Path(ROOT)
 sites=sorted((root/'environments').glob('*/site-packages'))
@@ -28,20 +36,26 @@ def hash_file(p):
  with p.open('rb') as f:
   for c in iter(lambda:f.read(1024*1024),b''):h.update(c)
  return h.hexdigest()
+def receive(output=None):
+ h=hashlib.sha256();remaining=SIZE
+ while remaining:
+  c=sys.stdin.buffer.read(min(1024*1024,remaining))
+  assert c,'Incomplete replica transfer'
+  if output is not None:output.write(c)
+  h.update(c);remaining-=len(c)
+ assert not sys.stdin.buffer.read(1),'Replica transfer exceeds declared size'
+ assert h.hexdigest()==DIGEST,'Replica transfer hash mismatch'
 if target.exists():
- assert hash_file(target)==DIGEST,'Immutable peer file has different contents'
+ assert target.is_file() and target.stat().st_size==SIZE and hash_file(target)==DIGEST,'Immutable peer file has different contents'
+ receive()
 else:
- with StorageBudget(root).reserve(files=SIZE,heap=4*1024**2,purpose='verified replica '+str(RELATIVE)):
+ block=os.statvfs(root).f_frsize
+ with StorageBudget(root).reserve(files=((SIZE+block-1)//block)*block,heap=4*1024**2,purpose='verified replica '+str(RELATIVE)):
   target.parent.mkdir(parents=True,exist_ok=True)
   temporary=target.with_name(target.name+'.'+uuid.uuid4().hex+'.incoming')
   try:
-   h=hashlib.sha256();remaining=SIZE
    with temporary.open('wb') as f:
-    while remaining:
-     c=sys.stdin.buffer.read(min(1024*1024,remaining))
-     assert c,'Incomplete replica transfer'
-     f.write(c);h.update(c);remaining-=len(c)
-   assert h.hexdigest()==DIGEST,'Replica transfer hash mismatch'
+    receive(f)
    try:os.link(temporary,target)
    except FileExistsError:assert hash_file(target)==DIGEST,'Conflicting immutable replica'
   finally:
@@ -52,11 +66,20 @@ print(json.dumps(dict(status='passed',sha256=DIGEST,bytes=SIZE)))
         code=code.replace(key,repr(value))
     command=['ssh','-F','/dev/null','-o','BatchMode=yes','-o','ConnectTimeout=10',peer,
              'python3 -c '+shlex.quote(code)]
-    with path.open('rb') as stream:
-        result=subprocess.run(command,stdin=stream,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,timeout=timeout)
+    result=subprocess.run(command,stdin=stream,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,timeout=timeout)
     if result.returncode:
         raise RuntimeError('Peer replication failed: '+result.stderr[-2000:])
-    return json.loads(result.stdout)
+    record=json.loads(result.stdout)
+    if record!=dict(status='passed',sha256=digest,bytes=size):
+        raise ValueError('Peer verification record differs from the payload')
+    return record
+
+
+def replicate_file(path:Path,root:Path,peer:str,*,timeout=180):
+    relative=path.resolve().relative_to(root.resolve())
+    digest=sha256(path);size=path.stat().st_size
+    with path.open('rb') as stream:
+        return replicate_stream(stream,root,relative,peer,digest=digest,size=size,timeout=timeout)
 
 
 def replicate_bundle(paths, root: Path, peer: str, *, timeout=300):

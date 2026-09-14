@@ -46,6 +46,14 @@ matching target. Wall time is a separate engineering comparison.
 
 ## Active next phase: biological interfaces
 
+The supervised spherical screen now has a separately registered
+[paired-seed confirmation](docs/attachment-confirmation.md): retain the exact
+32k-exposure input/optimizer contract, add seeds 2 and 3, and identify seed 1
+as exploratory. CPU numerical gates pass for both new seeds; six learners and
+their subsequent full-validation jobs are launched. Confirm value improvement
+and repeat the motor/cost diagnostics before changing retinal allocation or
+fitting output groups. TPU remains paused and is not required for this phase.
+
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,
 and motor/descending readouts inferred from robust response correlations.

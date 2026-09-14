@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import shlex
+import shutil
 import subprocess
 
 from cluster import snapshot, SSH, PYTHON
@@ -16,6 +17,47 @@ from flygo.data.loader import load_release
 from flygo.data.cache import cache_directory
 from flygo.replication import replicate_bundle
 from flygo.runtime import cpu_profile,pin
+
+
+def attachment_files(plan,root,environment):
+    """Validate the exact learner seed and numerical contract before deployment."""
+    if not plan.get('input_map'):
+        return set()
+    from flygo.attachments import load_attachment,input_contract,require_qualification,runtime_hashes
+    from flygo.fly import FlyConfig
+    from flygo.qualify import sha256
+    code='from flygo.attachments import runtime_hashes;import json;print(json.dumps(runtime_hashes()))'
+    qualified=json.loads(subprocess.check_output([str(root/'venv/bin/python'),'-B','-c',code],text=True,
+        env={**os.environ,'PYTHONPATH':str(environment/'site-packages'),'OPENBLAS_NUM_THREADS':'1'},timeout=30))
+    if qualified!=runtime_hashes():
+        raise ValueError('Controller and selected attachment learner have different numerical sources')
+    path=root/plan['input_map']
+    manifest=json.loads((root/'releases'/plan['release']/'manifest.json').read_text())
+    graph=json.loads((root/'runs/m4/graph.json').read_text())
+    graph_manifest=json.loads((Path(graph['path'])/'manifest.json').read_text())
+    adapter,_,receipt=load_attachment(path,graph_id=graph_manifest['graph_id'],dataset_id=manifest['dataset_id'])
+    files={path,path.with_suffix('.json')}
+    if plan.get('seed1_reference') and sha256(root/plan['seed1_reference'])!=plan['seed1_analysis_sha256']:
+        raise ValueError('Adopted exploratory result differs from the registered reference')
+    for job in plan['jobs']:
+        if job.get('ports') or job.get('model','fly')!='fly' or job.get('backend','cpu')!='cpu':
+            raise ValueError('Attachment deployment supports only separately qualified CPU fly trials')
+        qualification=root/plan['qualifications'][str(job['seed'])]
+        report=json.loads(qualification.read_text())
+        contract=input_contract(receipt,job['mode'])
+        config=FlyConfig(steps=job['passes'],groups=job.get('groups',plan['groups']),
+            features=adapter.features,threads=len(job['cpus']),seed=job['seed'],
+            rate_softness=job.get('rate_softness',plan.get('rate_softness',0.0)),
+            readout_mean_scale=job.get('readout_mean_scale',plan.get('readout_mean_scale',1.0)))
+        require_qualification(qualification,contract,config,batch_size=plan['batch_size'],
+            rate=job.get('rate',plan['rate']),epsilon=job.get('epsilon',plan['epsilon']),
+            clip=job.get('clip',plan.get('clip',1.0)),rate_scales=job.get('rate_scales',plan.get('rate_scales',{})))
+        records=[r for r in report['records'] if r['input_contract']==contract]
+        if (report['dataset_id']!=manifest['dataset_id'] or report['graph_id']!=graph_manifest['graph_id']
+                or len(records)!=1 or records[0]['model']['seed']!=job['seed']):
+            raise ValueError('Attachment qualification does not cover this actual seed and corpus')
+        files.add(qualification)
+    return files
 
 
 def main():
@@ -43,11 +85,16 @@ def main():
             raise ValueError('The experiment plan overlaps CPU allocations on a host')
         if job['host'] not in range(4):
             raise ValueError('Host index must be in 0..3')
+        if 'replica_host' in job and (job['host'] not in (1,2,3)
+                or job['replica_host'] not in (1,2,3) or job['replica_host']==job['host']):
+            raise ValueError('Checkpoint relay requires two distinct worker hosts')
         allocations[job['host']] |= cpus
 
     environment = args.source or snapshot(root)
     if not (environment/'snapshot.json').is_file():
         raise ValueError('An explicit source must be a published immutable environment')
+    if plan.get('environment') and environment.resolve()!=(root/plan['environment']).resolve():
+        raise ValueError('Selected source differs from the registered environment')
     release = root / 'releases' / plan['release']
     manifest = json.loads((release / 'manifest.json').read_text())
     if json.loads((release / 'replication.json').read_text())['status'] != 'passed':
@@ -55,6 +102,7 @@ def main():
     graph_record = root / 'runs/m4/graph.json'
     graph_path = Path(json.loads(graph_record.read_text())['path'])
     files = {graph_record, *(root / record['path'] for record in manifest['records'])}
+    files.update(attachment_files(plan,root,environment))
     for job in plan['jobs']:
         if job.get('ports'):
             path=root/job['ports'];files.update((path,path.with_suffix('.json')))
@@ -72,6 +120,11 @@ def main():
     else:
         output.mkdir(parents=True)
         atomic_json(output / 'plan.json', plan)
+    helper=output/'replicate_checkpoints.py'
+    if not helper.exists():
+        shutil.copyfile(Path(__file__).with_name('replicate_checkpoints.py'),helper)
+    if not (output/'deploy_research.py').exists():
+        shutil.copyfile(Path(__file__),output/'deploy_research.py')
 
     def deploy(host):
         if host:
@@ -101,9 +154,13 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                         diagnostics_every=plan.get('diagnostics_every',0),
                         ports=str(root/job['ports']) if job.get('ports') else None,
                         rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),
-                        threads=len(job['cpus']),eval_every=plan['eval_every'],checkpoint_every=plan['checkpoint_every'])
+                        threads=len(job['cpus']),eval_every=plan['eval_every'],checkpoint_every=plan['checkpoint_every'],
+                        eval_positions=plan.get('eval_positions',2048),eval_batch_size=plan.get('eval_batch_size',32))
                     for key,default in (('warmup_steps',0),('decay_until',0),('final_rate_ratio',.1),('diagnostic_batch_size',32),('rate_softness',0.0),('readout_mean_scale',1.0),('epsilon',1e-8)):
                         expected[key]=job.get(key,plan.get(key,default))
+                    if plan.get('input_map'):
+                        expected.update(input_map=str(root/plan['input_map']),input_mode=job['mode'],
+                            qualification=str(root/plan['qualifications'][str(job['seed'])]))
                     valid=(config.get('dataset_id')==manifest['dataset_id'] and config.get('cpus')==job['cpus']
                            and all(arguments.get(key,dict(clip=1.0,backend='cpu',diagnostics_every=0,rate_scales={},
                                     warmup_steps=0,decay_until=0,final_rate_ratio=.1,diagnostic_batch_size=32,rate_softness=0.0,readout_mean_scale=1.0,epsilon=1e-8).get(key))==value
@@ -129,11 +186,16 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                        '--diagnostics-every',str(plan.get('diagnostics_every',0)),
                        '--cpus', ','.join(map(str, job['cpus'])), '--peer', '',
                        '--eval-every', str(plan['eval_every']),
+                       '--eval-positions',str(plan.get('eval_positions',2048)),
+                       '--eval-batch-size',str(plan.get('eval_batch_size',32)),
                        '--checkpoint-every', str(plan['checkpoint_every'])]
             for key in ('warmup_steps','decay_until','final_rate_ratio','diagnostic_batch_size','rate_softness','readout_mean_scale','epsilon'):
                 if key in job or key in plan:
                     command+=['--'+key.replace('_','-'),str(job.get(key,plan.get(key)))]
             if job.get('ports'):command+=['--ports',str(root/job['ports'])]
+            if plan.get('input_map'):
+                command+=['--input-map',str(root/plan['input_map']),'--input-mode',job['mode'],
+                          '--qualification',str(root/plan['qualifications'][str(job['seed'])])]
             if host:
                 command = SSH + [f'cubic27@t1v-n-a09f5679-w-{host}', shlex.join(command)]
             else:
@@ -163,7 +225,7 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
             command=[]
         if str(output/'jobs.json') in command and any('replicate_checkpoints.py' in part for part in command):
             return
-    command = ['taskset','--cpu-list','116',str(root / 'venv/bin/python'), '-B', str(Path(__file__).with_name('replicate_checkpoints.py')),
+    command = ['taskset','--cpu-list','116',str(root / 'venv/bin/python'), '-B', str(helper),
                '--root', str(root), '--jobs', str(output / 'jobs.json'),
                '--output', str(output / 'replicas')]
     with (output / 'replicas.log').open('a') as log:
