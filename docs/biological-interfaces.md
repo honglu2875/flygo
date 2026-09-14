@@ -17,6 +17,13 @@ move. Signal and optimization calibration therefore precede substantial
 pretraining and group fitting. This result does not settle the capacity of
 trained motor representations.
 
+The later [supervised spherical screen](attachment-study.md) now provides
+32,000-exposure policy/value checkpoints with historical, current or neutral
+vision and matched nonvisual context. Visual responses grow substantially,
+but over 99.9% of their measured variance concentrates in one descending cell
+in the two vision-trained models. This supports inspecting signal distribution
+before fitting action groups; it does not establish a biological advantage.
+
 **Question:** does respecting sensory organization, signal propagation and
 functional readout structure improve learning at the same prediction FLOPs
 and labeled-position horizon? Anatomical plausibility, sharper policies and

@@ -4,9 +4,10 @@ Design revision, 2026-09-14. The user proposes
 giving both eyes the current board and letting recurrent state carry history.
 This follows the [Doomfly source review](doomfly-review.md). Existing runs,
 including the negative spherical embedding pilot, keep their original contracts.
-The first [supervised attachment screen](attachment-study.md) now implements
-A/B and a neutral visual control. C/D remain planned; no persistent model is
-being trained yet.
+The first [supervised attachment screen](attachment-study.md) completes A/B and
+a neutral visual control at 32,000 exposures each, including full validation.
+Visual drive becomes measurable but concentrates heavily in one descending
+neuron. C/D remain planned; no persistent model is being trained yet.
 
 The broader research order is attachment, execution, then optimization. Within
 attachment, vary inputs before outputs. A change to a loss, optimizer, synaptic

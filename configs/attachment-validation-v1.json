@@ -1,0 +1,16 @@
+{
+  "release": "v0-1m",
+  "updates": 1000,
+  "batch_size": 32,
+  "rate": 0.03,
+  "rate_scales": {"bias": 0.01},
+  "epsilon": 0.000001,
+  "warmup_steps": 100,
+  "matches": null,
+  "scope": "Full natural validation of the three fixed final attachment checkpoints; no checkpoint selection or final-test evaluation. The existing novelty slice concerns the original H4 inputs, not reduced current/neutral inputs.",
+  "jobs": [
+    {"run_id": "attachment-history-seed1-v1", "host": 1, "mode": "history", "passes": 8, "groups": 2129, "seed": 1, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "attachment-current-seed1-v1", "host": 2, "mode": "current", "passes": 8, "groups": 2129, "seed": 1, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "attachment-neutral-seed1-v1", "host": 3, "mode": "neutral", "passes": 8, "groups": 2129, "seed": 1, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]}
+  ]
+}

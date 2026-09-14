@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 20:49 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 21:31 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -14,7 +14,7 @@ No fly advantage has been established.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production continues | Freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Earlier batch complete; supervised visual ablation running | Finish matched history/current/neutral endpoints before changing another factor |
+| M6: controlled studies | Supervised visual ablation and full validation complete | Confirm the value finding with paired seeds; then qualify larger retinal allocation and output attachment separately |
 | M7: four-host TPU | Qualified | Nondefault epsilon and smooth-rate TPU gates remain separate |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -33,7 +33,7 @@ No fly advantage has been established.
 | Smooth firing | Softness .01, rate .03, bias multiplier .01; three seeds, 128k exposures | All training, full validations and paired analysis complete |
 | Mean conditioning | Fixed-topology readout transform | Deferred after full-update parity failure; no scientific training |
 | Spherical motor embeddings | K8, 64 updates / 2,048 views per arm; learned versus frozen circuit | CPU pilot complete; both reach 50% branch ranking, with negligible circuit change |
-| Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | CPU-qualified and running on workers 1–3; matched context and optimizer |
+| Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | All endpoints, full validation, paired family analysis and signal/cost probes complete |
 
 All studies retain their declared immutable sources, failed attempts and fixed
 final horizons. V0 has 10,256 games / 1,000,201 positions: train 887,338,
@@ -100,14 +100,26 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   its cancellation diagnosis remain recorded. The same epsilon is used in all
   arms, selected without validation. Initial checkpoints have identical weights,
   moments, ports and samplers, with exact direct/Go-interface B1/B32 predictions.
-  At 8k exposures, KL is about 1.768/1.777/1.767 for history/current/neutral;
-  these interim seed-1 results do not establish a visual benefit.
+  Full-validation KL is **1.6674/1.6592/1.6520**, MSE **.6281/.8494/.8190**
+  for history/current/neutral. History improves value in this seed; neither
+  visual arm establishes a policy benefit. Family bootstrap intervals condition
+  on these weights, not training-seed variation. About 98.4–98.9% of edge
+  parameters change. [Results and provenance](docs/results/attachment-screen-v1.json).
+- With nonvisual context held fixed, 415/621 motors have varying visual responses
+  in the two trained image arms. **Over 99.9% of raw visual-response variance
+  concentrates in DNg30, body ID 10123**. Other cells carry weaker distinct signals
+  (unit-variance effective ranks 7.13/5.02). No action groups are fitted.
+- New K8 warm B1 arithmetic is **173–182M FLOPs**, including the renderer;
+  these models cannot inherit the old 8.3–8.9M comparison with the small CNN.
+  A topology-only inference audit suggests about 22% fewer post-cache edge
+  evaluations through exact output dependencies, before zero skipping. No new
+  kernel or measured speedup is claimed.
 
 ## Runtime and next work
 
-At **20:03 UTC**, all 32 generation workers were healthy and had published
-**181,064 games**. Free shared memory: **103–170 GiB**; available RAM:
-**282–352 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
+At **21:30 UTC**, all 32 generation workers were healthy and had published
+**191,213 games**. Free shared memory: **102–170 GiB**; available RAM:
+**281–352 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
 floor and 100 GiB own-file cap, including reservations. Runtime data and
 checkpoints live in volatile `/dev/shm/flygo`.
 The 18 biological-probe artifacts/source files (about 256 MB) have verified
@@ -118,10 +130,12 @@ and the next sampler batch/update pass using a fresh model in the same process.
 These representation checkpoints do not implement a Go policy. All copies
 remain volatile; no existing files were removed to make room.
 
-The three attachment trainers are verified live on workers 1–3, pinned to
-`32–55`, with 32,000 exposures planned per arm. Their initial checkpoints
-(about 190 MB each) have verified copies on the owner and w0. The main node
-is close to its own-file cap; reserve actual known transfer sizes and preserve
+The three attachment trainers and subsequent full validations completed on
+workers 1–3, pinned to `32–55`, with 32,000 exposures per arm. Their initial and
+final checkpoints (about 190 MB each) have verified copies on the owner and w0.
+The 22 signal/overlap/arithmetic files and six final analysis/source/status files
+have verified copies on w0/w1. The main node uses about 98.7 GiB of its own-file
+budget; reserve actual known transfer sizes and preserve
 the cap when placing further artifacts. TPU use is paused pending fresh
 coordination with the user; current training and qualification use CPU only.
 
@@ -143,8 +157,10 @@ patches, one larger board per eye, then persistent state with the same input.
 Keep outputs and optimizer fixed within these input/execution comparisons.
 Trajectory training, consistent stone perspective and state-gradient parity
 are required before testing learned memory. The first two inputs and a neutral
-visual control are now running under the [registered attachment contract](docs/attachment-study.md).
-Larger retinal allocation and persistent state remain planned.
+visual control complete under the [registered attachment contract](docs/attachment-study.md).
+Next confirm the observed value improvement with paired seeds 2/3 at the same
+32k horizon, before qualifying larger retinal allocation. Persistent state
+remains planned.
 Captures/older history through nonvisual source nodes remain a separate input
 alternative. Source-graph degree, annotation and outgoing-path audits are gates.
 
@@ -154,6 +170,6 @@ hard value-head rate confirmation, physiology/sign changes and
 added. Persistent models require a history-matched conventional control before
 claiming an equi-FLOP algorithmic advantage.
 
-The prior design milestone **f0ebcda** is published to `master` at
+The qualified attachment implementation **08db1de** is published to `master` at
 `git@github.com:honglu2875/flygo.git`. Deployment and artifact replication
 preserve prior checkpoints and immutable sources.

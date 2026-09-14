@@ -92,11 +92,72 @@ have identical parameters, moments, ports and sampler states; direct versus
 Go-interface predictions match exactly at B1 and B32. Initial checkpoints have
 verified second copies on w0. [Engineering evidence](results/attachment-engineering-v1.json).
 
-At 8,000 exposures, policy KL is approximately 1.768 / 1.777 / 1.767 for
-history/current/neutral, respectively, on the common validation slice. These
-are interim seed-1 values. They do not establish a visual benefit; retain the
-fixed 32,000-exposure endpoints and their perturbation checks before deciding
-the next scientific comparison.
+All three arms completed their fixed **32,000 exposures**. On the registered
+2,048-position validation slice:
+
+| Trained input | Policy KL ↓ | Value MSE ↓ | Top-1 agreement |
+|---|---:|---:|---:|
+| History | 1.68728 | .65678 | 17.82% |
+| Current | 1.67900 | .86844 | 18.60% |
+| Neutral | 1.67716 | .83000 | 19.24% |
+
+Blanking the trained history/current model's eyes increases KL by .00950/.00916
+and value MSE by .18831/.22290. Replacing history with current imagery in the
+history-trained model changes KL by -.00028. The models use visual input, but
+the separately trained neutral control remains competitive. Blanking is also
+a distribution shift; these perturbations alone do not establish generalizable
+visual benefit.
+
+Full validation completes under [the frozen endpoint plan](../configs/attachment-validation-v1.json):
+**70,425 positions from 254 opening families**, using the fixed final checkpoints.
+
+| Trained input | Full-validation KL ↓ | Full-validation MSE ↓ | Top-1 agreement |
+|---|---:|---:|---:|
+| History | 1.66743 | .62807 | 19.13% |
+| Current | 1.65923 | .84937 | 20.44% |
+| Neutral | 1.65202 | .81902 | 21.33% |
+
+History-minus-neutral value MSE is **-.19095**, with a paired opening-family
+bootstrap interval **[-.29620, -.14491]**. Their policy KL difference is +.01541,
+interval [-.00017, +.02334]. Current-minus-neutral KL is +.00720, interval
+[-.00212, +.01130]; its value difference is unresolved. Thus this seed gives a
+value benefit for the history-trained model, with no policy benefit established
+for either visual arm. These intervals condition on the three trained weights;
+they do not measure variation across training seeds. On the common 61,541-position
+reduced-source-novel subset, the history value difference is -.22683, interval
+[-.34158, -.17294]. [Complete analysis and provenance](results/attachment-screen-v1.json).
+
+About **98.4–98.9%** of edge parameters change, unlike the earlier contrastive
+pilot. The learned sensory multipliers are signed and unconstrained; some
+invert their input contrast. This is an external learned encoding, not a fully
+physiological photoreceptor response model. Each arm additionally evaluates
+38,912 training-time validation/perturbation positions, 256 diagnostic forwards,
+128 diagnostic backwards and 70,425 full-validation positions. These are
+reported separately from the 32,000 labeled optimizer exposures.
+
+A separate input-only audit finds **62,984/70,425** validation sources unseen
+under D4 for current-board-plus-context, and **61,541/70,425** for neutral
+vision plus context. Current keys describe pre-render source features; absence
+of FP32 retinal collisions is not certified. Neutral keys describe its actual
+constant-vision input. The audit examines neither labels nor final-test inputs.
+
+On 256 positions from distinct training families, the history/current models
+have 415/621 motors with visual-minus-neutral standard deviation above 1e-6.
+Almost all raw visual-response variance, **99.977%/99.962%**, is concentrated in
+one annotated descending neuron, **DNg30, body ID 10123**. Unit-variance scaling
+of the varying cells yields effective covariance ranks **7.13/5.02**, so the
+other signals are not literally one identical feature. This is model-dependent
+response concentration, not a claim about that neuron's biological function.
+Raw responses and absolute amplitudes are retained; no action groups are fitted.
+
+Counted warm B1 arithmetic on 64 common validation positions is approximately
+**176.1M / 181.6M / 173.3M FLOPs** for history/current/neutral. B32 counts are
+182.1M / 187.9M / 179.7M per position because row skipping is batch-wide.
+The unchanged no-skipping convention gives about 252.7M. These models cannot
+inherit the older K4 model's 8.3–8.9M warm comparison with the small CNN.
+Counts include the external renderer and attached context; mask/integer work,
+memory traffic, training and teacher work remain separate. Trace timings are
+not production inference latency.
 
 Pure Python attachments precede the existing Rust/JAX equations. Unit checks
 verify coherent bilateral current input, independence from older planes, context
@@ -125,3 +186,23 @@ the 64 production cores. Storage admission preserves the 64 GiB free-SHM floor,
 96 GiB available-RAM floor and 100 GiB own-file cap, including reservations.
 The user has reassigned TPU availability to other work. Pause and coordinate
 with the user before any TPU use; the current study uses no TPU devices.
+
+## Next decisions
+
+First confirm the history arm's value finding with paired learner/sampler
+seeds 2 and 3, keeping all three inputs and the same 32,000-exposure horizon.
+Register that confirmation before launch and place verified checkpoint copies
+within the existing host budgets. It must not become a longer or retuned run.
+
+Then keep the existing order: qualify one larger current board per eye as a
+separate input allocation test, followed by output attachment. The concentrated visual
+response motivates that output study; it does not justify freezing action groups
+from this one short seed. Divisive gain control, tonic activity, transmitter
+exceptions and optimizer conditioning remain separate rule/optimization factors.
+State carried across plies remains unimplemented.
+
+An engineering-only dependency audit finds that a reset K8 motor prediction
+needs 83.53M of the 106.89M post-cache edge evaluations before zero skipping.
+Most saving is in the final two passes. This suggests an exact inference
+optimization to qualify later, with the entire logical graph retained; it is
+not a measured speedup and does not apply to returning a complete carried state.

@@ -63,7 +63,10 @@ history through state carried across plies. The
 [temporal vision design](docs/temporal-vision-study.md) separates input removal,
 retinal allocation and persistent execution, with optimization held fixed in
 each comparison. The [supervised attachment screen](docs/attachment-study.md)
-now runs historical/current/neutral imagery with matched context and optimizer.
+completes historical/current/neutral imagery with matched context and optimizer.
+Its seed-1 history arm improves value loss; neither visual arm establishes a
+policy benefit. Learned visual-response variance concentrates in one descending
+cell. Full validation, input-overlap audits and sparse work counts are retained.
 Persistent state remains planned. Attachment, execution and optimization remain
 separate research lines.
 
