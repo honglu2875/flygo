@@ -13,7 +13,7 @@ import pyarrow.feather as feather
 
 from flygo.data.corpus import atomic_json
 from flygo.fly import FlyConfig,initialize,load_graph
-from flygo.ports import infer_columns,retinal_overlay
+from flygo.ports import infer_columns,retinal_overlay,visual_readout
 from flygo.qualify import sha256
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
@@ -27,6 +27,7 @@ def main():
     p.add_argument('--groups',type=int,default=656)
     p.add_argument('--confidence',type=float,default=.5)
     p.add_argument('--min-synapses',type=int,default=4)
+    p.add_argument('--visual-readout',action='store_true',help='Also freeze spatial/shuffled visual readouts with the spatial input held fixed')
     p.add_argument('--cpus',type=lambda x:list(map(int,x.split(','))),default=[117,118,119])
     args=p.parse_args();pin(args.cpus)
     if not .5<=args.confidence<=1 or args.min_synapses<1:p.error('Require majority confidence and positive synapse mass')
@@ -87,6 +88,21 @@ def main():
             report['selected_by_type']=dict(Counter(types[selected]))
             report['selected_by_side']=dict(Counter(root_side[selected]))
             report['spatial_board_point_coverage']=len(np.unique(spatial['input_index'][selected]//12))
+            if args.visual_readout:
+                local,scrambled,readout_audit=visual_readout(spatial,coord,side,graph['type_id'],audit['bounds'],
+                                                          seed=seed,groups=cfg.groups)
+                cells=readout_audit.pop('selected');readout_audit.pop('strata')
+                for variant,ports in [('spatial',local),('shuffled',scrambled)]:
+                    path=out/f'visual-readout-{variant}-g{cfg.groups}-s{seed}.npz';np.savez(path,**ports)
+                    receipt=dict(schema_version=1,graph_id=manifest['graph_id'],features=cfg.features,groups=cfg.groups,seed=seed,
+                        variant='spatial-input-visual-readout-v1-'+variant,sha256=sha256(path),
+                        input_source=str(out/f'spatial-g{cfg.groups}-s{seed}.npz'),columns_sha256=report['columns_sha256'],
+                        readout_neurons=len(cells),**readout_audit,
+                        side_rule='somaSide when L/R, otherwise rootSide; sensory input uses rootSide',
+                        attachment='Directly annotated columns within the same sensory bounds; 81 board points by 8 seeded type channels; inverse-sqrt actual pool counts',
+                        control='Shuffle output groups within side and type; identical cells, input, pool counts, parameter shapes and full recurrent topology')
+                    atomic_json(path.with_suffix('.json'),receipt)
+                    report['artifacts'].append(dict(path=str(path),**{k:receipt[k] for k in ('sha256','seed','variant','readout_neurons')}))
         atomic_json(out/'result.json',dict(status='passed',**report))
         print(json.dumps(report,indent=2))
 

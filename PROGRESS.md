@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 02:52 UTC**. Autonomous work is authorized until about
+Updated **2026-09-14 03:51 UTC**. Autonomous work is authorized until about
 09:02 UTC. The target is an efficient fixed-fly Go engine, compared with a
 conventional neural engine at matched prediction FLOPs and training-position
 exposure. No fly strength advantage has been established.
@@ -24,27 +24,36 @@ Earlier qualification detail remains in [history](docs/qualification-history.md)
 - **Generation:** 32 workers × 16 concurrent games, using 64 pinned physical
   cores per host (`0–31,60–91`). Production and frozen research releases are independent.
 - **Prototype:** K=4/8 × G=656/2,624 × seeds 1/2, 10,000 updates at B=32,
-  rate 0.003. All K=4 validation/matches finished. At 02:50 three K=8 trials
-  reached 10,000 updates and the fourth reached 9,740; follow-up workers wait for final verified checkpoints and
-  trainer exit before reusing `92–115` for full validation and fresh matches.
+  rate 0.003. All eight training runs, full validations and match panels are complete.
+  Paired depth/readout reports retain every seed and count search evaluations.
 - **CPU optimizer:** all six global rates and two bias-rate variants completed
   full V0 validation. `optimizer-confirm-v1.json` registers 4,000 updates at
   B=32, three seeds, comparing 0.003, 0.01, and 0.03 with bias multiplier 0.01.
-  Wave 1 runs on all four `32–55` lanes at roughly 3,000–3,160 updates at 02:50.
+  Wave 1 and its full validation finished; wave 2 runs on all four `32–55` lanes.
+  A bounded coordinator waits for validation before launching wave 3.
   All waves reuse source `2185746d8cb5a7b93d1c`; original trials keep their binaries.
 - **TPU:** the equal three-rate `matched-control-v1` screen completed. Its
   registered KL+MSE rule selects fly rate 0.01 and CNN rate 0.003.
-  `matched-confirm-v1` now runs three seeds per family at 512 updates × B=2,048
-  (1,048,576 exposures each). All three CNN cases and fly seed 1 finished;
-  fly seed 2 is running. The subsequent
-  registered `spatial-input-v1` adopts those fly baselines and adds spatial and
-  shuffled ports at identical settings/horizons. One cohort owns all 16 devices.
+  `matched-confirm-v1` completed three seeds per family at 512 updates × B=2,048
+  (1,048,576 exposures each). Full validation and common 32-game
+  prior/PUCT/Gumbel panels run on CPU. The registered `spatial-input-v1`
+  adopted all three fly baselines and is training spatial/shuffled ports at
+  identical settings/horizons. One cohort owns all 16 devices.
+- **Schedule screen:** four seed-1 warmup/decay cases are registered at 128,000
+  exposures. Each starts after its matched panels leave `92–115`; two have
+  started. All use source `c149278eda30697520f9` and queued full validation.
+- **Visual readout:** a separate input-fixed, visual-output spatial/shuffled
+  screen is queued after schedule validation. Both variants pass full-state,
+  all-gradient and three-update JAX CPU parity on real V0 inputs. They retain
+  23,565 annotated output cells, exclude 155 outside the sensory bounds, and
+  cover 60 board points. The full recurrent topology still executes.
+  Source `c149278eda30697520f9`, B=32, 4,000 updates, seed 1; no learning result yet.
 
 Runtime artifacts stay under `/dev/shm/flygo`. Floors remain **64 GiB free
 shared memory**, **96 GiB available RAM**, and a **100 GiB own-file cap** with
-reservations. At 02:50, free shared memory was 147–178 GiB and available RAM
-320–353 GiB. All 32 generation workers are healthy; 63,404 games are published. Generation uses 256 physical cores across the fleet; CPU trials
-and evaluations use another 192. TPU runtime/development uses spare cores;
+reservations. At 03:41, free shared memory was 142–178 GiB and available RAM
+315–353 GiB. All 32 generation workers are healthy; 69,153 games are published. Generation uses 256 physical cores across the fleet; CPU trials
+and evaluations use up to another 192. TPU runtime/development uses spare cores;
 waiting coordinators use core 116. Owned SSH keepalives remain active. RAM and
 peer copies remain volatile across reboot or common cleanup.
 
@@ -63,7 +72,7 @@ All releases exclude truncated games; final test labels remain outside tuning.
 Registered unused v2 feature caches are evictable, while live mmap readers,
 NumPy views, corpus, checkpoints and legacy caches remain protected.
 
-- **Regression:** 47 Rust tests and all 50 current Python tests pass. Includes
+- **Regression:** 47 Rust tests and all 56 current Python tests pass. Includes
   sparse VJPs, recurrence gradients, scaled Adam, port controls, CNN equations,
   storage, cache leases and portable checkpoints.
 - **V0 CPU:** `v0-cpu-recovery-v1` reproduces the next update bitwise in fresh
@@ -126,7 +135,9 @@ All 47 Rust / 50 Python tests pass, including signed-zero and nonfinite behavior
 On three spare cores, trained B=32 inference improves from 0.69 to 0.44 s and
 loss-plus-gradient time from 4.32 to 1.70 s; initial dense-state gradients
 improve from 4.35 to 2.67 s. Extra storage is 122.2 MB of graph indices plus
-61.1 MB during backward. Full 24-core-lane timings remain pending. Active
+61.1 MB during backward. On 24 cores, trained B=32 inference is 0.232 → 0.172 s and gradients
+1.171 → 0.594 s; initial gradients are 1.166 → 0.786 s. All reference
+bytes match. Evidence: `runs/cpu-lane-*-v1`. Active
 studies retain their original binaries. Skipping is data-dependent execution,
 with every node, edge and parameter retained; nominal model FLOPs are unchanged.
 
@@ -145,14 +156,37 @@ matched CNN control alongside measured screens. Browser checks pass all
 interactions, offline loading and widths 320–1,440 px; desktop/mobile figures
 were visually reviewed. Evidence: `runs/model-guide/20260914/render-checks.json`.
 
+**Current playing evidence:** matched CNN seeds 2/3 each win 32/32 prior games
+against opponent 0 at 16 visits. Their PUCT panels win 31/32 each and Gumbel
+31/32, 32/32. Fly seed 1 wins 0/32 prior and 1/32 PUCT. This is a substantial
+current strength gap; the remaining panels are still running. These fixed
+openings are for this registered screening comparison, not an Elo estimate.
+
+**Schedules:** absolute-update warmup/cosine settings are stored in checkpoints
+and validated on resume. Full V0 replay across warmup and decay boundaries
+reproduces all 31 arrays, sampler and checkpoint bytes. Diagnostics use a
+bounded batch prefix, independent of the large training batch. Evidence:
+`next-gates/schedule-cpu-recovery.json` (288 qualification exposures).
+
+**Circuit audit:** by pass 4, possible sensory paths reach 148,736/149,210
+readout neurons (99.7%). The 23,720 annotated column cells span 15 repeated
+visual types. These are structural paths, ignoring gating/cancellation. The
+corrected `circuit-routes-v3` accounts for missing class labels and uses
+interneuron soma side. Earlier route counts agree; annotation corrections and
+the failed first readout-artifact attempt are retained.
+
+**Readout qualification:** `visual-readout-cpu-parity-v2` passes both new port
+maps with the original tolerances. V1 exposed a zero-based step passed to the
+one-based Adam reference in the new harness; only the harness was corrected.
+
 ## Next gates and deliberate revisions
 
 1. Confirm the completed optimizer and compute-matched rate screens
    with three seeds and longer equal horizons, then full validation
    and fresh common KataGo panels. Retain every failed/unhelpful trial.
-2. Run baseline/spatial/shuffled sensory attachment at a declared common
-   optimizer. Then test one structured zeroth-order or plasticity mechanism
-   with explicit state equations and counted queries.
+2. Finish baseline/spatial/shuffled sensory attachment. Independently compare
+   warmup/decay and a controlled visual readout. Calibrate these ordinary
+   gradient-based choices before a structured zeroth-order/plasticity hybrid.
 3. Select a reproducible fly prior before online relabeling/distillation.
 
 The TPU became available and its exact tiled learner passed qualification,
@@ -162,3 +196,13 @@ High-rate activity collapse motivated a separate bias-rate factor. Missing
 sensory coordinates motivated an inferred, audited overlay with a matched
 shuffle. Original prototype contracts and failed numerical evidence are retained.
 Record further reasons and affected contracts before dependent work.
+
+The longer constant-rate behavior motivated separate warmup and decay factors
+before zeroth-order work. The measured strength gap, short sensory path lengths
+and repeated visual columns motivated testing output aggregation. These
+revisions retain original study contracts, topology and final test isolation.
+
+Local commit `51d6110` contains the qualified CPU speedup and updated guide.
+Upstream remains at `772db92`: automatic approval review rejected the next push
+and requires explicit user confirmation of `git@github.com:honglu2875/flygo.git`.
+Local implementation and experiments continue; no further push is attempted.

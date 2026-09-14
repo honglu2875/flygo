@@ -8,7 +8,7 @@ def norm(array):
     return float(np.sqrt(np.square(np.asarray(array,dtype=np.float64)).sum()))
 
 
-def measure(model,batch,before,training_metrics,*,clip):
+def measure(model,batch,before,training_metrics,*,clip,training_batch_size=None):
     started=time.perf_counter()
     after=model.parameters()
     _,gradient=model.loss_and_grad(*batch)
@@ -38,4 +38,5 @@ def measure(model,batch,before,training_metrics,*,clip):
                 states=states,value_saturated_fraction=float(np.mean(np.abs(output['value'])>.98)),
                 seconds=time.perf_counter()-started,diagnostic_forward_positions=2*len(batch[0]),
                 diagnostic_backward_positions=len(batch[0]),
-                gradient_scope='Post-update diagnostic gradient on the same batch; no extra optimizer step')
+                diagnostic_batch_positions=len(batch[0]),training_batch_positions=training_batch_size or len(batch[0]),
+                gradient_scope='Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step')

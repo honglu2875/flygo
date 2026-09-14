@@ -92,6 +92,12 @@ the separate control; it uses the same data, loss, sampler and JAX optimizer.
 TPU launch performs source/runtime replication and collective setup; do not
 start unrelated cohorts on the same devices concurrently.
 
+Optional `--warmup-steps 500` ramps to the peak rate. `--decay-until 4000
+--final-rate-ratio 0.1` reaches the cosine floor at that absolute update;
+the endpoint stays fixed across restarts. Resume validates the stored schedule.
+`--diagnostic-batch-size 32` bounds extra activity/gradient measurements even
+when the training batch is large. Constant-rate defaults preserve the baseline.
+
 The active snapshot study is specified in
 [configs/prototype-v1.json](configs/prototype-v1.json): four depth/readout
 configurations, two paired seeds, 10,000 updates each. Periodic validation uses
@@ -144,7 +150,9 @@ The fly numerical crate does not depend on Go, Python or JAX.
 | Neuron equation and its backward rule | `crates/fly-core/src/recurrent.rs`, `python/flygo/jax/model.py`, `tests/test_fly.py` |
 | Sensory/readout maps and initialization | `python/flygo/fly.py`; generic Rust composition in `fly-core/src/model.rs` |
 | Audited spatial ports and shuffled controls | `python/flygo/ports.py`, `scripts/retinotopy.py` |
+| Sensory path lengths and annotated visual types | `scripts/audit_circuit.py` |
 | Loss and CPU Adam | `fly-core/src/model.rs`, `optim.rs`; matching JAX functions |
+| Absolute-update learning-rate schedules | `python/flygo/schedule.py` |
 | TPU sparse kernels and common learner | `python/flygo/jax/{sparse,numerics,learner}.py` |
 | Independent residual-CNN control and FLOP ledger | `python/flygo/jax/cnn.py`, `python/flygo/cost.py` |
 | Frozen data and learner | `python/flygo/data/loader.py`, `train.py` |
@@ -152,6 +160,7 @@ The fly numerical crate does not depend on Go, Python or JAX.
 | Teacher protocol and production | `python/flygo/data/{katago,label,generate,corpus,service}.py` |
 | Checkpoint portability and peer copies | `python/flygo/{checkpoint,replication}.py` |
 | Placement, shared RAM and launch | `runtime.py`, `storage.py`, `scripts/{cluster,deploy_research,tpu}.py` |
+| Validation, dependent panels and paired analysis | `scripts/{compare_checkpoints,finish_study,summarize_study}.py` |
 
 The initial equation is
 `v[k+1] = (1-a)*v[k] + a*(W*ReLU(v[k]) + bias + sensory_input)`.

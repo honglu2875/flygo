@@ -15,6 +15,7 @@ from .data.corpus import atomic_json
 from .data.loader import load_release,Sampler
 from .fly import FlyConfig,RustFly,load_graph
 from .runtime import cpu_profile,pin
+from .schedule import Schedule
 from .storage import GIB,StorageBudget,StoragePressure
 
 
@@ -53,6 +54,9 @@ def main(argv=None):
     parser.add_argument('--threads',type=int,default=24)
     parser.add_argument('--cpus',help='Explicit allocation; defaults to spare physical cores')
     parser.add_argument('--rate',type=float,default=.003)
+    parser.add_argument('--warmup-steps',type=int,default=0)
+    parser.add_argument('--decay-until',type=int,default=0,help='Absolute update at cosine floor; zero keeps a constant peak')
+    parser.add_argument('--final-rate-ratio',type=float,default=.1)
     parser.add_argument('--rate-scales',type=json.loads,default={},help='JSON parameter-group multipliers, e.g. {"bias":0.1}')
     parser.add_argument('--backend',choices=('cpu','tpu'),default='cpu')
     parser.add_argument('--model',choices=('fly','cnn'),default='fly')
@@ -60,6 +64,7 @@ def main(argv=None):
     parser.add_argument('--blocks',type=int,default=10,help='CNN control residual blocks')
     parser.add_argument('--clip',type=float,default=1.0)
     parser.add_argument('--diagnostics-every',type=int,default=0,help='Zero disables extra gradient/activity measurements')
+    parser.add_argument('--diagnostic-batch-size',type=int,default=32,help='Bound extra full-state/gradient measurements independently of the training batch')
     parser.add_argument('--seed',type=int,default=1)
     parser.add_argument('--eval-every',type=int,default=100)
     parser.add_argument('--eval-batch-size',type=int,default=32)
@@ -69,12 +74,14 @@ def main(argv=None):
     parser.add_argument('--peer',default='cubic27@t1v-n-a09f5679-w-1')
     args=parser.parse_args(argv)
     if min(args.steps,args.passes,args.groups,args.batch_size,args.threads,args.eval_every,
-           args.eval_batch_size,args.eval_positions,args.checkpoint_every)<=0:
+           args.eval_batch_size,args.eval_positions,args.checkpoint_every,args.diagnostic_batch_size)<=0:
         parser.error('Step, batch, thread and interval counts must be positive')
     if not np.isfinite(args.rate) or args.rate<=0 or not np.isfinite(args.clip) or args.clip<=0 or args.diagnostics_every<0:
         parser.error('Finite positive learning rate/clip and a nonnegative diagnostic interval are required')
     if args.model=='cnn' and (args.ports or args.diagnostics_every):
         parser.error('Fly ports/activity diagnostics apply only to the fly model')
+    try:Schedule(args.rate,args.warmup_steps,args.decay_until,args.final_rate_ratio)
+    except ValueError as error:parser.error(str(error))
     cpus=[int(x) for x in args.cpus.split(',')] if args.cpus else cpu_profile()['research_cpus'][:args.threads]
     if args.threads>len(cpus):
         parser.error('Thread count exceeds allocated physical CPUs')
@@ -102,6 +109,7 @@ def main(argv=None):
 
 def run_training(args,cpus,run):
     root=args.root
+    schedule=Schedule(args.rate,args.warmup_steps,args.decay_until,args.final_rate_ratio)
     if args.model=='cnn':
         from .jax.cnn import CNNConfig,JaxCNN
         config=CNNConfig(channels=args.channels,blocks=args.blocks,threads=args.threads,seed=args.seed)
@@ -126,10 +134,14 @@ def run_training(args,cpus,run):
             model=JaxFly(graph,config,ports=ports)
         else:
             model=RustFly(graph,config,ports=ports)
+        diagnostic_size=min(args.batch_size,args.diagnostic_batch_size)
+        if args.diagnostics_every and hasattr(model,'mesh') and diagnostic_size%model.mesh.size:
+            raise ValueError('Diagnostic batch must divide evenly across the data mesh')
         any_host=getattr(model,'collective_any',bool)
         step=0
         if args.resume:
-            load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'])
+            previous=load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'])
+            schedule.check_resume(previous.get('training_contract',{}))
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                     dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,
@@ -154,7 +166,7 @@ def run_training(args,cpus,run):
             try:
                 receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics,
                     port_contract=port_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
-                        clip=args.clip,rate_scales=args.rate_scales)),
+                        clip=args.clip,rate_scales=args.rate_scales,schedule=schedule.contract())),
                     root=root,peer=args.peer or None)
             except Exception as failure:
                 error=failure
@@ -187,11 +199,12 @@ def run_training(args,cpus,run):
             sample_seconds=time.perf_counter()-sample_begin
             diagnostic=args.diagnostics_every and (step+1)%args.diagnostics_every==0
             before=model.parameters() if diagnostic else None
-            begin=time.perf_counter();metrics=model.train_step(*batch,rate=args.rate,clip=args.clip,
+            rate=schedule.rate(step+1)
+            begin=time.perf_counter();metrics=model.train_step(*batch,rate=rate,clip=args.clip,
                                                               rate_scales=args.rate_scales or None)
             elapsed=time.perf_counter()-begin;step=metrics['step']
             observed_updates+=1;clipped_updates+=int(metrics['gradient_norm']>args.clip)
-            record=dict(kind='train',**metrics,clipped=metrics['gradient_norm']>args.clip,
+            record=dict(kind='train',**metrics,learning_rate=rate,clipped=metrics['gradient_norm']>args.clip,
                         clipping_fraction=clipped_updates/observed_updates,
                         clipping_scope='updates since this process started',
                         seconds=elapsed,positions_per_second=args.batch_size/elapsed,
@@ -203,7 +216,9 @@ def run_training(args,cpus,run):
                 atomic_json(run/'status.json',dict(state='training',pid=os.getpid(),updated=time.time(),**record))
             if diagnostic:
                 from .diagnostics import measure
-                report=measure(model,batch,before,metrics,clip=args.clip)
+                diagnostic_batch=tuple(array[:diagnostic_size] for array in batch)
+                report=measure(model,diagnostic_batch,before,metrics,clip=args.clip,
+                               training_batch_size=args.batch_size)
                 log.write(json.dumps(report,allow_nan=False)+'\n');log.flush()
                 del before
             if step%args.eval_every==0 or step==args.steps:

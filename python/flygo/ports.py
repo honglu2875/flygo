@@ -87,3 +87,42 @@ def retinal_overlay(base,inference,photoreceptors,sides,type_ids,*,seed,confiden
         cells=selected[membership==group]
         shuffled['input_index'][cells]=rng.permutation(spatial['input_index'][cells])
     return spatial,shuffled,dict(selected=selected,bounds=bounds,strata=strata)
+
+
+def visual_readout(base,coordinates,sides,type_ids,bounds,*,seed,groups=656,channels=8):
+    """Spatial or matched-shuffled pools of directly annotated visual cells."""
+    if channels<1 or groups<81*channels:raise ValueError('Readout groups must fit all board/channel slots')
+    candidate=(base['input_index']<0)&np.isfinite(coordinates).all(axis=1)&np.isin(sides,['L','R'])
+    selected=[];points=[];outside=0
+    for side in ('L','R'):
+        cells=np.flatnonzero(candidate&(sides==side))
+        if not len(cells):continue
+        low,high=np.asarray(bounds[side]['min']),np.asarray(bounds[side]['max'])
+        if np.any(high<=low):raise ValueError('Readout coordinate extent is degenerate')
+        xy=coordinates[cells]
+        valid=((xy>=low)&(xy<=high)).all(axis=1);outside+=int((~valid).sum())
+        cells=cells[valid];ij=np.rint(8*(coordinates[cells]-low)/(high-low)).astype(np.int32)
+        selected.extend(cells);points.extend(ij[:,1]*9+ij[:,0])
+    selected=np.asarray(selected,np.int32);points=np.asarray(points,np.int32)
+    if not len(selected):raise ValueError('No annotated readout cells fall within the sensory bounds')
+    types,membership=np.unique(type_ids[selected],return_inverse=True)
+    rng=np.random.default_rng(seed+610309)
+    type_channel=rng.permutation(len(types))%channels
+    assigned=points*channels+type_channel[membership]
+    spatial={k:v.copy() for k,v in base.items()}
+    spatial['output_group'].fill(-1);spatial['output_group'][selected]=assigned
+    shuffled={k:v.copy() for k,v in spatial.items()}
+    strata=np.stack([(sides[selected]=='R').astype(np.int32),type_ids[selected]],axis=1)
+    _,stratum=np.unique(strata,axis=0,return_inverse=True)
+    for group in np.unique(stratum):
+        cells=selected[stratum==group]
+        shuffled['output_group'][cells]=rng.permutation(spatial['output_group'][cells])
+    counts=np.bincount(assigned,minlength=groups)
+    for ports in (spatial,shuffled):
+        actual=np.bincount(ports['output_group'][selected],minlength=groups)
+        np.testing.assert_array_equal(actual,counts)
+        ports['output_scale'].fill(0)
+        ports['output_scale'][selected]=(1/np.sqrt(counts[ports['output_group'][selected]])).astype(np.float32)
+    return spatial,shuffled,dict(selected=selected,strata=strata,candidate_cells=int(candidate.sum()),
+        outside_sensory_bounds=outside,board_point_coverage=len(np.unique(points)),empty_groups=int((counts==0).sum()),
+        group_counts=counts.tolist(),type_channels={str(kind):int(channel) for kind,channel in zip(types,type_channel)})

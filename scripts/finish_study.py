@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Finish one frozen CPU study: wait for each learner, then validate and play fresh panels."""
+"""Finish a frozen study: wait for learners and CPU lanes, then validate and play."""
 from __future__ import annotations
 
 import argparse
@@ -34,6 +34,34 @@ def running_train(run_id):
     return None
 
 
+def dependency_complete(directory):
+    """A completed status alone cannot release a lane while its worker exits."""
+    status_path=directory/'status.json'
+    if not status_path.exists():return False
+    status=json.loads(status_path.read_text())
+    if status.get('state') in ('failed','stopped'):
+        raise RuntimeError('Evaluation dependency did not complete: '+str(directory))
+    if status.get('state')!='complete':return False
+    lock_path=directory/'worker.lock'
+    if lock_path.exists():
+        with lock_path.open('a') as lock:
+            try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+            except BlockingIOError:return False
+    return True
+
+
+def cohort_complete(directory):
+    status_path=directory/'status.json'
+    if not status_path.exists():return False
+    status=json.loads(status_path.read_text())
+    if status.get('status')=='failed':raise RuntimeError('TPU cohort failed: '+str(directory))
+    if status.get('status')!='passed':return False
+    pid=json.loads((directory/'job.json').read_text())['pid']
+    try:command=Path('/proc',str(pid),'cmdline').read_bytes().decode().split('\0')
+    except (FileNotFoundError,ProcessLookupError):command=[]
+    return str(directory/'worker.py') not in command
+
+
 def worker(args):
     from flygo.data.corpus import atomic_json
     from flygo.qualify import sha256
@@ -49,16 +77,20 @@ def worker(args):
         try:
             checkpoint=source/'checkpoints'/f"step-{plan['updates']:08d}.npz"
             while not (out/'stop').exists():
-                status=json.loads((source/'status.json').read_text())
+                status_path=source/'status.json'
+                status=json.loads(status_path.read_text()) if status_path.exists() else {}
                 if status.get('state') in ('failed','stopped'):
                     raise RuntimeError('Source trainer did not complete: '+str(status))
                 complete=status.get('state')=='complete' and status.get('step')==plan['updates']
-                if complete and not running_train(job['run_id']):
+                dependencies=all(dependency_complete(root/'runs'/name) for name in job.get('wait_for',[]))
+                cohort=not job.get('cohort') or cohort_complete(root/'runs'/job['cohort'])
+                if complete and dependencies and cohort and not running_train(job['run_id']):
                     receipt=json.loads(checkpoint.with_suffix('.json').read_text())
                     if receipt.get('replica_status')=='verified':
                         break
                 atomic_json(out/'status.json',dict(state='waiting_training_and_replica',pid=os.getpid(),
-                            source_step=status.get('step'),updated=time.time()))
+                            source_step=status.get('step'),dependencies_ready=dependencies,
+                            cohort_ready=cohort,updated=time.time()))
                 time.sleep(20)
             else:
                 atomic_json(out/'status.json',dict(state='stopped',updated=time.time()))
@@ -67,7 +99,12 @@ def worker(args):
             expected=dict(passes=job['passes'],groups=job['groups'],seed=job['seed'],
                           steps=plan['updates'],batch_size=plan['batch_size'],rate=job.get('rate',plan['rate']),release=plan['release'],
                           rate_scales=job.get('rate_scales',plan.get('rate_scales',{})))
-            if any(original['arguments'].get(k,{} if k=='rate_scales' else None)!=v for k,v in expected.items()):
+            expected.update({k:job[k] for k in ('model','backend','channels','blocks','ports') if k in job})
+            if job.get('ports'):expected['ports']=str(root/job['ports'])
+            for key in ('warmup_steps','decay_until','final_rate_ratio'):
+                if key in job or key in plan:expected[key]=job.get(key,plan.get(key))
+            defaults=dict(rate_scales={},model='fly',backend='cpu')
+            if any(original['arguments'].get(k,defaults.get(k))!=v for k,v in expected.items()):
                 raise ValueError('Source trial differs from frozen study contract')
             if sha256(checkpoint)!=receipt['sha256']:
                 raise ValueError('Final checkpoint checksum failed')
@@ -77,9 +114,13 @@ def worker(args):
             common=['--root',str(root),'--threads',threads,'--cpus',cpus]
             stages=[('validation',[sys.executable,str(out/'compare_checkpoints.py'),*common,
                     '--release',plan['release'],'--checkpoints',str(checkpoint),'--output',str(out/'validation')])]
-            for name,simulations in [('prior',0),('puct',16),('gumbel',16)]:
+            matches=plan.get('matches',dict(games=16,seed=229101,opponent=0,simulations=16,
+                                         search_modes=['prior','puct','gumbel']))
+            for name in matches.get('search_modes',[]) if matches else []:
+                simulations=0 if name=='prior' else matches['simulations']
                 stages.append((name,[sys.executable,'-m','flygo.evaluate',*common,'--checkpoint',str(checkpoint),
-                              '--opponent','0','--games','16','--seed','229101','--simulations',str(simulations),
+                              '--opponent',str(matches['opponent']),'--games',str(matches['games']),
+                              '--seed',str(matches['seed']),'--simulations',str(simulations),
                               '--search','gumbel' if name=='gumbel' else 'puct','--output',str(out/name)]))
             for name,command in stages:
                 if (out/'stop').exists():
@@ -106,11 +147,33 @@ def launch(args):
     from cluster import snapshot,SSH,PYTHON,remote
     from flygo.data.corpus import atomic_json
     from flygo.replication import replicate_bundle
+    from flygo.runtime import cpu_profile,pin
     root=args.root
     plan=json.loads(args.plan.read_text())
+    allowed=set(cpu_profile()['research_cpus']);seen={}
+    matches=plan.get('matches')
+    if matches and (set(matches['search_modes'])-{'prior','puct','gumbel'}
+                    or matches.get('opponent_visits',16)!=16):
+        raise ValueError('Unsupported registered search panel')
+    for job in plan['jobs']:
+        name=job['run_id'];cpus=set(job['cpus'])
+        if name in seen or name in ('.','..') or Path(name).name!=name:
+            raise ValueError('Each evaluation needs a unique plain run ID')
+        if job['host'] not in range(4) or not cpus or not cpus<=allowed or len(cpus)!=len(job['cpus']):
+            raise ValueError('Invalid host or physical CPU allocation')
+        for other in seen.values():
+            if other['host']==job['host'] and cpus.intersection(other['cpus']):
+                if args.run_id+'/'+other['run_id'] not in job.get('wait_for',[]):
+                    raise ValueError('Overlapping evaluation jobs need an explicit completion dependency')
+        seen[name]=job
+    pin([117,118,119])
     out=root/'runs'/args.run_id
     out.mkdir(parents=True,exist_ok=False)
-    environment=snapshot(root)
+    environment=args.source or snapshot(root)
+    if not (environment/'snapshot.json').is_file():raise ValueError('Source must be a published environment')
+    runtime=args.runtime
+    if runtime and not (runtime/'runtime.json').is_file():raise ValueError('Runtime must be published')
+    pythonpath=str(environment/'site-packages')+((':'+str(runtime/'site-packages')) if runtime else '')
     atomic_json(out/'plan.json',plan)
     helper=Path(__file__).resolve()
     compare=helper.with_name('compare_checkpoints.py')
@@ -118,7 +181,8 @@ def launch(args):
     for job in plan['jobs']:
         directory=out/job['run_id'];directory.mkdir()
         config=dict(schema_version=1,root=str(root),plan={k:v for k,v in plan.items() if k!='jobs'},job=job,
-                    environment=str(environment),helper_sha256=hashlib.sha256(helper.read_bytes()).hexdigest(),
+                    environment=str(environment),runtime=str(runtime) if runtime else None,
+                    helper_sha256=hashlib.sha256(helper.read_bytes()).hexdigest(),
                     comparator_sha256=hashlib.sha256(compare.read_bytes()).hexdigest())
         atomic_json(directory/'config.json',config)
         shutil.copyfile(helper,directory/'worker.py')
@@ -129,6 +193,7 @@ def launch(args):
         jobs=[r for r in records if r['host']==host]
         if host:
             files=[p for p in environment.rglob('*') if p.is_file()]
+            if runtime:files.extend(p for p in runtime.rglob('*') if p.is_file())
             files.extend(p for j in jobs for p in Path(j['config']).parent.iterdir() if p.is_file())
             replicate_bundle(files,root,peer)
         result=[]
@@ -136,7 +201,9 @@ def launch(args):
             directory=Path(job['config']).parent
             code=f'''import subprocess,os,pathlib,json
 p=pathlib.Path({str(directory)!r})
-env=dict(os.environ,PYTHONPATH={str(environment/'site-packages')!r},PYTHONDONTWRITEBYTECODE='1',OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1')
+env=dict(os.environ,PYTHONPATH={pythonpath!r},PYTHONDONTWRITEBYTECODE='1',OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',
+         JAX_PLATFORMS='cpu',TMPDIR={str(root/'tmp')!r},JAX_COMPILATION_CACHE_DIR=str(p/'compile-cache'))
+env.pop('LD_PRELOAD',None)
 with (p/'worker.log').open('a') as log:
  child=subprocess.Popen([{PYTHON!r},str(p/'worker.py'),'worker','--config',str(p/'config.json')],env=env,
       stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
@@ -179,6 +246,8 @@ def main():
     p.add_argument('--run-id',default='prototype-followup-v1')
     p.add_argument('--plan',type=Path,default=Path('configs/prototype-v1.json'))
     p.add_argument('--config',type=Path)
+    p.add_argument('--source',type=Path,help='Published immutable inference environment')
+    p.add_argument('--runtime',type=Path,help='Published JAX dependency runtime for CNN evaluation')
     args=p.parse_args()
     if Path(args.run_id).name!=args.run_id or args.run_id in ('.','..'):
         p.error('Run ID must be a plain path component')

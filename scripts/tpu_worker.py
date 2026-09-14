@@ -67,6 +67,8 @@ def main():
                 options+=['--steps',str(plan['updates'])]
                 for key in ('model','channels','blocks'):
                     if key in plan:options+=['--'+key,str(plan[key])]
+                for key in ('warmup_steps','decay_until','final_rate_ratio','diagnostics_every','diagnostic_batch_size'):
+                    if key in plan:options+=['--'+key.replace('_','-'),str(plan[key])]
                 if config.get('ports'):options+=['--ports',config['ports']]
                 if plan.get('rate_scales'):options+=['--rate-scales',json.dumps(plan['rate_scales'])]
                 if config.get('restore_from'):options+=['--resume',config['restore_from']]

@@ -134,6 +134,35 @@ affine adapter; it does not establish calibrated retinal orientation, physical
 isotropy or exact D4 equivariance. Record coverage and excluded cells before
 training; compare against the unchanged all-sensory random baseline as well.
 
+The structural audit finds possible sensory paths to 148,736 of 149,210
+readout cells by pass 4. Extra passes therefore add processing time more than
+newly reachable cells. This ignores nonlinear gating and signal attenuation.
+The 23,720 directly annotated column cells belong to 15 repeated visual types.
+These observations motivate a separate **visual readout** screen after the
+input-only registration: retain its spatial sensory map, then compare the
+original all-cell pools with spatial and matched-shuffled pools of directly
+annotated visual cells. All circuit nodes and edges still execute.
+
+Map those measured column indices through the same per-eye bounds as the
+sensory overlay; exclude coordinates outside those bounds rather than clip
+them. Annotated interneurons use `somaSide` when L/R (falling back to
+`rootSide`); the sensory cells use `rootSide`. The first artifact attempt
+incorrectly reused the sensory side field and correctly stopped with no
+eligible readout cells; it remains recorded. Assign each of the 15 types to one of eight seeded channels, consistently
+across columns. A readout group is `8 * board_point + channel`; normalize by
+the square root of its actual cell count. Other neurons have no direct adapter
+readout, while remaining in the recurrent circuit. The shuffle permutes group
+assignments within side and type, preserving selected cells, all group counts,
+channel identities, input ports and trainable-parameter shapes. Report empty
+groups and excluded cells. This is a spatial aggregation hypothesis, not a
+calibrated model of the fly's motor output or an exact convolution.
+
+The first comparison starts from initialization at K=4, G=656, B=32, rate 0.01
+and 4,000 updates, seed 1. Include spatial-input/original-readout as its direct
+control at this same horizon; the existing random-input/original-readout
+confirmation is an additional reference. Retain all three new outcomes before
+selecting further seeds or any TPU continuation.
+
 ## Neuromodulation and plasticity
 
 Drosophila experiments and circuit models support dopamine-dependent learning
@@ -235,3 +264,28 @@ from 0.69 to 0.44 seconds and loss-plus-gradient time from 4.32 to 1.70 seconds.
 These are bounded microbenchmarks with concurrent fleet workloads, not a
 24-core throughput or universal speedup claim. Keep the reference artifacts
 and separately qualify actual research-lane throughput.
+
+## Next optimizer factor: deterministic schedules
+
+The longer constant-rate trials still trade policy improvement against activity
+loss and unstable value error. Before a zeroth-order hybrid, compare two
+separate schedule factors from initialization: 500-update linear warmup to the
+declared peak, or cosine decay from that peak to 10% at update 4,000. Keep the
+128,000-position horizon, batch 32, clipping, diagnostics, ports and sampling
+fixed. Apply each factor to peak 0.01 and to peak 0.03 with bias multiplier
+0.01; adopt the corresponding constant-rate confirmations as controls. The
+first screen uses seed 1 and retains all four outcomes before further seeds.
+
+For one-based update `t`, warmup uses `peak * t / warmup_steps`. After warmup,
+the constant schedule stays at peak. A cosine schedule starts at
+`s = max(1, warmup_steps)` and uses
+`peak * [r + (1-r) * (1+cos(pi*q))/2]`, where
+`q = clip((t-s)/(decay_until-s), 0, 1)` and `r = 0.1`. The absolute decay endpoint
+is an immutable optimizer setting, independent of how many updates a process
+runs before checkpointing. Resume must retain the schedule contract and use
+the restored optimizer step. Qualify boundary behavior, restart continuity and
+Rust/JAX update parity before launching these cases.
+
+This is a recorded change in ordering: ordinary optimizer calibration remains
+the prerequisite for a meaningful zeroth-order comparison. The existing
+constant-rate and spatial-input studies continue unchanged.
