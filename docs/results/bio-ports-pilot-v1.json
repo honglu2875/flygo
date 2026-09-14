@@ -1,0 +1,2481 @@
+{
+  "anatomy": {
+    "annotation_columns": [
+      "assignedOlHex1",
+      "assignedOlHex2",
+      "bodyId",
+      "flywireType",
+      "group",
+      "instance",
+      "somaSide",
+      "statusLabel",
+      "superclass",
+      "type",
+      "vfbId",
+      "hemibrainType",
+      "itoleeHl",
+      "supertype",
+      "birthtime",
+      "mancBodyid",
+      "mancGroup",
+      "mancType",
+      "subclass",
+      "synonyms",
+      "class",
+      "rootSide",
+      "somaNeuromere",
+      "trumanHl",
+      "dimorphism",
+      "matchingNotes",
+      "entryNerve",
+      "mancSerial",
+      "mcnsSerial",
+      "serialMotif",
+      "fruDsx",
+      "exitNerve",
+      "receptorType",
+      "somaLocation",
+      "tosomaLocation",
+      "status"
+    ],
+    "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+    "atlas_sha256": "69f26e1a01ad97357e2f2759c65cd17cf69033363a3d1d59ec9b67a315cb1306",
+    "candidate_cells": 2129,
+    "candidate_subclasses": {
+      "cb_motor": {
+        "am": 13,
+        "nm": 20,
+        "pm": 67,
+        "rm": 7
+      },
+      "descending_neuron": {
+        "<unknown>": 8,
+        "ad": 10,
+        "fl": 115,
+        "hl": 2,
+        "ht": 26,
+        "it": 18,
+        "lt": 31,
+        "ml": 2,
+        "nt": 108,
+        "ut": 276,
+        "wt": 2,
+        "xl": 275,
+        "xn": 441
+      },
+      "vnc_motor": {
+        "ad": 214,
+        "fl": 135,
+        "hl": 130,
+        "hm": 16,
+        "ml": 116,
+        "nm": 24,
+        "wm": 67,
+        "xm": 6
+      }
+    },
+    "candidate_superclasses": {
+      "cb_motor": 107,
+      "descending_neuron": 1314,
+      "vnc_motor": 708
+    },
+    "columns_sha256": "3e4a9313262104e50b1aa2d4952d704e4cb0104eb9d4ad017d027e2c26567e52",
+    "eyes": {
+      "L": {
+        "cells_per_column_quantiles": [
+          1.0,
+          2.0,
+          8.0
+        ],
+        "columns_required_for_12_separate_9x9_patches": 972,
+        "distinct_columns": 652,
+        "mean_columns_per_12_patches": 54.333333333333336,
+        "selected_cells": 1328,
+        "selected_types": {
+          "R1-R6": 496,
+          "R7_unclear": 54,
+          "R7d": 28,
+          "R7p": 40,
+          "R7y": 88,
+          "R8_unclear": 185,
+          "R8d": 35,
+          "R8p": 172,
+          "R8y": 230
+        },
+        "visual_cells": 1733
+      },
+      "R": {
+        "cells_per_column_quantiles": [
+          1.0,
+          2.0,
+          8.0
+        ],
+        "columns_required_for_12_separate_9x9_patches": 972,
+        "distinct_columns": 730,
+        "mean_columns_per_12_patches": 60.833333333333336,
+        "selected_cells": 2162,
+        "selected_types": {
+          "R1-R6": 887,
+          "R7R8_unclear": 13,
+          "R7_unclear": 177,
+          "R7d": 36,
+          "R7p": 144,
+          "R7y": 227,
+          "R8_unclear": 236,
+          "R8d": 37,
+          "R8p": 158,
+          "R8y": 247
+        },
+        "visual_cells": 2374
+      }
+    },
+    "geometry_scope": "Inferred optic-column coordinates, not measured optical axes or 3D eye coordinates",
+    "qualified_visual_cells": 3490,
+    "sensory_cells": 15912,
+    "side_rule": "somaSide when L/R, otherwise rootSide; photoreceptors use rootSide",
+    "visual_cells": 4107
+  },
+  "cases": [
+    {
+      "correlation_sha256": "2e6d100b3e23a91461dcb45fcd15884573fb132b73c1e97a9df68b8843d39d34",
+      "direct_input_cells": 15912,
+      "log_weight_jitter_std": 0,
+      "model_config": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "seed": 1,
+        "steps": 8,
+        "threads": 24
+      },
+      "name": "all-sensory-j0",
+      "parameter_sha256": "ffd33ce0b7744ffbfda9be10d9559b9ee7bf64a0705ab725fbc95035dbe517b5",
+      "records": [
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.17288058996200562,
+              "pairs": 2148192,
+              "positive_over_point5_fraction": 0.25458059614783035,
+              "quantiles": [
+                -0.9925824403762817,
+                -0.4740638554096222,
+                0.24883927404880524,
+                0.6754470586776735,
+                0.9991246461868286
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.18033447861671448,
+              "pairs": 117064,
+              "positive_over_point5_fraction": 0.2840839199070594,
+              "quantiles": [
+                -0.9822387099266052,
+                -0.4978103369474411,
+                0.24780313670635223,
+                0.7257034122943878,
+                0.9995489716529846
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 107,
+              "varying_cells": 107
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 1314,
+              "varying_cells": 1314
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 708,
+              "varying_cells": 708
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 26.662288085138705,
+            "first_pc_variance_fraction": 0.14171913961522487,
+            "observations": 256,
+            "rms_input_variation": 0.001286025423365443,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.8317809608479576e-06,
+              1.9781333796576516e-05,
+              0.0003909469107330147,
+              0.002034818141878955,
+              0.021466713853486547
+            ],
+            "varying_cells": 2129
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.010727099142968655,
+              "pairs": 2148192,
+              "positive_over_point5_fraction": 0.0021916104333318436,
+              "quantiles": [
+                -0.8378195762634277,
+                -0.1324432224035263,
+                0.006374133517965674,
+                0.15648566931486133,
+                0.9994250535964966
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.040973030030727386,
+              "pairs": 117064,
+              "positive_over_point5_fraction": 0.01810120959475159,
+              "quantiles": [
+                -0.9120340347290039,
+                -0.13261810541152955,
+                0.023664738051593304,
+                0.22728470265865322,
+                0.9998548626899719
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 4,
+          "policy": {
+            "mean_effective_actions": 40.90725921010983,
+            "mean_entropy": 3.5551310227870387,
+            "mean_entropy_over_legal_uniform": 0.9967643349183601,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.04922796087645287
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 1.4538875769543036,
+            "first_pc_variance_fraction": 0.8287866693123525,
+            "observations": 256,
+            "rms_input_variation": 0.0032799281265524683,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.001122839394477645,
+              0.001918722947261434,
+              0.0029887686253719844,
+              0.004478726251223006,
+              0.007909790767258782
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.965246571234324,
+            "first_pc_variance_fraction": 0.5723950662089022,
+            "observations": 256,
+            "rms_input_variation": 0.002221974342465269,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              2.028839196466237e-06,
+              4.150508349092329e-05,
+              0.0006277283778299249,
+              0.0034386665196549982,
+              0.024878520145181143
+            ],
+            "varying_cells": 2129
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9700529248396694,
+            "pairs": 2265256
+          }
+        },
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.15476275980472565,
+              "pairs": 2146130,
+              "positive_over_point5_fraction": 0.2844245222796382,
+              "quantiles": [
+                -0.9823824167251587,
+                -0.5569929838180542,
+                0.23049971461296082,
+                0.7202750444412231,
+                0.9972708821296692
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.1731608808040619,
+              "pairs": 116998,
+              "positive_over_point5_fraction": 0.3159541188738269,
+              "quantiles": [
+                -0.9774123430252075,
+                -0.5685062050819396,
+                0.24200240522623062,
+                0.7816607475280761,
+                0.9992749691009521
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 107,
+              "varying_cells": 107
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 1314,
+              "varying_cells": 1314
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 707,
+              "varying_cells": 707
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 29.638377521130067,
+            "first_pc_variance_fraction": 0.1214355593035148,
+            "observations": 256,
+            "rms_input_variation": 0.0019236896229536265,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              5.993994724970678e-05,
+              0.0005997896351989525,
+              0.0031836568922878265,
+              0.029465028459505178
+            ],
+            "varying_cells": 2128
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.012095398269593716,
+              "pairs": 2146130,
+              "positive_over_point5_fraction": 0.0025976991142195485,
+              "quantiles": [
+                -0.8309962153434753,
+                -0.1362043797969818,
+                0.007683694362640381,
+                0.16257613897323614,
+                0.9972984790802002
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.04587748646736145,
+              "pairs": 116998,
+              "positive_over_point5_fraction": 0.02117130207353972,
+              "quantiles": [
+                -0.9418618083000183,
+                -0.1396455615758896,
+                0.027308081276714802,
+                0.247697414457798,
+                0.9994125366210938
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 8,
+          "policy": {
+            "mean_effective_actions": 40.86851109298076,
+            "mean_entropy": 3.554096222661732,
+            "mean_entropy_over_legal_uniform": 0.9964536503287611,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.04991120039637112
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 1.195669940240772,
+            "first_pc_variance_fraction": 0.9143958159811164,
+            "observations": 256,
+            "rms_input_variation": 0.006314516474334032,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0020579774303437952,
+              0.00399697916644327,
+              0.005870831175447323,
+              0.008398912127324146,
+              0.014939918088147784
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.7334705977142293,
+            "first_pc_variance_fraction": 0.5981257848787804,
+            "observations": 256,
+            "rms_input_variation": 0.003425208601973483,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.00013202504107074083,
+              0.0010585625968824377,
+              0.005167649135815124,
+              0.03404067965681648
+            ],
+            "varying_cells": 2128
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9764224658939756,
+            "pairs": 2263128
+          }
+        }
+      ],
+      "response_sha256": "69eac64015ee8b59b4ef07b37a901986fb5e6c678333111c70af63627d577482",
+      "weight_jitter_seed": 0
+    },
+    {
+      "correlation_sha256": "937c86bd29e2b62f5eb16382f52c42b391d68efd03cdba042c22b5d91a592a06",
+      "direct_input_cells": 4107,
+      "log_weight_jitter_std": 0,
+      "model_config": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "seed": 1,
+        "steps": 8,
+        "threads": 24
+      },
+      "name": "visual-only-j0",
+      "parameter_sha256": "ffd33ce0b7744ffbfda9be10d9559b9ee7bf64a0705ab725fbc95035dbe517b5",
+      "records": [
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.011680607683956623,
+              "pairs": 4785,
+              "positive_over_point5_fraction": 0.2731452455590387,
+              "quantiles": [
+                -0.952613115310669,
+                -0.7555352449417114,
+                0.0402836836874485,
+                0.8011201381683349,
+                0.999728262424469
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.015881605446338654,
+              "pairs": 1320,
+              "positive_over_point5_fraction": 0.2681818181818182,
+              "quantiles": [
+                -0.9474117159843445,
+                -0.7447401404380798,
+                0.021580854430794716,
+                0.8495517790317536,
+                0.9998168349266052
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 1
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 61,
+              "varying_cells": 110
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 0
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.8717939204448975,
+            "first_pc_variance_fraction": 0.36836051163020506,
+            "observations": 256,
+            "rms_input_variation": 1.2611310077277832e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              4.827618892706302e-19,
+              5.2218136413824715e-18,
+              4.71143159924842e-09,
+              1.4966723414022256e-07,
+              2.8577479590983786e-05
+            ],
+            "varying_cells": 61
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.03268372267484665,
+              "pairs": 1438,
+              "positive_over_point5_fraction": 0.030598052851182198,
+              "quantiles": [
+                -0.45803555846214294,
+                -0.1545751631259918,
+                0.01813481841236353,
+                0.19025896936655035,
+                0.9606785774230957
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.07621017843484879,
+              "pairs": 392,
+              "positive_over_point5_fraction": 0.07142857142857142,
+              "quantiles": [
+                -0.4617464542388916,
+                -0.13519375920295715,
+                0.030673477798700333,
+                0.28216067552566554,
+                0.9942652583122253
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 4,
+          "policy": {
+            "mean_effective_actions": 40.93930642406083,
+            "mean_entropy": 3.5560218076949477,
+            "mean_entropy_over_legal_uniform": 0.9970353969165339,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.04857026499562747
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 2.4584466244279675,
+            "first_pc_variance_fraction": 0.6345558989465924,
+            "observations": 256,
+            "rms_input_variation": 0.0016202277681190518,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.000584238776214432,
+              0.0010556060729587549,
+              0.0015427834441203573,
+              0.002102853487227073,
+              0.0031963118350020834
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.798295114783793,
+            "first_pc_variance_fraction": 0.5727238524047986,
+            "observations": 256,
+            "rms_input_variation": 1.8370294715588971e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              7.945081700118223e-09,
+              3.16486632967689e-07,
+              3.713881052403679e-05
+            ],
+            "varying_cells": 111
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9880606560029318,
+            "pairs": 5886
+          }
+        },
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.004299807827919722,
+              "pairs": 47829,
+              "positive_over_point5_fraction": 0.34522988145267514,
+              "quantiles": [
+                -0.982897162437439,
+                -0.8354849100112915,
+                -0.014497645199298859,
+                0.8445775151252747,
+                0.9992128610610962
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.046274393796920776,
+              "pairs": 8116,
+              "positive_over_point5_fraction": 0.3822079842286841,
+              "quantiles": [
+                -0.974164605140686,
+                -0.8242564499378204,
+                0.09853105619549751,
+                0.8736712336540222,
+                0.9992388486862183
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 6,
+              "varying_cells": 11
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 194,
+              "varying_cells": 319
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 1,
+              "varying_cells": 5
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 5.115497173947203,
+            "first_pc_variance_fraction": 0.36177358955841055,
+            "observations": 256,
+            "rms_input_variation": 3.460474180641263e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.441372963685374e-09,
+              4.39900759867511e-09,
+              6.002816487121678e-08,
+              9.233843688210086e-07,
+              6.723727918130024e-05
+            ],
+            "varying_cells": 201
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.03553711995482445,
+              "pairs": 16554,
+              "positive_over_point5_fraction": 0.035882566147154765,
+              "quantiles": [
+                -0.6964130401611328,
+                -0.17354632765054703,
+                0.010118197184056044,
+                0.258228799700737,
+                0.9962007403373718
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.11176883429288864,
+              "pairs": 3546,
+              "positive_over_point5_fraction": 0.07896221094190638,
+              "quantiles": [
+                -0.48943233489990234,
+                -0.12296541035175323,
+                0.06607385724782944,
+                0.4331780970096588,
+                0.9919456243515015
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 8,
+          "policy": {
+            "mean_effective_actions": 40.92688893681402,
+            "mean_entropy": 3.5557217693975307,
+            "mean_entropy_over_legal_uniform": 0.996948249387434,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.048743766036973786
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 3.013958921073978,
+            "first_pc_variance_fraction": 0.57124902158413,
+            "observations": 256,
+            "rms_input_variation": 0.0017975965021964383,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.00071703738985612,
+              0.001171662731615794,
+              0.0017053597873226303,
+              0.0023448335270653403,
+              0.0036513316928098844
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.1986756012294433,
+            "first_pc_variance_fraction": 0.6614247533582996,
+            "observations": 256,
+            "rms_input_variation": 5.6478922285927485e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.5115895379857203e-09,
+              7.753046840292621e-09,
+              1.1469951654384495e-07,
+              1.9207927338718617e-06,
+              0.00012247680914074694
+            ],
+            "varying_cells": 335
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9929962869480343,
+            "pairs": 51360
+          }
+        }
+      ],
+      "response_sha256": "5a4ba9c7b7463c0663d4f2b6726859961f000c1592923793926c022e3a7a7ffd",
+      "weight_jitter_seed": 0
+    },
+    {
+      "correlation_sha256": "c1c6e8695bcd2f235d1aaf61498f58cf5742df71fc22d2666581d5a89696bfbe",
+      "direct_input_cells": 4107,
+      "log_weight_jitter_std": 0,
+      "model_config": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "seed": 1,
+        "steps": 8,
+        "threads": 24
+      },
+      "name": "overlay-visual-only-j0",
+      "parameter_sha256": "ffd33ce0b7744ffbfda9be10d9559b9ee7bf64a0705ab725fbc95035dbe517b5",
+      "records": [
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.03186813369393349,
+              "pairs": 4625,
+              "positive_over_point5_fraction": 0.3011891891891892,
+              "quantiles": [
+                -0.9458075165748596,
+                -0.7316810011863708,
+                0.07267070561647415,
+                0.7815365433692932,
+                0.9994262456893921
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.018510818481445312,
+              "pairs": 1261,
+              "positive_over_point5_fraction": 0.28707375099127674,
+              "quantiles": [
+                -0.9508702754974365,
+                -0.7481219172477722,
+                -0.0017688305815681815,
+                0.8222941756248474,
+                0.999772310256958
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 1
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 64,
+              "varying_cells": 108
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 0
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.804722988323136,
+            "first_pc_variance_fraction": 0.35228372420348064,
+            "observations": 256,
+            "rms_input_variation": 1.4391298190638667e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              4.827618892706302e-19,
+              5.2218136413824715e-18,
+              5.5545496687799094e-09,
+              1.9189889374784126e-07,
+              3.6364341946046104e-05
+            ],
+            "varying_cells": 64
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.06630156934261322,
+              "pairs": 1610,
+              "positive_over_point5_fraction": 0.052795031055900624,
+              "quantiles": [
+                -0.7154913544654846,
+                -0.16695133298635484,
+                0.04063979536294937,
+                0.30589488148689287,
+                0.9957795143127441
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.07606126368045807,
+              "pairs": 406,
+              "positive_over_point5_fraction": 0.07881773399014778,
+              "quantiles": [
+                -0.5731396079063416,
+                -0.16337572783231735,
+                0.024302235804498196,
+                0.39736565947532654,
+                0.9885116815567017
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 4,
+          "policy": {
+            "mean_effective_actions": 40.939934224856195,
+            "mean_entropy": 3.5560357038805535,
+            "mean_entropy_over_legal_uniform": 0.9970391734118949,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.04856128492045168
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 2.6374275046798865,
+            "first_pc_variance_fraction": 0.6119125689495849,
+            "observations": 256,
+            "rms_input_variation": 0.0016476651349151216,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0006250105133867209,
+              0.001100717468082055,
+              0.0015771551254423492,
+              0.002097345726068419,
+              0.003402594558949711
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.7365817028453976,
+            "first_pc_variance_fraction": 0.5733550696321926,
+            "observations": 256,
+            "rms_input_variation": 2.07011078632804e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              8.51703440343384e-09,
+              3.2873144396421847e-07,
+              4.479755260174466e-05
+            ],
+            "varying_cells": 109
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9923989487192852,
+            "pairs": 5778
+          }
+        },
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.015386907383799553,
+              "pairs": 53321,
+              "positive_over_point5_fraction": 0.3193863580953095,
+              "quantiles": [
+                -0.9830618500709534,
+                -0.7667909860610962,
+                0.010106018744409084,
+                0.7897735834121704,
+                0.998714029788971
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.05344744399189949,
+              "pairs": 8807,
+              "positive_over_point5_fraction": 0.3597138639718406,
+              "quantiles": [
+                -0.970370352268219,
+                -0.7622998714447021,
+                0.09183992445468903,
+                0.8201833724975586,
+                0.9990052580833435
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 8,
+              "varying_cells": 11
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 222,
+              "varying_cells": 334
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 1,
+              "varying_cells": 8
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.82075543712026,
+            "first_pc_variance_fraction": 0.35809098483313556,
+            "observations": 256,
+            "rms_input_variation": 4.001811124582056e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.4134042186009405e-09,
+              5.216168911322351e-09,
+              7.226376521389142e-08,
+              1.1164848103355498e-06,
+              7.977109438180873e-05
+            ],
+            "varying_cells": 231
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.06782962381839752,
+              "pairs": 22268,
+              "positive_over_point5_fraction": 0.05460750853242321,
+              "quantiles": [
+                -0.7534304261207581,
+                -0.2223295778036117,
+                0.04821562021970749,
+                0.3817875504493713,
+                0.997032642364502
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.10249048471450806,
+              "pairs": 4297,
+              "positive_over_point5_fraction": 0.09913893414009774,
+              "quantiles": [
+                -0.7058907151222229,
+                -0.24168296456336974,
+                0.07380451261997223,
+                0.49776629209518436,
+                0.9897422194480896
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 8,
+          "policy": {
+            "mean_effective_actions": 40.92761001125838,
+            "mean_entropy": 3.5557383854499705,
+            "mean_entropy_over_legal_uniform": 0.9969528281621766,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.0487316012011876
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 3.2815615179295854,
+            "first_pc_variance_fraction": 0.5462481226677736,
+            "observations": 256,
+            "rms_input_variation": 0.0018304211705813152,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0007248085112549499,
+              0.001219951613068049,
+              0.0017359670478590454,
+              0.0023543042475650884,
+              0.003938528888477405
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.1904319963438907,
+            "first_pc_variance_fraction": 0.6590466076236412,
+            "observations": 256,
+            "rms_input_variation": 6.2851077454222356e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.4403654901969166e-09,
+              8.300704776242467e-09,
+              1.2133923333203067e-07,
+              2.0673594578262134e-06,
+              0.00013270501251948477
+            ],
+            "varying_cells": 353
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9930958406381519,
+            "pairs": 58996
+          }
+        }
+      ],
+      "response_sha256": "56debec5a9a387031575082acb481d3cedb96e6477b754939ed437de51daad26",
+      "weight_jitter_seed": 0
+    },
+    {
+      "correlation_sha256": "23b7bedd6fbfe131024018698a75e010cd74e3b76906dd6a484e76773bd99094",
+      "direct_input_cells": 4107,
+      "log_weight_jitter_std": 0.1,
+      "model_config": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "seed": 1,
+        "steps": 8,
+        "threads": 24
+      },
+      "name": "overlay-visual-only-j1",
+      "parameter_sha256": "85c0c59e45ce68af1e0736cdf17d4739987e8d145b96377a1f54c0a57b85a41d",
+      "records": [
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.03102024458348751,
+              "pairs": 4595,
+              "positive_over_point5_fraction": 0.28879216539717084,
+              "quantiles": [
+                -0.9491980671882629,
+                -0.7323736071586608,
+                0.06286261975765228,
+                0.7799260377883911,
+                0.9996803402900696
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.018326574936509132,
+              "pairs": 1291,
+              "positive_over_point5_fraction": 0.2711076684740511,
+              "quantiles": [
+                -0.9485625624656677,
+                -0.7519347071647644,
+                0.007451165933161974,
+                0.8268159031867981,
+                0.9993333220481873
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 1
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 67,
+              "varying_cells": 108
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 0
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.543108959033752,
+            "first_pc_variance_fraction": 0.37224813428593745,
+            "observations": 256,
+            "rms_input_variation": 1.489746713996642e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              4.755312434659027e-19,
+              5.568790497835859e-18,
+              5.471280082458908e-09,
+              1.9666036194615306e-07,
+              3.930321224105845e-05
+            ],
+            "varying_cells": 67
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.0715622752904892,
+              "pairs": 1782,
+              "positive_over_point5_fraction": 0.051066217732884396,
+              "quantiles": [
+                -0.7166303396224976,
+                -0.16610738337039946,
+                0.042800379917025566,
+                0.3150815278291703,
+                0.9963210821151733
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.07189514487981796,
+              "pairs": 429,
+              "positive_over_point5_fraction": 0.07692307692307693,
+              "quantiles": [
+                -0.5690467357635498,
+                -0.18944568634033201,
+                0.030036944895982742,
+                0.36472498178482043,
+                0.9835477471351624
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 4,
+          "policy": {
+            "mean_effective_actions": 40.940047135959105,
+            "mean_entropy": 3.5560382127511114,
+            "mean_entropy_over_legal_uniform": 0.9970398691389527,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.04856117446145576
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 2.6468800113797655,
+            "first_pc_variance_fraction": 0.6107849183167988,
+            "observations": 256,
+            "rms_input_variation": 0.001647059311489192,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0006402089817399425,
+              0.001102959810752405,
+              0.0015755725779682769,
+              0.0021093153528322786,
+              0.003370092050394346
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.8305283710236306,
+            "first_pc_variance_fraction": 0.5597520163414619,
+            "observations": 256,
+            "rms_input_variation": 2.081786092811067e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              8.793818932874486e-09,
+              3.4345102723079185e-07,
+              4.7670295987985284e-05
+            ],
+            "varying_cells": 109
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9918972657515237,
+            "pairs": 5886
+          }
+        },
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.015353936702013016,
+              "pairs": 52421,
+              "positive_over_point5_fraction": 0.3110776215638771,
+              "quantiles": [
+                -0.9790172576904297,
+                -0.7594150304794312,
+                0.00906374678015709,
+                0.7820392847061157,
+                0.9984899759292603
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.053929612040519714,
+              "pairs": 8654,
+              "positive_over_point5_fraction": 0.35266928587936214,
+              "quantiles": [
+                -0.9717559218406677,
+                -0.7551272630691528,
+                0.09451375529170036,
+                0.8148983418941498,
+                0.9988591074943542
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 8,
+              "varying_cells": 12
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 232,
+              "varying_cells": 331
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 1,
+              "varying_cells": 7
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.758827743710834,
+            "first_pc_variance_fraction": 0.3595613729105352,
+            "observations": 256,
+            "rms_input_variation": 4.053042603996732e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.3001745975117955e-09,
+              5.373864836611947e-09,
+              7.214015704340448e-08,
+              1.1236721298863786e-06,
+              8.30350450359695e-05
+            ],
+            "varying_cells": 241
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.06887170672416687,
+              "pairs": 24180,
+              "positive_over_point5_fraction": 0.054507857733664185,
+              "quantiles": [
+                -0.727628767490387,
+                -0.2205094113945961,
+                0.04928216524422169,
+                0.37744156420230873,
+                0.9971302151679993
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.10000783950090408,
+              "pairs": 4740,
+              "positive_over_point5_fraction": 0.09620253164556962,
+              "quantiles": [
+                -0.680471658706665,
+                -0.23494308441877362,
+                0.07056856155395508,
+                0.4911297082901001,
+                0.9877866506576538
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 8,
+          "policy": {
+            "mean_effective_actions": 40.92775339250019,
+            "mean_entropy": 3.5557416218824915,
+            "mean_entropy_over_legal_uniform": 0.9969537361762985,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.04873185364570684
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 3.284949083874316,
+            "first_pc_variance_fraction": 0.5459430222999753,
+            "observations": 256,
+            "rms_input_variation": 0.0018288495095776442,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0007539326297386805,
+              0.0012124251613497372,
+              0.0017349350533685825,
+              0.002351892532017123,
+              0.003901688296228948
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.2605512672235584,
+            "first_pc_variance_fraction": 0.6474500214437076,
+            "observations": 256,
+            "rms_input_variation": 6.202551369177868e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.4568751470652276e-09,
+              8.432627806349555e-09,
+              1.2238467530093562e-07,
+              2.1051822131958687e-06,
+              0.00012605089918802463
+            ],
+            "varying_cells": 350
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9930800173873366,
+            "pairs": 58996
+          }
+        }
+      ],
+      "response_sha256": "94423abf6c3e354731fcd1eebf23e3958e534c1f110622500127d68f81802d33",
+      "weight_jitter_seed": 1
+    },
+    {
+      "correlation_sha256": "ab2cdd7341424e5bd1dad57f7669d14dc9e79503f5304fe4c59419d413eed561",
+      "direct_input_cells": 4107,
+      "log_weight_jitter_std": 0.1,
+      "model_config": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "seed": 1,
+        "steps": 8,
+        "threads": 24
+      },
+      "name": "overlay-visual-only-j2",
+      "parameter_sha256": "ffc4b4ec30df77226ab82b0722695aa697ac89c596306f7837b94e00f2cbf690",
+      "records": [
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.03325266018509865,
+              "pairs": 4776,
+              "positive_over_point5_fraction": 0.2870603015075377,
+              "quantiles": [
+                -0.9467325210571289,
+                -0.7212326526641846,
+                0.06865387409925461,
+                0.7801622748374939,
+                0.9993824362754822
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.016643576323986053,
+              "pairs": 1329,
+              "positive_over_point5_fraction": 0.2708803611738149,
+              "quantiles": [
+                -0.9510926604270935,
+                -0.7380779981613159,
+                -0.006171327084302902,
+                0.8161175489425659,
+                0.9997978210449219
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 1,
+              "varying_cells": 1
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 64,
+              "varying_cells": 110
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 0,
+              "varying_cells": 0
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.841529978860515,
+            "first_pc_variance_fraction": 0.3475549940051987,
+            "observations": 256,
+            "rms_input_variation": 1.4399439634881274e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              3.1707484801693134e-19,
+              5.310061617571644e-18,
+              5.470652743330814e-09,
+              1.8484037632611472e-07,
+              3.560364576201787e-05
+            ],
+            "varying_cells": 65
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.07043303549289703,
+              "pairs": 1674,
+              "positive_over_point5_fraction": 0.054958183990442055,
+              "quantiles": [
+                -0.7310724854469299,
+                -0.1643847644329071,
+                0.04263708181679249,
+                0.32335380315780643,
+                0.9956069588661194
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.07443463802337646,
+              "pairs": 406,
+              "positive_over_point5_fraction": 0.0812807881773399,
+              "quantiles": [
+                -0.5636950135231018,
+                -0.1611875742673874,
+                0.02461956348270178,
+                0.39475058019161224,
+                0.9851381182670593
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 4,
+          "policy": {
+            "mean_effective_actions": 40.94012663646291,
+            "mean_entropy": 3.556040370098458,
+            "mean_entropy_over_legal_uniform": 0.9970405261462327,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.048555847682326105
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 2.656872461573165,
+            "first_pc_variance_fraction": 0.609614135029281,
+            "observations": 256,
+            "rms_input_variation": 0.0016470337782696358,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.00060089647428953,
+              0.001102201258702024,
+              0.0015893355954720956,
+              0.0021001734999982116,
+              0.0034282890378863544
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.839307276211505,
+            "first_pc_variance_fraction": 0.5589276612759148,
+            "observations": 256,
+            "rms_input_variation": 2.042916043412197e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              8.669427163091143e-09,
+              3.222835425500961e-07,
+              4.406380938764276e-05
+            ],
+            "varying_cells": 111
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9919979413268251,
+            "pairs": 5886
+          }
+        },
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.014721019193530083,
+              "pairs": 55404,
+              "positive_over_point5_fraction": 0.31423723918850627,
+              "quantiles": [
+                -0.9817235469818115,
+                -0.7609870970249176,
+                0.0049744052812457085,
+                0.7845115363597872,
+                0.9983646273612976
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.052698250859975815,
+              "pairs": 8857,
+              "positive_over_point5_fraction": 0.353844416845433,
+              "quantiles": [
+                -0.9677861928939819,
+                -0.7564778923988342,
+                0.10711134225130081,
+                0.8164157032966614,
+                0.9991022944450378
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 8,
+              "varying_cells": 13
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 226,
+              "varying_cells": 337
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 1,
+              "varying_cells": 9
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 4.857630649052278,
+            "first_pc_variance_fraction": 0.34999239555611905,
+            "observations": 256,
+            "rms_input_variation": 4.0425978742288655e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.6356195928590789e-09,
+              5.199511322220034e-09,
+              7.296643293483147e-08,
+              1.0998571427433316e-06,
+              7.979993207500814e-05
+            ],
+            "varying_cells": 235
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.06939074397087097,
+              "pairs": 23083,
+              "positive_over_point5_fraction": 0.05207295412208118,
+              "quantiles": [
+                -0.8045003414154053,
+                -0.21785277426242827,
+                0.053059171885252,
+                0.37637163996696454,
+                0.9968075156211853
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.09966007620096207,
+              "pairs": 4412,
+              "positive_over_point5_fraction": 0.0972348141432457,
+              "quantiles": [
+                -0.7106525301933289,
+                -0.23805859982967376,
+                0.07332591339945793,
+                0.48900793492794037,
+                0.9894416332244873
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 8,
+          "policy": {
+            "mean_effective_actions": 40.92776485912943,
+            "mean_entropy": 3.555742074400332,
+            "mean_entropy_over_legal_uniform": 0.9969538984466364,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.048727686817778594
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 3.3011131522722876,
+            "first_pc_variance_fraction": 0.5445818174493989,
+            "observations": 256,
+            "rms_input_variation": 0.001826954038223332,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0007048384442311599,
+              0.0012139014573779717,
+              0.0017333861287359665,
+              0.0023502942605574924,
+              0.003909928086107754
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.2979722784872525,
+            "first_pc_variance_fraction": 0.6398215708031131,
+            "observations": 256,
+            "rms_input_variation": 6.219322039579272e-06,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              1.898760413139638e-09,
+              8.482756776194686e-09,
+              1.2363597148975928e-07,
+              2.044683990483974e-06,
+              0.00013150696865869686
+            ],
+            "varying_cells": 359
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.9927527049864501,
+            "pairs": 59340
+          }
+        }
+      ],
+      "response_sha256": "4fa8478b4e16a7e23d4fe71b7608ba11ae69f42eab8a4ce6c7457591b4dfa0e9",
+      "weight_jitter_seed": 2
+    },
+    {
+      "checkpoint": "/dev/shm/flygo/runs/tpu-confirm-v0-fly-s1-learner/checkpoints/step-00000512.npz",
+      "checkpoint_sha256": "333ad7f216f4cc08ffad11d1a8822d0f5aa28cde60c2946a1572b0782ef537bb",
+      "correlation_sha256": "a648b46b75bc3a58266b62c4d72d007269edbcf2898ec92e226f4cf1aa59f6f2",
+      "model_config": {
+        "actions": 82,
+        "features": 972,
+        "groups": 656,
+        "rate_softness": 0.0,
+        "readout_mean_scale": 1.0,
+        "seed": 1,
+        "steps": 8,
+        "threads": 24
+      },
+      "name": "trained",
+      "parameter_sha256": "537aa28f61cc83f18ed77cb40c6800b59662433b27a6a8ca6a2ff02c5661db49",
+      "records": [
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.046229977160692215,
+              "pairs": 9205,
+              "positive_over_point5_fraction": 0.055404671374253124,
+              "quantiles": [
+                -0.8382472991943359,
+                -0.19989220201969146,
+                -0.013726060278713703,
+                0.38514397740364076,
+                0.9358019828796387
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.12050437182188034,
+              "pairs": 948,
+              "positive_over_point5_fraction": 0.11814345991561181,
+              "quantiles": [
+                -0.7669827342033386,
+                -0.16980303823947904,
+                0.06127304770052433,
+                0.5500190258026124,
+                0.961112916469574
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 1,
+              "varying_cells": 1
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 121,
+              "varying_cells": 121
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 21,
+              "varying_cells": 21
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 3.9091778707966656,
+            "first_pc_variance_fraction": 0.464332300766463,
+            "observations": 256,
+            "rms_input_variation": 0.019292008453513115,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5880858748157665
+            ],
+            "varying_cells": 143
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.032646503299474716,
+              "pairs": 9205,
+              "positive_over_point5_fraction": 0.016621401412275937,
+              "quantiles": [
+                -0.6150780320167542,
+                -0.09128113985061645,
+                0.005175014492124319,
+                0.1767282992601395,
+                0.9138449430465698
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.090631864964962,
+              "pairs": 948,
+              "positive_over_point5_fraction": 0.05907172995780591,
+              "quantiles": [
+                -0.3051337003707886,
+                -0.08716878443956375,
+                0.03310047648847103,
+                0.3519962906837464,
+                0.9690731763839722
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 4,
+          "policy": {
+            "mean_effective_actions": 25.52515636441189,
+            "mean_entropy": 3.137290551621067,
+            "mean_entropy_over_legal_uniform": 0.8833641996984015,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.13960853654118532
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 5.644280673981606,
+            "first_pc_variance_fraction": 0.39226796208774745,
+            "observations": 256,
+            "rms_input_variation": 0.05486171398658047,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0032603769480868015,
+              0.021306213858649038,
+              0.09136239470426966,
+              0.2359508784198537
+            ],
+            "varying_cells": 654
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 2.289647597281511,
+            "first_pc_variance_fraction": 0.6486700974311235,
+            "observations": 256,
+            "rms_input_variation": 0.027399607399632153,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.9333320637426333
+            ],
+            "varying_cells": 143
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.8615817800847011,
+            "pairs": 8778
+          }
+        },
+        {
+          "annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.08280758559703827,
+              "pairs": 75213,
+              "positive_over_point5_fraction": 0.08981160171778815,
+              "quantiles": [
+                -0.9874122142791748,
+                -0.15814894437789911,
+                -0.005923970602452755,
+                0.47592570185661326,
+                1.0
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.16081035137176514,
+              "pairs": 5388,
+              "positive_over_point5_fraction": 0.16109873793615442,
+              "quantiles": [
+                -0.9374962449073792,
+                -0.1316881537437439,
+                0.06158509664237499,
+                0.6570055902004243,
+                1.0
+              ]
+            }
+          },
+          "by_superclass": {
+            "cb_motor": {
+              "cells": 107,
+              "conditioned_varying_cells": 9,
+              "varying_cells": 9
+            },
+            "descending_neuron": {
+              "cells": 1314,
+              "conditioned_varying_cells": 326,
+              "varying_cells": 326
+            },
+            "vnc_motor": {
+              "cells": 708,
+              "conditioned_varying_cells": 67,
+              "varying_cells": 67
+            }
+          },
+          "conditioned": {
+            "cells": 2129,
+            "covariance_participation_rank": 1.3510950740144188,
+            "first_pc_variance_fraction": 0.8550156469735426,
+            "observations": 256,
+            "rms_input_variation": 0.27006436555861735,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              0.0,
+              0.014437201856236643,
+              11.39469948934263
+            ],
+            "varying_cells": 402
+          },
+          "conditioned_annotation_pairs": {
+            "between_annotations": {
+              "mean": 0.0529426634311676,
+              "pairs": 75213,
+              "positive_over_point5_fraction": 0.03919535186736336,
+              "quantiles": [
+                -0.9767290353775024,
+                -0.09454837888479233,
+                0.006378933321684599,
+                0.2429935067892075,
+                1.0
+              ]
+            },
+            "within_annotation": {
+              "mean": 0.13050438463687897,
+              "pairs": 5388,
+              "positive_over_point5_fraction": 0.1048626577579807,
+              "quantiles": [
+                -0.8944444060325623,
+                -0.08099937587976455,
+                0.04692002385854721,
+                0.518476688861847,
+                1.0
+              ]
+            }
+          },
+          "nuisance_rank": 7,
+          "passes": 8,
+          "policy": {
+            "mean_effective_actions": 3.094193637625293,
+            "mean_entropy": 0.8711506795033059,
+            "mean_entropy_over_legal_uniform": 0.26535702375690806,
+            "mean_legal_actions": 41.36328125,
+            "mean_max_probability": 0.6933224452666353
+          },
+          "pooled": {
+            "cells": 656,
+            "covariance_participation_rank": 2.666420883742954,
+            "first_pc_variance_fraction": 0.585977952742499,
+            "observations": 256,
+            "rms_input_variation": 0.44702435652249306,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0005901410979415219,
+              0.0166808401178582,
+              0.1075024965192137,
+              0.4932872894874132,
+              4.947350166883914
+            ],
+            "varying_cells": 656
+          },
+          "raw": {
+            "cells": 2129,
+            "covariance_participation_rank": 1.290177220795242,
+            "first_pc_variance_fraction": 0.8763763265469936,
+            "observations": 256,
+            "rms_input_variation": 0.39821001481126755,
+            "sample_rank_ceiling": 255,
+            "std_floor": 1e-06,
+            "std_quantiles": [
+              0.0,
+              0.0,
+              0.0,
+              0.018044009167341536,
+              16.774704035156084
+            ],
+            "varying_cells": 402
+          },
+          "split_half_raw_agreement": {
+            "coefficient_correlation": 0.8924638262572165,
+            "pairs": 67161
+          }
+        }
+      ],
+      "response_sha256": "043449839ce77913433504100e183bbdb8e73612ddbfbe6aec807a9fc9a1a7a7",
+      "trained_passes": 4,
+      "training_contract": {
+        "batch_size": 2048,
+        "clip": 1.0,
+        "rate": 0.01,
+        "rate_scales": {}
+      }
+    }
+  ],
+  "cpus": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+  ],
+  "fly_interface_sha256": "162d63f277d4f1c88bebbd224e447e2dfca016a34d3118304780e171c218939d",
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "interpretation": "Descriptive model responses, not physiological recordings or a learning comparison. No topology changes, optimizer updates, or final-test selection. Absolute response amplitudes accompany correlations. Jitter preserves signs and destination incoming mass; input and head seed stay fixed. Existing overlays retain random feature channels and unqualified photoreceptor assignments. Do not freeze action groups from these pilots before biological input alignment.",
+  "native_sha256": "bfb00c23f5c7cdf66b9c42ff5c4bf1d86bd2f2051ff261735468cf54c3a150c3",
+  "overlay_sha256": "63a94a6d089fb94eb92a826a7053ce9c76fa4090a95816784bfd0134568aa5a8",
+  "probes": {
+    "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+    "nuisance_columns": [
+      "own_stone_fraction",
+      "opponent_stone_fraction",
+      "black_to_play",
+      "consecutive_passes_over_2",
+      "legal_point_fraction",
+      "ply_over_324"
+    ],
+    "opening_families": [
+      "c5afcb065c8e76a283e21880151806a3834c5d72dbb443002ee8a4ec7e9d4fd3",
+      "df4f9c3f817b712f45d2775c3b65bd96ab5574ddd3d31a99c143daf63bbda6c7",
+      "39ca258814dd7bc56bb718c2fdb31a175d5b764c750b186fad5783e81c8ef26a",
+      "1b937019125218741c08a97c6666c64bc073d930199e52b5dcd468fa1a2878d0",
+      "abb15be0b3b17d072e67c1f47b39ea1ce310cf7a71913ee8f2cd001f5a8efa5b",
+      "7426e65c8cc3008d38257195842c94edd05b4fe5b1179f1c5b59cf268870bf81",
+      "3fbf925bedfa056b955b3bdeb4002ea395ee5dcfd06b5539b13aadcbadbd2e38",
+      "4aea4becb48090554424c982baf8f42efb542a89e6268d170646a282460e3a22",
+      "d0baacc77e5dccb939b18765d29b7ef9eb619cefc4e4d45c07980b1611b005c6",
+      "d9fd2e61bfd9cfe1a0a6e95b6e99847ad4b1b99c3c29a6495d3b9d849d5d3db7",
+      "a9f71e99f747fef65796ad80f16f2ddb83d65c4d956b43b0c4e74d3bea8bd118",
+      "5856e4164b68f8b7e2916a7500eae97d7d8eed7954818f631e0780cb1c6f2767",
+      "6bfcb24a75cc488f216b48cc7dd9f6465649bd8327e52463d0074bf37472f57d",
+      "07899370d8a091bd8b911e8258038cf17358c8dbf167ceb0afe368e760e473b7",
+      "748d7c91b0b8200ca9925d53e17e34696358a0f001da38fdd5c6efbd95252383",
+      "88a06f7102655c9fac0cb2611688104fcff38dcd24ecf2bb0c582ca7cc5dec1d",
+      "bf8db093eb4fca3a727eeb23d880c36dc5c1c8c2ef8ff1dcefb1bec8fc79aa8f",
+      "37751e52fb1826d8ae048c28d22a0d2c46ed949f3088bad9f2f2fa8383685abb",
+      "deaf7a0f614212d70edf5ededf437b7ef5f61135f55ea061a292453f489ef52f",
+      "c8a5e43811c3e26fc8055421f09676805ac8c48a2374a37eeffffa43c853c6db",
+      "b59e72c6a20a9d7b04e1d628c762a5c0203ecb6891172d8196dad3e5136e8563",
+      "66160d222c07243cce76e32051d9ca3870518f7c60ae93168b0f1164c715b534",
+      "125db36f3dce729f5d59377e0ba608e1d24f777e7075ce88ebddab7bec5ffd0b",
+      "0db3ab90b70c363fd89d7b5fe92c50803592a0a2dd56d9cb291c23c0a7060b81",
+      "cbe62d5d641bcb137ff252ea0e88795c5819273e6ee9633ef7e856a26ffafbb3",
+      "c9e7a3e36b9669c623baafc7edf61aeabdaca09c9f923f9c7646fe827d984837",
+      "e46ea18d71b6626a6b80491334666c965f3dad41e80e160b96ef8292dc26c5cf",
+      "1507e4ca38b441bc5e1d67789fd669b4e6da46a75f90b51aa44aedd084fec945",
+      "4230629ffd56e620539f798b97b2a36bd09dbff7d58685b7191a539737970505",
+      "99d3b0e5d9a4611117c6e277856de23f0fb192f83d116ac93e355ebd1ede99d3",
+      "e189d9ea640fd09e9891417922c8e242d553ba34e0494384252ff7e07438ba6a",
+      "a28898fbf546fd5dea46fc9d8c23f75070babbb2cf4eccc9ec75ae037bf356d9",
+      "e5560e9989e9968b2c6328c708181d9c88ce7a7174741e8cf263d19916132571",
+      "6ee84911461d73b1f74dca1838b29a4adf3ba5eb8afd0248a45250f32c80cc3a",
+      "6f62b30c06c707f169e999a1fbfe082f2d5a3f041079992e4f5a62bfc0bbdb6e",
+      "f02aa8b652eb3d6387a9431d27b69a5163e0175fec01954d720080a9acb7ad70",
+      "77bd8230bedf97b7de33fbd2d01b83874e2d422abd5f8e5b8f53ac223b26d704",
+      "3b3f17e3df4aca764f4285b8f09d20ac23c2d6132d48f8c77748147a8736879b",
+      "676054e17baf22e44744374992de32b08c261f12d499858f6895d9763a2cd936",
+      "f4fe3246d4f7b39c928a6dcf7089bf340a4e51b4c69fad648d2143eadcfb3d16",
+      "b80437082a667c92b3c5fb9ca8dea9bc52a369a5d5d63c7d1f3e01d32ce693ea",
+      "d1e5c529e2d57c8c1d11ef43e88f82662971d1010dc181791d6297d8f32c47a5",
+      "f86fb2c62f77f4f24406fb26e7fffaf47c86a4dc5f7222af50bcac5d6f4cacfd",
+      "7fcc9d820388c6022261b5d3a679e651a8578220154f22a1f314f3778f583335",
+      "1126d6d2caeba9a5d9f70d49c7ab19a85007ce56fe1fe59bea88cc89990162d4",
+      "3551875e9f53d52629701c79910a3ace6266c06586317b8a8b50bb21bb4a36b5",
+      "4d4c414ca53395ed585ed05d90f52386ce2ffe03ee08187b8e1813132d747f53",
+      "0d0d01b79da9c440957d4b784fe0618014d8b1c031474b878dd8901d2d6d49d0",
+      "bd22352f2c6703ef704fcb62dd5bf9d4ba58f05c8a09c22e6b4b88f51f8c9944",
+      "3c8cf39164873f66028536ba051d6e60620fa9cadae43b969c8696a4a937821c",
+      "9b5e77e343ca9fa634a484d424af751e234ee734c7545c06a610d0ef85f6a2db",
+      "8d2b8627f362fdf315fc82b8c3f6168ebc7432db713e8df81ce048a3fd414f62",
+      "e9c58a8a1c2dbc7e4218a6e01141e54b6869937c95f7e89108e3c2ffcb87af74",
+      "cb80f29f9683abf9332066bb87b0accae8fa234d39d3ac9d8b0becd935d43839",
+      "92476f41c5306dbecf3a81a604208e5628428a720e70e385538b2d27b96a9f2d",
+      "ede8815c588dd79ab6f93218c811739210da20a8af408b9fefb577c427d37a14",
+      "9d78e8974fe0aca3ed9d95e7a07c9cca5fb2c6bca5b52be770a6b2dddc10ef6e",
+      "893c4333b3bc2aeba1140cc0a9c074a810cabcb6c42835bb7803363ed0f23235",
+      "93d8607c95bbd69759efe438fa09ae0598eefeb68a8bc88e4cff9823320dbe96",
+      "11b5900a19423e122fcdd4e5a91b8a0221196abdf6bee869596025eb15b5ec5d",
+      "2c76ed283edea7a8cecdc9cc0af70312a1e9186aa9bb2fd1212525ace1c78d3c",
+      "9f415ff06f2475c037d491001dd9d75cb5d6d9a7e5f966a7e851cec38f63ff67",
+      "8ff63712ab79159b77a11f708608fbe5b048fd56b701908cf4b29065eca66e11",
+      "8b9899e32a6bf4d3b7ce48859976498871517fed685ab4430c08b41f18875c9f",
+      "8c95bb2c1a08199cb080416b0ca0225204cdc2acc3e2923c2d6593def09ddd66",
+      "ca92edc66e5146d9e73578c05b5995f0f6c67b9b0e011e08de3704901ce494ce",
+      "6e16fa8f26c4df3c2efbcd28835d387e88585ac4d48bee0eb8eeb4fb8f91e020",
+      "3984a73d9459c11646e1b7c264e40af2885ed81574a4a2426d9523ae7c76d0ce",
+      "92d0f57481f4231d2b384f9a7eeb124a2a045cb41f206d33f92f59df2f08c471",
+      "2fffc4ed27a79ed9542cb8a45d1c8d1187a3d6a1a01bc035cb8a44fcf93f8408",
+      "f51d537f9aa545bef7fe442560e69b84e20f0b881649a99dc3be1f8ea450da91",
+      "43cc319628973caa649e5e34835c1f9d804078db6c0cebe214555634497d28f5",
+      "df391ac2eca4156d8539811be39a7eed11647a60c341fe02af40bf5d8cccd605",
+      "86a9b441e42a5b3eaa80747766e759bb4551fa2d03d950c86fc1c0f957dee928",
+      "15588704d6512f9f3e24aaa0867d9a6b44f16dff0628180c3d09cf047abf3709",
+      "2c5c227c303358900911e0c708c0741d904db4ff03d725c7d2a04c2e9cbe5e4a",
+      "f1e18f5fe6e87c8937185d7b860228621262794210b1001a0b2ff27ff4863073",
+      "e712424e5e5f11dcbbe15d3c49b5bd9c680bbdc233b70efe8665519cbe24739c",
+      "59351e55eca089e6d3b97fff56dd7f199fae8976e84f7070c9a9546f177207e3",
+      "966b366ea30a159d2685f2c29f47644f786832dd955981097bbb2911ed1a74d4",
+      "12b2dea915dab9f98921773472b3b2f2e3ae90da2fe0518003df499fdf24c39b",
+      "d41877858241cf5cf2de78875a2fdceacdeedaa326f13d839128925d8147d712",
+      "80f08f163a2bc419bf74df1e824463bcb5db1d77b41b608d792f01be004dcac3",
+      "12ea41a9901ab8abbf11512422cf0ee4c301e933bf04c78128b71234ce318321",
+      "f2143ffff5bf64a7d6caa4aed14e603958e04b8acb6734fd2ea292e840293278",
+      "705d4ee6d673dc5b1d7b28b517649fdd879fd3a50b91a9e0fd97818d45380ec1",
+      "c31bbbcc12c1df99f3144c8a4c7cbf7120d2a349023914bf174fea7fc81cc5bf",
+      "7f133eb1cd15451e31742b83c699724a716e452ec795ee000087fec5b2da55bd",
+      "2fbbdf5071b44df80ccb2f6280e7407519cfdefc7927f574451506d27400b101",
+      "27dba1a9834656da23984e35077e70e61d01f1654af1dee477707c2ec5a28b78",
+      "2f3d560376a2a4be62ebe1741f24bb2a40d24a7e626691d4b3157c789a0e86d8",
+      "b57751cb116fa53df38526bb58512e230e1676bab6b0429754418c3902565f6a",
+      "8550bc227b5e08a78af78728059b98c903d5e35110d66a9dd8c5b822a845a9ef",
+      "79444b52cc6435155749ee60048e63a31310ad918fb0567bfef42812411b269c",
+      "c34ead9c10c0b62b027a3ee9066d5c9bea99b0d8cd8aa2dbe8f6e0b185f7baa2",
+      "e019e82cbcbf8b7806106c2430f4f3119aa8f4d7a12faca1ff49c33ecdeafb31",
+      "cd29878f810232faed337c82c6efc7dfe22c51e70e21f3e009f2eef15c6cb9a5",
+      "7fc83ac41098195ded069f836d5b17b469fe3d8a6fdc3f6fabde4268b67ae6fe",
+      "1bcf874ad03c32aaa6c93d572f44cfbe316d005b35f680ab4c144856f3a401fd",
+      "8f7b85d5ed0cb1d6497e0041623d745d9f9e3afb8adfc2b8aeff86f8c2ac50cc",
+      "36a1b5911d1d5b70379009c1ec1ac97922bff24dc4e1294e4a8347e2f67c1853",
+      "02815d6b4183451aed1c1791b55017db30cf46d920bcaeda20a323aa763cbefc",
+      "a88ff24ead6a84f66acb0c6c566100a56e6669db59fef919f6560c42c65cda36",
+      "144598dc35cb4df06b3295b3efd90f9a5fb36aaa6046520fc0580e679ebce023",
+      "945e0fcc7a44a954faab3d27e13823246418b978d447b1f9a86204ad2d32ce59",
+      "9674a78543ef6852c684d60ca4d95e05c5317652e1018423b2c5fb77b1adf9bc",
+      "f37bbe787cf97d6d6a42c6f04223be90b36dec2d27e9d8e64af03b0d7b3c5e7c",
+      "13246e6758c42c052a79d2278c04e3e8bd781fd98a0e009d25368966cf64c24d",
+      "bf8a73c10fc111ce7966cfa6c502d0adf71fef44489a34be0820fb1770353d65",
+      "8896bd639a49c8ec3cee5d5a76dd0c190f1b079f1aef60a606c8e4c15f1ebb79",
+      "73639268a1391861ad9c34e7a0876a23757574d5049b3361a607a6380dd517c5",
+      "68ced1662ae71d9ffbf40b078e0bec30d63fb6f5a0acd12bcda464a8881c5ed8",
+      "261f0bb946975664e7d14235488b25d00b36e68a62b2ea46e49fd711f795bd44",
+      "0ccd7b2385f2910b86f240150b67117cfe8417ec5bfdf8ef23cafe6b8f272ce9",
+      "af3a70b619dc9dfbc1791b39f309dd8497fc4c28994e0da484ffebcd6c5eb5a7",
+      "8fcf8d8b65c5cd064fb6ed0c0d46fda9db089bcf53ff4e325b078fda3d78631b",
+      "70b87fc488b87baf345d5702746521f33568bd9b11a27f3e273d3b328828cbde",
+      "a6b2930ee5be59a19bbcaccca89abbc465b13b3c2e093eb6c21c22d8924ce2ef",
+      "8eb8f453b0da6ba3d7c39f4e637b362166a4b2e39ae086f3b81203def8bd04ca",
+      "5a03fd04507185e15635aef694decf89bc854afca687da9e2909d378be5ff92a",
+      "69db983ca97da2632cfaad11f33a9ad3214b005351dee58103b3106649f2a3c6",
+      "0b20c05c8435e5ba284b07cccf0fbf36fd214a270042e74866e4ed3af63ae7a4",
+      "9c35bb000855ef589a9b633b71a11f75c4be12d50597075116f2e729f006b7e1",
+      "de29a65a0418157073cddeed19e02d1a6f4d5092f55d68aff9652d7a34bc38f3",
+      "9994bbdda84957f1feff614ccef4fcbc66d151cc1b73aa559b7fb7cc87e2552c",
+      "77dc95098d4f9697cf56770244601b785910cf33d74e9acf96c421d3650b0477",
+      "69f91b1405e721e94646b9f799294105ec2df392da8f5ed8e9759a273a40e7dc",
+      "46cd1aa658ebd2863fb81d77d2ded567dc31310aa0b7f7222a96a874c9d3d81f",
+      "ae8d47b2b11906238d102e531213b7e438f72f85c28582ebff62100b7459d28f",
+      "95678fbb21edb1ad190f7e95672438344a7b8e8ec427c131c7a72ab01a10e323",
+      "8cbf9a03d972a9626b4d3f252b9226207e3db23cb2d17f99381bcfedf1e73761",
+      "60529b31fd571a5ddbd265948dee6971eff653716696850e96c9fc4b1ca5c161",
+      "3f990c0560511810c2136764ed4c72bc519b5522913be318bbf18384237d9eec",
+      "d6e65fa6f361490d9c84a2dcc2f1f067b8e6679904a3b57b5daf0accf8e5cd87",
+      "76eaabf5950ecacf20fdbaa42a7454265df305caf5102c7627868f1b99abf86e",
+      "634c1e194f36af86f25423cb0df5dc34eb42d841f064a9c527652cd1b5ab3049",
+      "90b2bf4cd45f7e5df985613aaeba7230cf6575efe32ab0db75f54c12d672038c",
+      "4f2233e40f1935a145156e0532960bce5a448e27e492ca9d215e444bbe48f5de",
+      "af771a9632458d35bdcffadd969dbc5c73df4755d4ad188c234582287dfbcf5f",
+      "1f51c9f3801a647f130f535bdc045e3bae940227aeb5b8099e3458b03f657aa8",
+      "19964a1381d63d4a0aaa58ea6b920f8095736f55f639cc5fe0595023701a98e8",
+      "d09dcadb72714197933e0c59c1d18237a0a0d42ead27f04c374ee3db55e1a243",
+      "e7442b205ef885bd0fa15dceede3e05708c41e289e961a4bed41ddff8151338c",
+      "b561338febbd7eb0e4d3b836c5761f74ec54871599f33daaf9ef24b0f8b8c488",
+      "8b715010a78288d9b3530d5d85f9e85ceb083c226f87ebef481ced2f83155dcf",
+      "9f437c959e4f791bb12b2b4589f9d81a4bd67b2b07efd009ec3d957a222d08e4",
+      "17153a6b62cb80d3828d3677c4c2582a34e99e2234a3c65e89d077dd170b5246",
+      "b125acb50ca2116d7d366bbf1fb44d69e2e0540cf58a55efcfbefbc28cc6d942",
+      "e95dd6cc7c4cea708328efde9ce7021f880f6d2fa35b297c6b24a2dd0ebf7913",
+      "209efa30d376dc6a1f74be1006c5c7f67a244e508f5021536e465317828964f9",
+      "7bed88d2aa788ccd3002ee74e44b14ef829c99e22e702e6230b5d486108d00ef",
+      "0c5683cc131f3715ab4e6705ed366eb13c8cec1c81559788ec1cb9e22eeffe62",
+      "b74cc60884e44a7671600079a6a10fcf04f4c8a811e4967a256753915fcf0935",
+      "09d3f7a65bd2b930df4a705a6513b115bd9f2c30d1d3e85b627bed29aa21281c",
+      "1f098db37d9680422f5c88e54690d7d0c7f94385bf4ee25ca3dd469938b87833",
+      "1aa1998796c17a24f2152f22f4e03448afae08e9dc1ba0fad2e88dedc0bb4cc0",
+      "b65f244c8b7a2bb4e77db3039bb069b4fb97c88dc73becd52344edb1abfe8f57",
+      "da721dee79d1f4d447a1c1145ea9e903da722b672aa94fa945afc65cbb9bf334",
+      "d8e36cc86d45a4197657b1737c4aee8f587d739350de1b56680f6424d1f52860",
+      "e7f451d0ded670777b3cff01ffd6e7041b648c1630b1050d6b3ab808567f132f",
+      "c5326e87aedd9d508bc8d54728445a525e39d993256faf2132f08c91c90d4aa7",
+      "dfaa9460d574f2239d806046a73ee59ae779235747b9cf9c32820d286f6e1b38",
+      "c21f815024ef81ee77121668e6f2b5644a4fe80dace5b9fab3549f6472899b49",
+      "8611b52d6dafd28536211eec58053006cb7d776ed6735021b80841bae0a9cab4",
+      "582545bc964e7c5247fc9b92a6fd860ed686c9c42da71940cc99be18b2f766b6",
+      "696ec15ebaa7a763728be90b829a0ca743634ca6eb03a0623fed165e1d38b3bb",
+      "6c423e9bfde8bc099cdcef67d01ea92d904a3ec8e299f7a397e128069cb1a04f",
+      "b5bc37ee9e502b56d65ec027835daf647a975aeaf2cd8be85d01b27bbdee2014",
+      "602e6e00c53e708a67c083447b9ad83a3dd8ae49556b49ebf1d338af5054550f",
+      "9e366412953bdd3f053c5c4dd0116fc2f2289213d50aab81d36346cc4a41a093",
+      "294b193ce525e0b8b1c6d82e793d9dff41dc159441522b053d0bf539a57850ab",
+      "0bc2333890416c81ce96ab238f54e5d86e4e891255454943af6fe1ee9096e95a",
+      "e55ce4b8744e59e007ca8defcbc1b8cac99c44882c74595e351d46cb3e76f03b",
+      "e670c59369797497af3c6c77f592eb5b8c666a6f19c129a9b8f9cf2aca8b7647",
+      "aac288e3db0e53de6b4f7fac515570d3079c4467c88fb9d5c7a57951346fdc26",
+      "60f8b619a7fddaa578a388bc5af9c77a8bd4389ea4fe749a23e873b114cb75dd",
+      "cd0ab9a975e4096c499f04d1060f69026302875311d61050301239a09915c5ca",
+      "6d2c3db2cdf0a34a8afc6a7607a4090b58364e15742a5bdfba32e5872039232b",
+      "762ffb7694137071d3cff317c25eaf5a59c6ea87b37d2a0e202751d50ab4312a",
+      "26dcb41fb34f4ba99f44173eb1619344b99060d8dd22ba55608cfee4897ffacf",
+      "42da4f911263239af5af4a4f03e223d1c1163630957632a2c1e72e636ab561a7",
+      "54d676a3e642ff36a3e3cc9e73040b7e1a3f1a59a10c5ef4482e4f8d01f7c4bf",
+      "7efdb1bcc652663f90b91c65b9a37b1137eeb46dd25ad9f7ccdc522be6c58e6b",
+      "d6946a8f9b69fcd0782df8c3283a429799e3c064e37e78cf95e43553f7167854",
+      "24cf2dca23e3dc881bf6eb7c41fb8d53ea9e418c1073afb9459e4c182d17b80d",
+      "617388fcd8142ded67f3a73dbdc13af78a9c38ec13d86e5275101a2dd2095231",
+      "622dcbb1e98696984c011c1513983bace61c5265e3919c818e765e00343db473",
+      "c634968b54b1569c69f597da7f020d117d5f67d6bf5fd71dbb61c825a30217bf",
+      "7c7290b268e488ccf6cfe68baa9793d89697a66d095d40f319351f4c6b253f3c",
+      "767e15997c61724d10bf635961730307faa0c6f891791f6504eb1838778ff6c8",
+      "8c73c1b6206fb0a847d9c841140f2e3919e0819fd14ea6b65df00ac01797d63a",
+      "edeef924cbbbabc0b3f7d3e9f4bb550ad0cc434c57cc00834e8fa70c19cf7377",
+      "e0509b2dc5663f95129e4807f2ee55688aca9c9b6b40e6abce3d0ceab1aeac4a",
+      "78d2288b67cc3f6101973e1913ed449ebbb499476f2a76ea99484222756e38e9",
+      "1694bedc7e70d360b8e1c222c96c132fbbd9a16b7b8ff995deef68b8ee3a4194",
+      "fda43b23c6e71e4b1d1ea09766fdab347f5682632c09221570c6aa60ea1b93e1",
+      "c75a54f4096985a96f26d7c29d253f22b0826c00179f082f7d043db1229e77e3",
+      "dfe007c2460110a6beb7f9538231e03f497bdd1998b2de9e0ab03b8651f39be5",
+      "17ad152849fdefd0e821a907cce9c081c73abf19dbd23b61277d96ab7a4a4489",
+      "af052cd5872f9fb9f6c72501f186f0283669be0fdb387f78c2ea38e3e6db8457",
+      "ad5acbab61c51c959fa58c6bddb9fa3b53de22c4dd2cf71a712192f29c92e4be",
+      "009f291eb7110640515b1adbe70b19bba08550f5547d454658e68a9ba8ae158c",
+      "d541709c1530c8b5916dce961a5b192d33d45661fee99aa92aa884c1ad664dfd",
+      "ccb3e07ed9869d482f0a8dffd68603d4646aa5a2291f31c9673b69ec55f16392",
+      "60e7ad98d3bba5e3a988a62ba170c1894c031630e1613c5009eaebf41a8c53f6",
+      "1b334de6adf13d7442bdb39647f7e7d9028dc609f3a6d454928967a1ccd73d49",
+      "3d540a97b718b09cbc2b348e036e32b137577cd56603065568ec00550f222f87",
+      "fadc90a6a7bb77de01ec8e0eb41d1368406b807b468f8d8d0205df6883abde0f",
+      "0a0460b6219e33b1b0cf0630fbc01b995428e7f7295495be33286fb089ce2c4e",
+      "877654fe5792639b4a6f9214a364079c69d9b0a637016d4b2bbf12e58ce10d84",
+      "917d273ef3a3c4cabd5b88c3e1bdd68993258e2498b2507fdfb48383ce61ec1c",
+      "4bdcc11673ea45062e56df7f23697e4c7cd9acc0a03df8de43323769ca1ef2fd",
+      "49b08574ea5413d4784c4040bcf77de46fb0905127d0d399df4016e7fa680a4a",
+      "b7ab38f9af29975b140a27f899826c359086c260b0900a82b49695c581187242",
+      "4d59b0e33a1db2ddb1b2027ef876f8a8b842f45cc4ebb1305091517127b66d36",
+      "49864764575023c36f8bf4d9d66c29cc52b9f890b3609667d3d140e5f235bad7",
+      "ca382b08e637c8bbadf96c9cb0e266a242ca51292a03a2591c9538f4d0ac23f0",
+      "b2c031b81ea0efb4a73d711ef86071ac364612af1f8471889ffaf5a675c3a0fb",
+      "3678d6cb6d76230156a63887daef03cd5b705722f5e5132d6984d293a4a8c08a",
+      "2a6135c3659fba2f2f0bdb19e069961cb453f927a9168e515bbf942ddcbf600f",
+      "a3fde89a1b43a08c6688bed4f10555d730921e75c2d01de98a28db33a95c6ec0",
+      "919e622d18f7cb73960690efc9ed49db2f48d7637eb884a12cc6c30b40356830",
+      "51d2da000fe91e0802602d56a8d990f506af8e8bbd8c5cd6a39fd6abbfa4b6d0",
+      "1100a506daaf5edc80e1f059c2c304f2bb902a9de2980736354120726edb9335",
+      "20ef5c153d5caa0e7000c783fe9fd3498ba65d2abe89c7690cf887d0497f7904",
+      "07122d84f121785c2a303177f5f939292f894a562d633e2ebb595d6eec600dd8",
+      "bfb208fbaa466e27e5f55069c98d5323026ba67c4f2352fa1bfcaf9f2b6170ee",
+      "df5a0f93c3587b988c5c11e17c206325c45f8eb9fffebeda0a3b398397a02f55",
+      "49d46b2d1619e81bff97a2cfd1d37bba99f60113556768d31720e15172489a35",
+      "d93d0870f6906812f82ef21707542fdd971c887f830f2615cfbcd3e94e4d5650",
+      "7c18f7af728f9f6c83aa54ce2aebd7bca5db3b84025f65134fd6198403595c6e",
+      "22e6ad421fe6be33cc973c151990d85c76fe9e3f6ddde59a264d4ce06308828c",
+      "5404acd272d8d2f0fab758f43f9f34ba4a22272d5e52363e41760e2f3eaf2b1c",
+      "2a14286b857a5ca35a33e2c15eae632ef4af6b49c007c7cd43d7923c06146ff4",
+      "0cdcd2c5d5eee3875e9d8f78591899ba95781ec3580aba1a6cc3afd6d70af805",
+      "5c7e59add2563c713bc49b83b3f4f2f0d1ed320c54be7e0fa164d57ce34094b7",
+      "dae0a8a64509f2a659daf2a4aaf8a5a2e3db60aad1478e9e820a49591c7b8039",
+      "85073a2f8431b8f9cd082f668762412cf52929f2332e1771d8ea7dda05beab4f",
+      "a50d026628952875859475027b6c1814bf2d8bb9fdcc2f3ec9135d1f4ea9a1c7",
+      "e4aa0f8117e59c540bf3ccb26640b5cd1f97d6bb25b1ec8fc2ebe79bba6a2ab4",
+      "0027250a551fc291dc057b045bcd0c98fa007578620a681c52de8940a98bf430",
+      "02d7d1f896f166fa52a3d122804d24237b223e59814b03efce8c27bf67035f62",
+      "7b5599901b75cd9f1cf7baf7975c82ef25a389ceae0e9fec46fe7d81d8d9f7d1",
+      "8b3e2aafdb8ebca1daa0aaa1af9646ca4df29ccc862b7a2e638be4f36c6210d9",
+      "12af9d467bfe5ab23bb74b00b6da5a89243d276c1cee2650cf37b9d2017838a5",
+      "59fc825aeab999194304798fa30d88006d08085205ec27a7c8ad83d5058f5e38",
+      "b3fea061f2f0ea996f5cac5ef846e02cfcbe4acbf1ab7e660e1f9d98d8d1e944",
+      "fa7119ac3baf3212feb58bb057fd2f4bcfdad701c8cd122a083e14e6c2b7e023",
+      "580d07b9970c79729dc9edf0158383c93e6da2b019bb39bf7ccd357a1c986075",
+      "2ded8e3cc81a34c7bea5d2aa4909914b647c12d8448ff2436edc42ff7c57f629",
+      "2e33c8da79270cd4d00c76edb37466e7dc81a219f928c46a2c2ba7eef3cb070b",
+      "d03e7984b5d74bac4fbdaa5af63287087ba3cd7d7dde1761eacd5c32b42544ff",
+      "945ac01b43776b7478367ce07f9abd2f449cf1098be0951321fdc5506647db3f",
+      "fcdf7bd10da4f40400c9a2647afec89693b14495ad93ac76ddb166e224c995ce",
+      "1793b7ff951ed175bac2dd8ce3358276701807740e47d7147dc73094ad197b74",
+      "54ea480a91269f2d67f41537968ff1e94fed43944a4131494310cdda6a100939"
+    ],
+    "position_indices": [
+      511202,
+      302392,
+      104379,
+      340071,
+      526413,
+      109173,
+      230434,
+      67845,
+      644249,
+      954754,
+      149423,
+      180808,
+      534911,
+      568961,
+      884559,
+      312618,
+      358363,
+      977881,
+      601899,
+      614159,
+      970855,
+      123267,
+      752383,
+      127220,
+      290863,
+      684701,
+      24635,
+      945826,
+      272291,
+      125755,
+      63705,
+      338964,
+      530792,
+      672878,
+      788390,
+      950210,
+      606448,
+      117957,
+      57483,
+      849443,
+      975372,
+      970192,
+      639460,
+      754958,
+      987091,
+      379035,
+      931640,
+      604255,
+      81246,
+      744833,
+      335027,
+      503345,
+      580519,
+      153901,
+      792785,
+      986650,
+      563247,
+      551683,
+      784277,
+      618647,
+      817626,
+      683035,
+      231743,
+      573787,
+      244307,
+      403121,
+      186104,
+      171771,
+      797968,
+      563862,
+      284889,
+      470021,
+      772441,
+      691728,
+      460711,
+      116067,
+      826063,
+      368051,
+      623004,
+      854639,
+      708225,
+      40111,
+      506173,
+      953029,
+      639247,
+      386003,
+      355954,
+      712148,
+      501946,
+      721293,
+      293864,
+      253731,
+      670786,
+      831337,
+      789745,
+      74377,
+      153445,
+      472174,
+      967892,
+      327263,
+      61681,
+      146137,
+      610000,
+      544016,
+      26670,
+      202154,
+      862191,
+      852306,
+      615613,
+      319688,
+      663612,
+      791737,
+      534321,
+      44495,
+      589856,
+      899658,
+      292174,
+      172923,
+      176055,
+      840732,
+      598722,
+      384139,
+      65009,
+      926764,
+      426717,
+      189741,
+      777860,
+      830554,
+      208704,
+      578928,
+      596909,
+      330059,
+      793625,
+      242451,
+      56327,
+      775961,
+      112232,
+      795867,
+      676931,
+      118060,
+      660087,
+      189101,
+      610637,
+      50803,
+      293285,
+      638640,
+      94846,
+      810813,
+      466381,
+      535092,
+      706092,
+      481231,
+      216788,
+      484424,
+      408991,
+      530741,
+      729006,
+      933644,
+      561738,
+      418399,
+      869707,
+      864959,
+      325525,
+      218880,
+      964544,
+      616325,
+      343162,
+      379329,
+      319847,
+      317095,
+      647339,
+      445100,
+      805145,
+      251387,
+      956802,
+      276028,
+      991933,
+      499401,
+      666014,
+      334375,
+      128162,
+      554796,
+      155574,
+      183574,
+      16441,
+      251706,
+      457531,
+      231191,
+      366069,
+      852506,
+      74809,
+      591286,
+      574889,
+      356613,
+      881061,
+      374606,
+      351227,
+      820354,
+      611151,
+      462937,
+      452875,
+      285372,
+      539680,
+      453084,
+      157110,
+      532455,
+      598435,
+      918408,
+      126094,
+      540401,
+      503028,
+      543297,
+      957825,
+      898130,
+      828464,
+      617557,
+      675439,
+      367103,
+      673801,
+      398387,
+      219053,
+      771355,
+      956524,
+      42765,
+      574569,
+      684043,
+      418268,
+      977357,
+      323147,
+      295021,
+      392734,
+      864138,
+      147701,
+      348926,
+      983604,
+      409795,
+      528878,
+      964470,
+      915581,
+      892987,
+      978400,
+      316691,
+      865430,
+      861125,
+      463817,
+      12522,
+      341500,
+      484242,
+      723639,
+      222179,
+      940309,
+      420408,
+      160049,
+      175854,
+      533303,
+      495226
+    ],
+    "rule": "One unaugmented position per distinct training opening family; no target-based selection",
+    "seed": 918417
+  },
+  "probes_sha256": "f8e4efef2063576cc4ef032d82147c70c17db4c8c337baba6ecfda397ef01110",
+  "schema_version": 1,
+  "script_sha256": "de6aaa2bd8a9e87855aa6837b6316b783df2a161b8f813872e72fb18ddbd1e80",
+  "seconds": 42.89816665649414,
+  "status": "complete",
+  "weight_jitter_agreement": [
+    {
+      "conditioned": {
+        "coefficient_correlation": 0.9948636026437523,
+        "pairs": 26335
+      },
+      "raw": {
+        "coefficient_correlation": 0.998477008719034,
+        "pairs": 59340
+      },
+      "weight_jitter_seed": 1
+    },
+    {
+      "conditioned": {
+        "coefficient_correlation": 0.9952660170027345,
+        "pairs": 25200
+      },
+      "raw": {
+        "coefficient_correlation": 0.9982261218336433,
+        "pairs": 60726
+      },
+      "weight_jitter_seed": 2
+    }
+  ]
+}

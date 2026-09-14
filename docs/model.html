@@ -151,6 +151,35 @@
   <p class="source-note">Three-seed spatial attachment gives a small policy-loss improvement over its shuffle, with no resolved value benefit. The visual-system motivation comes from repeated retinotopic circuitry, as modeled by <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11525180/" target="_blank" rel="noopener noreferrer">Lappalainen et al., Nature 2024</a>. Our coordinate inference and Go attachment are explicit modeling choices. Read the equations in <a href="../RESEARCH.md">RESEARCH.md</a> and the deliberate next phase in the <a href="group-study.md">neuron-group study plan</a>.</p>
 </section>
 
+<section class="section" id="biological-interfaces" aria-labelledby="biological-interfaces-title">
+  <div class="section-title"><div><span class="eyebrow">Next phase / Biological alignment</span><h2 id="biological-interfaces-title">Organize the input.<br>Measure what gets through.</h2></div><p>The next hypothesis uses coherent retinal images and response-guided readouts. Anatomical plausibility, correlation and policy confidence are measured separately from improved learning.</p></div>
+  <div class="grid2">
+    <article class="card"><span class="tag proposed">Proposed interface</span><h3 style="margin-top:14px">Two eyes, aligned historical locations</h3>
+      <svg viewBox="0 0 480 210" style="width:100%;height:auto;margin-top:14px" role="img" aria-labelledby="bilateral-title bilateral-desc">
+        <title id="bilateral-title">Proposed alternating history across two eyes</title><desc id="bilateral-desc">The left eye receives current, two-ply-old and four-ply-old boards. Corresponding right-eye patches receive one-, three- and five-ply-old boards. Local retinal sampling feeds the unchanged recurrent graph, followed by measured response groups. This is a proposed encoding, not measured eye anatomy.</desc>
+        <g font-family="system-ui,sans-serif" font-size="13" fill="#183c34" text-anchor="middle">
+          <rect x="10" y="10" width="210" height="55" rx="10" fill="#e5eff2"/><text x="115" y="32">Left eye</text><text x="115" y="51">t · t−2 · t−4 · …</text>
+          <rect x="260" y="10" width="210" height="55" rx="10" fill="#f5e6d7"/><text x="365" y="32">Right eye</text><text x="365" y="51">t−1 · t−3 · t−5 · …</text>
+          <path d="M115 70 L115 87 L240 87 L240 99 M365 70 L365 87 L240 87" stroke="#5d6d65" stroke-width="2" fill="none"/>
+          <rect x="60" y="101" width="360" height="36" rx="8" fill="#dbeaaa"/><text x="240" y="124">Coherent local sampling at retinal coordinates</text>
+          <text x="240" y="157">↓</text><rect x="10" y="169" width="225" height="34" rx="8" fill="#183c34"/><text x="122" y="191" fill="#fffef9">Same fixed fly circuit</text>
+          <text x="251" y="191">→</text><rect x="269" y="169" width="201" height="34" rx="8" fill="#e5eff2"/><text x="370" y="191">Response groups → heads</text>
+        </g>
+      </svg>
+      <p>The qualified inferred map has <strong>652 left and 730 right visual columns</strong>. Twelve separate 9×9 patches per eye need 972 spatial samples. Start with the existing four boards, then compare larger history montages with sequences presented at the same retinal locations.</p>
+      <p class="small muted">Physical registration is still pending. Published measurements place highest acuity near the frontal equator and show narrow binocular overlap. Missing reconstructed cells are not evidence for sparse peripheral vision. <a href="https://www.nature.com/articles/s41586-025-09276-5">Eye geometry study</a>.</p>
+    </article>
+    <article class="card"><span class="tag data">Completed CPU diagnostic</span><h3 style="margin-top:14px">Reachability is not response strength</h3>
+      <p>On 256 training positions, the initial visual-only overlay produces varying responses in just <strong>109 of 2,129</strong> motor/descending candidates at four passes. None of the 708 nerve-cord motor cells cross the declared standard-deviation threshold of 10<sup>−6</sup> model rate units.</p>
+      <p class="small muted">This overlay still retains random feature channels. The pilot diagnoses the existing model; it is not the proposed retinal renderer or a learning comparison. Raw and conditioned correlations, amplitudes and small strength perturbations are saved with canonical neuron IDs.</p>
+      <div class="rule"></div><h3>Sharper can be less accurate</h3>
+      <table class="mini-table"><thead><tr><th scope="col">Same trained checkpoint</th><th scope="col">Top probability</th><th scope="col">Teacher KL ↓</th></tr></thead><tbody><tr><td>4 passes, as trained</td><td>14.0%</td><td>1.278</td></tr><tr><td>8 passes, no retraining</td><td>69.3%</td><td>13.920</td></tr></tbody></table>
+      <p class="small muted">A post-hoc check on the same training probes. This does not compare separately trained four- and eight-pass architectures. Targets never enter the correlation fit.</p>
+      <p><a href="biological-interfaces.md">Equations, biological sources and ordered milestones →</a></p>
+    </article>
+  </div>
+</section>
+
 <section class="section" id="dynamics" aria-labelledby="dynamics-title">
   <div class="section-title"><div><span class="eyebrow">04 / Inside the recurrent cell</span><h2 id="dynamics-title">Sparse messages.<br>Nonlinear state updates.</h2></div><p>The baseline is a leaky rate network. Each pass combines a sparse matrix multiplication with elementwise operations. Unrolling the same cell K times gives a nonlinear, shared-weight computation graph.</p></div>
   <div class="equation large" aria-label="Neuron update equation">r<sup>k</sup> = ReLU(h<sup>k</sup>)<br>h<sup>k+1</sup> = <span class="eq-leak">(1 − α) ⊙ h<sup>k</sup></span> + α ⊙ (<span class="eq-edge">W r<sup>k</sup></span> + b + <span class="eq-input">I(x)</span>)</div>

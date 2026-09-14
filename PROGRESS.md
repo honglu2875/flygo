@@ -1,13 +1,13 @@
 # Progress
 
-Updated **2026-09-14 09:14 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 11:20 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
 
 [Interfaces](README.md) · [Study contracts](RESEARCH.md) ·
 [Results](docs/research-results.md) · [Qualification history](docs/qualification-history.md) ·
-[Next phase: neuron groups](docs/group-study.md).
+[Neuron groups](docs/group-study.md) · [Active phase: biological interfaces](docs/biological-interfaces.md).
 
 | Milestone | Status | Remaining work |
 |---|---|---|
@@ -17,7 +17,7 @@ No fly advantage has been established.
 | M6: controlled studies | Current registered batch complete | Use the results to register the next isolated hypotheses |
 | M7: four-host TPU | Qualified | Nondefault epsilon and smooth-rate TPU gates remain separate |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
-| Group study | Planned; descriptive audit complete | Anatomy → connectivity/dynamics → execution layout → group rules |
+| Group study | Underway; candidate atlas and response pilot complete | Coherent retinal input → response validation → functional readouts |
 
 ## Studies
 
@@ -63,29 +63,43 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   failed records remain. No numerical tolerance or storage limit was relaxed.
 - Missing-only immutable bundle replication recovers pending deployments
   without retransferring existing feature data. Conflicts remain errors.
+- Biological interface audit: 652/730 qualified inferred visual columns
+  left/right, and 2,129 motor/descending candidates. A 256-position training-only
+  CPU pilot finds severe visual-to-motor attenuation at initialization. Its
+  raw/conditioned response matrices and two explicit strength perturbations
+  are descriptive; no action grouping or new scientific training was fitted.
+  [Protocol and findings](docs/biological-interfaces.md).
+- On those fixed probes, extending a K4-trained checkpoint to K8 sharpens
+  predictions but worsens policy KL **1.28 → 13.92**. Confidence alone is not
+  progress. This is a post-hoc training-input check, not a K4/K8 training study.
+  Five diagnostic unit tests and the full-graph pilot pass.
 
 ## Runtime and next work
 
-At **09:10 UTC**, all 32 generation workers were healthy and had published
-**105,902 games**. Free shared memory: **104–172 GiB**; available RAM:
+At **11:16 UTC**, all 32 generation workers were healthy and had published
+**120,469 games**. Free shared memory: **104–172 GiB**; available RAM:
 **283–354 GiB**. Keep the 64 GiB free-filesystem floor, 96 GiB available-RAM
 floor and 100 GiB own-file cap, including reservations. Runtime data and
 checkpoints live in volatile `/dev/shm/flygo`.
+The 18 biological-probe artifacts/source files (about 256 MB) have verified
+copies on w0 and w1; no existing data or checkpoints were removed.
 
 Generation uses 64 pinned physical cores per host: `0–31,60–91`.
 Research lanes are `32–55` and `92–115`; TPU/development uses spare cores.
 Preserve production, checkpoint replicators and owned SSH keepalives.
 
-The current registered studies are closed. Follow the deliberate
-[group-study milestones](docs/group-study.md); a useful next optimizer test is
-multi-seed confirmation of the isolated hard value-head rate screen.
-The baseline already shares
+The current registered studies are closed. **Plan revision:** the user's
+biological-interface proposal now prioritizes coherent spatial/bilateral input
+and response-guided readouts within [G1–G3](docs/group-study.md). B0 is complete;
+**B1, a qualified coherent retinal adapter using the existing four boards, is
+next.** Longer history, temporal presentation, physiology changes and output
+grouping are separate factors. The isolated hard value-head rate confirmation
+remains a pending optimizer idea. The baseline already shares
 leak/bias by cell type. Dense groups motivate hypotheses, not an established
 functional advantage. [Regrowth](docs/structural-plasticity.md) is a proposed
 later relaxation; no connection has been added.
 
-Completed changes are committed locally. Publication remains blocked by automatic approval
-review, which requires explicit confirmation of
-`git@github.com:honglu2875/flygo.git`. Review also rejected removal of retired
-checkpoint replicas after copying them to another host's volatile RAM.
-No archive checkpoint was moved or removed; deployment recovered without it.
+The nine approved commits through **96b0a53** are published to `master` at
+`git@github.com:honglu2875/flygo.git`; the remote SHA was verified. No retired
+checkpoint was moved or removed; deployment recovered through missing-only
+replication. The new biological-interface work is recorded separately above.

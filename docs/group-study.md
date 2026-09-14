@@ -1,6 +1,10 @@
 # Next phase: understand neuron groups before changing their rules
 
-Status: planned after the current engineering gates and registered studies.
+Status: underway after the completed engineering gates and registered batch.
+The user's spatial/bilateral input and response-correlation proposal now sets
+the first application: [biological interfaces, B0–B5](biological-interfaces.md).
+The candidate atlas and bounded CPU response pilot are complete; coherent
+retinal input and qualified functional grouping are next.
 The user will also investigate the biology independently. Keep this phase
 deliberate: characterize the circuit, derive a small number of hypotheses,
 then test them. The initial [density audit](structural-plasticity.md) is a
@@ -30,8 +34,9 @@ its processes can cross the midline despite its soma label. Connectivity
 communities are another inferred view, and should not overwrite annotations.
 
 The local tables already include type, superclass/class, soma/root side,
-assigned optic-lobe coordinates, soma locations, developmental annotations,
-and transmitter predictions. Audit coverage and meanings before use. In
+assigned optic-lobe coordinates, soma locations and developmental annotations;
+transmitter predictions are retained in a separate table. Audit coverage and
+meanings before use. In
 particular, a field called `receptorType` must not be assumed to specify
 postsynaptic neurotransmitter receptors. Soma coordinates do not describe
 axon/dendrite overlap, and birth class is not synapse age.
@@ -73,6 +78,12 @@ patterns and paired perturbations. Record the baseline initialization and
 each declared trained seed. No validation labels should decide group membership
 or fit a physiological explanation. Groupwise Go responses describe our
 adapted model, not necessarily the living fly's sensory tuning.
+
+The [first interface pilot](biological-interfaces.md#first-response-pilot-completed-descriptive)
+finds strong visual-to-motor attenuation at the present initialization, despite
+short structural paths. Its raw/conditioned correlations and amplitude floors
+are descriptive. Do not use these provisional groups as a biological atlas
+or interpret a sharper policy as better teacher agreement.
 
 ## G4: optimize the implementation without changing the hypothesis
 

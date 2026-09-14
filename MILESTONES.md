@@ -9,6 +9,11 @@ and architecture comparisons. [PROGRESS.md](PROGRESS.md) records actual status,
 next steps and plan revisions. Each milestone produces a usable artifact and
 an acceptance record. CPU work and dataset production do not wait for TPU.
 
+After the first M6 batch, the active research sequence is
+[B0–B5: biological interfaces](docs/biological-interfaces.md), within the
+[G1–G5 neuron-group study](docs/group-study.md). B0's bounded atlas/response
+pilot is complete; coherent retinal input is the next implementation gate.
+
 | Milestone | Deliverable | Depends on |
 |---|---|---|
 | M0 | Revised design and data protocol | Complete in this design pass |

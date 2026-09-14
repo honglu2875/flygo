@@ -44,7 +44,17 @@ matching target. Wall time is a separate engineering comparison.
   calibration, phase/value-band/D4-novel slices; and actual playing strength
   with uncertainty. Confirm promising results with at least three seeds.
 
-## First priority: optimization
+## Active next phase: biological interfaces
+
+The first optimizer/spatial/control batch is complete. The user's next
+proposal prioritizes coherent retinal input, bilateral historical context,
+and motor/descending readouts inferred from robust response correlations.
+Follow the [B0–B5 contract](docs/biological-interfaces.md) within the deliberate
+[neuron-group study](docs/group-study.md). The initial atlas/correlation pilot
+is complete; it establishes neither biological tuning nor improved learnability.
+Earlier studies and the FLOP/exposure comparison contract remain intact.
+
+## Optimization study contracts
 
 The existing 2×2 depth/readout study uses Adam at 0.003, batch 32 and 10,000
 updates. Preserve it. It does not establish that the optimizer is well tuned.

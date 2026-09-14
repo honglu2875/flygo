@@ -1,0 +1,35 @@
+{
+  "checkpoint_sha256": "333ad7f216f4cc08ffad11d1a8822d0f5aa28cde60c2946a1572b0782ef537bb",
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "pilot_sha256": "2f6e2019a668d7873238c825091a3a852927ae4d9b0f67e96000791d13db6bdb",
+  "positions": 256,
+  "rows": [
+    {
+      "mean_policy_kl": 1.27821169430787,
+      "mean_value_mse": 0.5751375915292318,
+      "passes": 4,
+      "sharpness": {
+        "mean_effective_actions": 25.52515636441189,
+        "mean_entropy": 3.137290551621067,
+        "mean_entropy_over_legal_uniform": 0.8833641996984015,
+        "mean_legal_actions": 41.36328125,
+        "mean_max_probability": 0.13960853654118532
+      }
+    },
+    {
+      "mean_policy_kl": 13.91974429587886,
+      "mean_value_mse": 1.2467311881157523,
+      "passes": 8,
+      "sharpness": {
+        "mean_effective_actions": 3.094193637625293,
+        "mean_entropy": 0.8711506795033059,
+        "mean_entropy_over_legal_uniform": 0.26535702375690806,
+        "mean_legal_actions": 41.36328125,
+        "mean_max_probability": 0.6933224452666353
+      }
+    }
+  ],
+  "scope": "Post-hoc training-only sanity check using fixed recorded pools, after the correlation pilot. No target enters correlations or grouping; no new fitting, validation selection, final test or optimizer update. K8 extrapolates a K4-trained model and uses additional work. This is not a comparison of trained K4/K8 architectures.",
+  "script_sha256": "130e89c44d5311df70f92b1d6d16358a317e204b5a1e0c52b97a7d996c7f473a",
+  "status": "complete"
+}
