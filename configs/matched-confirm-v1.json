@@ -1,0 +1,163 @@
+{
+  "name": "matched-confirm-v1",
+  "release": "v0-1m",
+  "require_cohorts": [
+    "tpu-v0-b2048-lr01-s1"
+  ],
+  "selection": {
+    "fly": {
+      "run_id": "tpu-v0-b2048-lr01-s1",
+      "rate": 0.01,
+      "criterion": 2.304773990100414
+    },
+    "cnn": {
+      "run_id": "tpu-cnn-v0-b2048-lr003-s1",
+      "rate": 0.003,
+      "criterion": 1.2968732955498652
+    }
+  },
+  "selection_rule": "Choose minimum final validation KL+value MSE from the completed equal three-rate seed-1 screen. Start every confirmation from initialization.",
+  "training_exposures_per_case": 1048576,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "validation": "Full V0 natural and D4-novel validation, paired game bootstrap and explicit training-seed variation. Test labels stay closed.",
+  "matches": {
+    "opponent": 0,
+    "opponent_visits": 16,
+    "games": 32,
+    "seed": 684209,
+    "search_modes": [
+      "prior",
+      "puct",
+      "gumbel"
+    ],
+    "simulations": 16,
+    "rule": "Fresh paired openings shared between families/seeds; every neural evaluation counted. Capped games excluded from wins, reported separately."
+  },
+  "compute": "K4/G656 fly vs 64-channel/10-block residual CNN, approximately 126.7M nominal arithmetic FLOPs/prediction; report actual sparse/dense padding, parameter counts, training work and latency separately.",
+  "cases": [
+    {
+      "run_id": "tpu-confirm-v0-cnn-s1",
+      "training": {
+        "model": "cnn",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.003,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "channels": 64,
+        "blocks": 10
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-cnn-s2",
+      "training": {
+        "model": "cnn",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 2,
+        "rate": 0.003,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "channels": 64,
+        "blocks": 10
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-cnn-s3",
+      "training": {
+        "model": "cnn",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 3,
+        "rate": 0.003,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "channels": 64,
+        "blocks": 10
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-fly-s1",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-fly-s2",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 2,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-fly-s3",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 3,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    }
+  ]
+}

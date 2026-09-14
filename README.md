@@ -12,7 +12,7 @@ forward/backward kernels. A separate residual CNN provides a compute-matched con
 The early trained models are weak; working training is not a strength claim.
 
 - [Interactive model guide](docs/model.html): illustrated graph, Go adapters,
-  recurrent passes, current variants and proposed extensions. Open directly in
+  recurrent passes, retinal controls, measured studies and proposed extensions. Open directly in
   a browser; all images, data and controls work offline.
 - [PROGRESS.md](PROGRESS.md): current jobs, results and remaining gates.
 - [DESIGN.md](DESIGN.md): equations, module boundaries and extension rules.
@@ -31,6 +31,10 @@ environments.
 python3 -B scripts/dev.py check --jax
 # Optional build for this CPU's instruction set; qualified on these EPYC hosts.
 python3 -B scripts/dev.py check --jax --native
+
+# Read-only CPU kernel/profile check on spare cores, using frozen real Go data.
+/dev/shm/flygo/venv/bin/python scripts/profile_cpu.py \
+  --output /dev/shm/flygo/runs/my-cpu-profile --cpus 117,118,119
 
 # Concise fleet status; add --json for full records.
 python3 -B scripts/cluster.py status --run-id expert-v1

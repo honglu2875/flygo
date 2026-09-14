@@ -114,6 +114,10 @@ class RustFly:
             np.ascontiguousarray(value,dtype=np.float32),rate,clip,*extra)
         return dict(policy_loss=pl,value_loss=vl,gradient_norm=norm,step=step)
 
+    def profile_sparse(self,features,*,repetitions=5):
+        """Read-only warm kernel timings; synthetic cotangent, no optimizer update."""
+        return dict(self.native.profile_sparse(self._input(features),self.config.steps,repetitions))
+
     def checkpoint_arrays(self):
         params,first,second,step = self.native.checkpoint()
         return {**{prefix+name:array for prefix,group in [('param/',params),('first/',first),('second/',second)]

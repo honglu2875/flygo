@@ -65,8 +65,9 @@ def worker(args):
                 return
             original=json.loads((source/'config.json').read_text())
             expected=dict(passes=job['passes'],groups=job['groups'],seed=job['seed'],
-                          steps=plan['updates'],batch_size=plan['batch_size'],rate=plan['rate'],release=plan['release'])
-            if any(original['arguments'].get(k)!=v for k,v in expected.items()):
+                          steps=plan['updates'],batch_size=plan['batch_size'],rate=job.get('rate',plan['rate']),release=plan['release'],
+                          rate_scales=job.get('rate_scales',plan.get('rate_scales',{})))
+            if any(original['arguments'].get(k,{} if k=='rate_scales' else None)!=v for k,v in expected.items()):
                 raise ValueError('Source trial differs from frozen study contract')
             if sha256(checkpoint)!=receipt['sha256']:
                 raise ValueError('Final checkpoint checksum failed')

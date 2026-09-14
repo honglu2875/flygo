@@ -155,6 +155,7 @@ pub fn backward(
     let mut grad = CoreGrad::zeros(graph);
     let mut drive_grad = vec![0.0; last_gradient.len()];
     let mut state_grad = last_gradient.to_vec();
+    let transpose_weights = executor.transpose_weights(graph, &tape.weights);
     for step in (0..tape.states.len() - 1).rev() {
         let previous = &tape.states[step];
         let next = &tape.states[step + 1];
@@ -175,7 +176,8 @@ pub fn backward(
             }
         }
         executor.edge_vjp(graph, &rate, &message_grad, batch, &mut grad.edge);
-        let propagated = executor.transpose(graph, &tape.weights, &message_grad, batch);
+        let propagated =
+            executor.transpose_prepared(graph, &transpose_weights, &message_grad, batch);
         executor.pool.install(|| {
             state_grad
                 .par_chunks_mut(batch)

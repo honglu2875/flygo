@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the registered matched-control screen with one immutable SPMD cohort at a time."""
+"""Run a frozen TPU study with one immutable SPMD cohort at a time."""
 from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor
@@ -32,6 +32,34 @@ print(json.dumps(dict(exists=p.exists(),status=s.get('status'),error=s.get('erro
                      live=str(p/'worker.py') in command,training=c.get('training'))))'''
     with ThreadPoolExecutor(4) as pool:
         return [json.loads(s) for s in pool.map(lambda host:remote(host,code),HOSTS)]
+
+
+def cases_for(plan):
+    """Explicit cases support later controlled studies without a second runner."""
+    if 'cases' in plan:
+        cases=[dict(case,training=dict(case['training'])) for case in plan['cases']]
+    else:
+        cases=[]
+        for family in ('cnn','fly'):
+            for seed in plan['seeds']:
+                for rate in plan['rates']:
+                    encoded=f'{rate:g}'
+                    tag=encoded[2:] if encoded.startswith('0.') else encoded.replace('.','p')
+                    run_id=f"tpu-{'cnn-' if family=='cnn' else ''}v0-b{plan['batch_size']}-lr{tag}-s{seed}"
+                    training=dict(model=family,release=plan['release'],passes=plan['fly']['passes'],groups=plan['fly']['groups'],
+                        seed=seed,rate=rate,clip=plan['clip'],batch_size=plan['batch_size'],updates=plan['updates'],
+                        eval_every=plan['evaluation']['every'],eval_batch_size=plan['batch_size'],
+                        eval_positions=plan['evaluation']['positions'],checkpoint_every=64)
+                    if family=='cnn':training.update(channels=plan['cnn']['channels'],blocks=plan['cnn']['blocks'])
+                    cases.append(dict(run_id=run_id,training=training))
+    seen=set()
+    for case in cases:
+        name=case['run_id']
+        if not name or name in ('.','..') or Path(name).name!=name or name in seen:
+            raise ValueError('Every cohort needs a unique plain run ID')
+        seen.add(name)
+    if not cases:raise ValueError('A study needs at least one cohort')
+    return cases
 
 
 def worker(path):
@@ -92,35 +120,30 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config',type=Path,default=Path('configs/matched-control-v1.json'))
     p.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
+    p.add_argument('--source',type=Path,help='Reuse a published source environment across related studies')
+    p.add_argument('--runtime',type=Path,help='Reuse an already qualified TPU dependency runtime')
     p.add_argument('--worker',type=Path)
     args=p.parse_args()
     if args.worker:return worker(args.worker)
     pin([117,118,119])
     plan=json.loads(args.config.read_text());root=args.root;out=root/'runs'/plan['name']
     if Path(plan['name']).name!=plan['name']:raise ValueError('Study name must be a path component')
-    for gate in ('tpu-cnn-parity-v3','tpu-v0-trainer-restore-v1'):
+    cases=cases_for(plan)
+    for gate in ('tpu-cnn-parity-v3','tpu-v0-trainer-restore-v1',*plan.get('require_cohorts',[])):
         if not all(s['status']=='passed' and not s['live'] for s in inspect(root,gate)):
             raise ValueError('Numerical gate is not complete: '+gate)
     from tpu import environment
-    source=snapshot(root);runtime=environment(root,base=source)
+    source=args.source or snapshot(root);runtime=args.runtime or environment(root,base=source)
+    if not (source/'snapshot.json').is_file() or not (runtime/'runtime.json').is_file():
+        raise ValueError('Study source and runtime must be published immutable environments')
     with StorageBudget(root).reserve(files=1<<20,heap=GIB,purpose='freeze matched TPU study coordinator'):
         (out/'code').mkdir(parents=True,exist_ok=False)
         for name in ('tpu_study.py','tpu.py','tpu_worker.py','cluster.py'):
             shutil.copyfile(Path(__file__).with_name(name),out/'code'/name)
         atomic_json(out/'registration.json',plan)
-        cases=[]
-        for family in ('cnn','fly'):
-            for seed in plan['seeds']:
-                for rate in plan['rates']:
-                    tag=f'{rate:g}'.split('.')[1]
-                    run_id=f"tpu-{'cnn-' if family=='cnn' else ''}v0-b2048-lr{tag}-s{seed}"
-                    training=dict(model=family,release=plan['release'],passes=plan['fly']['passes'],groups=plan['fly']['groups'],
-                        seed=seed,rate=rate,clip=plan['clip'],batch_size=plan['batch_size'],updates=plan['updates'],
-                        eval_every=plan['evaluation']['every'],eval_batch_size=plan['batch_size'],
-                        eval_positions=plan['evaluation']['positions'],checkpoint_every=64)
-                    if family=='cnn':training.update(channels=plan['cnn']['channels'],blocks=plan['cnn']['blocks'])
-                    path=out/(run_id+'.json');atomic_json(path,training)
-                    cases.append(dict(run_id=run_id,training=training,plan_path=str(path)))
+        for case in cases:
+            path=out/(case['run_id']+'.json');atomic_json(path,case['training'])
+            case['plan_path']=str(path)
         path=out/'queue.json';atomic_json(path,dict(root=str(root),source=str(source),runtime=str(runtime),cases=cases))
         with (out/'coordinator.log').open('a') as log:
             process=subprocess.Popen(['taskset','--cpu-list','116',sys.executable,'-B',str(out/'code/tpu_study.py'),

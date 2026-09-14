@@ -6,6 +6,8 @@ pub struct Graph {
     pub dst: Vec<usize>,
     pub transpose_indptr: Vec<usize>,
     pub transpose_edges: Vec<usize>,
+    /// Original destinations, contiguous in transpose row order.
+    pub transpose_src: Vec<usize>,
     pub type_id: Vec<usize>,
     pub sign: Vec<f32>,
     pub types: usize,
@@ -47,8 +49,10 @@ impl Graph {
         }
         let mut cursor = transpose_indptr.clone();
         let mut transpose_edges = vec![0; src.len()];
+        let mut transpose_src = vec![0; src.len()];
         for (edge, &source) in src.iter().enumerate() {
             transpose_edges[cursor[source]] = edge;
+            transpose_src[cursor[source]] = dst[edge];
             cursor[source] += 1;
         }
         Ok(Self {
@@ -57,6 +61,7 @@ impl Graph {
             dst,
             transpose_indptr,
             transpose_edges,
+            transpose_src,
             type_id: type_id.iter().map(|&x| x as usize).collect(),
             sign: sign.to_vec(),
             types: 1 + *type_id.iter().max().unwrap() as usize,

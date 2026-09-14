@@ -1,0 +1,212 @@
+{
+  "name": "spatial-input-v1",
+  "release": "v0-1m",
+  "require_cohorts": [
+    "tpu-confirm-v0-fly-s3"
+  ],
+  "rate": 0.01,
+  "batch_size": 2048,
+  "updates": 512,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "training_exposures_per_case": 1048576,
+  "comparison": "Adopt the matched-confirm baseline per seed. Compare baseline, spatial sensory overlay, and within-side/type/channel shuffled overlay. Same original graph, every edge, output ports, initialization, optimizer, sampled positions and horizon.",
+  "geometry": "3490 confidence-filtered photoreceptors inferred from canonical same-side synapse-count votes. Separate affine scaling of two column indices per side; 57/81 board points covered by overlay; other original sensory ports remain.",
+  "controls": "The spatial/shuffled pair has identical feature-channel and board-point multiplicities in each side/type/channel stratum. This tests one simple input adapter, not calibrated retinal orientation or exact square-grid equivariance.",
+  "analysis": "Report all final natural and D4-novel validation slices, aligned paired per-game differences within seeds, then variation across three seeds. No final test labels or best-step selection.",
+  "matches": {
+    "opponent": 0,
+    "opponent_visits": 16,
+    "games": 32,
+    "seed": 684209,
+    "search_modes": [
+      "prior",
+      "puct",
+      "gumbel"
+    ],
+    "simulations": 16,
+    "rule": "Fresh paired openings shared between families/seeds; every neural evaluation counted. Capped games excluded from wins, reported separately."
+  },
+  "cases": [
+    {
+      "run_id": "tpu-confirm-v0-fly-s1",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-fly-s2",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 2,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-confirm-v0-fly-s3",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 3,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128
+      }
+    },
+    {
+      "run_id": "tpu-spatial-v0-spatial-s1",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "ports": "/dev/shm/flygo/ports/retinal-overlay-v1/spatial-g656-s1.npz"
+      }
+    },
+    {
+      "run_id": "tpu-spatial-v0-spatial-s2",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 2,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "ports": "/dev/shm/flygo/ports/retinal-overlay-v1/spatial-g656-s2.npz"
+      }
+    },
+    {
+      "run_id": "tpu-spatial-v0-spatial-s3",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 3,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "ports": "/dev/shm/flygo/ports/retinal-overlay-v1/spatial-g656-s3.npz"
+      }
+    },
+    {
+      "run_id": "tpu-spatial-v0-shuffled-s1",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 1,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "ports": "/dev/shm/flygo/ports/retinal-overlay-v1/shuffled-g656-s1.npz"
+      }
+    },
+    {
+      "run_id": "tpu-spatial-v0-shuffled-s2",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 2,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "ports": "/dev/shm/flygo/ports/retinal-overlay-v1/shuffled-g656-s2.npz"
+      }
+    },
+    {
+      "run_id": "tpu-spatial-v0-shuffled-s3",
+      "training": {
+        "model": "fly",
+        "release": "v0-1m",
+        "passes": 4,
+        "groups": 656,
+        "seed": 3,
+        "rate": 0.01,
+        "clip": 1,
+        "rate_scales": {},
+        "batch_size": 2048,
+        "updates": 512,
+        "eval_every": 128,
+        "eval_batch_size": 2048,
+        "eval_positions": 2048,
+        "checkpoint_every": 128,
+        "ports": "/dev/shm/flygo/ports/retinal-overlay-v1/shuffled-g656-s3.npz"
+      }
+    }
+  ]
+}

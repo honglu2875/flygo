@@ -1,5 +1,5 @@
 //! Thin NumPy boundary for the owned Rust model and optimizer.
-use fly_core::{optim::Adam, CoreParams, Graph, Model, Params, Ports, Targets};
+use fly_core::{CoreParams, Graph, Model, Params, Ports, Targets, optim::Adam};
 use numpy::{IntoPyArray, PyArray1, PyReadonlyArray1, PyReadonlyArray2, PyUntypedArrayMethods};
 use pyo3::{
     exceptions::{PyRuntimeError, PyValueError},
@@ -159,6 +159,101 @@ impl FlyModel {
             .lock()
             .map_err(|e| PyRuntimeError::new_err(e.to_string()))?;
         Ok(export(py, &state.params))
+    }
+    /// Read-only kernel timings on this graph and a real recurrent state.
+    fn profile_sparse(
+        &self,
+        py: Python<'_>,
+        input: PyReadonlyArray2<'_, f32>,
+        steps: usize,
+        repetitions: usize,
+    ) -> PyResult<Vec<(&'static str, Vec<f64>)>> {
+        if !(1..=100).contains(&repetitions) {
+            return Err(PyValueError::new_err("Choose 1..100 repetitions"));
+        }
+        let batch = input.shape()[1];
+        let input = input.as_slice()?.to_vec();
+        py.detach(|| {
+            let state = self.state.lock().map_err(|e| e.to_string())?;
+            let model = &state.model;
+            let output = model.forward(&state.params, &input, batch, steps)?;
+            let rate: Vec<_> = output
+                .tape
+                .states
+                .last()
+                .unwrap()
+                .iter()
+                .map(|x| x.max(0.0))
+                .collect();
+            let cotangent: Vec<_> = rate.iter().map(|x| 0.01 + 0.001 * x).collect();
+            let transpose_weights = model
+                .executor
+                .transpose_weights(&model.graph, &output.tape.weights);
+            let mut edge = vec![0.0; model.graph.edges()];
+            let mut records = Vec::new();
+            for kernel in [
+                "multiply",
+                "transpose",
+                "transpose_prepare",
+                "transpose_prepared",
+                "edge_vjp",
+            ] {
+                let mut seconds = Vec::new();
+                for sample in 0..=repetitions {
+                    edge.fill(0.0);
+                    let start = std::time::Instant::now();
+                    match kernel {
+                        "multiply" => {
+                            std::hint::black_box(model.executor.multiply(
+                                &model.graph,
+                                &output.tape.weights,
+                                &rate,
+                                batch,
+                            ));
+                        }
+                        "transpose" => {
+                            std::hint::black_box(model.executor.transpose(
+                                &model.graph,
+                                &output.tape.weights,
+                                &cotangent,
+                                batch,
+                            ));
+                        }
+                        "transpose_prepare" => {
+                            std::hint::black_box(
+                                model
+                                    .executor
+                                    .transpose_weights(&model.graph, &output.tape.weights),
+                            );
+                        }
+                        "transpose_prepared" => {
+                            std::hint::black_box(model.executor.transpose_prepared(
+                                &model.graph,
+                                &transpose_weights,
+                                &cotangent,
+                                batch,
+                            ));
+                        }
+                        _ => {
+                            model.executor.edge_vjp(
+                                &model.graph,
+                                &rate,
+                                &cotangent,
+                                batch,
+                                &mut edge,
+                            );
+                            std::hint::black_box(&edge);
+                        }
+                    }
+                    if sample > 0 {
+                        seconds.push(start.elapsed().as_secs_f64());
+                    }
+                }
+                records.push((kernel, seconds));
+            }
+            Ok::<_, String>(records)
+        })
+        .map_err(PyValueError::new_err)
     }
     #[allow(clippy::too_many_arguments)]
     fn loss_and_grad<'py>(

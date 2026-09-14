@@ -142,7 +142,7 @@ print(json.dumps(dict(supervisor=json.loads((p/'supervisor.json').read_text()) i
  concurrent_games=config['concurrent_games'],
  published_games=sum(1 for _ in (root/'corpora'/contract_id).glob('host-'+str(config['host_index'])+'/worker-*/*.npz')),
  ram_available=memory['MemAvailable'],shm_free=fs.f_bavail*fs.f_frsize,
- learners=[dict(run=x.parent.name,**json.loads(x.read_text())) for x in sorted((root/'runs').glob('*/status.json'))])))
+ learners=[dict(json.loads(x.read_text()),run=x.parent.name) for x in sorted((root/'runs').glob('*/status.json'))])))
 '''.replace('ROOT',repr(str(root))).replace('RUN_ID',repr(run_id))
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(lambda h: dict(host=h, **json.loads(remote(h, code))), HOSTS))

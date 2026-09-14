@@ -22,6 +22,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True, type=Path)
     parser.add_argument('--root', type=Path, default=Path('/dev/shm/flygo'))
+    parser.add_argument('--source', type=Path, help='Reuse one immutable source environment across successive study waves')
     parser.add_argument('--resume-launch',action='store_true',help='Adopt matching live trials from a partially completed launch')
     args = parser.parse_args()
     plan = json.loads(args.config.read_text())
@@ -44,7 +45,9 @@ def main():
             raise ValueError('Host index must be in 0..3')
         allocations[job['host']] |= cpus
 
-    environment = snapshot(root)
+    environment = args.source or snapshot(root)
+    if not (environment/'snapshot.json').is_file():
+        raise ValueError('An explicit source must be a published immutable environment')
     release = root / 'releases' / plan['release']
     manifest = json.loads((release / 'manifest.json').read_text())
     if json.loads((release / 'replication.json').read_text())['status'] != 'passed':

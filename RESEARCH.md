@@ -208,3 +208,30 @@ checkpoint states: this keeps derivative checks at the same parameters. Initial
 free-running comparisons exposed near-cancelled Adam updates and subsequent
 ReLU-boundary crossings; retain both failures. Checkpoint alignment changes the
 test input, not model equations, optimizer settings or pointwise tolerances.
+
+CPU profiling on three spare cores identifies indirect transpose reads as a
+concrete cost: at B=1, roughly 0.197 s versus 0.031 s for the forward multiply;
+at B=32, 0.433 s versus 0.166 s. The next storage-only optimization keeps
+destinations contiguous in transpose order and packs its weights once per
+backward call, amortized over K passes. Preserve canonical parameter IDs and
+each row's summation order. Require byte-identical full outputs and all gradients
+on real initial and trained V0 fixtures before adoption, plus regression checks.
+Current study binaries remain frozen. Extra layout memory and preparation time
+must appear in the performance report.
+
+After qualifying the packed transpose, test exact zero-activity skipping.
+Build one Boolean flag per node when fewer than 80% of batch rows contain a
+nonzero value. A multiplication by an all-zero row contributes zero; skip its
+batch arithmetic while retaining the edge and its position in summation order.
+Apply the same rule to zero input/cotangent rows in edge gradients. Preserve
+the dense path when activity is high. This is an execution optimization, not
+topology pruning or a new neuron rule. Require the same byte-level checks and
+measure dense-path overhead. Report data-dependent executed work separately
+from the unchanged nominal graph-FLOP comparison.
+
+Both CPU optimizations pass the original full-state/all-gradient byte checks
+on real initial and trained V0 batches. Three-core trained B=32 inference falls
+from 0.69 to 0.44 seconds and loss-plus-gradient time from 4.32 to 1.70 seconds.
+These are bounded microbenchmarks with concurrent fleet workloads, not a
+24-core throughput or universal speedup claim. Keep the reference artifacts
+and separately qualify actual research-lane throughput.

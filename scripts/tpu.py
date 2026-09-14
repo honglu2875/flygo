@@ -64,6 +64,13 @@ def launch(args):
     source = args.source or snapshot(args.root)
     runtime = args.runtime or environment(args.root,base=source)
     training=json.loads(args.train_plan.read_text()) if args.train_plan else None
+    # A training-plan port artifact is part of the declared model and must be
+    # copied before all controllers start, just like qualification ports.
+    if training and training.get('ports'):
+        planned_ports=Path(training['ports'])
+        if args.ports and args.ports!=planned_ports:
+            raise ValueError('Training-plan and command-line port artifacts differ')
+        args.ports=planned_ports
     run.mkdir(parents=True)
     worker = run / 'worker.py'
     shutil.copyfile(args.worker or REPO / 'scripts/tpu_worker.py', worker)
