@@ -62,8 +62,10 @@ The latest proposal simplifies both eyes to the current board and learns
 history through state carried across plies. The
 [temporal vision design](docs/temporal-vision-study.md) separates input removal,
 retinal allocation and persistent execution, with optimization held fixed in
-each comparison. This is a design revision, not a launched run or evidence of
-memory. Attachment, execution and optimization remain separate research lines.
+each comparison. The [supervised attachment screen](docs/attachment-study.md)
+now runs historical/current/neutral imagery with matched context and optimizer.
+Persistent state remains planned. Attachment, execution and optimization remain
+separate research lines.
 
 ## Optimization study contracts
 

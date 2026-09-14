@@ -17,6 +17,26 @@ from .runtime import cpu_profile,pin
 from .storage import StorageBudget,GIB
 
 
+class VisualPlayer:
+    """Inference adapter: a saved visual encoding followed by the unchanged core."""
+    def __init__(self,core,adapter,mode):
+        self.core,self.adapter,self.mode=core,adapter,mode
+        self.graph,self.ports=core.graph,core.ports
+
+    @property
+    def config(self):return self.core.config
+
+    @config.setter
+    def config(self,value):self.core.config=value
+
+    def infer(self,features,*,trace=False):
+        return self.core.infer(self.adapter.encode(features,self.mode),trace=trace)
+
+    def parameters(self):return self.core.parameters()
+
+    def checkpoint_arrays(self):return self.core.checkpoint_arrays()
+
+
 def load_player(checkpoint:Path,graph_path:Path,*,threads=16):
     with np.load(checkpoint,allow_pickle=False) as data:
         metadata=json.loads(data['metadata'].tobytes())
@@ -30,9 +50,27 @@ def load_player(checkpoint:Path,graph_path:Path,*,threads=16):
     else:
         config=FlyConfig(**{**metadata['model_config'],'threads':threads})
         model=RustFly(load_graph(graph_path),config,ports=ports)
-    if (config.features,config.actions)!=(972,82):
+    visual=metadata.get('input_contract')
+    if config.actions!=82 or (not visual and config.features!=972):
         raise ValueError('This GTP profile requires a trained 9x9 Go model')
     load_checkpoint(checkpoint,model)
+    if visual:
+        from .attachments import load_attachment,input_contract
+        # Resolve immutable content, so moving a checkpoint among the owned
+        # hosts does not change its sensory interpretation.
+        candidates=sorted((graph_path.parent.parent/'ports').glob('*/*.json'))
+        selected=None
+        for path in candidates:
+            receipt=json.loads(path.read_text())
+            if receipt.get('sha256')==visual['attachment_sha256'] and receipt.get('version')==visual['version']:
+                selected=path.with_suffix('.npz');break
+        if selected is None:raise ValueError('Missing qualified visual input map for this checkpoint')
+        adapter,expected,receipt=load_attachment(selected,graph_id=model.graph['manifest']['graph_id'],
+            dataset_id=metadata['dataset_id'])
+        if (input_contract(receipt,visual['mode'])!=visual or adapter.features!=config.features
+                or any(not np.array_equal(expected[k],model.ports[k]) for k in expected)):
+            raise ValueError('Checkpoint visual encoding differs from its neural attachment')
+        model=VisualPlayer(model,adapter,visual['mode'])
     return model,metadata
 
 

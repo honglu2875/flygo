@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-14 20:10 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-14 20:49 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -14,7 +14,7 @@ No fly advantage has been established.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production continues | Freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Current registered batch complete | Use the results to register the next isolated hypotheses |
+| M6: controlled studies | Earlier batch complete; supervised visual ablation running | Finish matched history/current/neutral endpoints before changing another factor |
 | M7: four-host TPU | Qualified | Nondefault epsilon and smooth-rate TPU gates remain separate |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -33,6 +33,7 @@ No fly advantage has been established.
 | Smooth firing | Softness .01, rate .03, bias multiplier .01; three seeds, 128k exposures | All training, full validations and paired analysis complete |
 | Mean conditioning | Fixed-topology readout transform | Deferred after full-update parity failure; no scientific training |
 | Spherical motor embeddings | K8, 64 updates / 2,048 views per arm; learned versus frozen circuit | CPU pilot complete; both reach 50% branch ranking, with negligible circuit change |
+| Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | CPU-qualified and running on workers 1–3; matched context and optimizer |
 
 All studies retain their declared immutable sources, failed attempts and fixed
 final horizons. V0 has 10,256 games / 1,000,201 positions: train 887,338,
@@ -92,6 +93,15 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   comparison finds 312 R8→aMe12 edges with negative initial signs, including
   uncertain subtypes. Target-specific transmission is a candidate physiology
   audit; no sign change or training experiment was made from this finding.
+- [Supervised attachment study](docs/attachment-study.md): 3,490 visual inputs
+  plus 84 context features distributed over 11,530 nonvisual sensory cells.
+  All 87 Python tests pass. Full-CNS B32/K8 states/losses/all-gradients/three
+  Adam updates pass in every mode at epsilon 1e-6; the failed 1e-8 gate and
+  its cancellation diagnosis remain recorded. The same epsilon is used in all
+  arms, selected without validation. Initial checkpoints have identical weights,
+  moments, ports and samplers, with exact direct/Go-interface B1/B32 predictions.
+  At 8k exposures, KL is about 1.768/1.777/1.767 for history/current/neutral;
+  these interim seed-1 results do not establish a visual benefit.
 
 ## Runtime and next work
 
@@ -108,11 +118,18 @@ and the next sampler batch/update pass using a fresh model in the same process.
 These representation checkpoints do not implement a Go policy. All copies
 remain volatile; no existing files were removed to make room.
 
+The three attachment trainers are verified live on workers 1–3, pinned to
+`32–55`, with 32,000 exposures planned per arm. Their initial checkpoints
+(about 190 MB each) have verified copies on the owner and w0. The main node
+is close to its own-file cap; reserve actual known transfer sizes and preserve
+the cap when placing further artifacts. TPU use is paused pending fresh
+coordination with the user; current training and qualification use CPU only.
+
 Generation uses 64 pinned physical cores per host: `0–31,60–91`.
 Research lanes are `32–55` and `92–115`; TPU/development uses spare cores.
 Preserve production, checkpoint replicators and owned SSH keepalives.
 
-The current registered studies are closed. B0, B1's coherent spherical adapter
+The earlier registered studies are closed. B0, B1's coherent spherical adapter
 and the bounded B1.5 embedding pilot are complete. Random/prior responses and
 the minimally changed pilot weights cannot establish trained capacity. Keep
 signal amplitude and gradient diagnostics before fitting functional groups;
@@ -125,8 +142,9 @@ four supervised comparisons: historical montage, current board in unchanged
 patches, one larger board per eye, then persistent state with the same input.
 Keep outputs and optimizer fixed within these input/execution comparisons.
 Trajectory training, consistent stone perspective and state-gradient parity
-are required before testing learned memory. These are planned studies;
-no new scientific training was launched by the Doomfly review or this revision.
+are required before testing learned memory. The first two inputs and a neutral
+visual control are now running under the [registered attachment contract](docs/attachment-study.md).
+Larger retinal allocation and persistent state remain planned.
 Captures/older history through nonvisual source nodes remain a separate input
 alternative. Source-graph degree, annotation and outgoing-path audits are gates.
 
@@ -136,6 +154,6 @@ hard value-head rate confirmation, physiology/sign changes and
 added. Persistent models require a history-matched conventional control before
 claiming an equi-FLOP algorithmic advantage.
 
-The approved history through **a0bc239** is published to `master` at
+The prior design milestone **f0ebcda** is published to `master` at
 `git@github.com:honglu2875/flygo.git`. Deployment and artifact replication
 preserve prior checkpoints and immutable sources.

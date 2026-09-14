@@ -20,14 +20,15 @@ from .optimizer import DEFAULT_EPSILON,validate_epsilon,check_epsilon_resume
 from .storage import GIB,StorageBudget,StoragePressure
 
 
-def evaluate(model,arrays,indices,*,batch_size=32,limit=512):
+def evaluate(model,arrays,indices,*,batch_size=32,limit=512,transform=None):
     indices=indices[:limit]
     if not len(indices):
         return dict(positions=0)
     total_policy=total_value=total_entropy=correct=0.0
     for begin in range(0,len(indices),batch_size):
         selected=indices[begin:begin+batch_size]
-        result=model.infer(arrays['features'][selected])
+        features=arrays['features'][selected]
+        result=model.infer(transform(features) if transform else features)
         logits=np.where(arrays['legal'][selected],result['logits'],-1e30)
         logits-=logits.max(axis=1,keepdims=True)
         logp=logits-np.log(np.exp(logits).sum(axis=1,keepdims=True))
@@ -46,6 +47,9 @@ def main(argv=None):
     parser.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
     parser.add_argument('--graph',type=Path)
     parser.add_argument('--ports',type=Path,help='Qualified sensory/readout artifact; defaults to seeded random ports')
+    parser.add_argument('--input-map',type=Path,help='Qualified spherical visual/context attachment')
+    parser.add_argument('--input-mode',choices=('history','current','neutral'),default='history')
+    parser.add_argument('--qualification',type=Path,help='Full-circuit numerical gate required for an input map')
     parser.add_argument('--release',default='pilot-v1')
     parser.add_argument('--run-id',default='fly-baseline-k8-seed1')
     parser.add_argument('--steps',type=int,default=1000,help='Total optimizer steps, including restored steps')
@@ -82,8 +86,14 @@ def main(argv=None):
         parser.error('Step, batch, thread and interval counts must be positive')
     if not np.isfinite(args.rate) or args.rate<=0 or not np.isfinite(args.clip) or args.clip<=0 or args.diagnostics_every<0:
         parser.error('Finite positive learning rate/clip and a nonnegative diagnostic interval are required')
-    if args.model=='cnn' and (args.ports or args.diagnostics_every or args.rate_softness or args.readout_mean_scale!=1):
+    if args.model=='cnn' and (args.ports or args.input_map or args.diagnostics_every or args.rate_softness or args.readout_mean_scale!=1):
         parser.error('Fly ports, firing rates and activity diagnostics apply only to the fly model')
+    if args.input_map and (args.ports or not args.qualification):
+        parser.error('An input map replaces --ports and requires --qualification')
+    if args.input_map and args.backend!='cpu':
+        parser.error('Visual/context training requires a separate actual TPU qualification before TPU use')
+    if not args.input_map and args.input_mode!='history':
+        parser.error('An input mode requires --input-map')
     try:Schedule(args.rate,args.warmup_steps,args.decay_until,args.final_rate_ratio)
     except ValueError as error:parser.error(str(error))
     try:validate_epsilon(args.epsilon)
@@ -129,11 +139,23 @@ def run_training(args,cpus,run):
         manifest,arrays,indexes=load_release(root,root/'releases'/args.release/'manifest.json',cache=True)
         sampler=Sampler(arrays,indexes,args.seed)
         graph=load_graph(graph_path) if args.model=='fly' else None
-        ports=None;port_contract=None
+        ports=None;port_contract=None;visual_contract=None;transform=None
         if args.ports:
             from .ports import load_ports
             ports,port_contract=load_ports(args.ports,graph_id=graph['manifest']['graph_id'],
                 features=config.features,groups=config.groups,seed=config.seed)
+        if args.input_map:
+            from dataclasses import replace
+            from .attachments import load_attachment,input_contract,require_qualification
+            adapter,ports,port_contract=load_attachment(args.input_map,
+                graph_id=graph['manifest']['graph_id'],dataset_id=manifest['dataset_id'])
+            if config.groups!=port_contract['groups']:
+                raise ValueError('Readout group count differs from the visual/context attachment')
+            config=replace(config,features=adapter.features)
+            visual_contract=input_contract(port_contract,args.input_mode)
+            require_qualification(args.qualification,visual_contract,config,batch_size=args.batch_size,
+                rate=args.rate,epsilon=args.epsilon,clip=args.clip,rate_scales=args.rate_scales)
+            transform=lambda features:adapter.encode(features,args.input_mode)
         if args.model=='cnn':model=JaxCNN(config)
         elif args.backend=='tpu':
             from .jax.learner import JaxFly
@@ -147,11 +169,13 @@ def run_training(args,cpus,run):
         step=0
         if args.resume:
             previous=load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'])
+            if previous.get('input_contract')!=visual_contract:
+                raise ValueError('Checkpoint external input encoding differs')
             schedule.check_resume(previous.get('training_contract',{}))
             check_epsilon_resume(args.epsilon,previous.get('training_contract',{}))
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
-                    dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,
+                    dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,input_contract=visual_contract,
                     split_counts={k:len(v) for k,v in indexes.items()}))
         # Common fixed random slices, independent of model/sampler seed. Avoid
         # repeatedly reporting only the first few complete games in file order.
@@ -160,9 +184,14 @@ def run_training(args,cpus,run):
                     for key in ('train','validation','validation_novel')}
         def validation(step):
             result=dict(kind='validation',step=step,unix=time.time(),
-                natural=evaluate(model,arrays,evaluation['validation'],limit=args.eval_positions,batch_size=args.eval_batch_size),
-                novel=evaluate(model,arrays,evaluation['validation_novel'],limit=args.eval_positions,batch_size=args.eval_batch_size),
-                train=evaluate(model,arrays,evaluation['train'],limit=args.eval_positions,batch_size=args.eval_batch_size))
+                natural=evaluate(model,arrays,evaluation['validation'],limit=args.eval_positions,batch_size=args.eval_batch_size,transform=transform),
+                novel=evaluate(model,arrays,evaluation['validation_novel'],limit=args.eval_positions,batch_size=args.eval_batch_size,transform=transform),
+                train=evaluate(model,arrays,evaluation['train'],limit=args.eval_positions,batch_size=args.eval_batch_size,transform=transform))
+            if args.input_map and step in (0,args.steps):
+                result['input_perturbations']={mode:evaluate(model,arrays,evaluation['validation'],
+                    limit=args.eval_positions,batch_size=args.eval_batch_size,
+                    transform=lambda x,mode=mode:adapter.encode(x,mode))
+                    for mode in ('history','current','neutral') if mode!=args.input_mode}
             log.write(json.dumps(result)+'\n');log.flush();print(json.dumps(result),flush=True)
             return result
         validation(step)
@@ -172,7 +201,7 @@ def run_training(args,cpus,run):
             error=None
             try:
                 receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics,
-                    port_contract=port_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
+                    port_contract=port_contract,input_contract=visual_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
                         clip=args.clip,rate_scales=args.rate_scales,schedule=schedule.contract(),epsilon=args.epsilon)),
                     root=root,peer=args.peer or None)
             except Exception as failure:
@@ -203,6 +232,7 @@ def run_training(args,cpus,run):
                     atomic_json(run/'status.json',dict(state='paused_storage',reason=pressure or 'Peer storage pressure',step=step,updated=time.time()))
                     time.sleep(20);continue
             sample_begin=time.perf_counter();batch=sampler.batch(args.batch_size)
+            if transform:batch=(transform(batch[0]),*batch[1:])
             sample_seconds=time.perf_counter()-sample_begin
             diagnostic=args.diagnostics_every and (step+1)%args.diagnostics_every==0
             before=model.parameters() if diagnostic else None

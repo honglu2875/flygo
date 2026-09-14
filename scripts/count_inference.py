@@ -68,10 +68,17 @@ def main():
                 raise ValueError('This byte-qualified zero-row ledger currently supports the hard-rate model only')
             before=model.checkpoint_arrays();records=[]
             for batch in batches:
-                nominal=fly_cost(len(degree),len(graph['src']),len(graph['sensory']),
+                nominal=fly_cost(len(degree),len(graph['src']),int(np.count_nonzero(model.ports['input_index']>=0)),
                     passes=model.config.steps,groups=model.config.groups,batch_size=batch,
                     readout_neurons=int(np.count_nonzero(model.ports['output_group']>=0)),
                     readout_mean_scale=model.config.readout_mean_scale)
+                if hasattr(model,'adapter'):
+                    # The NumPy renderer evaluates all four weights per sensor,
+                    # including zero weights: 4 products + 3 additions, one
+                    # scale and one neutral offset. Signed occupancy costs 324.
+                    external=0 if model.mode=='neutral' else 9*len(model.adapter.renderer.index)+324+1/batch
+                    nominal['parts']['external_visual_encoding']=external
+                    nominal['arithmetic_flops']+=external
                 other=nominal['arithmetic_flops']-nominal['parts']['sparse_aggregation']
                 # Cold preparation is explicitly outside the measured warm call.
                 started=time.perf_counter();model.infer(arrays['features'][indices[:batch]])
