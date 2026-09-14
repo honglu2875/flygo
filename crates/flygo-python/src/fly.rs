@@ -116,13 +116,18 @@ impl FlyModel {
             state: Mutex::new(state),
         })
     }
+    #[pyo3(signature = (input, steps, trace, prune=false))]
     fn infer<'py>(
         &self,
         py: Python<'py>,
         input: PyReadonlyArray2<'py, f32>,
         steps: usize,
         trace: bool,
+        prune: bool,
     ) -> PyResult<Infer<'py>> {
+        if trace && prune {
+            return Err(PyValueError::new_err("Readout pruning cannot return a full-state trace"));
+        }
         let batch = input.shape()[1];
         let input = input.as_slice()?.to_vec();
         let (logits, values, states) = py
@@ -141,6 +146,11 @@ impl FlyModel {
                         &state.params, &input, batch, steps, state.prepared.as_ref(),
                     )?;
                     Ok::<_, String>((output.logits, output.values, output.tape.states))
+                } else if prune {
+                    let output = state.model.predict_pruned_prepared(
+                        &state.params, &input, batch, steps, state.prepared.as_ref(),
+                    )?;
+                    Ok((output.logits, output.values, Vec::new()))
                 } else {
                     let output = state.model.predict_prepared(
                         &state.params, &input, batch, steps, state.prepared.as_ref(),
@@ -154,6 +164,12 @@ impl FlyModel {
             values.into_pyarray(py),
             states.into_iter().map(|v| v.into_pyarray(py)).collect(),
         ))
+    }
+    fn prediction_dependencies(&self, py: Python<'_>, steps: usize) -> PyResult<Vec<(usize, usize)>> {
+        py.detach(|| {
+            let state = self.state.lock().map_err(|error| error.to_string())?;
+            state.model.prediction_dependencies(steps)
+        }).map_err(PyValueError::new_err)
     }
     fn parameters<'py>(&self, py: Python<'py>) -> PyResult<Arrays<'py>> {
         let state = self

@@ -128,6 +128,17 @@ impl Executor {
     ) -> Vec<f32> {
         self.multiply_rows(&graph.indptr, &graph.src, weights, input, batch)
     }
+    /// Same row reductions, evaluating only destinations in a validated readout plan.
+    pub(crate) fn multiply_required(
+        &self, graph: &Graph, weights: &[f32], input: &[f32], batch: usize, required: &[bool],
+    ) -> Vec<f32> {
+        match self.sparse_rows(input, batch) {
+            Some(active) => self.multiply_active::<true, true>(
+                &graph.indptr, &graph.src, weights, input, batch, &active, required),
+            None => self.multiply_active::<false, true>(
+                &graph.indptr, &graph.src, weights, input, batch, &[], required),
+        }
+    }
     /// Finite model states often have whole rows zeroed by the rectifier.
     /// Keep dense execution when the extra branch would offer little benefit.
     fn sparse_rows(&self, input: &[f32], batch: usize) -> Option<Vec<bool>> {
@@ -153,12 +164,12 @@ impl Executor {
     ) -> Vec<f32> {
         match self.sparse_rows(input, batch) {
             Some(active) => {
-                self.multiply_active::<true>(indptr, neighbors, weights, input, batch, &active)
+                self.multiply_active::<true, false>(indptr, neighbors, weights, input, batch, &active, &[])
             }
-            None => self.multiply_active::<false>(indptr, neighbors, weights, input, batch, &[]),
+            None => self.multiply_active::<false, false>(indptr, neighbors, weights, input, batch, &[], &[]),
         }
     }
-    fn multiply_active<const SKIP_ZERO: bool>(
+    fn multiply_active<const SKIP_ZERO: bool, const SELECT_ROWS: bool>(
         &self,
         indptr: &[usize],
         neighbors: &[usize],
@@ -166,6 +177,7 @@ impl Executor {
         input: &[f32],
         batch: usize,
         active: &[bool],
+        required: &[bool],
     ) -> Vec<f32> {
         let mut output = vec![0.0; input.len()];
         self.pool.install(|| {
@@ -173,6 +185,7 @@ impl Executor {
                 .par_chunks_mut(batch)
                 .enumerate()
                 .for_each(|(row, out)| {
+                    if SELECT_ROWS && !required[row] { return; }
                     let start = indptr[row];
                     let end = indptr[row + 1];
                     for (&source, &weight) in neighbors[start..end].iter().zip(&weights[start..end])

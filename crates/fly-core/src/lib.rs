@@ -1,5 +1,6 @@
 //! Fixed directed graph, rate recurrence and explicit CPU derivatives.
 //! Topology is owned by Graph and never enters an optimizer parameter vector.
+mod dependency;
 pub mod graph;
 pub mod model;
 pub mod optim;

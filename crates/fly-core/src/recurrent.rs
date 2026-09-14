@@ -111,7 +111,7 @@ pub fn forward_prepared(
     let mut states: Vec<Vec<f32>> = vec![vec![0.01; drive.len()]];
     for step in 0..steps {
         states.push(next_state(graph, executor, params, drive, batch,
-            states.last().unwrap(), step == 0, prepared)?);
+            states.last().unwrap(), step == 0, prepared, None)?);
     }
     Ok(Tape {
         states,
@@ -149,7 +149,22 @@ pub fn predict_prepared(
     validate_input(graph, drive, batch, steps, prepared)?;
     let mut state = vec![0.01; drive.len()];
     for step in 0..steps {
-        state = next_state(graph, executor, params, drive, batch, &state, step == 0, prepared)?;
+        state = next_state(graph, executor, params, drive, batch, &state, step == 0, prepared, None)?;
+    }
+    Ok(state)
+}
+
+/// Only Model constructs these graph/port-specific dependency masks. This state
+/// is valid at the selected outputs, and must not be reused as recurrent memory.
+pub(crate) fn predict_required_prepared(
+    graph: &Graph, executor: &Executor, params: &CoreParams, drive: &[f32],
+    batch: usize, prepared: &Prepared, required: &[Arc<[bool]>],
+) -> Result<Vec<f32>, String> {
+    validate_input(graph, drive, batch, required.len(), prepared)?;
+    let mut state = vec![0.01; drive.len()];
+    for (step, rows) in required.iter().enumerate() {
+        state = next_state(graph, executor, params, drive, batch, &state,
+            step == 0, prepared, Some(rows))?;
     }
     Ok(state)
 }
@@ -187,12 +202,15 @@ fn next_state(
     previous: &[f32],
     initial: bool,
     prepared: &Prepared,
+    required: Option<&[bool]>,
 ) -> Result<Vec<f32>, String> {
     let mut next = if initial {
         let mut message = vec![0.0; drive.len()];
         executor.pool.install(|| {
             message.par_chunks_mut(batch).enumerate().for_each(|(node, row)| {
-                row.fill(prepared.initial_message[node]);
+                if required.is_none_or(|rows| rows[node]) {
+                    row.fill(prepared.initial_message[node]);
+                }
             })
         });
         message
@@ -200,12 +218,16 @@ fn next_state(
         let rate: Vec<_> = executor.pool.install(|| {
             previous.par_iter().map(|&x| prepared.rate.value(x)).collect()
         });
-        executor.multiply(graph, &prepared.weights, &rate, batch)
+        match required {
+            Some(rows) => executor.multiply_required(graph, &prepared.weights, &rate, batch, rows),
+            None => executor.multiply(graph, &prepared.weights, &rate, batch),
+        }
     };
     executor.pool.install(|| {
         next.par_chunks_mut(batch)
             .enumerate()
             .for_each(|(node, out)| {
+                if required.is_some_and(|rows| !rows[node]) { return; }
                 let group = graph.type_id[node];
                 let a = prepared.alpha[group];
                 for (b, value) in out.iter_mut().enumerate() {

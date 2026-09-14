@@ -197,6 +197,10 @@ state, using O(N×batch) state memory independently of K. Training and explicit
 `trace=True` retain O(K×N×batch) states for differentiation or inspection.
 Both paths call the same propagation and readout code; graph/parameter storage
 is separate from these state-memory counts.
+Optional `infer(features, prune=True)` computes only finite-horizon readout
+dependencies, with exact predictions on the qualified fixtures. It cannot
+return full traces or persistent state. The [CPU measurement and scope](docs/prediction-dependencies.md)
+include its cold setup cost; the default remains full execution.
 Edge strengths use signed softplus magnitudes; type-shared leak lies in
 `(0.01,0.99)`. The [design](DESIGN.md) specifies initialization and derivatives.
 

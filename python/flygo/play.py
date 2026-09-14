@@ -29,8 +29,8 @@ class VisualPlayer:
     @config.setter
     def config(self,value):self.core.config=value
 
-    def infer(self,features,*,trace=False):
-        return self.core.infer(self.adapter.encode(features,self.mode),trace=trace)
+    def infer(self,features,*,trace=False,prune=False):
+        return self.core.infer(self.adapter.encode(features,self.mode),trace=trace,prune=prune)
 
     def parameters(self):return self.core.parameters()
 

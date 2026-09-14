@@ -75,5 +75,17 @@ class Snapshot(unittest.TestCase):
         self.assertNotEqual(first, second)
         self.assertEqual((second / 'site-packages/flygo/__init__.py').read_text(), 'version = 2\n')
 
+    def test_alternate_native_has_its_own_identity_and_preserves_the_installed_runtime(self):
+        installed=self.root/'venv/lib/python3.12/site-packages/flygo/_native.test.so'
+        previous=installed.read_bytes()
+        baseline=cluster.snapshot(self.root)
+        candidate=self.root/'candidate.so';candidate.write_bytes(b'alternate native fixture')
+        alternate=cluster.snapshot(self.root,native_path=candidate)
+        self.assertNotEqual(baseline,alternate)
+        self.assertEqual((alternate/'site-packages/flygo/_native.test.so').read_bytes(),candidate.read_bytes())
+        self.assertEqual((baseline/'site-packages/flygo/_native.test.so').read_bytes(),previous)
+        self.assertEqual(installed.read_bytes(),previous)
+        self.assertEqual(alternate,cluster.snapshot(self.root,native_path=candidate))
+
 
 if __name__ == '__main__': unittest.main()

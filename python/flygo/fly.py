@@ -119,13 +119,18 @@ class RustFly:
             raise ValueError('Expected batch-major Go features with the configured feature count')
         return np.ascontiguousarray(array.reshape(len(array),self.config.features).T)
 
-    def infer(self, features, *, trace=False):
+    def infer(self, features, *, trace=False, prune=False):
         input_array = self._input(features)
-        logits, value, states = self.native.infer(input_array,self.config.steps,trace)
+        logits, value, states = self.native.infer(input_array,self.config.steps,trace,prune)
         result = dict(logits=logits.reshape(-1,self.config.actions),value=value)
         if trace:
             result['states'] = [s.reshape(len(self.graph['type_id']),-1) for s in states]
         return result
+
+    def prediction_dependencies(self):
+        """Required neurons/incoming edges per pass; counts precede zero skipping."""
+        return [dict(neurons=neurons,edges=edges) for neurons,edges in
+                self.native.prediction_dependencies(self.config.steps)]
 
     def parameters(self):
         return dict(zip(PARAMETERS,self.native.parameters()))

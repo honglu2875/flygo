@@ -28,6 +28,7 @@ def main():
     p.add_argument('--passes',type=int,help='Profiling-only depth override; never a trained-strength result')
     p.add_argument('--repetitions',type=int,default=3)
     p.add_argument('--reference',type=Path,help='Require identical inputs and prediction bytes')
+    p.add_argument('--prune',action='store_true',help='Optional finite-horizon readout dependency execution')
     args=p.parse_args();cpus=list(map(int,args.cpus.split(',')));pin(cpus)
     if (not 1<=args.batch_size<=128 or not 1<=args.repetitions<=10
             or (args.passes is not None and not 1<=args.passes<=64)):
@@ -40,6 +41,7 @@ def main():
         model=(load_player(args.checkpoint,graph,threads=len(cpus))[0] if args.checkpoint else
                RustFly(load_graph(graph),FlyConfig(steps=4,threads=len(cpus))))
         family='cnn' if hasattr(model.config,'blocks') else 'fly'
+        if args.prune and family!='fly':raise ValueError('Readout pruning applies only to fly models')
         if args.passes is not None:
             if family!='fly':raise ValueError('A recurrent-pass override applies only to fly models')
             model.config=replace(model.config,steps=args.passes)
@@ -47,7 +49,8 @@ def main():
         hashes=None;samples=[]
         loaded_peak=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024
         for repetition in range(args.repetitions+1):
-            start=time.perf_counter();prediction=model.infer(batch)
+            start=time.perf_counter()
+            prediction=model.infer(batch,prune=True) if args.prune else model.infer(batch)
             elapsed=time.perf_counter()-start
             current={key:hashlib.sha256(value.tobytes()).hexdigest() for key,value in prediction.items()}
             if hashes is not None and current!=hashes:raise AssertionError('Repeated prediction changed')
@@ -59,10 +62,13 @@ def main():
             checkpoint_sha256=sha256(args.checkpoint) if args.checkpoint else None,
             batch_size=args.batch_size,passes=getattr(model.config,'steps',None),cpus=cpus,
             family=family,model_config=asdict(model.config),
+            pruned=args.prune,
             input_sha256=hashlib.sha256(batch.tobytes()).hexdigest(),prediction_sha256=hashes,
             cold_seconds=cold,warm_seconds=samples,loaded_peak_rss_bytes=loaded_peak,
             peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,
             scope='Fresh process high-water RSS includes model/data initialization. Warm prediction excludes loading and first cache preparation. Any depth override is an implementation probe, not a trained architecture or playing-strength result.')
+        if args.prune:
+            result['dependency_counts']=getattr(model,'core',model).prediction_dependencies()
         if args.reference:
             other=json.loads(args.reference.read_text())
             for key in ('dataset_id','graph_id','checkpoint_sha256','batch_size','passes','cpus','input_sha256','prediction_sha256'):

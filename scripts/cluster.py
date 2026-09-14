@@ -34,12 +34,12 @@ def remote(host, code, *, timeout=30):
     return subprocess.check_output(SSH + ['cubic27@' + host, 'python3 -c ' + shlex.quote(code)], text=True, timeout=timeout)
 
 
-def snapshot(root):
+def snapshot(root, *, native_path=None):
     installed = root / 'venv/lib/python3.12/site-packages'
     native = next((installed / 'flygo').glob('_native*.so'))
     # Freeze the bytes before hashing/copying: editing source during deployment
     # must not produce different content under the same source identity.
-    native_bytes = native.read_bytes()
+    native_bytes = (native_path or native).read_bytes()
     sources = {path.relative_to(REPO): path.read_bytes()
                for path in sorted((REPO / 'python/flygo').rglob('*.py'))}
     numpy_metadata = next(installed.glob('numpy-*.dist-info/METADATA')).read_bytes()
@@ -55,7 +55,15 @@ def snapshot(root):
             if not (target / 'snapshot.json').is_file():
                 raise ValueError('Incomplete environment retained for inspection: ' + str(target))
             return target
-        with StorageBudget(root).reserve(files=GIB, heap=GIB, purpose='freeze worker environment'):
+        # Every copied file is already available locally. Reserve its rounded
+        # payload size, including a small metadata allowance, rather than a
+        # blanket GiB that can refuse a known small snapshot near the file cap.
+        copied = [path for name in ('numpy','numpy.libs') for path in (installed/name).rglob('*')
+                  if path.is_file() and '__pycache__' not in path.parts]
+        block = os.statvfs(root).f_frsize
+        sizes = [path.stat().st_size for path in copied] + [len(native_bytes)] + [len(x) for x in sources.values()]
+        reserved_files = sum(((size+block-1)//block)*block for size in sizes) + (1<<20)
+        with StorageBudget(root).reserve(files=reserved_files, heap=GIB, purpose='freeze worker environment'):
             staging = Path(tempfile.mkdtemp(prefix='.' + key + '.', dir=parent))
             try:
                 site = staging / 'site-packages'; (site / 'flygo').mkdir(parents=True)

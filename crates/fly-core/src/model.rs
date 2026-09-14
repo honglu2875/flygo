@@ -1,6 +1,8 @@
 //! Sparse sensory attachment and disjoint readout; all learned computation uses the graph.
 use crate::{CoreGrad, CoreParams, Executor, Graph, Rate, recurrent};
 use rayon::prelude::*;
+use crate::dependency::ReadoutPlan;
+use std::sync::{Arc, Mutex};
 
 #[derive(Clone)]
 pub struct Ports {
@@ -35,6 +37,7 @@ pub struct Model {
     pub rate: Rate,
     readout_nodes: Vec<Vec<usize>>,
     readout_mean_scale: f32,
+    readout_plan: Mutex<Option<Arc<ReadoutPlan>>>,
 }
 /// Prediction has no backward tape and cannot accidentally enter backward.
 pub struct Prediction {
@@ -130,6 +133,7 @@ impl Model {
             rate,
             readout_nodes,
             readout_mean_scale: 1.0,
+            readout_plan: Mutex::new(None),
         })
     }
     /// Fixed, invertible conditioning of pooled features before the heads.
@@ -260,6 +264,37 @@ impl Model {
                 &self.graph, &self.executor, &params.core, &drive, batch, steps, self.rate,
             )?,
         };
+        Ok(self.readout(params, &state, batch))
+    }
+    fn plan(&self, steps: usize) -> Result<Arc<ReadoutPlan>, String> {
+        let mut cached = self.readout_plan.lock().map_err(|error| error.to_string())?;
+        if cached.as_ref().is_none_or(|plan| plan.required.len() != steps) {
+            *cached = Some(Arc::new(ReadoutPlan::new(&self.graph, &self.ports.output_group, steps)?));
+        }
+        Ok(cached.as_ref().unwrap().clone())
+    }
+    /// Static incoming-edge counts, before zero skipping and the first-message cache.
+    pub fn prediction_dependencies(&self, steps: usize) -> Result<Vec<(usize, usize)>, String> {
+        Ok(self.plan(steps)?.counts(&self.graph))
+    }
+    /// Optional readout-only execution. Unneeded rows are not evaluated or returned;
+    /// callers needing full states or global divergence checks must use forward.
+    pub fn predict_pruned_prepared(
+        &self, params: &Params, input: &[f32], batch: usize, steps: usize,
+        prepared: Option<&recurrent::Prepared>,
+    ) -> Result<Prediction, String> {
+        let plan = self.plan(steps)?;
+        let drive = self.input_drive(params, input, batch)?;
+        let owned;
+        let prepared = match prepared {
+            Some(prepared) => prepared,
+            None => {
+                owned = recurrent::prepare(&self.graph, &self.executor, &params.core, self.rate)?;
+                &owned
+            }
+        };
+        let state = recurrent::predict_required_prepared(&self.graph, &self.executor,
+            &params.core, &drive, batch, prepared, &plan.required)?;
         Ok(self.readout(params, &state, batch))
     }
     fn input_drive(&self, params: &Params, input: &[f32], batch: usize) -> Result<Vec<f32>, String> {
