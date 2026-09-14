@@ -60,12 +60,48 @@ print(json.dumps(dict(status='passed',sha256=DIGEST,bytes=SIZE)))
 
 
 def replicate_bundle(paths, root: Path, peer: str, *, timeout=300):
-    """Copy an immutable file set with admission for both archive and extraction."""
-    paths = [Path(path) for path in paths]
+    """Verify existing peer files, then archive only missing immutable entries."""
+    root = root.resolve()
+    paths = [Path(path).resolve() for path in paths]
     for path in paths:
         path.resolve().relative_to(root.resolve())
         if not path.is_file():
             raise ValueError('Bundle entries must be individual regular files')
+    if len(set(paths)) != len(paths):
+        raise ValueError('Bundle entries must be unique')
+    manifest = [dict(path=str(path.relative_to(root)), bytes=path.stat().st_size, sha256=sha256(path))
+                for path in paths]
+    inventory = '''import pathlib,sys,json,hashlib
+root=pathlib.Path(ROOT).resolve()
+manifest=json.load(sys.stdin);missing=[]
+for index,record in enumerate(manifest):
+ target=root/record['path']
+ target.resolve().relative_to(root)
+ if not target.exists():
+  missing.append(index);continue
+ assert target.is_file(),'Bundle target is not a regular file'
+ assert target.stat().st_size==record['bytes'],'Immutable bundle size conflict: '+str(target)
+ h=hashlib.sha256()
+ with target.open('rb') as stream:
+  for chunk in iter(lambda:stream.read(1024*1024),b''):h.update(chunk)
+ assert h.hexdigest()==record['sha256'],'Immutable bundle hash conflict: '+str(target)
+print(json.dumps(dict(status='passed',missing=missing,files=len(manifest))))
+'''.replace('ROOT', repr(str(root)))
+    checked = subprocess.run(['ssh','-F','/dev/null','-o','BatchMode=yes','-o','ConnectTimeout=10',
+                              peer,'python3 -c '+shlex.quote(inventory)], input=json.dumps(manifest),
+                             capture_output=True,text=True,timeout=timeout)
+    if checked.returncode:
+        raise RuntimeError('Bundle inventory failed: '+checked.stderr[-2000:])
+    checked = json.loads(checked.stdout)
+    missing = checked['missing']
+    if (checked.get('status') != 'passed' or checked.get('files') != len(paths)
+            or len(set(missing)) != len(missing)
+            or any(type(index) is not int or not 0 <= index < len(paths) for index in missing)):
+        raise ValueError('Invalid peer bundle inventory')
+    total = len(paths)
+    if not missing:
+        return dict(status='passed',files=total,transferred_files=0,verified_existing_files=total)
+    paths = [paths[index] for index in missing]
     size = sum(path.stat().st_size for path in paths) + len(paths) * 4096 + 10240
     archive = root / 'tmp' / ('replica-' + uuid.uuid4().hex + '.tar')
     archive.parent.mkdir(parents=True, exist_ok=True)
@@ -111,6 +147,10 @@ print(json.dumps(dict(status='passed',files=len(members))))
                                     text=True, timeout=timeout)
             if result.returncode:
                 raise RuntimeError('Bundle extraction failed: ' + result.stderr[-2000:])
-            return {**json.loads(result.stdout), 'archive_sha256': transfer['sha256']}
+            extracted=json.loads(result.stdout)
+            if extracted.get('status')!='passed' or extracted.get('files')!=len(paths):
+                raise ValueError('Bundle extraction result differs from the manifest')
+            return {**extracted, 'files':total, 'transferred_files':len(paths),
+                    'verified_existing_files':total-len(paths), 'archive_sha256':transfer['sha256']}
         finally:
             archive.unlink(missing_ok=True)

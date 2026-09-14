@@ -73,7 +73,7 @@ def launch(args):
         args.ports=planned_ports
     run.mkdir(parents=True)
     worker = run / 'worker.py'
-    shutil.copyfile(args.worker or REPO / 'scripts/tpu_worker.py', worker)
+    shutil.copyfile(args.worker or Path(__file__).with_name('tpu_worker.py'), worker)
     config = dict(schema_version=1, mode=args.mode, cpus=args.cpus,
                   per_device_batches=args.batches, steps=args.steps, repetitions=args.repetitions,
                   kernel=args.kernel,
