@@ -13,7 +13,7 @@ def value_score(params, pooled, head_mask):
     return jnp.matmul(pooled.T, weight, precision=jax.lax.Precision.HIGHEST) + params['value_bias'][0]
 
 
-def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0,return_embedding=False,head_mask=None):
+def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0,return_embedding=False,head_mask=None,initial_state=None):
     # Reference uses edge messages. Production Rust avoids this E*B allocation.
     # Keep full-graph JAX parity batches small until a TPU kernel is qualified.
     n = graph['type_id'].shape[0]
@@ -25,7 +25,11 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
     input_index = ports['input_index']
     safe_input = jnp.maximum(input_index,0)
     drive = jnp.where((input_index >= 0)[:,None],params['input_gain'][safe_input,None]*x[safe_input],0)
-    state = jnp.full((n,x.shape[1]),0.01,dtype=jnp.float32)
+    state = (jnp.full((n,x.shape[1]),0.01,dtype=jnp.float32) if initial_state is None
+             else jnp.asarray(initial_state,dtype=jnp.float32))
+    if state.shape != (n,x.shape[1]):
+        raise ValueError('Expected node-major initial state [N,B]')
+    initial = state[None,...]
     def step(state,_):
         if 'layout' in graph:
             from .sparse import multiply
@@ -49,7 +53,6 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
                         precision=jax.lax.Precision.HIGHEST) + params['policy_bias']
     score = value_score(params, pooled, head_mask)
     value = jax.lax.tanh(score,accuracy=HIGHEST)
-    initial = jnp.full((1,n,x.shape[1]),0.01,dtype=jnp.float32)
     result = dict(logits=logits,value=value,states=jnp.concatenate([initial,states],axis=0))
     if return_embedding: result.update(embedding=pooled.T,score=score)
     return result

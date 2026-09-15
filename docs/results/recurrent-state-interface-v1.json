@@ -1,0 +1,397 @@
+{
+  "build": {
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "created": 1789489842.2591074,
+    "environment": "environments/16ed8c734c2182b3c437",
+    "native_bytes": 12554576,
+    "native_sha256": "5886f4412f688cfba3a5fea07f6570fabc9e268152954e1bf164938642efdd1d",
+    "package_manifest_sha256": "da2e58e278584aa936b1043e2b79972837635f1cf65dd0366c6dc13afce8963a",
+    "results": [
+      {
+        "command": [
+          "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "-j",
+          "4"
+        ],
+        "log_sha256": "db10a3ab75e574a30a69ff38cd5578d1fdaa3f530bd0c3925ed6681f9d43b0c9",
+        "name": "rust-tests",
+        "returncode": 0,
+        "seconds": 16.401015758514404
+      },
+      {
+        "command": [
+          "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+          "build",
+          "--release",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--offline",
+          "-j",
+          "4"
+        ],
+        "log_sha256": "a20e543281684f91da59f3d051a78056a3fa0369a2d6aa5889cb510ac3771eb2",
+        "name": "native-build",
+        "returncode": 0,
+        "seconds": 51.008715867996216
+      }
+    ],
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "rustc_sha256": "859254978c0a0402c32f949f6de0d99aee73be8d15f45aac00ae1448aac51e74",
+    "rustflags": "-C target-cpu=native",
+    "source_manifest_sha256": "8a33a1d27f973d222237b12166b0c4ad3332c71fcb9b9fe7b0ce15ad763bfb9b",
+    "status": "passed"
+  },
+  "compiled_sources_unchanged": true,
+  "contract_sha256": "05e21c89033dee75ba4994ec52107ca36f5b9b0cd1f4c8977764372ea5814589",
+  "created_utc": "2026-09-15 16:41:57 UTC",
+  "first_build_evidence": {
+    "bytes": 78786560,
+    "environment": "environments/16ed8c734c2182b3c437",
+    "files": 1252,
+    "manifest_path": "runs/recurrent-state-interface-evidence-v1/build-manifest.json",
+    "manifest_sha256": "65726ea435d39d6dae6fe8074079e686012490ff560c9d487e9357576bade2ba",
+    "path": "runs/recurrent-state-interface-evidence-v1/build-evidence.tar",
+    "sha256": "470d3ace5575fd955295f4af05b994f1aab98adc8d11a5e9734a24fcd4e8d069",
+    "unpacked_bytes": 76278249
+  },
+  "first_build_replica": {
+    "member_verification": {
+      "archive_sha256": "470d3ace5575fd955295f4af05b994f1aab98adc8d11a5e9734a24fcd4e8d069",
+      "files": 1252,
+      "status": "passed"
+    },
+    "owner": 1,
+    "peer": 2,
+    "transfer": {
+      "bytes": 78786560,
+      "sha256": "470d3ace5575fd955295f4af05b994f1aab98adc8d11a5e9734a24fcd4e8d069",
+      "status": "passed"
+    }
+  },
+  "initial_failure": {
+    "created": 1789489888.932093,
+    "records": [
+      {
+        "command": [
+          "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "-j",
+          "4"
+        ],
+        "log_sha256": "db10a3ab75e574a30a69ff38cd5578d1fdaa3f530bd0c3925ed6681f9d43b0c9",
+        "name": "rust-tests",
+        "returncode": 0,
+        "seconds": 16.401015758514404
+      },
+      {
+        "command": [
+          "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+          "build",
+          "--release",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--offline",
+          "-j",
+          "4"
+        ],
+        "log_sha256": "a20e543281684f91da59f3d051a78056a3fa0369a2d6aa5889cb510ac3771eb2",
+        "name": "native-build",
+        "returncode": 0,
+        "seconds": 51.008715867996216
+      },
+      {
+        "command": [
+          "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-v"
+        ],
+        "log_sha256": "07ac1fa3f2f270375762bdbc98f00beecd8bef3156c430c0e193564a9fecdd41",
+        "name": "python-tests",
+        "returncode": 1,
+        "seconds": 46.659977436065674
+      }
+    ],
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/dev/shm/flygo/runs/recurrent-state-interface-build-v1/worker.py\", line 89, in <module>\n    run([sys.executable, '-B', '-m', 'unittest', 'discover', '-s', 'tests', '-v'], 'python-tests')\n  File \"/dev/shm/flygo/runs/recurrent-state-interface-build-v1/worker.py\", line 56, in run\n    if result.returncode: raise RuntimeError('Failed ' + name + '; preserve the frozen attempt')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Failed python-tests; preserve the frozen attempt\n"
+  },
+  "initial_failure_explanation": "All four new state tests passed in the initial bundle. Ten unrelated suite errors came from omitted report fixtures or PyArrow; the corrected bundle adds the missing report and uses existing PyArrow. No numerical source or native binary changed.",
+  "new_state_tests": [
+    "reset/chunk/batch/owned-state equivalence",
+    "two-chunk dense coordinate differences for every parameter and initial-state element",
+    "independent two-ply JAX gradients and three continued updates, hard/smooth, masked and conditioned heads, both clipping modes",
+    "malformed inputs, invalid updates and stale forward/backward/update/restore revision rejection"
+  ],
+  "python_passed": 186,
+  "qualification_evidence": {
+    "archive": {
+      "bytes": 4700160,
+      "files": 322,
+      "manifest_path": "runs/recurrent-state-interface-evidence-v1/qualification-manifest.json",
+      "manifest_sha256": "fdab7a8f1aae50df3eb41823e25d264691911f6ad85e4d38bfce78d1c660b9e9",
+      "path": "runs/recurrent-state-interface-evidence-v1/qualification.tar",
+      "sha256": "45e39b02b561674641a8ace9dd63283cf975f3605d6bbffb01c8b11dd1ae6a80"
+    },
+    "member_verification": {
+      "files": 322,
+      "status": "passed"
+    },
+    "owner": 2,
+    "peer": 1,
+    "transfer": {
+      "bytes": 4700160,
+      "sha256": "45e39b02b561674641a8ace9dd63283cf975f3605d6bbffb01c8b11dd1ae6a80",
+      "status": "passed"
+    }
+  },
+  "regression": {
+    "arrays": 1602,
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "failures": [],
+    "fixture_sha256": "56655ce083fe11cf5287f86d5e554050b39d4e6e9ccbf179744d937e88c21024",
+    "runs": [
+      {
+        "label": "baseline",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "metadata": {
+          "arrays": 1602,
+          "cases": [
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.0
+            }
+          ],
+          "native": "/dev/shm/flygo/environments/9471407cdd0c68b40179/site-packages/flygo/_native.abi3.so",
+          "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+          "synthetic_update_exposures": 72
+        },
+        "payload_sha256": "fb18cad9c27a004768b9ded026639dd79f1af49d28b12cdcdce3d16603029d44"
+      },
+      {
+        "label": "candidate",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "metadata": {
+          "arrays": 1602,
+          "cases": [
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.0,
+              "updates": 3,
+              "value_core_scale": 0.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "global",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 1.0
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.1
+            },
+            {
+              "batch": 2,
+              "clip_mode": "parameter-group",
+              "rate_softness": 0.05,
+              "updates": 3,
+              "value_core_scale": 0.0
+            }
+          ],
+          "native": "/dev/shm/flygo/environments/16ed8c734c2182b3c437/site-packages/flygo/_native.abi3.so",
+          "native_sha256": "5886f4412f688cfba3a5fea07f6570fabc9e268152954e1bf164938642efdd1d",
+          "synthetic_update_exposures": 72
+        },
+        "payload_sha256": "fb18cad9c27a004768b9ded026639dd79f1af49d28b12cdcdce3d16603029d44"
+      }
+    ],
+    "scope": "Exact old/new reset predictions, all gradients, moments and three continued updates; 12 synthetic protocols. No V0 labels, scientific exposures or TPU.",
+    "seconds": 3.062652826309204,
+    "status": "passed",
+    "synthetic_update_exposures": 144
+  },
+  "running_runtime_unchanged": "9471407cdd0c68b40179",
+  "rust_passed": 56,
+  "scope": "Synthetic CPU engineering gate only. No full-CNS state qualification, V0 scientific update, sequence sampler, memory advantage or TPU claim.",
+  "source_manifest_sha256": "8a33a1d27f973d222237b12166b0c4ad3332c71fcb9b9fe7b0ce15ad763bfb9b",
+  "status": "passed",
+  "tests": {
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "environment": "environments/16ed8c734c2182b3c437",
+    "log_sha256": "099d14f5cde5039a21206f7e8e68d172553f38706990096cca1456246ea13242",
+    "returncode": 0,
+    "scope": "CPU fixtures only; no V0 labels or scientific update",
+    "seconds": 48.115474462509155,
+    "source_manifest_sha256": "58bc692e0ea3432d255ff4a262b431c0ab1718d7cd6599d5d7af6266225fbe87",
+    "status": "passed"
+  },
+  "version": "recurrent-state-interface-v1"
+}

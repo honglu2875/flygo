@@ -140,8 +140,14 @@ computed and discarded, allowing gradients to cross declared chunk boundaries.
 explicit reset equivalence, chunked versus uninterrupted prediction, independent
 finite differences of initial-state gradients, and composed chunk gradients.
 Malformed/nonfinite states and cotangents are rejected. This is a core-only
-engineering gate. It has not updated the native binaries used by the attachment
-studies or enabled a persistent Go learner.
+engineering gate. The subsequent [model/Python/JAX interface gate](recurrent-state-interface.md)
+also passes: 186 Python tests cover complete state through task heads, literal
+boundary cotangents, independent dense differences, JAX gradients and three
+continued updates. A separate old/new reset regression matches all 1,602 arrays
+across twelve synthetic protocols. Both successful checks and the initial
+incomplete test-bundle failure are [retained with peer copies](results/recurrent-state-interface-v1.json).
+These checks use an isolated native runtime and synthetic graphs. They do not
+update live scientific runtimes or qualify a persistent full-CNS Go learner.
 
 A [fixed training-only replay audit](results/trajectory-data-audit-v1.json) checks 128 games from distinct opening
 families, totaling 13,085 positions. Stored observations, cached feature/color
@@ -155,10 +161,9 @@ not qualify a trajectory sampler or establish a memory advantage.
 
 Complete the remaining gates in order:
 
-1. Expose complete state and its cotangent through model readouts, Python and
-   the independent JAX reference. Preserve reset predictions and gradients;
-   then qualify actual-graph nondefault states and continued optimizer updates
-   on CPU. Keep live attachment sources frozen.
+1. Model/Python/JAX state integration and reset fixture regression are complete.
+   Next qualify actual-graph nondefault states and continued optimizer updates
+   on CPU. Keep live scientific sources frozen.
 2. Implement deterministic contiguous replay windows, one D4 transform per
    window, exact causal-prefix reconstruction and portable sampler recovery.
    Test pass/episode boundaries and account for all observed and labeled plies.

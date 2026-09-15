@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 16:03 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 16:43 UTC**. Fixed fly topology, learnable strengths.
 Compare **prediction FLOPs and labeled-position exposures**; report training,
 tuning, memory and latency costs separately. No advantage over the matched CNN
 has been established. Detailed history stays in the linked study reports.
@@ -52,6 +52,19 @@ full validation, value tradeoffs, motor responses and actual prediction FLOPs.
 [Registration and launch record](docs/results/value-core-registration-v1.json).
 Persistent state, attachment changes and precision changes remain separate.
 
+Independent engineering advanced the [explicit-state interface](docs/recurrent-state-interface.md):
+Rust/Python prediction returns complete caller-owned state; literal VJPs carry
+gradients across calls and one revision-checked update applies the accumulated
+window gradient. The CPU fixture gate passes **56 Rust / 186 Python tests**,
+including two-ply dense/JAX derivative checks and three continued updates.
+All **1,602** old/new reset arrays match exactly across twelve synthetic
+protocols. The initial missing-fixture/dependency failure is retained; correcting
+the test bundle changed no native or numerical source. The **1,252** build and
+**322** completed-test archive entries have member-verified peer copies.
+Actual full-CNS state qualification and the causal sampler remain next gates;
+no memory experiment or TPU run was launched.
+[Engineering record](docs/results/recurrent-state-interface-v1.json).
+
 ## Milestones
 
 | Milestone | Status | Remaining work |
@@ -64,7 +77,7 @@ Persistent state, attachment changes and precision changes remain separate.
 | M8: online refinement | Pending a useful prior | Prior/PUCT/Gumbel interfaces and panels work |
 | Biological groups and interfaces | Mapping, readout and signal studies complete | Improve learnability through separately controlled changes |
 | Research notebook | Executed public Hub walkthrough complete | Available for independent researcher exploration |
-| Persistent state | Rust core primitive and trajectory audit complete | Model/Python/JAX integration and scientific training pending |
+| Persistent state | Model/Python/JAX CPU fixtures and trajectory audit complete | Full-CNS state qualification, causal sampler and scientific training pending |
 
 ## What the results support
 
@@ -120,12 +133,12 @@ Persistent state, attachment changes and precision changes remain separate.
   Both notebook executions are retained, totaling **4,096** public-sample
   training exposures. [Setup](notebooks/README.md),
   [current execution record](docs/results/research-notebook-hf-v2.json).
-- **Persistent state:** ten Rust core tests pass, including finite differences
-  and split-trajectory composition. The public model/training interfaces do
-  not yet carry state across Go moves. The replay audit shows current-player
-  color reversal after passes; qualify an absolute-color reset control before
-  attributing a future gain to persistent memory.
-  [Design and audit](docs/temporal-vision-study.md).
+- **Persistent state:** the core and public state/VJP interfaces pass synthetic
+  CPU gates, including independent gradients, chunk composition and exact reset
+  regression. A full-CNS persistent learner is not yet qualified. The replay
+  audit shows current-player color reversal after passes; qualify an
+  absolute-color reset control before attributing a future gain to memory.
+  [Design, interface and audit](docs/temporal-vision-study.md).
 
 ## Resource and evidence rules
 

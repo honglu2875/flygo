@@ -182,6 +182,12 @@ Native callers use `go_core::Board`, `go_actors::game::Game`, `go_actors::Pool`
 and `fly_core::{Graph, Model, Params}` with `fly_core::optim::Adam`.
 The fly numerical crate does not depend on Go, Python or JAX.
 
+For recurrent-memory research, `infer_state` returns a complete caller-owned
+state, `state_vjp` propagates gradients across calls, and `apply_gradients`
+updates once after accumulating a window. See the
+[explicit-state interface](docs/recurrent-state-interface.md) for shapes,
+revision checks and the remaining full-connectome qualification gates.
+
 **Where to make a change**
 
 | Area | Read/edit |

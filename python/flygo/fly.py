@@ -152,6 +152,69 @@ class RustFly:
         return [dict(neurons=neurons,edges=edges) for neurons,edges in
                 self.native.prediction_dependencies(self.config.steps)]
 
+    def initial_state(self, batch):
+        """New episode state in node-major [N,B] order; no state is stored in the model."""
+        import operator
+        batch = operator.index(batch)
+        if batch <= 0:
+            raise ValueError('State batch size must be positive')
+        return np.full((len(self.graph['type_id']), batch), .01, np.float32)
+
+    def _state_array(self, state, batch):
+        state = np.asarray(state, np.float32)
+        if state.shape != (len(self.graph['type_id']), batch) or not np.isfinite(state).all():
+            raise ValueError('Expected finite node-major state [N,B]')
+        return np.ascontiguousarray(state)
+
+    def infer_state(self, features, initial_state, *, trace=False):
+        """Prediction with caller-owned memory. Always returns a complete next_state.
+
+        Carry next_state to the next ply, including opponent moves and passes.
+        The revision token guards subsequent VJPs and the accumulated update.
+        """
+        x = self._input(features)
+        state = self._state_array(initial_state, x.shape[1])
+        logits, value, next_state, states, revision = self.native.infer_state(
+            x, state, self.config.steps, trace)
+        result = dict(logits=logits.reshape(-1, self.config.actions), value=value,
+                      next_state=next_state.reshape(state.shape), revision=revision)
+        if trace:
+            result['states'] = [s.reshape(state.shape) for s in states]
+        return result
+
+    def state_vjp(self, features, initial_state, *, revision, dlogits=None, dvalue=None, dstate=None):
+        """Literal VJP of infer_state: returns (parameter gradients, d_initial_state).
+
+        Cotangents include their own loss normalization. dstate can be the next
+        chunk's initial-state gradient; neither detach nor value_core_scale is
+        applied here. Keep inputs, boundary states and weights unchanged between
+        forward and backward. Accumulate all chunk gradients before one update.
+        """
+        x = self._input(features)
+        batch = x.shape[1]
+        state = self._state_array(initial_state, batch)
+        dl = np.zeros((batch, self.config.actions), np.float32) if dlogits is None else np.asarray(dlogits, np.float32)
+        dv = np.zeros(batch, np.float32) if dvalue is None else np.asarray(dvalue, np.float32)
+        if dl.shape != (batch, self.config.actions) or dv.shape != (batch,):
+            raise ValueError('Head cotangents must match batch-major logits and values')
+        ds = None if dstate is None else self._state_array(dstate, batch)
+        gradients, initial_grad = self.native.state_vjp(x, state, self.config.steps,
+            np.ascontiguousarray(dl), np.ascontiguousarray(dv), revision, ds)
+        return dict(zip(PARAMETERS, gradients)), initial_grad.reshape(state.shape)
+
+    def apply_gradients(self, gradients, *, revision, rate=0.003, clip=1.0,
+                        rate_scales=None, epsilon=DEFAULT_EPSILON):
+        """One Rust Adam update after accumulating literal VJPs at this revision."""
+        validate_epsilon(epsilon)
+        if set(gradients) != set(PARAMETERS):
+            raise ValueError('Expected exactly nine parameter gradient groups')
+        if rate_scales is not None and set(rate_scales)-set(PARAMETERS):
+            raise ValueError('Unknown parameter group in learning-rate multipliers')
+        scales = [1.0 if rate_scales is None else rate_scales.get(name, 1.0) for name in PARAMETERS]
+        norm, step = self.native.apply_gradients(packed(gradients), revision, rate, clip,
+            scales, epsilon, self.clip_mode)
+        return dict(gradient_norm=norm, step=step, clipping=self._clipping_metrics())
+
     def parameters(self):
         return dict(zip(PARAMETERS,self.native.parameters()))
 

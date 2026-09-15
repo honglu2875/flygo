@@ -302,6 +302,49 @@ impl Model {
     ) -> Result<Prediction, String> {
         self.predict_prepared(params, input, batch, steps, None)
     }
+    /// Full-state recurrence for one chunk. Reusing parameter transforms is safe;
+    /// the cached reset message is never used with an explicit initial state.
+    #[allow(clippy::too_many_arguments)]
+    pub fn forward_from_state_prepared(
+        &self,
+        params: &Params,
+        input: &[f32],
+        batch: usize,
+        steps: usize,
+        prepared: &recurrent::Prepared,
+        initial_state: &[f32],
+    ) -> Result<Output, String> {
+        let drive = self.input_drive(params, input, batch)?;
+        let tape = recurrent::forward_from_state_prepared(
+            &self.graph, &self.executor, &params.core, &drive, batch, steps, prepared, initial_state,
+        )?;
+        let prediction = self.readout(params, tape.states.last().unwrap(), batch);
+        Ok(Output {
+            logits: prediction.logits,
+            values: prediction.values,
+            scores: prediction.scores,
+            pooled: prediction.pooled,
+            tape,
+        })
+    }
+    /// Streaming prediction plus every neuron's final state, suitable for the
+    /// next chunk. Readout pruning cannot provide this complete boundary state.
+    #[allow(clippy::too_many_arguments)]
+    pub fn predict_from_state_prepared(
+        &self,
+        params: &Params,
+        input: &[f32],
+        batch: usize,
+        steps: usize,
+        prepared: &recurrent::Prepared,
+        initial_state: &[f32],
+    ) -> Result<(Prediction, Vec<f32>), String> {
+        let drive = self.input_drive(params, input, batch)?;
+        let state = recurrent::predict_from_state_prepared(
+            &self.graph, &self.executor, &params.core, &drive, batch, steps, prepared, initial_state,
+        )?;
+        Ok((self.readout(params, &state, batch), state))
+    }
     /// Same equations as forward, without retaining a differentiation tape.
     pub fn predict_prepared(
         &self,
@@ -448,6 +491,39 @@ impl Model {
         dscores: Option<&[f32]>,
         value_core_scale: f32,
     ) -> Result<Grad, String> {
+        let (grad, _) = self.backward_routed_state(params, input, output, dlogits, dvalues,
+            dembedding, dscores, value_core_scale, None)?;
+        Ok(grad)
+    }
+    /// Literal VJP of (logits, values, final state). The boundary cotangent is
+    /// added after the heads, without a batch reduction or supervised scaling.
+    /// Return the initial-state cotangent for backward composition of chunks.
+    #[allow(clippy::too_many_arguments)]
+    pub fn backward_with_state(
+        &self,
+        params: &Params,
+        input: &[f32],
+        output: &Output,
+        dlogits: &[f32],
+        dvalues: &[f32],
+        dnext_state: Option<&[f32]>,
+    ) -> Result<(Grad, Vec<f32>), String> {
+        self.backward_routed_state(params, input, output, dlogits, dvalues,
+            None, None, 1.0, dnext_state)
+    }
+    #[allow(clippy::too_many_arguments)]
+    fn backward_routed_state(
+        &self,
+        params: &Params,
+        input: &[f32],
+        output: &Output,
+        dlogits: &[f32],
+        dvalues: &[f32],
+        dembedding: Option<&[f32]>,
+        dscores: Option<&[f32]>,
+        value_core_scale: f32,
+        dnext_state: Option<&[f32]>,
+    ) -> Result<(Grad, Vec<f32>), String> {
         let p = &self.ports;
         let batch = output.tape.batch;
         if dlogits.len() != batch * p.actions
@@ -455,6 +531,8 @@ impl Model {
             || input.len() != p.features * batch
             || dembedding.is_some_and(|x| x.len() != p.groups * batch || x.iter().any(|v| !v.is_finite()))
             || dscores.is_some_and(|x| x.len() != batch || x.iter().any(|v| !v.is_finite()))
+            || dnext_state.is_some_and(|x| x.len() != self.graph.neurons() * batch
+                || x.iter().any(|v| !v.is_finite()))
             || dlogits.iter().chain(dvalues).any(|v| !v.is_finite())
         {
             return Err("Invalid model cotangent shapes".into());
@@ -511,7 +589,10 @@ impl Model {
                 }
             })
         });
-        let (core, ddrive) = recurrent::backward(
+        if let Some(extra) = dnext_state {
+            for (g, &value) in dstate.iter_mut().zip(extra) { *g += value; }
+        }
+        let (core, ddrive, dinitial_state) = recurrent::backward_with_state(
             &self.graph,
             &self.executor,
             &params.core,
@@ -528,7 +609,7 @@ impl Model {
                 }
             }
         }
-        Ok(grad)
+        Ok((grad, dinitial_state))
     }
     pub fn loss_and_grad(
         &self,

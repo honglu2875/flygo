@@ -1,0 +1,26 @@
+{
+  "version": "recurrent-state-interface-engineering-v1",
+  "scope": "Model/Python boundary and independent CPU JAX reference only; no memory experiment or scientific training",
+  "baseline_commit": "96af059e77d26b41629d1294a79e1d0275e574b0",
+  "running_runtime_unchanged": "9471407cdd0c68b40179",
+  "device": "cpu",
+  "host": 1,
+  "cpus": [56, 57, 58, 59],
+  "state_layout": "node-major [N,B], complete graph, caller owned",
+  "vjp": "Literal logits/value/final-state cotangents; no implicit batch reduction, detach, or supervised value-to-circuit scaling",
+  "optimizer_boundary": "Sum all chunk parameter gradients at one revision, then one Adam update",
+  "fixture_gates": [
+    "Existing workspace Rust and Python suite",
+    "Bitwise reset equivalence, chunked/whole equivalence, streaming/trace equivalence, independent batch columns",
+    "Independent float64 dense central differences for every parameter and initial-state coordinate, two chunks, hard/smooth rates",
+    "Independent CPU JAX two-ply objective, all parameter and initial-state gradients, three continued updates, masked/conditioned readout, global/per-group clipping",
+    "Malformed/nonfinite states, head and state cotangents, invalid gradient updates, stale VJP/update/restore revisions"
+  ],
+  "deferred_gates": [
+    "Actual full-CNS nondefault-state and continued-update CPU numerical qualification",
+    "Deterministic causal replay windows, absolute-color mapping, reset/carry comparison registration",
+    "TPU qualification when separately authorized"
+  ],
+  "resource_limits_gib": {"own_files_cap": 100, "free_filesystem_floor": 64, "available_memory_floor": 96},
+  "retain_failed_attempts": true
+}

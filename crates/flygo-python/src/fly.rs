@@ -6,6 +6,7 @@ use pyo3::{
     prelude::*,
 };
 use std::sync::Mutex;
+mod explicit_state;
 
 struct State {
     model: Model,
@@ -182,6 +183,30 @@ impl FlyModel {
             let state = self.state.lock().map_err(|error| error.to_string())?;
             state.model.prediction_dependencies(steps)
         }).map_err(PyValueError::new_err)
+    }
+    #[pyo3(signature=(input, initial_state, steps, trace=false))]
+    fn infer_state<'py>(
+        &self, py: Python<'py>, input: PyReadonlyArray2<'py, f32>,
+        initial_state: PyReadonlyArray2<'py, f32>, steps: usize, trace: bool,
+    ) -> PyResult<explicit_state::InferState<'py>> {
+        explicit_state::infer(self, py, input, initial_state, steps, trace)
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[pyo3(signature=(input, initial_state, steps, dlogits, dvalue, revision, dnext_state=None))]
+    fn state_vjp<'py>(
+        &self, py: Python<'py>, input: PyReadonlyArray2<'py, f32>,
+        initial_state: PyReadonlyArray2<'py, f32>, steps: usize,
+        dlogits: PyReadonlyArray2<'py, f32>, dvalue: PyReadonlyArray1<'py, f32>,
+        revision: u64, dnext_state: Option<PyReadonlyArray2<'py, f32>>,
+    ) -> PyResult<(Arrays<'py>, Bound<'py, PyArray1<f32>>)> {
+        explicit_state::vjp(self, py, input, initial_state, steps, dlogits, dvalue, revision, dnext_state)
+    }
+    #[allow(clippy::too_many_arguments)]
+    fn apply_gradients(
+        &self, py: Python<'_>, gradients: Vec<PyReadonlyArray1<'_, f32>>, revision: u64,
+        rate: f32, clip: f32, rate_scales: Vec<f32>, epsilon: f32, clip_mode: &str,
+    ) -> PyResult<(f64, u64)> {
+        explicit_state::update(self, py, gradients, revision, rate, clip, rate_scales, epsilon, clip_mode)
     }
     fn parameters<'py>(&self, py: Python<'py>) -> PyResult<Arrays<'py>> {
         let state = self
