@@ -227,8 +227,8 @@ def launch(args):
         peer=f'cubic27@t1v-n-a09f5679-w-{host}'
         jobs=[r for r in records if r['host']==host]
         if host:
-            files=[p for p in environment.rglob('*') if p.is_file()]
-            if runtime:files.extend(p for p in runtime.rglob('*') if p.is_file())
+            files=[p for p in environment.rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+            if runtime:files.extend(p for p in runtime.rglob('*') if p.is_file() and '__pycache__' not in p.parts)
             files.extend(p for j in jobs for p in Path(j['config']).parent.iterdir() if p.is_file())
             if 'signal' in plan.get('analyses',[]):files.append(root/'runs'/plan['name']/'plan.json')
             replicate_bundle(files,root,peer)

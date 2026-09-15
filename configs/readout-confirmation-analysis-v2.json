@@ -1,0 +1,95 @@
+{
+  "arithmetic": "Use the registered 64-position sample, seed 917271, B1/B32, warm reset-state cache, complete unpruned recurrent work plus visual encoding and masked heads. Report absolute work and paired differences; no existing CNN budget is inherited.",
+  "arms": [
+    "dense",
+    "soma-side",
+    "shuffled-side"
+  ],
+  "bootstrap": {
+    "interval": [
+      0.025,
+      0.975
+    ],
+    "resamples": 1000,
+    "seed": 709,
+    "unit": "opening_family"
+  },
+  "confirmation_independence": "Fresh head/sampler seeds only; same shared initial core strengths, frozen corpus, validation families, map and masks. No new external validation population.",
+  "contrasts": [
+    {
+      "candidate": "soma-side",
+      "question": "Does restricting policy by soma side improve learning?",
+      "reference": "dense"
+    },
+    {
+      "candidate": "soma-side",
+      "question": "Does anatomical assignment add value beyond the same per-action fan-in constraint?",
+      "reference": "shuffled-side"
+    },
+    {
+      "candidate": "shuffled-side",
+      "question": "What is the effect of the generic block constraint?",
+      "reference": "dense"
+    }
+  ],
+  "current_source_novel_positions": 62984,
+  "development_evidence": {
+    "path": "runs/readout-roles-analysis-v1/result.json",
+    "seeds": [
+      4,
+      5,
+      6
+    ],
+    "sha256": "5b414a9776767fd83791ad2d3858f3ad21da69ed5226b76dd0365ef59abc5670"
+  },
+  "diagnostics": {
+    "leading_cell_counts": [
+      1,
+      8
+    ],
+    "motor_std_floor": 1e-06,
+    "positions": 256,
+    "selection_seed": 972091
+  },
+  "endpoint_update": 1000,
+  "interpretation": "Report all three contrasts, every paired-seed difference, conditional opening-family intervals, teacher agreement and complete prediction arithmetic. The main confirmation asks whether soma-side improves both mean policy KL and mean value MSE over dense with both losses improving in each fresh seed, and whether its policy KL improves over the same frozen shuffled-side control in each fresh seed. Report any failure or tradeoff explicitly; do not change masks, horizon, optimizer or decoder using a favorable intermediate metric. A successful result makes soma-side a provisional attachment candidate for subsequent separately registered execution work, not evidence of physiological function, playing strength or advantage over a matched CNN. Repeating one fixed shuffled partition does not establish robustness to arbitrary partitions.",
+  "labeled_exposures_per_endpoint": 32000,
+  "metrics": [
+    "policy_kl",
+    "value_mse",
+    "teacher_top1_agreement"
+  ],
+  "name": "readout-confirmation-analysis-v2",
+  "native_sha256": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1",
+  "novelty": "Reuse masks.current from runs/attachment-input-novelty-v1/masks.npz, after checking its source receipt. All four arms share the current-board input; the older current-and-neutral intersection is not their novelty definition. This is source-feature novelty before retinal rendering.",
+  "novelty_masks": "runs/attachment-input-novelty-v1/masks.npz",
+  "novelty_masks_sha256": "edb7b2f31d2825431db7dfc3c68a52cd40bdc2e1a82998eb3c7821f958a13baa",
+  "numerical_runtime": "rust-fp32-circuit-f64-head-reductions-v3",
+  "revision": "Launch evidence updated to combined-v2 qualification. Wave 1 followup v2 recovers a pre-worker immutable-cache transfer conflict by excluding interpreter bytecode. Scientific analysis and endpoints unchanged.",
+  "scope": "Fresh-seed confirmation of the soma-side result, chosen after the completed seeds 4/5/6 screen. All analysis rules, three arms, three contrasts and fixed horizons are frozen before new scientific training. Discovery and confirmation results reported separately; the same validation families are reused, so this is a training-seed confirmation rather than an untouched-data test. No final-test access or TPU use.",
+  "seeds": [
+    7,
+    8,
+    9
+  ],
+  "slices": [
+    "natural",
+    "current_reduced_source_novel"
+  ],
+  "uncertainty": "Report every paired-seed difference and its sample SD. Family intervals condition on the three fitted weights and do not estimate training-seed uncertainty. Do not treat repeated positions or fitted seeds as independent games.",
+  "validation_positions": 70425,
+  "wave_plans": [
+    {
+      "endpoints": "runs/readout-confirmation-wave1-endpoints-v1",
+      "followup": "runs/readout-confirmation-wave1-followup-v2",
+      "path": "runs/readout-confirmation-wave1-v2/plan.json",
+      "sha256": "edc389fe8a801cc883e3f54c98174b5a1c00f0991fd8165ee4f84b88a3f7879f"
+    },
+    {
+      "endpoints": "runs/readout-confirmation-wave2-endpoints-v1",
+      "followup": "runs/readout-confirmation-wave2-followup-v1",
+      "path": "runs/readout-confirmation-wave2-v2/plan.json",
+      "sha256": "bb5b86a1b52246cecbd37b26c85cff553c3ab14da3b4cfd2c7bd22bfb354a635"
+    }
+  ]
+}

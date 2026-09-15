@@ -1,0 +1,207 @@
+{
+  "created": 1789457972.1742482,
+  "endpoint_replication": {
+    "archive_sha256": "b4019618f29438c7ab0358fd57af4f379624aee4dd75e3ddbf4a706a63b37605",
+    "files": 10,
+    "status": "passed",
+    "transferred_files": 6,
+    "verified_existing_files": 4
+  },
+  "endpoints": {
+    "collector_sha256": "9db5825d75601b71880c75f818aba5e1c1bfd0940535df690f72dbeb892c4c7c",
+    "created": 1789457709.273897,
+    "environment": "/dev/shm/flygo/environments/2ba439e309df1e902b58",
+    "helper_sha256": "04eb3475b42bc7f6c54d00e5e581ed7e0a131c154b999dbdf44ffd7d03280101",
+    "plan_sha256": "edc389fe8a801cc883e3f54c98174b5a1c00f0991fd8165ee4f84b88a3f7879f",
+    "records": [
+      {
+        "checkpoint_sha256": "58977fb24c6f7ad6bd6467fffc188eddffaf4fa17ca55253b30a0d62b666a98e",
+        "host": 1,
+        "path": "runs/readout-confirmation-wave1-endpoints-v1/readout-confirm-dense-seed7-v1.json",
+        "run_id": "readout-confirm-dense-seed7-v1",
+        "sha256": "3e63ca09dc4bd42783a440719c090de6a8244ce7027f1448ca2a32e8220fdb6a"
+      },
+      {
+        "checkpoint_sha256": "aaf89e02706891a925c22cf9e477469c4a0136843b14546a5efca1a0fccc9383",
+        "host": 1,
+        "path": "runs/readout-confirmation-wave1-endpoints-v1/readout-confirm-soma-side-seed9-v1.json",
+        "run_id": "readout-confirm-soma-side-seed9-v1",
+        "sha256": "514b5c7e4467098946884ff46444daab6b75fa030451fd8e69b66acb3be221c4"
+      },
+      {
+        "checkpoint_sha256": "b5bcfe6682a95e6a66397f07a0512084123de7e17353df4d5aa4ba0f1183c684",
+        "host": 2,
+        "path": "runs/readout-confirmation-wave1-endpoints-v1/readout-confirm-dense-seed8-v1.json",
+        "run_id": "readout-confirm-dense-seed8-v1",
+        "sha256": "5cbc9f96d53138526a335c60578797c802d581d5091d3a6a8c0bb82da8c5c92c"
+      },
+      {
+        "checkpoint_sha256": "e79cd498899910ac7acf740be702ac6be34f49067344d47230e384e30432c541",
+        "host": 2,
+        "path": "runs/readout-confirmation-wave1-endpoints-v1/readout-confirm-soma-side-seed7-v1.json",
+        "run_id": "readout-confirm-soma-side-seed7-v1",
+        "sha256": "2b0f4a46619764a15febbb1ba203ad3ad1321db87f6553578cecda0b96127b9a"
+      },
+      {
+        "checkpoint_sha256": "7327fb77b943e98a85b46eb06019d7e5706deac9764d9a58e08c12e544d0de8f",
+        "host": 3,
+        "path": "runs/readout-confirmation-wave1-endpoints-v1/readout-confirm-dense-seed9-v1.json",
+        "run_id": "readout-confirm-dense-seed9-v1",
+        "sha256": "228852b8c6a05f319f6998d363f5409dbc44254893578b5543185e0d429a0024"
+      },
+      {
+        "checkpoint_sha256": "b93e6e7240adcbf983e7e9aca37344c7f3f44b48c555e4f9bcd8d19b1fc9666d",
+        "host": 3,
+        "path": "runs/readout-confirmation-wave1-endpoints-v1/readout-confirm-soma-side-seed8-v1.json",
+        "run_id": "readout-confirm-soma-side-seed8-v1",
+        "sha256": "a2a5882864a7ff91a6b402ef04f70081fb94e30cc35777fac65f48bd7db259aa"
+      }
+    ],
+    "scope": "Owner-local initial/final audits; verified recovery copies required. Only small JSON evidence copied to root. No new inference, updates, checkpoint payload transfers, final-test access or TPU.",
+    "status": "complete"
+  },
+  "engineering": {
+    "actual_io_cases": 9,
+    "actual_numerical_cases": 18,
+    "created": 1789456220.4359186,
+    "deployment_tests": 8,
+    "files": {
+      "deploy_research.py": "33ac2bf29455560d4b728c8e20de7b49e5aa3f4a9b019b03082535510d3da12e",
+      "finish_study.py": "f60952401fed2087efa7a08a0b78019ac0275cb581490ccd38ebfd8112c412fa",
+      "readout-confirmation-analysis-v2.json": "e758acc2b7ce80aea00b5535ec4bf91e1729f0bc0c4255b9f313774771852e54",
+      "readout-confirmation-wave1-v2.json": "edc389fe8a801cc883e3f54c98174b5a1c00f0991fd8165ee4f84b88a3f7879f",
+      "readout-confirmation-wave2-v2.json": "bb5b86a1b52246cecbd37b26c85cff553c3ab14da3b4cfd2c7bd22bfb354a635",
+      "test_head_deployment.py": "0b8950e51a80414e83f1812ddc5b2bbedbb29109fde763be421bb0e14d2c96d9"
+    },
+    "scope": "Controller binds both numerical constituents to the registered launch and source, exact recovery and paired initialization. Only the engineering test inputs changed; original two free-peak failures retained. No science settings changed.",
+    "source_environment": "environments/2ba439e309df1e902b58",
+    "status": "passed"
+  },
+  "queue_source": {
+    "change": "Entry filename queue.py -> worker.py; all source bytes, scientific plans and dependencies unchanged.",
+    "created": 1789457504.4015617,
+    "files": {
+      "code/attachment_endpoint.py": "04eb3475b42bc7f6c54d00e5e581ed7e0a131c154b999dbdf44ffd7d03280101",
+      "code/audit_circuit.py": "97e71704868553a345f7455a8c296cc8046bab65495a07074e893998b485e865",
+      "code/audit_groups.py": "afc68f7bbc5d0b136ab4f5191df358c02d4bddb4a7274a9aaf3c559cf3de6429",
+      "code/audit_input_novelty.py": "ed1f0cd0970c39a2fb336cf07eb8612136294696481d21816bc594404a2297bc",
+      "code/audit_readout.py": "f6e261908828d88ce8b9645a810e41f8c1d37dac2b9cd489c8b75906bfffd8f3",
+      "code/audit_trajectory_data.py": "72964001d952239915ffb8c67aed666ca10b02a3271a1f385cbdb59eaa84c6ee",
+      "code/benchmark_generation.py": "566a7b615378964e24fd87736e79d576fa5b18821a2fee42db6fe11975e7e5a5",
+      "code/benchmark_prediction.py": "4f4a75b46a44fd396b999ce0072627c6a3851c6ecba8c84fe9044c341a2c2d80",
+      "code/cache.py": "483b34204da4cb21454058ace46882a6a9cdb2444fcd1f8aa1581f2656e8cc45",
+      "code/calibrate_opponents.py": "1eed961b872e259a7b6d252b9dda1e51148967e782a645da7a3f2317b91bb793",
+      "code/cluster.py": "46415a07c13b524b31785f5780af2625e2560962a30b3a88ff46b0debefaa752",
+      "code/collect_attachment_endpoints.py": "9db5825d75601b71880c75f818aba5e1c1bfd0940535df690f72dbeb892c4c7c",
+      "code/compare_checkpoints.py": "2fc4bbed212a2e44bc2ce4805557397173f69b6e332e359dc8353616e991dacb",
+      "code/count_inference.py": "098570c2010a7b69a03e5581d9d9bd798ae0b936eade0f717445a8d3a6042b80",
+      "code/deploy_research.py": "33ac2bf29455560d4b728c8e20de7b49e5aa3f4a9b019b03082535510d3da12e",
+      "code/dev.py": "9db9f1df66e0276b037581849bfa825d782f852f1bc70ece163a357738d67ef6",
+      "code/diagnostic_fly.py": "b928e4d82310a296534146c8679310a9d399611da0efd130366e5fafd3231c55",
+      "code/finish_study.py": "f60952401fed2087efa7a08a0b78019ac0275cb581490ccd38ebfd8112c412fa",
+      "code/fit_motor_convex.py": "2f5533588f469de8efdd117dab7e8f4b2010479244ba7169a4298c556c967b85",
+      "code/fit_subset.py": "07442783c29c08ffade48fc1ff1ff2a676c80f32bf95e9c7aacdd40ad7e2c44b",
+      "code/freeze_corpus.py": "08191f4135ff6f0fc9f7263834452187d353140269cfffa8368b43205e73688f",
+      "code/inventory.py": "e8a62728a45847817c190070df26f28b9d3047ab5e61a854b21f51d70e5a7b00",
+      "code/prepare_attachments.py": "d5f6dfea43764bb5111594eab5c0a56a7bd67c65849311dd71843e700ceae3cd",
+      "code/prepare_control.py": "538f38de9c91414591fff492786d99542bacce1b9808dd1bffe2ca05abadbe85",
+      "code/prepare_embeddings.py": "fdadee10dc7e374cfc25fa8f91fd605272ecfa3df42f864627ff33d6c06a9db2",
+      "code/prepare_graph.py": "846a11a8c7b270583be14475703d0548444a0cf58f86159437877676e2226814",
+      "code/prepare_head_masks.py": "7c62687b03a8ff5b035db99662901a326ea43092d9af9abfb6232b9a20c81e3d",
+      "code/prepare_retinal_allocation.py": "973feca6966ee1db7f630ac3bef60885460df1959e4f9862daa083b16669623f",
+      "code/probe_attachment_signal.py": "63f4c8655c8bb0f43ef373f4be853877d706da6a903dede71ae649e9e5e2a118",
+      "code/probe_biological_ports.py": "083f93bb4eeaeb026ec167a8baa344c02fe0d914e3ed0b917e41f501a502dbaf",
+      "code/probe_motor_learnability.py": "bf07093ac4b257174d06359394879571d59f621ba873d2ea95a69cdde01e58fb",
+      "code/probe_readout_contributions.py": "c94538b51ced39fbe3f523e5c87af1c0030a41a057004b5bfa4b6b4358b61da9",
+      "code/probe_retinal_allocation.py": "77462b5d10a98176335573a9b5b585924bcf17fe92860120b2a030865a889585",
+      "code/profile_cpu.py": "42b5620b4cc8903ff26cd4ee36e84a1ffa5cba8e63f4e92e21c54d923e2914d5",
+      "code/qualify_attachment_io.py": "8e95fa558390fea77bddc9039625dd15a94f7fa5da4052a5076ce6710d88e38f",
+      "code/qualify_data.py": "6993a5f5f98f948e79d00804c623c64659fe246a458a923b70c40b6d231ea57f",
+      "code/qualify_embedding.py": "7a7a980af36afd2256b428eb42661954a1a9b45cb2ffc1a7ff2cbc90c3301dd5",
+      "code/qualify_fly.py": "7a58e4bdecde8a5f3392e7ca94579163d4af56d9ef878b5631c43a394d133068",
+      "code/qualify_head_io.py": "f3fce7fb75b99a65103a55cd0d8df78cc80657c8a9373a79835eeb6947370fba",
+      "code/qualify_ports.py": "6798a4a7235c727478397f2d466b58a171f39eb9a7e55a19cd62634efbb0b172",
+      "code/qualify_prediction_dependencies.py": "c3196d8f039fe7f0963a49f97f591a28375e80b19dd84929a0ad54698cf31787",
+      "code/queue_cpu.py": "bad934f26dcc4f3c14a3e94a823abaf7de9eb0c67c290920ac22f524be8200b0",
+      "code/replicate_checkpoints.py": "1f7dbcb9d0de3c2d13d525f33804dda4e70b41897e72edbb6b899d5cacac937d",
+      "code/retinotopy.py": "b5c81c2c5f9296efd0e5397eea03e881db7af909ef0b9e4ebc26cb8be6797869",
+      "code/summarize_attachment_confirmation.py": "cf32a8b5ccd330d6f9ab69043645ca21f590e8f663be8892b4df04e9a049c197",
+      "code/summarize_attachments.py": "ee798a0dae500d0edaeaecbd373cef0563cd9eb2d37753dfd70e58ac1035b04f",
+      "code/summarize_head_qualification.py": "0e20cdd56e78475e888c7780005e205792b4aa885bd632da9d8a88dc334eeb0d",
+      "code/summarize_motor_convergence.py": "d4891ee32eb05ae1f7f8a14fc01104c9ff88fa179e2cd7c4e698abbeb45f8a37",
+      "code/summarize_readout_roles.py": "af76608746cef51d2cc230dc967ab4423ded5ce6341495742f14a542e7c57165",
+      "code/summarize_retinal_allocation.py": "4777349f0cfe246afbd44b0b2920b6efb2442c35f7f4aaca7464b64b5f562758",
+      "code/summarize_study.py": "ab7829092e5e2818a88eecb13eacc44f18b546e8e8ea396c3fb684806486e269",
+      "code/tpu.py": "97b7e4e5d0fc7618767194a0fed1f78404f53a90011cc4848a1b0b7a4f7d83d2",
+      "code/tpu_study.py": "c4c349daf4a1d0ab6bd3b22c77308f1ad5300719240073bd6a973c3cd30b9e5b",
+      "code/tpu_worker.py": "ff0976c8a3316b61a34efadb9be2105c4de9a5253b9ceca65d8c78806b7440bd",
+      "code/train_embeddings.py": "4142ea18b3f93cef4dda79fca9ff35c55da24f33b6b73364772050787c7015b6",
+      "code/verify_restore.py": "ac81c0094009704a43ca5e70a688b62878f3d83f7729de2cdc3e3e0add7d97c4",
+      "code/worker.py": "753ee5711ba368eba26113aaaa308255e95def4beaf2112b18aa718037eac776",
+      "config.json": "3d00f579b5dae848c059bf85a598dfa1e0628eb46d7a68a6069b6cc9540cba0c",
+      "wave1.json": "edc389fe8a801cc883e3f54c98174b5a1c00f0991fd8165ee4f84b88a3f7879f",
+      "wave2.json": "bb5b86a1b52246cecbd37b26c85cff553c3ab14da3b4cfd2c7bd22bfb354a635"
+    },
+    "recovery_of": "runs/readout-confirmation-wave2-queue-v2"
+  },
+  "recoveries": [
+    {
+      "reason": "Immutable transfer included host-local storage.cpython-38.pyc with different bytes. No followup worker was live on any host before recovery.",
+      "recovery": "readout-confirmation-wave1-followup-v2",
+      "scope": "Exclude interpreter caches from transfer; numerical source, learner and analysis settings unchanged.",
+      "status": "failed_before_workers"
+    },
+    {
+      "error": "Entry named queue.py shadowed the Python standard-library queue module.",
+      "phase": "import_before_waiting_or_launch",
+      "recovery": "runs/readout-confirmation-wave2-queue-v3",
+      "state": "failed",
+      "updated": 1789457504.3987818
+    }
+  ],
+  "scope": "Six fixed 1000-update / 32000-exposure dense/soma endpoints and all initial/final replicas complete. Full validation and signal/arithmetic followups remain live. All three shuffled-side controls are queued behind those completed analyses. This is launch/accounting evidence, not a confirmation outcome. No TPU.",
+  "status": "wave1_training_complete_analysis_pending",
+  "wave2_queue": {
+    "dependencies": [
+      {
+        "dependency": "readout-confirmation-wave1-followup-v2/readout-confirm-dense-seed7-v1",
+        "host": 1,
+        "ready": false,
+        "state": "validation"
+      },
+      {
+        "dependency": "readout-confirmation-wave1-followup-v2/readout-confirm-soma-side-seed9-v1",
+        "host": 1,
+        "ready": false,
+        "state": "validation"
+      },
+      {
+        "dependency": "readout-confirmation-wave1-followup-v2/readout-confirm-dense-seed8-v1",
+        "host": 2,
+        "ready": false,
+        "state": "validation"
+      },
+      {
+        "dependency": "readout-confirmation-wave1-followup-v2/readout-confirm-soma-side-seed7-v1",
+        "host": 2,
+        "ready": false,
+        "state": "validation"
+      },
+      {
+        "dependency": "readout-confirmation-wave1-followup-v2/readout-confirm-dense-seed9-v1",
+        "host": 3,
+        "ready": false,
+        "state": "validation"
+      },
+      {
+        "dependency": "readout-confirmation-wave1-followup-v2/readout-confirm-soma-side-seed8-v1",
+        "host": 3,
+        "ready": false,
+        "state": "validation"
+      }
+    ],
+    "pid": 3006051,
+    "state": "waiting",
+    "updated": 1789457952.747454
+  }
+}

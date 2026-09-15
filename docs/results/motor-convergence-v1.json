@@ -1,0 +1,3718 @@
+{
+  "baseline": {
+    "policy_entropy": {
+      "family_bootstrap_95": [
+        3.2347587120671197,
+        3.3722082601018455
+      ],
+      "mean": 3.3282835226560485,
+      "per_seed": [
+        3.3314992930088825,
+        3.3566478573369434,
+        3.296703417622319
+      ],
+      "seed_sd": 0.03010132633949355
+    },
+    "policy_kl": {
+      "family_bootstrap_95": [
+        1.3146329192268693,
+        1.8630267322978038
+      ],
+      "mean": 1.683933501614213,
+      "per_seed": [
+        1.6740258741217557,
+        1.6872524326662548,
+        1.6905221980546288
+      ],
+      "seed_sd": 0.008734623822508034
+    },
+    "teacher_entropy": {
+      "family_bootstrap_95": [
+        1.4987139126018096,
+        1.9749161474550652
+      ],
+      "mean": 1.6534123034644221,
+      "per_seed": [
+        1.6534123034644224,
+        1.6534123034644224,
+        1.6534123034644224
+      ],
+      "seed_sd": 2.7194799110210365e-16
+    },
+    "teacher_top1": {
+      "family_bootstrap_95": [
+        0.1505442202215697,
+        0.27489494603876874
+      ],
+      "mean": 0.190673828125,
+      "per_seed": [
+        0.1876220703125,
+        0.178955078125,
+        0.2054443359375
+      ],
+      "seed_sd": 0.013505743747527907
+    },
+    "top_probability": {
+      "family_bootstrap_95": [
+        0.10100090636190931,
+        0.13020701008781918
+      ],
+      "mean": 0.11021161347483188,
+      "per_seed": [
+        0.10201680783917783,
+        0.09794307835765602,
+        0.1306749542276618
+      ],
+      "seed_sd": 0.017838443150874378
+    }
+  },
+  "complete_fits": 27,
+  "converged_fits": 27,
+  "created": 1789457031.8445673,
+  "fit_label_exposures": 97419264,
+  "gradient_audit_label_exposures": 442368,
+  "owner_audits": [
+    {
+      "bank_sha256": "458354747d210fab889a8a6d580cd9c2672f1dbaec890cf25dc61076c7748bdf",
+      "checkpoint_sha256": "c486f63d782ce9e3cbec26e7d0e53e9be79c2a1d4f5fbf6b6ecf7671fef610fb",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "path": "runs/motor-convergence-v1/owner-1-analysis-v1.json",
+      "seed": 4,
+      "selection": {
+        "train": {
+          "families": 4158,
+          "indices_sha256": "43af1a87e2424d4e9bd86f3c30eabe8afef42f052459ae9ecc545d9fbcff84f8",
+          "labels_sha256": "c8cc64b2c2bdff1845612cdc0d9153dfda42d8b86762c01cd6cbcc21acf1482c",
+          "motors_sha256": "c4af985d67f9701006516eaf2f0630be4e9caad60998869884d39520f6d1768c",
+          "positions": 16384
+        },
+        "validation": {
+          "families": 254,
+          "indices_sha256": "41d567ee1807546848cca680adf42b1b2cf623ba2a9be787c32a27e838a35ea1",
+          "labels_sha256": "ac5617b6af3fa131e6389151c1006945ef36b16290f7be82513c2ec62f5e34e2",
+          "motors_sha256": "0361c9c13a77d86b6d85635626d4a3604156d44048d5fb2bd27222caf0d8a9a3",
+          "positions": 8192
+        }
+      },
+      "sha256": "a05470ca5b127bbd61035814906a0aa41254471deb5407a07e2aa4cc60716d39"
+    },
+    {
+      "bank_sha256": "f379d192765fb718d2962ce84914a622a39213ca57098acdb6bcba3987d3b00f",
+      "checkpoint_sha256": "ba05d7f46df47c57c553ce4facbb5e9bd0351b00dd571f3a2684e5deb766d830",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "path": "runs/motor-convergence-v1/owner-2-analysis-v1.json",
+      "seed": 5,
+      "selection": {
+        "train": {
+          "families": 4158,
+          "indices_sha256": "43af1a87e2424d4e9bd86f3c30eabe8afef42f052459ae9ecc545d9fbcff84f8",
+          "labels_sha256": "1397209e901783dbf396ed35244d381596cd91db6489d61dabdbbf2610c576a7",
+          "motors_sha256": "832d31764bffa3f5ae7ca72b721db9f1d4503b438dd7b85c5924cd0c7df6d2f9",
+          "positions": 16384
+        },
+        "validation": {
+          "families": 254,
+          "indices_sha256": "41d567ee1807546848cca680adf42b1b2cf623ba2a9be787c32a27e838a35ea1",
+          "labels_sha256": "ffe72a7e38e5bfe0d3ae945a9821715d4c9447fcd8b38a91c1ddbd3da49fb717",
+          "motors_sha256": "3a40973a96070b22fcdd089bbd377316c6710bf3cba1106436132a3f6305a37f",
+          "positions": 8192
+        }
+      },
+      "sha256": "a1a525a23a2c2c861ec51536c667d853109e28f83f871ec01e45394c431857fe"
+    },
+    {
+      "bank_sha256": "ffb98eb0998fdbf15973dcb9cb8348d2d109bea96e143a1c3484c90186a03a96",
+      "checkpoint_sha256": "5f2073ac611861aa4b99ce731feaf2bc5122ee4d32ef412bcbc2e2c126c22e5f",
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "path": "runs/motor-convergence-v1/owner-3-analysis-v1.json",
+      "seed": 6,
+      "selection": {
+        "train": {
+          "families": 4158,
+          "indices_sha256": "43af1a87e2424d4e9bd86f3c30eabe8afef42f052459ae9ecc545d9fbcff84f8",
+          "labels_sha256": "c0f1c310a97bdcb82fea81272281427a652122f2fb34ba993d39fd7828b473a9",
+          "motors_sha256": "303564bdddcb9bc5a3089efe7a9230e58dd64544cd59a05265ae85af5d08be5a",
+          "positions": 16384
+        },
+        "validation": {
+          "families": 254,
+          "indices_sha256": "41d567ee1807546848cca680adf42b1b2cf623ba2a9be787c32a27e838a35ea1",
+          "labels_sha256": "fe31ebe20378fb016f1a1b6ca494d9cae66594dcdc48909e495000a3aefd7438",
+          "motors_sha256": "2c3822b5cc782bdeb03da693b4a6afa6224398df19cf40ebaf7c6919e7b61584",
+          "positions": 8192
+        }
+      },
+      "sha256": "12d81814f815828aa96d6fe63caf003c13b622c489b97d33875709abb50e6b8e"
+    }
+  ],
+  "plan": {
+    "acceptance": {
+      "formula": "F(theta)-F* <= ||gradient in original feature coordinates||_2^2/(2*ridge), since the objective is ridge-strongly-convex. This is a numerical gradient-based bound, not interval-arithmetic certification.",
+      "max_gradient_gap_bound": 0.0001
+    },
+    "audit": "Compare the conditioned solution and mapped original coefficients on all training predictions; evaluate the original-coordinate gradient independently and check the transformation. Report every termination, objective, gradient, bound, call count, label exposures and fixed endpoint even if the bound fails.",
+    "banks": [
+      {
+        "bank_sha256": "458354747d210fab889a8a6d580cd9c2672f1dbaec890cf25dc61076c7748bdf",
+        "host": 1,
+        "seed": 4
+      },
+      {
+        "bank_sha256": "f379d192765fb718d2962ce84914a622a39213ca57098acdb6bcba3987d3b00f",
+        "host": 2,
+        "seed": 5
+      },
+      {
+        "bank_sha256": "ffb98eb0998fdbf15973dcb9cb8348d2d109bea96e143a1c3484c90186a03a96",
+        "host": 3,
+        "seed": 6
+      }
+    ],
+    "blas_threads": 4,
+    "centering": "Subtract each variant feature mean fitted on training only. Regularization is defined on coefficients of these centered features and the learned intercept.",
+    "condition": "Full untruncated eigendecomposition C=Q diag(d) Q^T of training covariance. Transform phi to (phi-mean) Q diag(1/sqrt(max(d,0)+ridge)). This is invertible; no motor or covariance direction is selected or removed.",
+    "core_environment": "environments/2ba439e309df1e902b58",
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "data": "Reuse exactly the same fixed training D4 views, natural validation subset and opening-family split. No test labels or new core extraction. This is a validation-informed diagnostic on reused banks, not fresh independent confirmation.",
+    "dependency_environment": "environments/tpu-ec7b62e32ad49c203cdd",
+    "features": "Same raw individual motor bank as motor-learnability-v1, before readout gains. Training-only normalization with its fixed 1e-6 floor; gated keeps the same at most 128 largest positive standardized deviations. Bias-only adds an action-bias residual over the original policy.",
+    "followup": "If a sufficiently converged decoder generalizes much better than bias-only, qualify its conditioning for end-to-end training. If converged training loss or held-out fit remains poor, examine attenuation from incoming-strength averaging before a separately registered propagation study. Do not infer missing information from a nonconverged or overfit fit.",
+    "initialization": "Zero residual coefficients, reproducing the frozen original logits for every case.",
+    "metrics": [
+      "train_policy_kl",
+      "validation_policy_kl",
+      "policy_entropy",
+      "teacher_top1",
+      "top_probability",
+      "ridge_penalty",
+      "optimization_gap_bound",
+      "objective_evaluations",
+      "labeled_exposures",
+      "seconds"
+    ],
+    "name": "motor-convergence-v1",
+    "objective": "Mean raw-teacher legal-policy cross entropy + ridge/2*(squared Frobenius norm of original centered-feature coefficients + squared intercept norm). Original logits, value and circuit remain fixed. FP64 analytic derivatives include actual target mass.",
+    "optimizer": {
+      "ftol": 1e-13,
+      "gtol": 1e-08,
+      "maxcor": 20,
+      "maxfun": 1024,
+      "maxiter": 512,
+      "maxls": 40,
+      "method": "L-BFGS-B",
+      "scipy": "1.18.1"
+    },
+    "platform": "cpu",
+    "ridge": [
+      0.0001,
+      0.01,
+      1.0
+    ],
+    "scope": "27 frozen-core policy fits; no recurrent-rule changes, value optimization, new topology, playing-strength claim or CNN budget comparison. Count all solver label passes separately from prior core exposures. No TPU initialization.",
+    "source_bank": "runs/motor-learnability-v1",
+    "source_checkpoint_exposures": 32000,
+    "source_plan_sha256": "a3c30c2a1ad2cc70cdb539a06697f719f62d019cabccd5a8c71d4b641a7a7090",
+    "training_positions": 16384,
+    "validation_positions": 8192,
+    "variants": [
+      "bias-only",
+      "scaled-linear",
+      "gated-linear"
+    ]
+  },
+  "plan_sha256": "4dbbcbbb19f3d7175b053be70bead14e413a0bd2ff0e427311da7801ec0d3bf4",
+  "raw_analysis": {
+    "bytes": 2553163,
+    "path": "runs/motor-convergence-v1/result-v1.json",
+    "sha256": "41417d6556215bd1c6d5dbcd3e77080e30ae983c315fd29332bf0e103243abaa"
+  },
+  "records": [
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 770048,
+      "gap_bounds": [
+        7.949188725621925e-14,
+        1.0289828100163139e-14,
+        1.806403263647058e-12
+      ],
+      "iterations": [
+        14,
+        13,
+        11
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.043152998211489144,
+            0.04951933035200294
+          ],
+          "mean": 0.04513432878368129,
+          "per_seed": [
+            0.033615223973690385,
+            0.023181137544863437,
+            0.07860662483249004
+          ],
+          "seed_sd": 0.02945358198904475
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.03356205890709367,
+            -0.024811424496164858
+          ],
+          "mean": -0.03112970228562986,
+          "per_seed": [
+            -0.029042833161414195,
+            -0.03034492958094104,
+            -0.034001344114534336
+          ],
+          "seed_sd": 0.0025707214681041494
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.006764856375588552,
+            0.0022236738622396523
+          ],
+          "mean": -0.0003255208333333333,
+          "per_seed": [
+            0.0047607421875,
+            0.00390625,
+            -0.0096435546875
+          ],
+          "seed_sd": 0.008080956342238937
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.02336110999187215,
+            -0.02062063797982946
+          ],
+          "mean": -0.02149569860719812,
+          "per_seed": [
+            -0.012996541737653045,
+            -0.01099321170264762,
+            -0.04049734238129369
+          ],
+          "seed_sd": 0.016486363528550117
+        }
+      },
+      "ridge": 0.0001,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.305222013109459,
+        "policy_kl": 1.4548690154860033,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.23280843098958334,
+        "top_probability": 0.10262864574511506
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.2833759829995546,
+            3.415308396136832
+          ],
+          "mean": 3.3734178514397293,
+          "per_seed": [
+            3.365114516982576,
+            3.379828994881807,
+            3.375310042454805
+          ],
+          "seed_sd": 0.007537523140255599
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.2882221383139212,
+            1.8301048946422904
+          ],
+          "mean": 1.6528037993285842,
+          "per_seed": [
+            1.6449830409603416,
+            1.6569075030853155,
+            1.6565208539400957
+          ],
+          "seed_sd": 0.006775733944098086
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.15179501597397677,
+            0.2700935956878828
+          ],
+          "mean": 0.19034830729166666,
+          "per_seed": [
+            0.1923828125,
+            0.182861328125,
+            0.19580078125
+          ],
+          "seed_sd": 0.006705353859086756
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.08033319243344483,
+            0.10683274290731919
+          ],
+          "mean": 0.0887159148676338,
+          "per_seed": [
+            0.08902026610152476,
+            0.08694986665500835,
+            0.09017761184636829
+          ],
+          "seed_sd": 0.0016352544175953184
+        }
+      },
+      "variant": "bias-only"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 606208,
+      "gap_bounds": [
+        9.390371421668891e-15,
+        1.3717321764048699e-16,
+        2.5940627542557645e-16
+      ],
+      "iterations": [
+        8,
+        9,
+        10
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.036085913667597676,
+            0.04240621864302132
+          ],
+          "mean": 0.03809865501598627,
+          "per_seed": [
+            0.027827179453009655,
+            0.023021904334945505,
+            0.06344688126000365
+          ],
+          "seed_sd": 0.022083299063511554
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.026678013752824675,
+            -0.02128317698163096
+          ],
+          "mean": -0.02514468590678932,
+          "per_seed": [
+            -0.023886274317509813,
+            -0.02350127005652459,
+            -0.02804651334633356
+          ],
+          "seed_sd": 0.002520418405129019
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.0015413375406934872,
+            0.0069376785983952735
+          ],
+          "mean": 0.0045166015625,
+          "per_seed": [
+            0.007568359375,
+            0.0108642578125,
+            -0.0048828125
+          ],
+          "seed_sd": 0.008305267916588893
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.020092365345002517,
+            -0.01741309861007434
+          ],
+          "mean": -0.01826868701522144,
+          "per_seed": [
+            -0.01042375040920928,
+            -0.009864432200143967,
+            -0.03451787843631108
+          ],
+          "seed_sd": 0.01407499114010939
+        }
+      },
+      "ridge": 0.01,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.2984557308615394,
+        "policy_kl": 1.4608573576067287,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.23714192708333334,
+        "top_probability": 0.10576485954973198
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.276546711830837,
+            3.4082282790062486
+          ],
+          "mean": 3.3663821776720346,
+          "per_seed": [
+            3.3593264724618943,
+            3.3796697616718854,
+            3.3601502988823233
+          ],
+          "seed_sd": 0.011514755269113294
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.2924913487848748,
+            1.8367759640090209
+          ],
+          "mean": 1.6587888157074244,
+          "per_seed": [
+            1.650139599804246,
+            1.6637511626097314,
+            1.6624756847082955
+          ],
+          "seed_sd": 0.0075175403407036585
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.15677459483055997,
+            0.2754083207928553
+          ],
+          "mean": 0.1951904296875,
+          "per_seed": [
+            0.1951904296875,
+            0.1898193359375,
+            0.2005615234375
+          ],
+          "seed_sd": 0.00537109375
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.08355634448315234,
+            0.11021178099254465
+          ],
+          "mean": 0.09194292645961051,
+          "per_seed": [
+            0.09159305742996857,
+            0.088078646157512,
+            0.09615707579135098
+          ],
+          "seed_sd": 0.00405056324363031
+        }
+      },
+      "variant": "bias-only"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 393216,
+      "gap_bounds": [
+        1.254934725032482e-17,
+        1.413198707856456e-17,
+        5.607710296979135e-19
+      ],
+      "iterations": [
+        4,
+        4,
+        4
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.0020746683435396026,
+            0.002700863516217437
+          ],
+          "mean": 0.002274867108469176,
+          "per_seed": [
+            0.0010479302017216403,
+            0.0010068055283656053,
+            0.0047698655953202825
+          ],
+          "seed_sd": 0.0021608299092551555
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.001158384701928713,
+            -0.0009945341468436614
+          ],
+          "mean": -0.0011121190225938625,
+          "per_seed": [
+            -0.0007540692479455456,
+            -0.0007252387972450291,
+            -0.001857049022591013
+          ],
+          "seed_sd": 0.0006452893361847185
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.0005907774122707015,
+            0.00033132377916462595
+          ],
+          "mean": 8.138020833333333e-05,
+          "per_seed": [
+            0.0003662109375,
+            0.0003662109375,
+            -0.00048828125
+          ],
+          "seed_sd": 0.0004933412944735572
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.0014045058016123168,
+            -0.0011438242897563778
+          ],
+          "mean": -0.001227679817874169,
+          "per_seed": [
+            -0.00044015913921333116,
+            -0.00047643882484787623,
+            -0.0027664414895612996
+          ],
+          "seed_sd": 0.0013327301548278498
+        }
+      },
+      "ridge": 1.0,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.260489857588437,
+        "policy_kl": 1.4847309272658684,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.23459879557291666,
+        "top_probability": 0.12378273095782177
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.2374204499151666,
+            3.374274466310629
+          ],
+          "mean": 3.3305583897645152,
+          "per_seed": [
+            3.3325472232106015,
+            3.357654662865307,
+            3.3014732832176374
+          ],
+          "seed_sd": 0.028143444150211822
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.313594829035043,
+            1.8618931065209032
+          ],
+          "mean": 1.6828213825916185,
+          "per_seed": [
+            1.6732718048738073,
+            1.6865271938690103,
+            1.6886651490320375
+          ],
+          "seed_sd": 0.008338977096212898
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.15089063358216184,
+            0.2747398448399968
+          ],
+          "mean": 0.19075520833333334,
+          "per_seed": [
+            0.18798828125,
+            0.1793212890625,
+            0.2049560546875
+          ],
+          "seed_sd": 0.013039448465158832
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.09985554427499661,
+            0.1288330596796173
+          ],
+          "mean": 0.10898393365695776,
+          "per_seed": [
+            0.10157664869996441,
+            0.09746663953280804,
+            0.1279085127381008
+          ],
+          "seed_sd": 0.016517500231189804
+        }
+      },
+      "variant": "bias-only"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 26066944,
+      "gap_bounds": [
+        3.140756448980536e-05,
+        5.6921837928322756e-05,
+        5.8173947169283936e-05
+      ],
+      "iterations": [
+        512,
+        512,
+        512
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.600386615875024,
+            -0.5349637782875101
+          ],
+          "mean": -0.5787766233730507,
+          "per_seed": [
+            -0.6168588529117319,
+            -0.5651273667269803,
+            -0.5543436504804398
+          ],
+          "seed_sd": 0.03341802341550262
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.20342726960178475,
+            0.3320966122917263
+          ],
+          "mean": 0.24267331728287866,
+          "per_seed": [
+            0.25344300789051427,
+            0.22994251683121097,
+            0.24463442712691075
+          ],
+          "seed_sd": 0.01187235165720626
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.08579460532812982,
+            -0.009592521597715651
+          ],
+          "mean": -0.034138997395833336,
+          "per_seed": [
+            -0.0257568359375,
+            -0.0279541015625,
+            -0.0487060546875
+          ],
+          "seed_sd": 0.012663189276826194
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.11839288769413081,
+            0.13716411155168737
+          ],
+          "mean": 0.13118050275411255,
+          "per_seed": [
+            0.13969848068119609,
+            0.12937517598434423,
+            0.12446785159679744
+          ],
+          "seed_sd": 0.007774150701900768
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.5571508709371514,
+            -0.48618590923123545
+          ],
+          "mean": -0.5336422945893696,
+          "per_seed": [
+            -0.5832436289380417,
+            -0.5419462291821171,
+            -0.47573702564795023
+          ],
+          "seed_sd": 0.05423222229481056
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.17030936553801473,
+            0.30421101665036776
+          ],
+          "mean": 0.2115436149972487,
+          "per_seed": [
+            0.22440017472909984,
+            0.1995975872502701,
+            0.21063308301237613
+          ],
+          "seed_sd": 0.012426338470477031
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.08871202891867584,
+            -0.008380708100125159
+          ],
+          "mean": -0.034464518229166664,
+          "per_seed": [
+            -0.02099609375,
+            -0.0240478515625,
+            -0.058349609375
+          ],
+          "seed_sd": 0.020741299156998655
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.09525844062668253,
+            0.11646154307480193
+          ],
+          "mean": 0.10968480414691452,
+          "per_seed": [
+            0.12670193894354298,
+            0.11838196428169667,
+            0.0839705092155039
+          ],
+          "seed_sd": 0.02265445248639036
+        }
+      },
+      "ridge": 0.0001,
+      "solver_success": [
+        false,
+        false,
+        false
+      ],
+      "train": {
+        "policy_entropy": 2.8021084143236386,
+        "policy_kl": 0.8327920875579453,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.5446370442708334,
+        "top_probability": 0.2242277383957537
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            2.7440030530374817,
+            2.815757753558968
+          ],
+          "mean": 2.7946412280666793,
+          "per_seed": [
+            2.748255664070844,
+            2.814701628154826,
+            2.820966391974367
+          ],
+          "seed_sd": 0.04029301709772345
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.6073147311363318,
+            2.0366758557091282
+          ],
+          "mean": 1.8954771166114635,
+          "per_seed": [
+            1.898426048850856,
+            1.886850019916529,
+            1.9011552810670052
+          ],
+          "seed_sd": 0.007594884802301302
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.1416110549621079,
+            0.18848658383540293
+          ],
+          "mean": 0.15620930989583334,
+          "per_seed": [
+            0.1666259765625,
+            0.1549072265625,
+            0.1470947265625
+          ],
+          "seed_sd": 0.009830513587592122
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.21699205266818233,
+            0.22746573136075998
+          ],
+          "mean": 0.2198964176217464,
+          "per_seed": [
+            0.22871874678272058,
+            0.21632504263935262,
+            0.21464546344316593
+          ],
+          "seed_sd": 0.007686375312037375
+        }
+      },
+      "variant": "scaled-linear"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 17825792,
+      "gap_bounds": [
+        9.563625965921713e-11,
+        8.334440495417414e-11,
+        6.574777178006609e-11
+      ],
+      "iterations": [
+        320,
+        368,
+        363
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.16867303992317084,
+            -0.13784230170398015
+          ],
+          "mean": -0.1588008468883125,
+          "per_seed": [
+            -0.17536317003905863,
+            -0.16088875068012887,
+            -0.14015061994574998
+          ],
+          "seed_sd": 0.017698882103154245
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.11521301825768958,
+            -0.036399282934051126
+          ],
+          "mean": -0.08986667069001998,
+          "per_seed": [
+            -0.09714823708186286,
+            -0.09344300745592635,
+            -0.07900876753227078
+          ],
+          "seed_sd": 0.009583982855917718
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.009536903158857617,
+            0.019374289068446682
+          ],
+          "mean": 0.0101318359375,
+          "per_seed": [
+            0.019287109375,
+            0.01318359375,
+            -0.0020751953125
+          ],
+          "seed_sd": 0.011003269273266569
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.02783610600974361,
+            0.035756477537273054
+          ],
+          "mean": 0.033326526831185185,
+          "per_seed": [
+            0.03811501018621232,
+            0.035681171408057634,
+            0.0261833988992856
+          ],
+          "seed_sd": 0.006304688754262608
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.13240011444328897,
+            -0.09615263612953535
+          ],
+          "mean": -0.12070219187232618,
+          "per_seed": [
+            -0.14753599058604905,
+            -0.13786684634518334,
+            -0.07670373868574622
+          ],
+          "seed_sd": 0.03840925669283928
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.14167620869958958,
+            -0.05785047324705125
+          ],
+          "mean": -0.11501135659680926,
+          "per_seed": [
+            -0.12103451139937266,
+            -0.11694427751245091,
+            -0.1070552808786042
+          ],
+          "seed_sd": 0.007187270618099042
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.008769953280269095,
+            0.025870956255961655
+          ],
+          "mean": 0.0146484375,
+          "per_seed": [
+            0.02685546875,
+            0.0240478515625,
+            -0.0069580078125
+          ],
+          "seed_sd": 0.018764315544389735
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.007955249186198766,
+            0.018312337170506413
+          ],
+          "mean": 0.01505783981596374,
+          "per_seed": [
+            0.027691259777003027,
+            0.025816739207913653,
+            -0.00833447953702546
+          ],
+          "seed_sd": 0.02028001258321009
+        }
+      },
+      "ridge": 0.01,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.1594035281761337,
+        "policy_kl": 1.19495742559664,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.3541463216145833,
+        "top_probability": 0.13603879084857962
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.136222759196438,
+            3.2401353941901068
+          ],
+          "mean": 3.20758133078372,
+          "per_seed": [
+            3.183963302422837,
+            3.2187810109917554,
+            3.219999678936569
+          ],
+          "seed_sd": 0.020462886786364026
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.2540931498508245,
+            1.7218107225306158
+          ],
+          "mean": 1.5689221450174038,
+          "per_seed": [
+            1.552991362722383,
+            1.5703081551538047,
+            1.5834669171760234
+          ],
+          "seed_sd": 0.015284980303809833
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.17584132821967702,
+            0.26839204922964666
+          ],
+          "mean": 0.205322265625,
+          "per_seed": [
+            0.2144775390625,
+            0.2030029296875,
+            0.198486328125
+          ],
+          "seed_sd": 0.008244040041456565
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.11904490833660973,
+            0.1389377269253787
+          ],
+          "mean": 0.12526945329079567,
+          "per_seed": [
+            0.12970806761618078,
+            0.12375981756556967,
+            0.12234047469063658
+          ],
+          "seed_sd": 0.0039089137105200004
+        }
+      },
+      "variant": "scaled-linear"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 4947968,
+      "gap_bounds": [
+        4.9557278941562605e-12,
+        3.861794952518434e-12,
+        2.7638573207396733e-12
+      ],
+      "iterations": [
+        94,
+        92,
+        95
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.01704809117038778,
+            0.0261823839324036
+          ],
+          "mean": 0.019849859895659433,
+          "per_seed": [
+            0.005513352866458213,
+            0.005940876861430066,
+            0.04809534995909002
+          ],
+          "seed_sd": 0.024462245928861197
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.04677589827684487,
+            -0.032448959157202924
+          ],
+          "mean": -0.0423739400554081,
+          "per_seed": [
+            -0.044909890503243975,
+            -0.04292996447604447,
+            -0.03928196518693587
+          ],
+          "seed_sd": 0.0028548657076548135
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.006284411233045446,
+            0.017052701791975208
+          ],
+          "mean": 0.013997395833333334,
+          "per_seed": [
+            0.0277099609375,
+            0.0111083984375,
+            0.003173828125
+          ],
+          "seed_sd": 0.01252059035401321
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.01676388594935343,
+            -0.01242326347579475
+          ],
+          "mean": -0.013765999689622027,
+          "per_seed": [
+            -0.007186191003661387,
+            -0.00520310034711889,
+            -0.028908707718085805
+          ],
+          "seed_sd": 0.013151401711015163
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.019123683647964015,
+            0.028850347742714836
+          ],
+          "mean": 0.02212472700412862,
+          "per_seed": [
+            0.006561283068179853,
+            0.0069476823897956725,
+            0.05286521555441034
+          ],
+          "seed_sd": 0.026622745037682295
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.04791650342238429,
+            -0.03348125912488989
+          ],
+          "mean": -0.04348605907800196,
+          "per_seed": [
+            -0.04566395975118953,
+            -0.04365520327328949,
+            -0.04113901420952686
+          ],
+          "seed_sd": 0.0022672098177832626
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.006144557004972152,
+            0.017350111256907993
+          ],
+          "mean": 0.014078776041666666,
+          "per_seed": [
+            0.028076171875,
+            0.011474609375,
+            0.002685546875
+          ],
+          "seed_sd": 0.012894077031470285
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.018162702340400454,
+            -0.013568165449597823
+          ],
+          "mean": -0.014993679507496199,
+          "per_seed": [
+            -0.007626350142874713,
+            -0.005679539171966763,
+            -0.03167514920764712
+          ],
+          "seed_sd": 0.014479333263548493
+        }
+      },
+      "ridge": 1.0,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.2859240706220585,
+        "policy_kl": 1.4373369361599335,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.24346923828125,
+        "top_probability": 0.10766630775673462
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.262699222663998,
+            3.3912576443335234
+          ],
+          "mean": 3.3504082496601746,
+          "per_seed": [
+            3.338060576077062,
+            3.3635955397267345,
+            3.349568633176726
+          ],
+          "seed_sd": 0.012788170667729686
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.2801169282950418,
+            1.815629395096272
+          ],
+          "mean": 1.6404474425362114,
+          "per_seed": [
+            1.6283619143705663,
+            1.6435972293929673,
+            1.6493831838451012
+          ],
+          "seed_sd": 0.010858835596531329
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.1673499947070439,
+            0.2825125576434818
+          ],
+          "mean": 0.20475260416666666,
+          "per_seed": [
+            0.2156982421875,
+            0.1904296875,
+            0.2081298828125
+          ],
+          "seed_sd": 0.012968402842582272
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.08743403918781167,
+            0.11222256980277681
+          ],
+          "mean": 0.09521793396733567,
+          "per_seed": [
+            0.09439045769630305,
+            0.09226353918568916,
+            0.09899980502001479
+          ],
+          "seed_sd": 0.0034435239337076225
+        }
+      },
+      "variant": "scaled-linear"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 26427392,
+      "gap_bounds": [
+        1.4229857160687408e-05,
+        5.348259326711528e-05,
+        6.11794804208651e-05
+      ],
+      "iterations": [
+        512,
+        512,
+        512
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.7949981657620013,
+            -0.6844831900614882
+          ],
+          "mean": -0.7587063533743498,
+          "per_seed": [
+            -0.7340941314610377,
+            -0.7881209265799151,
+            -0.7539040020820963
+          ],
+          "seed_sd": 0.027331677247379865
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.3671105967834042,
+            0.5318563911294804
+          ],
+          "mean": 0.41985113762029985,
+          "per_seed": [
+            0.3785321641721321,
+            0.4349888303239027,
+            0.44603241836486496
+          ],
+          "seed_sd": 0.03620681405913007
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.08722709687023991,
+            -0.0016670989835660289
+          ],
+          "mean": -0.029744466145833332,
+          "per_seed": [
+            -0.015625,
+            -0.03125,
+            -0.0423583984375
+          ],
+          "seed_sd": 0.013430138575013413
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.15446347258952667,
+            0.18205137746527159
+          ],
+          "mean": 0.17309558918709278,
+          "per_seed": [
+            0.16694866295571548,
+            0.18215390286745323,
+            0.17018420173810964
+          ],
+          "seed_sd": 0.008009804170636639
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.7516948341105094,
+            -0.6354759372103732
+          ],
+          "mean": -0.7135720245906686,
+          "per_seed": [
+            -0.7004789074873475,
+            -0.7649397890350519,
+            -0.6752973772496063
+          ],
+          "seed_sd": 0.046233243281093836
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.3339066653826632,
+            0.5040197057709586
+          ],
+          "mean": 0.38872143533466996,
+          "per_seed": [
+            0.3494893310107176,
+            0.4046439007429616,
+            0.4120310742503306
+          ],
+          "seed_sd": 0.03417617723460455
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.0904602719511075,
+            -0.00038681575474433104
+          ],
+          "mean": -0.030069986979166668,
+          "per_seed": [
+            -0.0108642578125,
+            -0.02734375,
+            -0.052001953125
+          ],
+          "seed_sd": 0.020703907118125142
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.13146245031382126,
+            0.16146214540526999
+          ],
+          "mean": 0.15159989057989462,
+          "per_seed": [
+            0.15395212121806248,
+            0.17116069116480548,
+            0.12968685935681593
+          ],
+          "seed_sd": 0.02083673253993301
+        }
+      },
+      "ridge": 0.0001,
+      "solver_success": [
+        false,
+        false,
+        false
+      ],
+      "train": {
+        "policy_entropy": 2.6584239468290276,
+        "policy_kl": 0.687781749678651,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.611083984375,
+        "top_probability": 0.26222864114687533
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            2.591535425487322,
+            2.6254232853544583
+          ],
+          "mean": 2.614711498065377,
+          "per_seed": [
+            2.6310203855215333,
+            2.591708068301887,
+            2.6214060403727113
+          ],
+          "seed_sd": 0.020493346330529832
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.8016660223544771,
+            2.200297402992213
+          ],
+          "mean": 2.0726549369488834,
+          "per_seed": [
+            2.023515205132473,
+            2.0918963334092195,
+            2.1025532723049576
+          ],
+          "seed_sd": 0.04288854764267993
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.14888390280665054,
+            0.18790102508884618
+          ],
+          "mean": 0.16060384114583334,
+          "per_seed": [
+            0.1767578125,
+            0.151611328125,
+            0.1534423828125
+          ],
+          "seed_sd": 0.014019674860729896
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.25755649333545166,
+            0.26464403760060273
+          ],
+          "mean": 0.26181150405472664,
+          "per_seed": [
+            0.2559689290572403,
+            0.2691037695224617,
+            0.26036181358447796
+          ],
+          "seed_sd": 0.006686345067101439
+        }
+      },
+      "variant": "gated-linear"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 17465344,
+      "gap_bounds": [
+        1.1363931774830417e-11,
+        1.3789212001542323e-11,
+        2.23389047673878e-11
+      ],
+      "iterations": [
+        314,
+        369,
+        350
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.18473534704442252,
+            -0.1348738192960737
+          ],
+          "mean": -0.1684893518501497,
+          "per_seed": [
+            -0.18354623816274618,
+            -0.16852738156873837,
+            -0.15339443581896461
+          ],
+          "seed_sd": 0.015075937146301713
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.14134257329884098,
+            -0.045638579765978834
+          ],
+          "mean": -0.11006785898407127,
+          "per_seed": [
+            -0.11020226777604696,
+            -0.11877235542685105,
+            -0.10122895374931576
+          ],
+          "seed_sd": 0.008772473134604476
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.008160668544747361,
+            0.02284093638761754
+          ],
+          "mean": 0.012939453125,
+          "per_seed": [
+            0.0174560546875,
+            0.014892578125,
+            0.0064697265625
+          ],
+          "seed_sd": 0.005747684261227321
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.02760124388742849,
+            0.041799650080193054
+          ],
+          "mean": 0.03724150129405872,
+          "per_seed": [
+            0.04165753142231634,
+            0.03860877710667164,
+            0.03145819535318818
+          ],
+          "seed_sd": 0.005235331548581417
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            -0.14845076018362105,
+            -0.09295750022293363
+          ],
+          "mean": -0.1303906968341634,
+          "per_seed": [
+            -0.15571905870973635,
+            -0.14550547723379292,
+            -0.08994755455896096
+          ],
+          "seed_sd": 0.035395128612008664
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.16782032919893405,
+            -0.0675438757456162
+          ],
+          "mean": -0.13521254489086065,
+          "per_seed": [
+            -0.13408854209355683,
+            -0.1422736254833757,
+            -0.12927546709564944
+          ],
+          "seed_sd": 0.006571572649249544
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            -0.0071336500307512705,
+            0.029389850211500614
+          ],
+          "mean": 0.0174560546875,
+          "per_seed": [
+            0.0250244140625,
+            0.0257568359375,
+            0.0015869140625
+          ],
+          "seed_sd": 0.013747957251270593
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.007737273553165846,
+            0.024423619764676125
+          ],
+          "mean": 0.018972814278837253,
+          "per_seed": [
+            0.031233781013107035,
+            0.02874434490652763,
+            -0.003059683083122904
+          ],
+          "seed_sd": 0.019121258536920923
+        }
+      },
+      "ridge": 0.01,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.1559884414741135,
+        "policy_kl": 1.1366817958071591,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.3872477213541667,
+        "top_probability": 0.13873881345709235
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.1380789156450164,
+            3.224553636776449
+          ],
+          "mean": 3.1978928258218833,
+          "per_seed": [
+            3.1757802342991486,
+            3.2111423801031442,
+            3.2067558630633566
+          ],
+          "seed_sd": 0.019275253845891915
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.243260887858432,
+            1.6954411896531945
+          ],
+          "mean": 1.5487209567233524,
+          "per_seed": [
+            1.5399373320281977,
+            1.5449788071828798,
+            1.5612467309589797
+          ],
+          "seed_sd": 0.011136668401512523
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.1792627906860418,
+            0.26901311615879475
+          ],
+          "mean": 0.2081298828125,
+          "per_seed": [
+            0.212646484375,
+            0.2047119140625,
+            0.20703125
+          ],
+          "seed_sd": 0.004079779044694434
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.1249971010785469,
+            0.13921469656987673
+          ],
+          "mean": 0.12918442775366915,
+          "per_seed": [
+            0.1332505888522848,
+            0.1266874232641836,
+            0.12761527114453902
+          ],
+          "seed_sd": 0.003551826992153681
+        }
+      },
+      "variant": "gated-linear"
+    },
+    {
+      "converged": [
+        true,
+        true,
+        true
+      ],
+      "fit_label_exposures": 2916352,
+      "gap_bounds": [
+        8.591851384040747e-13,
+        3.30241594687062e-13,
+        5.70245917738698e-13
+      ],
+      "iterations": [
+        52,
+        53,
+        52
+      ],
+      "minus_bias_only": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.011955674954972574,
+            0.019941623784169287
+          ],
+          "mean": 0.014313774700411697,
+          "per_seed": [
+            0.003967790414516902,
+            0.004365512304323889,
+            0.0346080213823943
+          ],
+          "seed_sd": 0.01757645817470856
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.04185207633930515,
+            -0.027488879349550157
+          ],
+          "mean": -0.03728567494502883,
+          "per_seed": [
+            -0.039307818579352206,
+            -0.037446809092887084,
+            -0.03510239716284722
+          ],
+          "seed_sd": 0.0021073361105443523
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.010929478174772307,
+            0.02282294877641876
+          ],
+          "mean": 0.0194091796875,
+          "per_seed": [
+            0.0382080078125,
+            0.014892578125,
+            0.005126953125
+          ],
+          "seed_sd": 0.016996729452018834
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.012034914380561031,
+            -0.008111546284102867
+          ],
+          "mean": -0.009315952459352322,
+          "per_seed": [
+            -0.0050363333666492115,
+            -0.003107465230781701,
+            -0.019804058780626053
+          ],
+          "seed_sd": 0.009134025056137505
+        }
+      },
+      "minus_original": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            0.014030849975611139,
+            0.0226258642992713
+          ],
+          "mean": 0.016588641808880866,
+          "per_seed": [
+            0.005015720616238543,
+            0.0053723178326894935,
+            0.03937788697771456
+          ],
+          "seed_sd": 0.019736870621190245
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.043014774420606514,
+            -0.028466369506794438
+          ],
+          "mean": -0.03839779396762272,
+          "per_seed": [
+            -0.04006188782729779,
+            -0.03817204789013214,
+            -0.03695944618543823
+          ],
+          "seed_sd": 0.001563491926398359
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "seed_sd": 0.0
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.010629121929049887,
+            0.023119802418457496
+          ],
+          "mean": 0.019490559895833332,
+          "per_seed": [
+            0.03857421875,
+            0.0152587890625,
+            0.004638671875
+          ],
+          "seed_sd": 0.017359039394958427
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            -0.013430473165163541,
+            -0.009261393306423268
+          ],
+          "mean": -0.010543632277226494,
+          "per_seed": [
+            -0.005476492505862534,
+            -0.0035839040556295745,
+            -0.022570500270187373
+          ],
+          "seed_sd": 0.010458472070554519
+        }
+      },
+      "ridge": 1.0,
+      "solver_success": [
+        true,
+        true,
+        true
+      ],
+      "train": {
+        "policy_entropy": 3.2800591554029332,
+        "policy_kl": 1.4446624818170235,
+        "teacher_entropy": 1.8267508170407083,
+        "teacher_top1": 0.24643961588541666,
+        "top_probability": 0.1123054550265976
+      },
+      "validation": {
+        "policy_entropy": {
+          "family_bootstrap_95": [
+            3.256507214619203,
+            3.386157521467639
+          ],
+          "mean": 3.3448721644649275,
+          "per_seed": [
+            3.3365150136251214,
+            3.362020175169633,
+            3.3360813046000293
+          ],
+          "seed_sd": 0.014852196107852848
+        },
+        "policy_kl": {
+          "family_bootstrap_95": [
+            1.2847109305302362,
+            1.8205308730973508
+          ],
+          "mean": 1.64553570764659,
+          "per_seed": [
+            1.6339639862944573,
+            1.6490803847761233,
+            1.6535627518691893
+          ],
+          "seed_sd": 0.010268955885473607
+        },
+        "teacher_entropy": {
+          "family_bootstrap_95": [
+            1.4987139126018096,
+            1.9749161474550652
+          ],
+          "mean": 1.6534123034644221,
+          "per_seed": [
+            1.6534123034644224,
+            1.6534123034644224,
+            1.6534123034644224
+          ],
+          "seed_sd": 2.7194799110210365e-16
+        },
+        "teacher_top1": {
+          "family_bootstrap_95": [
+            0.17282773804446996,
+            0.2887945855966366
+          ],
+          "mean": 0.21016438802083334,
+          "per_seed": [
+            0.2261962890625,
+            0.1942138671875,
+            0.2100830078125
+          ],
+          "seed_sd": 0.01599136624248694
+        },
+        "top_probability": {
+          "family_bootstrap_95": [
+            0.09170063093506707,
+            0.11690165857704991
+          ],
+          "mean": 0.09966798119760543,
+          "per_seed": [
+            0.09654031533331525,
+            0.09435917430202644,
+            0.10810445395747459
+          ],
+          "seed_sd": 0.0073871441383395065
+        }
+      },
+      "variant": "gated-linear"
+    }
+  ],
+  "replication": {
+    "owners": [
+      {
+        "owner": 1,
+        "replica": 2,
+        "transfer": {
+          "bytes": 99502080,
+          "sha256": "30f60c30bae1fdf92ef3eaa1b9e081fa5ae4990ff4652f1127563ced0800e3a2",
+          "status": "passed"
+        },
+        "verification": {
+          "archive_sha256": "30f60c30bae1fdf92ef3eaa1b9e081fa5ae4990ff4652f1127563ced0800e3a2",
+          "destination": "runs/motor-convergence-archive-v1/owner-1",
+          "files": 51,
+          "owner": 1,
+          "status": "passed"
+        }
+      },
+      {
+        "owner": 2,
+        "replica": 3,
+        "transfer": {
+          "bytes": 99512320,
+          "sha256": "2a8d3d11175f1f564c37210eefec8d3aea8dd188f200d0860edf02ea0b319afd",
+          "status": "passed"
+        },
+        "verification": {
+          "archive_sha256": "2a8d3d11175f1f564c37210eefec8d3aea8dd188f200d0860edf02ea0b319afd",
+          "destination": "runs/motor-convergence-archive-v1/owner-2",
+          "files": 51,
+          "owner": 2,
+          "status": "passed"
+        }
+      },
+      {
+        "owner": 3,
+        "replica": 1,
+        "transfer": {
+          "bytes": 99512320,
+          "sha256": "4ea53d1d95187e65ae7700ac9ff8e5e2e61a7fc7d79e903f4e8d4c1c4da1d4cd",
+          "status": "passed"
+        },
+        "verification": {
+          "archive_sha256": "4ea53d1d95187e65ae7700ac9ff8e5e2e61a7fc7d79e903f4e8d4c1c4da1d4cd",
+          "destination": "runs/motor-convergence-archive-v1/owner-3",
+          "files": 51,
+          "owner": 3,
+          "status": "passed"
+        }
+      }
+    ],
+    "status": "passed"
+  },
+  "scope": "27 frozen-core policy fits; no recurrent-rule changes, value optimization, new topology, playing-strength claim or CNN budget comparison. Count all solver label passes separately from prior core exposures. No TPU initialization.",
+  "seed_results": [
+    {
+      "baseline": {
+        "train": {
+          "policy_entropy": 3.2705349225204055,
+          "policy_kl": 1.4816082395515178,
+          "teacher_entropy": 1.826750817040708,
+          "teacher_top1": 0.23455810546875,
+          "top_probability": 0.11453792768249806
+        },
+        "validation": {
+          "policy_entropy": 3.3314992930088816,
+          "policy_kl": 1.6740258741217575,
+          "teacher_entropy": 1.6534123034644224,
+          "teacher_top1": 0.1876220703125,
+          "top_probability": 0.1020168078391778
+        }
+      },
+      "scope": "27 frozen-core policy fits; no recurrent-rule changes, value optimization, new topology, playing-strength claim or CNN budget comparison. Count all solver label passes separately from prior core exposures. No TPU initialization.",
+      "seconds": 648.3248052597046,
+      "seed": 4,
+      "source": {
+        "bank_sha256": "458354747d210fab889a8a6d580cd9c2672f1dbaec890cf25dc61076c7748bdf",
+        "convex_sha256": "d5154374092a3a2d1e3ddab3a56aeab81120f365d9353cebeeb4932ecf4df886",
+        "lbfgsb_python_sha256": "61b69554f33a210284d4ae3de7da282152f9302b428eeb16984498b54e381d57",
+        "lbfgsb_sha256": "23d19ac49896c4ab452fc0bc807312bba273482ea01530ad6c0bc020ac8ccddb",
+        "numpy": "2.5.3",
+        "plan_sha256": "4dbbcbbb19f3d7175b053be70bead14e413a0bd2ff0e427311da7801ec0d3bf4",
+        "probe_sha256": "5238af9b3cacdc324f5fbba53724ecffa957f956fb3fa5339cadd0b02e590db2",
+        "scipy": "1.18.1",
+        "worker_sha256": "2f5533588f469de8efdd117dab7e8f4b2010479244ba7169a4298c556c967b85"
+      },
+      "status": "complete",
+      "trials": [
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "ff5708de9a60d8323627aaae6b739e9cad935c35c8d71bce4bdb988d3acdcda9",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 278528,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 14,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.3037262679250463,
+              "policy_kl": 1.4488951231048546,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.23828125,
+              "top_probability": 0.10205791673915426
+            },
+            "validation": {
+              "policy_entropy": 3.365114516982576,
+              "policy_kl": 1.6449830409603408,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1923828125,
+              "top_probability": 0.08902026610152475
+            }
+          },
+          "objective": 3.2759253951807907,
+          "objective_calls": 17,
+          "optimization_gap_bound": 7.949188725621925e-14,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 2.76620818120282e-09,
+          "penalty": 0.00027945503522828395,
+          "position_metrics_sha256": "74a1b6359c23f8b676a032ec2d8c44492929933532053fefafe713df2d6b104c",
+          "ridge": 0.0001,
+          "seconds": 1.251103162765503,
+          "solver_evaluations": 15,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "c0c7258996f2104dcf2ea5f6b4c9da217b2212d7176b394649b0ecd5ddb9696a",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 196608,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 8,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.298453832714283,
+              "policy_kl": 1.4559241479790388,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.23895263671875,
+              "top_probability": 0.10423459153318122
+            },
+            "validation": {
+              "policy_entropy": 3.3593264724618934,
+              "policy_kl": 1.6501395998042445,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1951904296875,
+              "top_probability": 0.09159305742996851
+            }
+          },
+          "objective": 3.2906833595474057,
+          "objective_calls": 12,
+          "optimization_gap_bound": 9.390371421668891e-15,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 8.602005070051932e-09,
+          "penalty": 0.008008394527659246,
+          "position_metrics_sha256": "862615c653eb292933429d974159a465f6a425144ad713917cae7e24f5e49247",
+          "ridge": 0.01,
+          "seconds": 0.9001948833465576,
+          "solver_evaluations": 10,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "7925b1f7dcd095ef0026dff13b7fcc9ea512bc616e09faa3760f6d57ce8827d9",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 131072,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 4,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.271636063782338,
+              "policy_kl": 1.4808133718662688,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.23455810546875,
+              "top_probability": 0.11407022356687135
+            },
+            "validation": {
+              "policy_entropy": 3.332547223210608,
+              "policy_kl": 1.6732718048738082,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.18798828125,
+              "top_probability": 0.10157664869996448
+            }
+          },
+          "objective": 3.3079587316697117,
+          "objective_calls": 8,
+          "optimization_gap_bound": 1.254934725032482e-17,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.5910815416922408e-09,
+          "penalty": 0.00039454276273489505,
+          "position_metrics_sha256": "1b5e4fb7844763921e72d8d8bca0f2e869a39d57236781158041e0331a5f9545",
+          "ridge": 1.0,
+          "seconds": 0.682187557220459,
+          "solver_evaluations": 6,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "9b45c6c6ba447406148dd00597435e3440cd91006bdc30ec4cb8e86886abadee",
+          "checkpoint_sha256": "e6631f238ed64fb5d7b24d097ec89487763eb40c96a83aa6bf6b3e29a03eca5e",
+          "coordinate_logit_max_error": 5.684341886080802e-14,
+          "feature_abs_max": {
+            "train": 127.99609369044357,
+            "validation": 1473.0377588421106
+          },
+          "fit_label_exposures": 8749056,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 512,
+          "metrics": {
+            "train": {
+              "policy_entropy": 2.773388465325334,
+              "policy_kl": 0.8095461283834442,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.547119140625,
+              "top_probability": 0.2287088451458691
+            },
+            "validation": {
+              "policy_entropy": 2.7482556640708404,
+              "policy_kl": 1.898426048850855,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1666259765625,
+              "top_probability": 0.22871874678272103
+            }
+          },
+          "objective": 2.7049089914571707,
+          "objective_calls": 534,
+          "optimization_gap_bound": 3.140756448980536e-05,
+          "optimizer_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "optimizer_success": false,
+          "original_gradient_inf": 6.031584155533983e-06,
+          "penalty": 0.06861204603301847,
+          "position_metrics_sha256": "aca48d32ddee5fc45b9f15735e32c463902974a363651cbed80b6ade410ae260",
+          "ridge": 0.0001,
+          "seconds": 179.2369523048401,
+          "solver_evaluations": 532,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "9b45c6c6ba447406148dd00597435e3440cd91006bdc30ec4cb8e86886abadee",
+          "checkpoint_sha256": "bc109c1d35990f4fadb34750b0575a4041ceb380f3b2fe3592ad082ed60c8913",
+          "coordinate_logit_max_error": 1.0658141036401503e-14,
+          "feature_abs_max": {
+            "train": 127.99609369044357,
+            "validation": 1473.0377588421106
+          },
+          "fit_label_exposures": 5406720,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 320,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.14614875325819,
+              "policy_kl": 1.1745917842831757,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.359130859375,
+              "top_probability": 0.1380657442291559
+            },
+            "validation": {
+              "policy_entropy": 3.1839633024228347,
+              "policy_kl": 1.5529913627223846,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2144775390625,
+              "top_probability": 0.12970806761618076
+            }
+          },
+          "objective": 3.0728872233643565,
+          "objective_calls": 330,
+          "optimization_gap_bound": 9.563625965921713e-11,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 4.783678096994908e-08,
+          "penalty": 0.0715446220404732,
+          "position_metrics_sha256": "a220b845a73e38f1877a3e2b7ce71354ba8236db628821a661560de5e76042fa",
+          "ridge": 0.01,
+          "seconds": 111.20510149002075,
+          "solver_evaluations": 328,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "9b45c6c6ba447406148dd00597435e3440cd91006bdc30ec4cb8e86886abadee",
+          "checkpoint_sha256": "7b89f57b07dbd9016d23b8fbad77e316a9f6063cbc0995f5b39834ab389991c4",
+          "coordinate_logit_max_error": 8.881784197001252e-16,
+          "feature_abs_max": {
+            "train": 127.99609369044357,
+            "validation": 1473.0377588421106
+          },
+          "fit_label_exposures": 1654784,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 94,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.280302216815626,
+              "policy_kl": 1.4323583599327372,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.24609375,
+              "top_probability": 0.10590362765762582
+            },
+            "validation": {
+              "policy_entropy": 3.3380605760770647,
+              "policy_kl": 1.6283619143705677,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2156982421875,
+              "top_probability": 0.09439045769630304
+            }
+          },
+          "objective": 3.2763570738177608,
+          "objective_calls": 101,
+          "optimization_gap_bound": 4.9557278941562605e-12,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.4272769775032414e-07,
+          "penalty": 0.017247896844315564,
+          "position_metrics_sha256": "1bea758f299d5ec09cf44131d7601de00ad3f37e6ca0126f8e36031d5861a6c2",
+          "ridge": 1.0,
+          "seconds": 34.288126707077026,
+          "solver_evaluations": 99,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "9f279a934187e58564ad55348b3e980f29339a871c4c9e1ac33412c52da910f0",
+          "checkpoint_sha256": "9e3347f5b2f5cf08d622842ad29685d9df5acb386741542c2e5b64f95bf2059f",
+          "coordinate_logit_max_error": 1.0391687510491465e-13,
+          "feature_abs_max": {
+            "train": 127.99609369044357,
+            "validation": 1473.0377588421106
+          },
+          "fit_label_exposures": 8847360,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 512,
+          "metrics": {
+            "train": {
+              "policy_entropy": 2.671530368952527,
+              "policy_kl": 0.7139207424803466,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.59136962890625,
+              "top_probability": 0.2569400018205673
+            },
+            "validation": {
+              "policy_entropy": 2.6310203855215315,
+              "policy_kl": 2.0235152051324734,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1767578125,
+              "top_probability": 0.25596892905724067
+            }
+          },
+          "objective": 2.6057777087655385,
+          "objective_calls": 540,
+          "optimization_gap_bound": 1.4229857160687408e-05,
+          "optimizer_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "optimizer_success": false,
+          "original_gradient_inf": 9.696315350251905e-06,
+          "penalty": 0.06510614924448348,
+          "position_metrics_sha256": "8c52c1ac05d4c0c3c045a75457dabb664ba1a4e9f6c974f7a8b2a086ecde9615",
+          "ridge": 0.0001,
+          "seconds": 184.50245141983032,
+          "solver_evaluations": 538,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        },
+        {
+          "basis_sha256": "9f279a934187e58564ad55348b3e980f29339a871c4c9e1ac33412c52da910f0",
+          "checkpoint_sha256": "6d872415d69e1a017164eefc3f5c397dae92c213636a238e4d763903487e4b40",
+          "coordinate_logit_max_error": 1.0658141036401503e-14,
+          "feature_abs_max": {
+            "train": 127.99609369044357,
+            "validation": 1473.0377588421106
+          },
+          "fit_label_exposures": 5357568,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 314,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.1440485765664774,
+              "policy_kl": 1.1295026740527032,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.3856201171875,
+              "top_probability": 0.14042464283756936
+            },
+            "validation": {
+              "policy_entropy": 3.1757802342991504,
+              "policy_kl": 1.5399373320281993,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.212646484375,
+              "top_probability": 0.13325058885228502
+            }
+          },
+          "objective": 3.048563736713484,
+          "objective_calls": 327,
+          "optimization_gap_bound": 1.1363931774830417e-11,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 2.5562785269330447e-08,
+          "penalty": 0.09231024562007263,
+          "position_metrics_sha256": "6acc2a94e83654f3aae70a623af2197206b34cdc3342136c2cdb053fce817b93",
+          "ridge": 0.01,
+          "seconds": 110.9581949710846,
+          "solver_evaluations": 325,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        },
+        {
+          "basis_sha256": "9f279a934187e58564ad55348b3e980f29339a871c4c9e1ac33412c52da910f0",
+          "checkpoint_sha256": "8dd37d1fd58a4f3e734f3ce155a6b5314933f27e285a37e6a646fca225aca909",
+          "coordinate_logit_max_error": 8.881784197001252e-16,
+          "feature_abs_max": {
+            "train": 127.99609369044357,
+            "validation": 1473.0377588421106
+          },
+          "fit_label_exposures": 983040,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.308359056592226,
+          "iterations": 52,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.2784332793511615,
+              "policy_kl": 1.440510274277189,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.25115966796875,
+              "top_probability": 0.10811388114524127
+            },
+            "validation": {
+              "policy_entropy": 3.3365150136251183,
+              "policy_kl": 1.633963986294459,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2261962890625,
+              "top_probability": 0.09654031533331517
+            }
+          },
+          "objective": 3.2842448995731037,
+          "objective_calls": 60,
+          "optimization_gap_bound": 8.591851384040747e-13,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 2.386845187483857e-07,
+          "penalty": 0.016983808255206845,
+          "position_metrics_sha256": "204dd9767baa99a344468b572a29ecb97cf322e0bcd0a62b18a951eaa8556461",
+          "ridge": 1.0,
+          "seconds": 20.003987073898315,
+          "solver_evaluations": 58,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        }
+      ]
+    },
+    {
+      "baseline": {
+        "train": {
+          "policy_entropy": 3.2846628620990463,
+          "policy_kl": 1.4849111605826701,
+          "teacher_entropy": 1.826750817040708,
+          "teacher_top1": 0.22930908203125,
+          "top_probability": 0.1126145651033208
+        },
+        "validation": {
+          "policy_entropy": 3.356647857336934,
+          "policy_kl": 1.6872524326662606,
+          "teacher_entropy": 1.6534123034644224,
+          "teacher_top1": 0.178955078125,
+          "top_probability": 0.09794307835765591
+        }
+      },
+      "scope": "27 frozen-core policy fits; no recurrent-rule changes, value optimization, new topology, playing-strength claim or CNN budget comparison. Count all solver label passes separately from prior core exposures. No TPU initialization.",
+      "seconds": 669.6559937000275,
+      "seed": 5,
+      "source": {
+        "bank_sha256": "f379d192765fb718d2962ce84914a622a39213ca57098acdb6bcba3987d3b00f",
+        "convex_sha256": "d5154374092a3a2d1e3ddab3a56aeab81120f365d9353cebeeb4932ecf4df886",
+        "lbfgsb_python_sha256": "61b69554f33a210284d4ae3de7da282152f9302b428eeb16984498b54e381d57",
+        "lbfgsb_sha256": "23d19ac49896c4ab452fc0bc807312bba273482ea01530ad6c0bc020ac8ccddb",
+        "numpy": "2.5.3",
+        "plan_sha256": "4dbbcbbb19f3d7175b053be70bead14e413a0bd2ff0e427311da7801ec0d3bf4",
+        "probe_sha256": "5238af9b3cacdc324f5fbba53724ecffa957f956fb3fa5339cadd0b02e590db2",
+        "scipy": "1.18.1",
+        "worker_sha256": "2f5533588f469de8efdd117dab7e8f4b2010479244ba7169a4298c556c967b85"
+      },
+      "status": "complete",
+      "trials": [
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "3be4794293621710e4672a299f803f9015549eddd565c47e300944c443cbfd79",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 262144,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 13,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.3077467976685284,
+              "policy_kl": 1.456862811555927,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.23431396484375,
+              "top_probability": 0.10164037140111329
+            },
+            "validation": {
+              "policy_entropy": 3.3798289948818043,
+              "policy_kl": 1.6569075030853142,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.182861328125,
+              "top_probability": 0.08694986665500834
+            }
+          },
+          "objective": 3.2838514117994513,
+          "objective_calls": 16,
+          "optimization_gap_bound": 1.0289828100163139e-14,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.0039917524060733e-09,
+          "penalty": 0.00023778320281607948,
+          "position_metrics_sha256": "4d537103c908a8f525c551b67e64939d531bae5a8c5dd51d2f567cfe8ec5d304",
+          "ridge": 0.0001,
+          "seconds": 1.1925179958343506,
+          "solver_evaluations": 14,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "ecdb2a3e34414ed96edfd8c7ada85ab02252484b63c3e09ed1c4925a9f518795",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 196608,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 9,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.3078050578416627,
+              "policy_kl": 1.462839567043964,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.2391357421875,
+              "top_probability": 0.10256608489630754
+            },
+            "validation": {
+              "policy_entropy": 3.3796697616718827,
+              "policy_kl": 1.6637511626097337,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1898193359375,
+              "top_probability": 0.08807864615751196
+            }
+          },
+          "objective": 3.2964402921264777,
+          "objective_calls": 12,
+          "optimization_gap_bound": 1.3717321764048699e-16,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 7.38511612378024e-10,
+          "penalty": 0.006849908041805621,
+          "position_metrics_sha256": "6042ed526458c5ab6afbc44e53b5b51a667e04fc1029f6ab533ee7e7448f2080",
+          "ridge": 0.01,
+          "seconds": 0.9376494884490967,
+          "solver_evaluations": 10,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "4b247d3a717f93b2c0badd5e1296beac540a1f0b3e7ef128754fb496b82b9b37",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 131072,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 4,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.285733293494788,
+              "policy_kl": 1.4842146605182802,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.229248046875,
+              "top_probability": 0.11210449429435729
+            },
+            "validation": {
+              "policy_entropy": 3.3576546628653055,
+              "policy_kl": 1.6865271938690134,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1793212890625,
+              "top_probability": 0.09746663953280815
+            }
+          },
+          "objective": 3.311310969927237,
+          "objective_calls": 8,
+          "optimization_gap_bound": 1.413198707856456e-17,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.8312614601806443e-09,
+          "penalty": 0.00034549236824857565,
+          "position_metrics_sha256": "b9921200d1007c30e5f5b5e8acd38c613b534b153c0d74bf72bd240c446d1f5c",
+          "ridge": 1.0,
+          "seconds": 0.7021269798278809,
+          "solver_evaluations": 6,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "0d8e1dbde983fbc260b350dd8c49f7b308d8a4da016f4856dada393c745c8187",
+          "checkpoint_sha256": "80ab6d7f6a54fedf1fce671696f8843774da541156b4faf2e0cc8572a5debc30",
+          "coordinate_logit_max_error": 3.26405569239796e-14,
+          "feature_abs_max": {
+            "train": 127.99609369040319,
+            "validation": 1190.7874140888453
+          },
+          "fit_label_exposures": 8683520,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 512,
+          "metrics": {
+            "train": {
+              "policy_entropy": 2.8092979389783324,
+              "policy_kl": 0.8377912802015934,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.54571533203125,
+              "top_probability": 0.2244775066385637
+            },
+            "validation": {
+              "policy_entropy": 2.814701628154826,
+              "policy_kl": 1.8868500199165241,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1549072265625,
+              "top_probability": 0.2163250426393527
+            }
+          },
+          "objective": 2.7368271996879523,
+          "objective_calls": 530,
+          "optimization_gap_bound": 5.6921837928322756e-05,
+          "optimizer_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "optimizer_success": false,
+          "original_gradient_inf": 4.1855563724918914e-06,
+          "penalty": 0.07228510244565077,
+          "position_metrics_sha256": "b56c2a8e1d12cd8df91e8b72c1640da948787fec331df251e2aa4d9a5be7c1c0",
+          "ridge": 0.0001,
+          "seconds": 178.67034792900085,
+          "solver_evaluations": 528,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "0d8e1dbde983fbc260b350dd8c49f7b308d8a4da016f4856dada393c745c8187",
+          "checkpoint_sha256": "600baf3b48837a1150c5dd4e4d344fe762c180be42aa14fe4dde44a20d49de02",
+          "coordinate_logit_max_error": 7.327471962526033e-15,
+          "feature_abs_max": {
+            "train": 127.99609369040319,
+            "validation": 1190.7874140888453
+          },
+          "fit_label_exposures": 6258688,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 368,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.1652457757252686,
+              "policy_kl": 1.2009359198503495,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.35601806640625,
+              "top_probability": 0.13576405035828362
+            },
+            "validation": {
+              "policy_entropy": 3.21878101099176,
+              "policy_kl": 1.5703081551538065,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2030029296875,
+              "top_probability": 0.1237598175655695
+            }
+          },
+          "objective": 3.0944118160204868,
+          "objective_calls": 382,
+          "optimization_gap_bound": 8.334440495417414e-11,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 3.726772940723881e-08,
+          "penalty": 0.06672507912942909,
+          "position_metrics_sha256": "d891eb8b57330f4d731b7f00712803c8456037adc190c9915507dbca69d726e5",
+          "ridge": 0.01,
+          "seconds": 126.95873618125916,
+          "solver_evaluations": 380,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "0d8e1dbde983fbc260b350dd8c49f7b308d8a4da016f4856dada393c745c8187",
+          "checkpoint_sha256": "e1a7e246b162e8504857201a26f26bc19fe0ee138f28878a0d25baf9b7b8f40b",
+          "coordinate_logit_max_error": 9.992007221626409e-16,
+          "feature_abs_max": {
+            "train": 127.99609369040319,
+            "validation": 1190.7874140888453
+          },
+          "fit_label_exposures": 1622016,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 92,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.295630239966638,
+              "policy_kl": 1.438663230845329,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.24066162109375,
+              "top_probability": 0.1051443744622902
+            },
+            "validation": {
+              "policy_entropy": 3.3635955397267363,
+              "policy_kl": 1.6435972293929677,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1904296875,
+              "top_probability": 0.09226353918568929
+            }
+          },
+          "objective": 3.280907419298485,
+          "objective_calls": 99,
+          "optimization_gap_bound": 3.861794952518434e-12,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 6.377319764156245e-08,
+          "penalty": 0.015493371412447896,
+          "position_metrics_sha256": "3672463fee281e91252cad1cb3b153bc34c8cea7459a2f469c34ce9c831cf0e4",
+          "ridge": 1.0,
+          "seconds": 33.63786506652832,
+          "solver_evaluations": 97,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "763979fb71270881ea00914a37ed12920bdcef22d8bc82846b194cfc15004b74",
+          "checkpoint_sha256": "c9cf83cddd309af02fbdf1db240ac329fdfc98e7b219352ad15908e931fa6522",
+          "coordinate_logit_max_error": 3.4638958368304884e-14,
+          "feature_abs_max": {
+            "train": 127.99609369040319,
+            "validation": 1190.7874140888453
+          },
+          "fit_label_exposures": 8683520,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 512,
+          "metrics": {
+            "train": {
+              "policy_entropy": 2.641440718206052,
+              "policy_kl": 0.6631406363537783,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.62939453125,
+              "top_probability": 0.26824733915011983
+            },
+            "validation": {
+              "policy_entropy": 2.591708068301887,
+              "policy_kl": 2.091896333409216,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.151611328125,
+              "top_probability": 0.26910376952246196
+            }
+          },
+          "objective": 2.5644460340552584,
+          "objective_calls": 530,
+          "optimization_gap_bound": 5.348259326711528e-05,
+          "optimizer_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "optimizer_success": false,
+          "original_gradient_inf": 9.965919767159935e-06,
+          "penalty": 0.07455458066077214,
+          "position_metrics_sha256": "6c01a49c82a4a72df3bd87ebdde404f3c25c756cbebf203f3dd14c63160e3421",
+          "ridge": 0.0001,
+          "seconds": 175.426509141922,
+          "solver_evaluations": 528,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        },
+        {
+          "basis_sha256": "763979fb71270881ea00914a37ed12920bdcef22d8bc82846b194cfc15004b74",
+          "checkpoint_sha256": "1c4190f1825b51f997c90e3d8497d0e039a42dd180751f97a3d06f7f88b74025",
+          "coordinate_logit_max_error": 7.993605777301127e-15,
+          "feature_abs_max": {
+            "train": 127.99609369040319,
+            "validation": 1190.7874140888453
+          },
+          "fit_label_exposures": 6242304,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 369,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.1625892258136785,
+              "policy_kl": 1.1355687317367922,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.3934326171875,
+              "top_probability": 0.13807595242060966
+            },
+            "validation": {
+              "policy_entropy": 3.211142380103148,
+              "policy_kl": 1.544978807182881,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2047119140625,
+              "top_probability": 0.12668742326418364
+            }
+          },
+          "objective": 3.058831246048027,
+          "objective_calls": 381,
+          "optimization_gap_bound": 1.3789212001542323e-11,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.6135911494552125e-08,
+          "penalty": 0.09651169727052712,
+          "position_metrics_sha256": "c81e8040b876a89063371675e465040493146021e61fcf8a59e8f1c912cc90ff",
+          "ridge": 0.01,
+          "seconds": 128.25939893722534,
+          "solver_evaluations": 379,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        },
+        {
+          "basis_sha256": "763979fb71270881ea00914a37ed12920bdcef22d8bc82846b194cfc15004b74",
+          "checkpoint_sha256": "dd1ced43ef4c06fb703a0a915119cafda9beaac0bf391e5ae7dbd4714d0f6a94",
+          "coordinate_logit_max_error": 1.2212453270876722e-15,
+          "feature_abs_max": {
+            "train": 127.99609369040319,
+            "validation": 1190.7874140888453
+          },
+          "fit_label_exposures": 966656,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.311661977623378,
+          "iterations": 53,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.2943036500379694,
+              "policy_kl": 1.445806024426762,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.2418212890625,
+              "top_probability": 0.10722997252637032
+            },
+            "validation": {
+              "policy_entropy": 3.3620201751696346,
+              "policy_kl": 1.6490803847761226,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1942138671875,
+              "top_probability": 0.09435917430202642
+            }
+          },
+          "objective": 3.2882951838126013,
+          "objective_calls": 59,
+          "optimization_gap_bound": 3.30241594687062e-13,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 2.6716935386386165e-08,
+          "penalty": 0.015738342345130874,
+          "position_metrics_sha256": "807013b041d074f3a07279ab50c89993e618e07c2086314d5c9f909660ae8ba6",
+          "ridge": 1.0,
+          "seconds": 18.509020805358887,
+          "solver_evaluations": 57,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        }
+      ]
+    },
+    {
+      "baseline": {
+        "train": {
+          "policy_entropy": 3.218637661189888,
+          "policy_kl": 1.4911313693803037,
+          "teacher_entropy": 1.826750817040708,
+          "teacher_top1": 0.24029541015625,
+          "top_probability": 0.1482287560946905
+        },
+        "validation": {
+          "policy_entropy": 3.2967034176223224,
+          "policy_kl": 1.6905221980546274,
+          "teacher_entropy": 1.6534123034644224,
+          "teacher_top1": 0.2054443359375,
+          "top_probability": 0.13067495422766207
+        }
+      },
+      "scope": "27 frozen-core policy fits; no recurrent-rule changes, value optimization, new topology, playing-strength claim or CNN budget comparison. Count all solver label passes separately from prior core exposures. No TPU initialization.",
+      "seconds": 697.341281414032,
+      "seed": 6,
+      "source": {
+        "bank_sha256": "ffb98eb0998fdbf15973dcb9cb8348d2d109bea96e143a1c3484c90186a03a96",
+        "convex_sha256": "d5154374092a3a2d1e3ddab3a56aeab81120f365d9353cebeeb4932ecf4df886",
+        "lbfgsb_python_sha256": "61b69554f33a210284d4ae3de7da282152f9302b428eeb16984498b54e381d57",
+        "lbfgsb_sha256": "23d19ac49896c4ab452fc0bc807312bba273482ea01530ad6c0bc020ac8ccddb",
+        "numpy": "2.5.3",
+        "plan_sha256": "4dbbcbbb19f3d7175b053be70bead14e413a0bd2ff0e427311da7801ec0d3bf4",
+        "probe_sha256": "5238af9b3cacdc324f5fbba53724ecffa957f956fb3fa5339cadd0b02e590db2",
+        "scipy": "1.18.1",
+        "worker_sha256": "2f5533588f469de8efdd117dab7e8f4b2010479244ba7169a4298c556c967b85"
+      },
+      "status": "complete",
+      "trials": [
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "9e61c74b1d71dd6ea26ad73feac47664d8db79ea7e88ad4dc65de7d2328ecf72",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 229376,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 11,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.304192973734802,
+              "policy_kl": 1.4588491117972282,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.225830078125,
+              "top_probability": 0.10418764909507762
+            },
+            "validation": {
+              "policy_entropy": 3.3753100424548004,
+              "policy_kl": 1.6565208539400995,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.19580078125,
+              "top_probability": 0.09017761184636841
+            }
+          },
+          "objective": 3.285805394994436,
+          "objective_calls": 14,
+          "optimization_gap_bound": 1.806403263647058e-12,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.1605377514156988e-08,
+          "penalty": 0.00020546615650022702,
+          "position_metrics_sha256": "3544e49fc672eb67388f66605ed669667ca670a9a7ad82cf79be0799358666f4",
+          "ridge": 0.0001,
+          "seconds": 1.0468270778656006,
+          "solver_evaluations": 12,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "d99e35a124ecb6164629efc19635b361394f584e650efbd0a157c91617867c97",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 212992,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 10,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.289108302028672,
+              "policy_kl": 1.463808357797183,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.23333740234375,
+              "top_probability": 0.11049390221970723
+            },
+            "validation": {
+              "policy_entropy": 3.3601502988823215,
+              "policy_kl": 1.6624756847082958,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2005615234375,
+              "top_probability": 0.09615707579135088
+            }
+          },
+          "objective": 3.2970121870103406,
+          "objective_calls": 13,
+          "optimization_gap_bound": 2.5940627542557645e-16,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 1.3499740292646778e-09,
+          "penalty": 0.006453012172449692,
+          "position_metrics_sha256": "bc52dd9050f0150aaa11e9672a626a16ab3da1ea2a900d87a80c2eb8995ec564",
+          "ridge": 0.01,
+          "seconds": 0.985419511795044,
+          "solver_evaluations": 11,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "490ae19d0838f4570d8b7ca8892c80a32a0537c2940ed4d59a146c69877d6294",
+          "checkpoint_sha256": "ec4a8a57d2f7c6bd05bca552ec93833f2d4db88a300f05247970fe197645518e",
+          "coordinate_logit_max_error": 0.0,
+          "feature_abs_max": {
+            "train": 0.0,
+            "validation": 0.0
+          },
+          "fit_label_exposures": 131072,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 4,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.2241002154881837,
+              "policy_kl": 1.4891647494130567,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.239990234375,
+              "top_probability": 0.14517347501223668
+            },
+            "validation": {
+              "policy_entropy": 3.3014732832176374,
+              "policy_kl": 1.6886651490320386,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2049560546875,
+              "top_probability": 0.12790851273810058
+            }
+          },
+          "objective": 3.3168677628648213,
+          "objective_calls": 8,
+          "optimization_gap_bound": 5.607710296979135e-19,
+          "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+          "optimizer_success": true,
+          "original_gradient_inf": 5.042421671180852e-10,
+          "penalty": 0.0009521964110571651,
+          "position_metrics_sha256": "37dfe9d3b51adec3c302c6e1253c43d20ec720d0218aa84abda4b42846509619",
+          "ridge": 1.0,
+          "seconds": 0.6914834976196289,
+          "solver_evaluations": 6,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "bias-only"
+        },
+        {
+          "basis_sha256": "db79beb5e67e70a319f66e6765a3a68d194cc9c6aafb3a794a158599e4d14dd9",
+          "checkpoint_sha256": "785d7f398c19bf8bec54b4b0f48f99433fe399e70e33acb8f3b0e1492f0fc2d6",
+          "coordinate_logit_max_error": 3.4638958368304884e-14,
+          "feature_abs_max": {
+            "train": 127.99609369042756,
+            "validation": 680.651399306953
+          },
+          "fit_label_exposures": 8634368,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 512,
+          "metrics": {
+            "train": {
+              "policy_entropy": 2.8236388386672484,
+              "policy_kl": 0.8510388540887981,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.54107666015625,
+              "top_probability": 0.2194968634028282
+            },
+            "validation": {
+              "policy_entropy": 2.8209663919743697,
+              "policy_kl": 1.9011552810670054,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1470947265625,
+              "top_probability": 0.21464546344316587
+            }
+          },
+          "objective": 2.750616316392654,
+          "objective_calls": 527,
+          "optimization_gap_bound": 5.8173947169283936e-05,
+          "optimizer_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "optimizer_success": false,
+          "original_gradient_inf": 6.151574716256019e-06,
+          "penalty": 0.07282664526314792,
+          "position_metrics_sha256": "31079da97fc059b4dae1ea7970224d4555b6f0145d3259dbb4fb7829f5aa9214",
+          "ridge": 0.0001,
+          "seconds": 183.9504954814911,
+          "solver_evaluations": 525,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "db79beb5e67e70a319f66e6765a3a68d194cc9c6aafb3a794a158599e4d14dd9",
+          "checkpoint_sha256": "747f4559483d7493b609c3da21e94c2a7f3631fdd2152f9c0df8352697fe5720",
+          "coordinate_logit_max_error": 9.769962616701378e-15,
+          "feature_abs_max": {
+            "train": 127.99609369042756,
+            "validation": 680.651399306953
+          },
+          "fit_label_exposures": 6160384,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 363,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.1668160555449436,
+              "policy_kl": 1.209344572656395,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.3472900390625,
+              "top_probability": 0.13428657795829937
+            },
+            "validation": {
+              "policy_entropy": 3.2199996789365706,
+              "policy_kl": 1.5834669171760254,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.198486328125,
+              "top_probability": 0.12234047469063654
+            }
+          },
+          "objective": 3.10076570102294,
+          "objective_calls": 376,
+          "optimization_gap_bound": 6.574777178006609e-11,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 2.2431482434438592e-08,
+          "penalty": 0.06467031132583738,
+          "position_metrics_sha256": "03da70e8c30bd90e9dbc0a14d24b7851fadf99156475dc04bf1a6a389ad1fa93",
+          "ridge": 0.01,
+          "seconds": 132.07202076911926,
+          "solver_evaluations": 374,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "db79beb5e67e70a319f66e6765a3a68d194cc9c6aafb3a794a158599e4d14dd9",
+          "checkpoint_sha256": "c87c9f670fb855fe697400328a52f507d02c56bbb2c81151338bb3d83a27c618",
+          "coordinate_logit_max_error": 1.1102230246251565e-15,
+          "feature_abs_max": {
+            "train": 127.99609369042756,
+            "validation": 680.651399306953
+          },
+          "fit_label_exposures": 1671168,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 95,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.2818397550839102,
+              "policy_kl": 1.4409892177017338,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.24365234375,
+              "top_probability": 0.11195092115028785
+            },
+            "validation": {
+              "policy_entropy": 3.3495686331767303,
+              "policy_kl": 1.6493831838451047,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2081298828125,
+              "top_probability": 0.09899980502001487
+            }
+          },
+          "objective": 3.2825301546589083,
+          "objective_calls": 102,
+          "optimization_gap_bound": 2.7638573207396733e-12,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 8.030938599724868e-08,
+          "penalty": 0.014790119916466437,
+          "position_metrics_sha256": "f8126953eb949a0d4070c91b8c2ed929a9140ca77a439799312340ba60548d2c",
+          "ridge": 1.0,
+          "seconds": 37.10741138458252,
+          "solver_evaluations": 100,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "scaled-linear"
+        },
+        {
+          "basis_sha256": "f12fa23f8ab2ddda1d09b60735b39231fccf65a6fdcd081867d2ba5c496c8cc7",
+          "checkpoint_sha256": "e299d2742fff14712aeda84853a8e84a3f2e8ec08b79102f8fc5f157380fa46f",
+          "coordinate_logit_max_error": 4.263256414560601e-14,
+          "feature_abs_max": {
+            "train": 127.99609369042756,
+            "validation": 680.651399306953
+          },
+          "fit_label_exposures": 8896512,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 512,
+          "metrics": {
+            "train": {
+              "policy_entropy": 2.6623007533285037,
+              "policy_kl": 0.6862838702018283,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.61248779296875,
+              "top_probability": 0.261498582469939
+            },
+            "validation": {
+              "policy_entropy": 2.6214060403727077,
+              "policy_kl": 2.1025532723049585,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.1534423828125,
+              "top_probability": 0.2603618135844782
+            }
+          },
+          "objective": 2.587069852422976,
+          "objective_calls": 543,
+          "optimization_gap_bound": 6.11794804208651e-05,
+          "optimizer_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "optimizer_success": false,
+          "original_gradient_inf": 1.9918669831097857e-05,
+          "penalty": 0.0740351651804394,
+          "position_metrics_sha256": "ce57e93e90f5527fdf9a3cf9a72e6e68bf8e4ea99ff42935a219fff1f75eb811",
+          "ridge": 0.0001,
+          "seconds": 188.62974572181702,
+          "solver_evaluations": 541,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        },
+        {
+          "basis_sha256": "f12fa23f8ab2ddda1d09b60735b39231fccf65a6fdcd081867d2ba5c496c8cc7",
+          "checkpoint_sha256": "a7a4978ca58d7794937b4735a941f81b95f2c2564a815b1f192e43f34484c6b2",
+          "coordinate_logit_max_error": 8.881784197001252e-15,
+          "feature_abs_max": {
+            "train": 127.99609369042756,
+            "validation": 680.651399306953
+          },
+          "fit_label_exposures": 5865472,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 350,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.1613275220421846,
+              "policy_kl": 1.1449739816319824,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.3826904296875,
+              "top_probability": 0.13771584511309798
+            },
+            "validation": {
+              "policy_entropy": 3.2067558630633566,
+              "policy_kl": 1.5612467309589788,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.20703125,
+              "top_probability": 0.12761527114453916
+            }
+          },
+          "objective": 3.0648050416705797,
+          "objective_calls": 358,
+          "optimization_gap_bound": 2.23389047673878e-11,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 4.8279459289087424e-08,
+          "penalty": 0.09308024299788939,
+          "position_metrics_sha256": "a64f82b2a55959955437856beafcb08874f4a7d3f04c5e6858e1e56a1b939428",
+          "ridge": 0.01,
+          "seconds": 126.54583740234375,
+          "solver_evaluations": 356,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        },
+        {
+          "basis_sha256": "f12fa23f8ab2ddda1d09b60735b39231fccf65a6fdcd081867d2ba5c496c8cc7",
+          "checkpoint_sha256": "db0a3412f833e99c1964a53db4d05d4a738f42537dc2060cda44c18bd9dc468f",
+          "coordinate_logit_max_error": 1.5543122344752192e-15,
+          "feature_abs_max": {
+            "train": 127.99609369042756,
+            "validation": 680.651399306953
+          },
+          "fit_label_exposures": 966656,
+          "gradient_audit_label_exposures": 16384,
+          "initial_objective": 3.3178821864210115,
+          "iterations": 52,
+          "metrics": {
+            "train": {
+              "policy_entropy": 3.2674405368196684,
+              "policy_kl": 1.4476711467471186,
+              "teacher_entropy": 1.826750817040708,
+              "teacher_top1": 0.246337890625,
+              "top_probability": 0.1215725114081812
+            },
+            "validation": {
+              "policy_entropy": 3.3360813046000324,
+              "policy_kl": 1.6535627518691904,
+              "teacher_entropy": 1.6534123034644224,
+              "teacher_top1": 0.2100830078125,
+              "top_probability": 0.10810445395747456
+            }
+          },
+          "objective": 3.2909735002649785,
+          "objective_calls": 59,
+          "optimization_gap_bound": 5.70245917738698e-13,
+          "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "optimizer_success": true,
+          "original_gradient_inf": 9.135989637292646e-08,
+          "penalty": 0.016551536477151768,
+          "position_metrics_sha256": "2cf9cd19e4f917d7d662decd5d0d7b1ce0349c20a6e6437e5723a82df8c9291f",
+          "ridge": 1.0,
+          "seconds": 20.945594549179077,
+          "solver_evaluations": 57,
+          "status": "complete",
+          "sufficiently_converged": true,
+          "train_metric_exposures": 16384,
+          "validation_metric_exposures": 8192,
+          "variant": "gated-linear"
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    4,
+    5,
+    6
+  ],
+  "source_sha256": "d4891ee32eb05ae1f7f8a14fc01104c9ff88fa179e2cd7c4e698abbeb45f8a37",
+  "status": "complete",
+  "uncertainty": "1000 paired opening-family bootstrap resamples, seed 709, after averaging across fitted seeds; conditional on those weights. Training-seed SD is separate. Validation-informed diagnostic, not independent confirmation.",
+  "validation_metric_exposures": 221184
+}

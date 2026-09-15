@@ -103,11 +103,14 @@ training. Confirmation is separate from discovery, and uses the same validation
 families rather than untouched data. Persistent-state work remains separate:
 only its Rust core primitive and a training-only trajectory audit have passed,
 with model/Python/JAX integration and scientific memory training pending.
-The [new numerical cohort](docs/results/readout-confirmation-gates-v1.json)
-passes seven of nine cases and their recovery checks. Two soma-side cases fail;
-no confirmation training is admitted. An FP64-head reference diagnostic clears
-one failure but not the other. Preserve the failures and diagnose the remaining
-drift before qualifying any replacement; do not drop seeds or relax tolerances.
+The [original numerical cohort](docs/results/readout-confirmation-gates-v1.json)
+passes seven of nine cases; its two soma-side failures remain recorded. The
+subsequent registered protocol revision passes all 18 numerical and nine
+recovery checks without changing learner source or tolerances. The v2 launch
+contracts bind both constituent protocols; six dense/soma learners now have
+completed endpoints and replicas, and full validation is running. The shuffled
+controls wait for those analyses to finish. Detailed failure history and
+operational recoveries are retained below and in the readout study.
 
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,
@@ -681,8 +684,9 @@ heads begin at the original logits, use the same 16,384/8,192 training/validatio
 bank and receive 131,072 additional labeled exposures. All 36 final endpoints
 are retained. [Results and limits](docs/motor-learnability-study.md) separate
 confidence, training fit, held-out fit and function-class equivalence. The next
-diagnostic should address convergence/regularization before a capacity claim,
-then isolate a propagation change under a common decoder contract. Soma-side
+diagnostic addresses convergence/regularization before a capacity claim; its
+completed 27-fit results are below. Then isolate a propagation change under a
+common decoder contract. Soma-side
 confirmation remains a secondary control.
 
 `readout-confirmation-numerics-v2` explicitly revises the engineering inputs,
@@ -692,10 +696,50 @@ trajectory, at unchanged tolerances and unchanged scientific source/settings.
 All 18 numerical and nine recovery checks pass. The old two free constant-peak
 stress failures remain failures. The original operational v2 launch failed CPU
 affinity admission before initialization; attempt 2 changes only child affinity
-setup. Combined-report controller validation and scientific launch remain pending.
+setup. Combined-report controller validation now passes eight focused tests
+and admits all nine registered cases. The v2 launch contracts bind that evidence
+without changing the v1 run IDs, source, scientific settings or horizons. Six
+dense/soma learners have completed their fixed endpoints and entered full
+validation. Followup recovery v2 changes only deployment
+bundle membership to omit host-specific bytecode; the original failed launch
+is preserved and had started no evaluation workers.
 
 The researcher notebook uses a separately pinned public `quintic/go9x9` sample,
 with 512/256 positions and 64 updates. Its executed outputs demonstrate the
 interface; they do not alter V0 study contracts or replace full-validation
 endpoints. The first local-V0 walkthrough is retained as an execution artifact.
 All notebook and current scientific work runs on CPU; TPU use remains paused.
+
+### Converged motor decoding — 2026-09-15
+
+[Motor convergence v1](configs/motor-convergence-v1.json) freezes a diagnostic
+on the existing three banks before fitting: bias-only residual, standardized
+linear residual and the same top-128 positive-deviation gate, crossed with
+ridge penalties .0001/.01/1. The circuit, original logits and value stay fixed.
+The complete training covariance basis provides an invertible change of
+coordinates; no feature or covariance direction is removed. Regularization
+acts on the coefficients of the original centered features and the intercept.
+
+FP64 L-BFGS-B gets at most 512 iterations / 1,024 function evaluations per fit.
+Independent original-coordinate logits, objective and gradient must reproduce
+the conditioned solution. Ridge makes this objective strongly convex, so
+`||gradient||² / (2 * ridge)` bounds remaining objective error; the declared
+sufficient-convergence threshold is 1e-4. This is a numerical bound, not an
+interval-arithmetic certificate. Every endpoint, termination, bound and label
+pass is retained, including fits that stop at the iteration limit. Four tests
+cover coordinate/penalty/gradient equivalence, directional derivatives, a known
+optimum and the bias-only case.
+
+This is a validation-informed followup on reused 16,384/8,192-position banks,
+not a new data split or an equal-training-budget CNN experiment. Compare every
+ridge setting with its paired bias-only control before claiming useful motor
+information. A good training fit with poor validation diagnoses generalization
+at this sample size, not absent information. A later propagation change must
+hold the decoder contract fixed and measure both signal and gradient transfer.
+
+All 27 fits and audits are complete, including their checked second-worker
+copies. Every original-gradient bound is below 1e-4. Weakly regularized gating
+reaches training KL .68778 and validation 2.07265; ridge .01 gives validation
+1.54872 versus paired bias-only 1.65879 and original 1.68393. All three seeds
+improve under that middle setting. Preserve the six iteration-limit flags and
+all 97,419,264 solver label exposures. [Complete report and limits](docs/motor-convergence-study.md).

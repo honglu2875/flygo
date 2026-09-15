@@ -29,6 +29,15 @@ tradeoff: KL −.03468 / MSE +.03730. Dense remains the reference pending regist
 fresh-seed confirmation. This short screen has a different prediction budget
 and does not inherit the CNN comparison below.
 
+The [converged motor-decoder diagnostic](motor-convergence-study.md) completes
+27 fits on three frozen 32k-exposure cores. At ridge .01, a gated linear residual
+improves subset validation KL **1.68393 → 1.54872**, versus **1.65879** for its
+bias-only control. Weak regularization fits mean training KL **.68778** but
+worsens validation to **2.07265**. All numerical optimization-error bounds pass;
+all solver outcomes and 97.42M additional fit exposures are reported. This
+separates optimization and overfitting on a fixed bank; it is not a new
+full-validation or matched-CNN result.
+
 ## Matched neural control, three seeds
 
 Both families receive 1,048,576 labeled-position exposures: 512 Adam updates at

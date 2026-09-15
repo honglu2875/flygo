@@ -63,7 +63,10 @@ coordinates. Different results between them cannot establish different
 information content. The tested Adam rates are not equivalent function-space
 steps under this change. A regularized decoder fitted with a convergence-aware
 optimizer is the next useful diagnostic before claiming a motor-information
-limit. A subsequent propagation study should hold that decoder fixed and
+limit. That [27-fit convergence diagnostic](motor-convergence-study.md) is now
+complete: ridge .01 reaches mean validation KL 1.56892 with standardized linear
+features and 1.54872 with gating, while weaker regularization overfits. A
+subsequent propagation study should hold that decoder fixed and
 measure both signal and gradients through the circuit. The smaller soma-side
 confirmation remains a secondary control.
 

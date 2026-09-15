@@ -1,0 +1,80 @@
+{
+  "acceptance": {
+    "formula": "F(theta)-F* <= ||gradient in original feature coordinates||_2^2/(2*ridge), since the objective is ridge-strongly-convex. This is a numerical gradient-based bound, not interval-arithmetic certification.",
+    "max_gradient_gap_bound": 0.0001
+  },
+  "audit": "Compare the conditioned solution and mapped original coefficients on all training predictions; evaluate the original-coordinate gradient independently and check the transformation. Report every termination, objective, gradient, bound, call count, label exposures and fixed endpoint even if the bound fails.",
+  "banks": [
+    {
+      "bank_sha256": "458354747d210fab889a8a6d580cd9c2672f1dbaec890cf25dc61076c7748bdf",
+      "host": 1,
+      "seed": 4
+    },
+    {
+      "bank_sha256": "f379d192765fb718d2962ce84914a622a39213ca57098acdb6bcba3987d3b00f",
+      "host": 2,
+      "seed": 5
+    },
+    {
+      "bank_sha256": "ffb98eb0998fdbf15973dcb9cb8348d2d109bea96e143a1c3484c90186a03a96",
+      "host": 3,
+      "seed": 6
+    }
+  ],
+  "blas_threads": 4,
+  "centering": "Subtract each variant feature mean fitted on training only. Regularization is defined on coefficients of these centered features and the learned intercept.",
+  "condition": "Full untruncated eigendecomposition C=Q diag(d) Q^T of training covariance. Transform phi to (phi-mean) Q diag(1/sqrt(max(d,0)+ridge)). This is invertible; no motor or covariance direction is selected or removed.",
+  "core_environment": "environments/2ba439e309df1e902b58",
+  "cpus": [
+    56,
+    57,
+    58,
+    59
+  ],
+  "data": "Reuse exactly the same fixed training D4 views, natural validation subset and opening-family split. No test labels or new core extraction. This is a validation-informed diagnostic on reused banks, not fresh independent confirmation.",
+  "dependency_environment": "environments/tpu-ec7b62e32ad49c203cdd",
+  "features": "Same raw individual motor bank as motor-learnability-v1, before readout gains. Training-only normalization with its fixed 1e-6 floor; gated keeps the same at most 128 largest positive standardized deviations. Bias-only adds an action-bias residual over the original policy.",
+  "followup": "If a sufficiently converged decoder generalizes much better than bias-only, qualify its conditioning for end-to-end training. If converged training loss or held-out fit remains poor, examine attenuation from incoming-strength averaging before a separately registered propagation study. Do not infer missing information from a nonconverged or overfit fit.",
+  "initialization": "Zero residual coefficients, reproducing the frozen original logits for every case.",
+  "metrics": [
+    "train_policy_kl",
+    "validation_policy_kl",
+    "policy_entropy",
+    "teacher_top1",
+    "top_probability",
+    "ridge_penalty",
+    "optimization_gap_bound",
+    "objective_evaluations",
+    "labeled_exposures",
+    "seconds"
+  ],
+  "name": "motor-convergence-v1",
+  "objective": "Mean raw-teacher legal-policy cross entropy + ridge/2*(squared Frobenius norm of original centered-feature coefficients + squared intercept norm). Original logits, value and circuit remain fixed. FP64 analytic derivatives include actual target mass.",
+  "optimizer": {
+    "ftol": 1e-13,
+    "gtol": 1e-08,
+    "maxcor": 20,
+    "maxfun": 1024,
+    "maxiter": 512,
+    "maxls": 40,
+    "method": "L-BFGS-B",
+    "scipy": "1.18.1"
+  },
+  "platform": "cpu",
+  "ridge": [
+    0.0001,
+    0.01,
+    1.0
+  ],
+  "scope": "27 frozen-core policy fits; no recurrent-rule changes, value optimization, new topology, playing-strength claim or CNN budget comparison. Count all solver label passes separately from prior core exposures. No TPU initialization.",
+  "source_bank": "runs/motor-learnability-v1",
+  "source_checkpoint_exposures": 32000,
+  "source_plan_sha256": "a3c30c2a1ad2cc70cdb539a06697f719f62d019cabccd5a8c71d4b641a7a7090",
+  "training_positions": 16384,
+  "validation_positions": 8192,
+  "variants": [
+    "bias-only",
+    "scaled-linear",
+    "gated-linear"
+  ]
+}

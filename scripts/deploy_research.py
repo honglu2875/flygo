@@ -19,6 +19,61 @@ from flygo.replication import replicate_bundle
 from flygo.runtime import cpu_profile,pin
 
 
+def numerical_protocol_files(plan,job,root,report,records):
+    """Require both registered checks when a trial uses the combined v2 report."""
+    from flygo.qualify import sha256
+    from flygo.schedule import Schedule
+    if not plan.get('numerical_plan'):
+        if report.get('numerical_protocol') or len(records)!=1:
+            raise ValueError('A revised numerical protocol needs an explicit launch contract')
+        return set()
+    path=root/plan['numerical_plan'];spec=json.loads(path.read_text())
+    digest=sha256(path)
+    if (digest!=plan['numerical_plan_sha256'] or report.get('numerical_plan_sha256')!=digest
+            or report.get('status')!='complete' or report.get('numerical_protocol')!='combined-v2'
+            or len(records)!=2 or records!=report.get('records') or len(report.get('constituent_reports',[]))!=2
+            or spec['source']!=plan['environment'] or spec['platform']!='cpu'
+            or spec['input_map']!=plan['input_map'] or job['mode']!=spec['input_mode']
+            or job['seed'] not in spec['seeds'] or job['arm'] not in spec['arms']):
+        raise ValueError('Combined numerical evidence differs from its registered protocol')
+    schedule=Schedule(job.get('rate',plan['rate']),job.get('warmup_steps',plan.get('warmup_steps',0)),
+        job.get('decay_until',plan.get('decay_until',0)),job.get('final_rate_ratio',plan.get('final_rate_ratio',.1)))
+    expected_rates={'aligned-peak':[schedule.peak]*3,
+                    'free-warmup':[schedule.rate(i) for i in range(1,4)]}
+    if (schedule.warmup_steps!=spec['warmup_steps'] or spec['rate']!=schedule.peak
+            or spec['steps']!=job['passes'] or spec['batch_size']!=plan['batch_size']
+            or {p['name']:p['rates'] for p in spec['protocols']}!=expected_rates):
+        raise ValueError('Numerical trajectories differ from the actual launch schedule')
+    parameters=('edge','leak','bias','input_gain','readout_gain','policy_weight','policy_bias','value_weight','value_bias')
+    checks={f'{step}/{family}/{name}' for step in range(3)
+        for family,names in [('forward',('states','logits','value')),('loss',('policy_loss','value_loss')),
+                             *[(f,parameters) for f in ('gradient','param','first','second')]] for name in names}
+    expected_optimizer=dict(rate=schedule.peak,epsilon=job.get('epsilon',plan['epsilon']),
+        clip=job.get('clip',plan.get('clip',1.)),rate_scales=job.get('rate_scales',plan.get('rate_scales',{})))
+    files={path};seen=set()
+    for evidence,record in zip(report['constituent_reports'],records):
+        constituent=Path(evidence['path']);constituent.resolve().relative_to(root.resolve())
+        if sha256(constituent)!=evidence['sha256']:
+            raise ValueError('Numerical constituent evidence changed')
+        child=json.loads(constituent.read_text());protocol=record.get('numerical_protocol')
+        alignment=[dict(step=i,arrays=27,exact=True) for i in range(3)] if protocol=='aligned-peak' else []
+        if (protocol not in expected_rates or protocol in seen or child.get('records')!=[record]
+                or child.get('status')!='complete' or child.get('numerical_protocol')!=protocol
+                or child.get('numerical_plan_sha256')!=digest
+                or child.get('script_sha256')!=report.get('qualifier_sha256')
+                or child.get('registered_protocol')!=next(p for p in spec['protocols'] if p['name']==protocol)
+                or any(child.get(key)!=report.get(key) for key in
+                       ('runtime_sha256','dataset_id','graph_id'))
+                or record['actual_rates']!=expected_rates[protocol]
+                or record['aligned_checkpoints']!=alignment or set(record['errors'])!=checks
+                or record['model']!=records[0]['model'] or record['model']['seed']!=job['seed']
+                or record['updates']!=3 or record['batch_size']!=plan['batch_size']
+                or record['optimizer']!=expected_optimizer):
+            raise ValueError('Both complete numerical trajectories must cover the actual trial')
+        seen.add(protocol);files.add(constituent)
+    return files
+
+
 def head_io_files(plan,root):
     """Bind expensive masked trials to their actual recovery and pairing evidence."""
     from flygo.attachments import runtime_hashes
@@ -106,8 +161,9 @@ def attachment_files(plan,root,environment):
         records=[r for r in report['records'] if r['input_contract']==contract
                  and r.get('head_mask')==(None if head_mask is None else head_mask.contract)]
         if (report['dataset_id']!=manifest['dataset_id'] or report['graph_id']!=graph_manifest['graph_id']
-                or len(records)!=1 or records[0]['model']['seed']!=job['seed']):
+                or not records or any(r['model']['seed']!=job['seed'] for r in records)):
             raise ValueError('Attachment qualification does not cover this actual seed and corpus')
+        files.update(numerical_protocol_files(plan,job,root,report,records))
         files.add(qualification)
     return files
 
@@ -254,7 +310,7 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                     results.append(record);print(json.dumps(record),flush=True)
                     continue
             command = ['env', 'PYTHONPATH=' + str(environment / 'site-packages'),
-                       'PYTHONDONTWRITEBYTECODE=1', 'OPENBLAS_NUM_THREADS=1', 'OMP_NUM_THREADS=1',
+                       'PYTHONDONTWRITEBYTECODE=1', 'JAX_PLATFORMS=cpu', 'OPENBLAS_NUM_THREADS=1', 'OMP_NUM_THREADS=1',
                        PYTHON, '-u', '-m', 'flygo.train', '--root', str(root),
                        '--release', plan['release'], '--run-id', run_id,
                        '--passes', str(job['passes']), '--seed', str(job['seed']),

@@ -1,0 +1,43 @@
+{
+  "export_normalization": "Remove trailing whitespace from Matplotlib SVG. Parsed element order, tags, whitespace-normalized attributes and text exactly match the reviewed figure; no geometry or labels change.",
+  "figure_sha256": "432fcd4125d1dfec647ec679b9250c96d32ed2a2c533bfad53338267f19d6ba7",
+  "html_sha256": "b88f187ca6362adb190e206e92e64cce1ff44a2f774c7965212bc44c38ae293a",
+  "javascript_exceptions": [],
+  "records": [
+    {
+      "bytes": 189176,
+      "geometry": {
+        "clip": {
+          "height": 1246.4375,
+          "scale": 1,
+          "width": 1180,
+          "x": 102.5,
+          "y": 8734
+        },
+        "documentWidth": 1385,
+        "width": 1400
+      },
+      "sha256": "e4e82214e3089faca1a41efee38cbf80128413fc16686dc4bd91d23a413eb4a6",
+      "viewport": "desktop"
+    },
+    {
+      "bytes": 136946,
+      "geometry": {
+        "clip": {
+          "height": 1536.140625,
+          "scale": 1,
+          "width": 394,
+          "x": 18,
+          "y": 16805.265625
+        },
+        "documentWidth": 430,
+        "width": 430
+      },
+      "sha256": "e108ed88204a6b77f3a0a3c56cf6b58fa72f114b6993c49a0c162a195185ce09",
+      "viewport": "mobile"
+    }
+  ],
+  "rendered_figure_sha256": "9c22d26fd6b355937c0d61a9ccdd27131f7d05e8c24befaa6170d0b31a92c033",
+  "review": "Both actual screenshots visually reviewed; the standalone figure and explanatory cards render without horizontal page overflow.",
+  "status": "passed"
+}

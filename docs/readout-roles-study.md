@@ -420,8 +420,8 @@ The [fresh-seed gate report](results/readout-confirmation-gates-v1.json) retains
 pass exact recovery and preserve their paired initial arrays and samplers.
 Soma-side seed 7 differs in one policy weight after the second update by
 7.70e-6; seed 8 differs in one logit before the third update by 6.10e-6. These
-exceed the existing elementwise tolerances. No scientific confirmation learner
-has started, and no failed seed has been replaced.
+exceed the existing elementwise tolerances. At this original gate, no scientific
+confirmation learner had started, and no failed seed was replaced.
 
 A separate independent FP64-head oracle keeps FP32 recurrence and Adam and
 uses the same examples, settings and tolerances. It clears soma-side seeds 7/9,
@@ -467,8 +467,21 @@ update exactly for seeds 7/8. Substituting the reference motor pool into the
 native head reproduces first-update differences around 4.6e-6 from initial
 motor discrepancies around 1e-7. Explicit FP32 barriers do not resolve this.
 The evidence supports rounding amplified by cancellation rather than a
-demonstrated native head/Adam equation bug. The combined-report controller
-validation and scientific confirmation launch are still pending.
+demonstrated native head/Adam equation bug. The combined-report controller now
+passes eight focused tests and admits all nine actual jobs. The
+[wave 1 launch](../configs/readout-confirmation-wave1-v2.json),
+[wave 2 launch](../configs/readout-confirmation-wave2-v2.json) and
+[analysis contract](../configs/readout-confirmation-analysis-v2.json) bind this
+evidence while preserving the original scientific settings and run IDs. Six
+dense/soma learners have started, with full-validation, signal and arithmetic
+followups. The shuffled controls are queued behind those completed analyses.
+
+The first followup deployment stopped before starting any evaluation worker
+because host-specific Python bytecode conflicted during immutable replication.
+Recovery v2 excludes caches from new bundles. The second-wave queue initially
+failed during imports because its `queue.py` entry shadowed Python's standard
+library; recovery v3 changes only that entry filename to `worker.py`. Failed
+attempts remain intact. No scientific horizon, learner or mask changed.
 
 In response to the remaining large CNN gap, priority moved to the independent
 [36-case motor learnability screen](motor-learnability-study.md). It probes raw
