@@ -22,6 +22,19 @@ from flygo.storage import GIB, StorageBudget
 CONFIDENCE = ('policy_entropy', 'mean_top_probability')
 
 
+def validate_contract(analysis):
+    """Keep the statistical rules fixed while accepting registered seeds and horizons."""
+    seeds = analysis['seeds']; update = analysis['endpoint_update']
+    if (len(seeds) < 2 or any(type(seed) is not int or seed < 0 for seed in seeds)
+            or len(set(seeds)) != len(seeds) or type(update) is not int or update <= 0 or update % 10
+            or analysis['arms'] != ['global', 'parameter-group']
+            or analysis['contrast'] != dict(candidate='parameter-group', reference='global')
+            or tuple(analysis['metrics']) != METRICS or tuple(analysis['confidence_metrics']) != CONFIDENCE
+            or tuple(analysis['slices']) != SLICES
+            or analysis['bootstrap'] != dict(unit='opening_family', resamples=1000, seed=709, interval=[.025, .975])):
+        raise ValueError('Unsupported clipping analysis contract')
+
+
 def paired_confidence(matrices, families, novel, seeds, arms, contrast, *, bootstrap=1000, seed=709):
     """The same position weighting and paired-family bootstrap, for two confidence columns."""
     if set(matrices) != {(s, a) for s in seeds for a in arms} or len(seeds) < 2:
@@ -111,16 +124,16 @@ def main():
     args.output.resolve().relative_to(root.resolve())
     if args.output.exists(): raise ValueError('Analysis reports are immutable')
     analysis = read(args.plan)
-    if (analysis['seeds'] != [10, 11, 12] or analysis['arms'] != ['global', 'parameter-group']
-            or tuple(analysis['metrics']) != METRICS or tuple(analysis['confidence_metrics']) != CONFIDENCE
-            or tuple(analysis['slices']) != SLICES or analysis['endpoint_update'] != 1000
-            or analysis['bootstrap'] != dict(unit='opening_family', resamples=1000, seed=709, interval=[.025, .975])):
-        raise ValueError('Unsupported clipping analysis contract')
+    validate_contract(analysis)
+    if (analysis.get('analysis_implementation_sha256')
+            and sha256(Path(__file__)) != analysis['analysis_implementation_sha256']):
+        raise ValueError('Registered analysis implementation changed')
     for helper, digest in analysis['statistics_implementations'].items():
         if sha256(Path(__file__).with_name(helper)) != digest: raise ValueError('Registered statistics source changed')
     plan_path = root / analysis['trial_plan']; plan = read(plan_path)
     if sha256(plan_path) != analysis['trial_plan_sha256']: raise ValueError('Trial contract changed')
-    if plan['updates'] * plan['batch_size'] != analysis['labeled_exposures_per_endpoint']:
+    if (plan['updates'] != analysis['endpoint_update']
+            or plan['updates'] * plan['batch_size'] != analysis['labeled_exposures_per_endpoint']):
         raise ValueError('Exposure horizon differs')
     jobs = plan['jobs']; seeds = analysis['seeds']; arms = analysis['arms']
     if sorted((j['seed'], j['arm']) for j in jobs) != sorted((s, a) for s in seeds for a in arms):

@@ -13,6 +13,11 @@ full validations, motor probes and cost measurements are complete.
 [Complete results](results/group-clipping-v1.json) and
 [evidence closure](results/group-clipping-closure-v1.json).
 
+A separately registered [128k-exposure confirmation](clipping-confirmation-study.md)
+is running with fresh paired seeds 13/14/15. Its six learners retain the same
+inputs, heads, propagation and optimizer settings; only clipping scope differs
+within a pair. No longer-horizon result is available yet.
+
 The [signal audit](signal-flow-study.md) found weak visual responses and
 epsilon-dominated edge moments. Existing joint-loss diagnostics showed that
 type-bias gradients supplied more than 99.95% of the squared gradient norm on

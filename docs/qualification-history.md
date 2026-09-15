@@ -654,3 +654,20 @@ reproduce their applied factors. The 216 scientific evidence files have
 member-verified owner/peer archives, with checkpoint payloads independently
 replicated. [Closure](results/group-clipping-closure-v1.json).
 TPU remains paused and data-generation stop markers are preserved.
+
+## Clipping confirmation qualification, 2026-09-15
+
+Fresh seeds 13/14/15 pass all 12 full-CNS numerical cases and six exact
+fresh-process recovery cases under the unchanged source and tolerances. The
+previous source fixture and legacy-regression evidence is inherited. This
+adds 2,112 native and 1,152 independent JAX update exposures, separately from
+the six registered 128k-exposure scientific endpoints. All 306 qualification
+files have member-verified owner/peer archives.
+
+The analyzer supports explicitly registered seeds and horizons, binds its
+implementation hash and retains the original statistics and selection rule.
+All 13 focused checks pass both on root and on the designated analysis worker
+2. Its copied PyArrow dependency passes all 748 file checks and reads 165,122
+annotation rows. The six CPU learners and initial replicas are verified; final
+scientific results remain pending. [Contract and operations](clipping-confirmation-study.md),
+[engineering receipt](results/clipping-confirmation-engineering-v1.json).

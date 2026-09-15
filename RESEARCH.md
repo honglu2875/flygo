@@ -788,8 +788,11 @@ motor variance remains strongly concentrated. Counted B1 prediction work rises
 **8.81%**; this increase is distinct from the **0–.6%** optimizer-only timing
 difference in synthetic full-shape checks. All initial arrays and sampler states
 match within pairs; owner/peer evidence is verified. Preserve this as a
-provisional optimizer candidate and register a longer-horizon comparison before
-changing propagation. [Results and limitations](docs/group-clipping-study.md).
+provisional optimizer candidate. The separately registered
+[128k-exposure confirmation](docs/clipping-confirmation-study.md) now runs six
+fresh-seed CPU learners with propagation fixed. Its 12 numerical and six exact
+recovery cases pass; final results remain pending.
+[Discovery results and limitations](docs/group-clipping-study.md).
 
 This advances the optimizer line first because of the measured imbalance;
 the separately scoped propagation and persistent-state ideas remain pending.

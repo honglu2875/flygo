@@ -53,6 +53,10 @@ in all three seeds. Counted B1 prediction FLOPs rise **8.81%**; entropy falls
 only .04047. This is a short-horizon optimizer improvement, with no new
 matched-CNN or playing-strength result. [Full study](group-clipping-study.md).
 
+A [fresh-seed 128k-exposure confirmation](clipping-confirmation-study.md) is
+now running on CPU. All 12 numerical and six recovery cases pass; final
+validation and the paired scientific result remain pending.
+
 ## Matched neural control, three seeds
 
 Both families receive 1,048,576 labeled-position exposures: 512 Adam updates at

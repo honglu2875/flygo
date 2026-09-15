@@ -1,0 +1,74 @@
+{
+  "analysis_implementation_sha256": "1500dce1061935a3187f45b122731d5dee5cdd6ce9f22eb6ec95d5892cf414b4",
+  "arithmetic": "Complete warm reset-state prediction plus visual encoding and dense heads. Separate these FLOPs from optimizer throughput and overhead; no existing CNN comparison is inherited.",
+  "arms": [
+    "global",
+    "parameter-group"
+  ],
+  "bootstrap": {
+    "interval": [
+      0.025,
+      0.975
+    ],
+    "resamples": 1000,
+    "seed": 709,
+    "unit": "opening_family"
+  },
+  "bulk_analysis_host": 2,
+  "clipping": "Retain actual pre-update group norms/factors and existing post-update/activity measurements separately; do not infer group clipping events from the global norm.",
+  "confidence_metrics": [
+    "policy_entropy",
+    "mean_top_probability"
+  ],
+  "contrast": {
+    "candidate": "parameter-group",
+    "reference": "global"
+  },
+  "current_source_novel_positions": 62984,
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "decision": "A provisional optimizer candidate requires policy KL improvement in each paired seed and no worsening of mean value MSE. Report all losses, tradeoffs and failed cases regardless; no best-checkpoint or best-seed selection. Any later horizon/rate/propagation study needs its own contract.",
+  "diagnostics": {
+    "count_batches": [
+      1,
+      32
+    ],
+    "count_positions": 64,
+    "count_seed": 917271,
+    "motor_std_floor": 1e-06,
+    "positions": 256,
+    "selection_seed": 972091
+  },
+  "endpoint_update": 4000,
+  "endpoints": "runs/clipping-confirmation-endpoints-v1",
+  "followup": "runs/clipping-confirmation-followup-v1",
+  "labeled_exposures_per_endpoint": 128000,
+  "metrics": [
+    "policy_kl",
+    "value_mse",
+    "teacher_top1_agreement"
+  ],
+  "name": "clipping-confirmation-analysis-v1",
+  "native_sha256": "9b34b4da315fda00686e501debe507fdeb76d06fa07f153fcb2d4c7b0074536f",
+  "novelty_masks": "runs/attachment-input-novelty-v1/masks.npz",
+  "novelty_masks_sha256": "edb7b2f31d2825431db7dfc3c68a52cd40bdc2e1a82998eb3c7821f958a13baa",
+  "pairing": "Compare candidate minus reference on identical validation indices within each seed, then average paired predictions per position before resampling opening families. Report every seed difference and its sample SD separately.",
+  "scope": "All six fresh-seed 128k-exposure endpoints and all failures. Same reused V0 validation families; report actual prediction work and separate seed variation. No cross-horizon causal claim, matched-CNN inheritance, untouched test, matches or TPU use.",
+  "seeds": [
+    13,
+    14,
+    15
+  ],
+  "slices": [
+    "natural",
+    "current_reduced_source_novel"
+  ],
+  "source": "environments/1f19481174f3bc8e5449",
+  "statistics_implementations": {
+    "compare_checkpoints.py": "c3b2068291bfdc99530238f70c293a321e879f9835cbba3b92d61f66cd079a67",
+    "summarize_readout_roles.py": "af76608746cef51d2cc230dc967ab4423ded5ce6341495742f14a542e7c57165"
+  },
+  "trial_plan": "runs/clipping-confirmation-trials-v1/plan.json",
+  "trial_plan_sha256": "27b81926b9cdf6adef6ce2473d4077f296f355e3dd01ae18ebde27d6d0a43bde",
+  "uncertainty": "Use the existing opening-family bootstrap: 1,000 resamples, seed 709. Report conditional family intervals and the three paired-seed differences/sample SD separately. The same validation families have been reused in earlier studies.",
+  "validation_positions": 70425
+}

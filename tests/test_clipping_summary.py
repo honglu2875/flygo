@@ -1,5 +1,6 @@
 """Clipping conclusions must retain paired seeds and observed update semantics."""
 import copy
+import json
 from pathlib import Path
 import sys
 import unittest
@@ -8,11 +9,22 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from attachment_endpoint import initial_state
-from summarize_clipping import CONFIDENCE, PARAMETERS, clipping_history, decision, paired_confidence
+from summarize_clipping import CONFIDENCE, PARAMETERS, clipping_history, decision, paired_confidence, validate_contract
 from summarize_readout_roles import METRICS, paired_results
 
 
 class ClippingSummary(unittest.TestCase):
+    def test_new_registered_horizon_retains_decision_direction_and_sampling_rules(self):
+        plan = json.loads((Path(__file__).resolve().parents[1] / 'configs/group-clipping-analysis-v1.json').read_text())
+        validate_contract(plan)
+        longer = dict(plan, seeds=[13, 14, 15], endpoint_update=4000)
+        validate_contract(longer)
+        for changes in [dict(seeds=[13, 13, 15]), dict(seeds=[13]), dict(endpoint_update=3999),
+                        dict(contrast=dict(candidate='global', reference='parameter-group')),
+                        dict(bootstrap=dict(plan['bootstrap'], unit='position'))]:
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                validate_contract(dict(longer, **changes))
+
     def test_confidence_uses_the_registered_pairing_and_family_weighting(self):
         families = np.array(['large', 'large', 'large', 'small'])
         novel = np.array([True, False, False, True])
