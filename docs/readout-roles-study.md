@@ -437,7 +437,8 @@ coordinate, swapping only the policy-weight array reduces the original
 6.10e-6 difference to 1.61e-7 (FP64 oracle: 4.88e-6 → 1.46e-7). This locates
 most of the discrepancy in policy-weight drift across optimizer updates;
 it does not yet identify which gradient or rounding boundary should change.
-The original failed gate remains in force.
+The original failed cohort remains recorded; the subsequent explicit protocol
+revision is described below.
 
 The contribution audit also motivates a later conditioning experiment. For an
 invertible diagonal scale S, `policy = W S (r - mean) + bias` has the same affine
@@ -447,3 +448,32 @@ positions, with a declared variance floor and fixed fitting cost. Treat this as
 an optimization/parameterization factor; do not silently combine it with the
 value-group or side-mask trials. The earlier mean-conditioning qualification
 failure remains part of the numerical history.
+
+## Numerical protocol revision and larger decoder study
+
+The [v2 numerical plan](../configs/readout-confirmation-numerics-v2.json) was
+registered before its checks and before confirmation learning. It tests three
+peak-rate transitions from identical native checkpoints/moments, plus three
+independent updates under the actual 100-step warmup. All existing numeric
+tolerances, examples, model/optimizer settings and the scientific runtime remain
+unchanged. This changes the engineering test inputs; it does not turn the two
+original free constant-peak failures into passes.
+
+The [completed report](results/readout-confirmation-numerics-v2.json) contains
+18/18 numerical and 9/9 exact-recovery passes. Each numerical case checks full
+states, outputs, losses, all gradients, parameters and both moments. Independent
+canonical head arithmetic reconstructs every captured policy gradient and Adam
+update exactly for seeds 7/8. Substituting the reference motor pool into the
+native head reproduces first-update differences around 4.6e-6 from initial
+motor discrepancies around 1e-7. Explicit FP32 barriers do not resolve this.
+The evidence supports rounding amplified by cancellation rather than a
+demonstrated native head/Adam equation bug. The combined-report controller
+validation and scientific confirmation launch are still pending.
+
+In response to the remaining large CNN gap, priority moved to the independent
+[36-case motor learnability screen](motor-learnability-study.md). It probes raw
+and standardized linear mixing, competitive gating and a nonlinear decoder at
+three rates on three frozen cores. This larger screen is complete; no recurrent
+equations were changed. It demonstrates that sharp outputs alone do not solve
+the held-out learning problem and motivates separating decoder convergence
+from missing or poorly trained circuit features.

@@ -1,0 +1,45 @@
+{
+  "name": "readout-confirmation-numerics-v2",
+  "source": "environments/2ba439e309df1e902b58",
+  "reference": "unchanged flygo.jax.model on CPU",
+  "platform": "cpu",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_mode": "current",
+  "head_mask_root": "ports/readout-masks-v1",
+  "arms": ["dense", "soma-side", "shuffled-side"],
+  "seeds": [7, 8, 9],
+  "steps": 8,
+  "batch_size": 32,
+  "updates": 3,
+  "rate": 0.03,
+  "rate_scales": {"bias": 0.01},
+  "clip": 1,
+  "epsilon": 0.000001,
+  "warmup_steps": 100,
+  "protocols": [
+    {
+      "name": "aligned-peak",
+      "alignment": "Copy native parameters and both moment arrays before each reference forward, derivative and transition.",
+      "rates": [0.03, 0.03, 0.03],
+      "checks": "Full states, logits, value, losses, all parameter gradients, updated parameters and both moments at each of three successive native checkpoints. Report parameter-delta differences separately."
+    },
+    {
+      "name": "free-warmup",
+      "alignment": "Identical initialization only; independent parameter and moment trajectories thereafter.",
+      "rates": [0.0003, 0.0006, 0.0009],
+      "checks": "Full states, logits, value, losses, all parameter gradients, updated parameters and both moments for the first three actual scheduled updates. Report parameter-delta differences separately."
+    }
+  ],
+  "tolerances": {
+    "states_outputs_losses": {"rtol": 0.0003, "atol": 0.000003},
+    "gradients_parameters_moments": {"rtol": 0.003, "atol": 0.000005}
+  },
+  "owners": [
+    {"seed": 7, "host": 1},
+    {"seed": 8, "host": 2},
+    {"seed": 9, "host": 3}
+  ],
+  "cpus": [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55],
+  "acceptance": "All 18 numerical cases and all nine source-bound exact checkpoint/sampler recovery cases must pass before any scientific confirmation training. No failed-seed substitution. The prior free-running constant-peak stress cohort remains failed and is reported alongside these results.",
+  "reason": "Independent head arithmetic reconstructs native policy gradients and Adam updates exactly. Initial recurrent-feature rounding of about 1e-7 causes about 4.6e-6 first-parameter differences in nearly cancelling gradients. Explicit FP32 materialization does not resolve this. Checkpoint alignment tests derivatives at the same parameters, as in the prior CNN qualification; free warmup tests the actual launch trajectory. This revises the engineering test inputs, not the learner source, mathematics, topology, scientific schedule, tolerances, examples, seeds or endpoints. Registered before these new checks and before any confirmation learning or validation."
+}

@@ -4,7 +4,7 @@ Learn 9×9 Go with one fixed fly connectome: **165,122 neurons and 15,270,273
 directed edges**. Neuron and edge identities remain fixed. Strengths, local
 dynamics, sensory attachment, readout and internal passes are research variables.
 
-The repository now runs expert generation on four CPU hosts, complete Rust
+The repository supports expert generation on four CPU hosts, complete Rust
 inference/backpropagation/Adam, offline teacher distillation, portable
 checkpoints, and prior/PUCT/Gumbel play. JAX supplies an independent CPU
 reference and a qualified four-host, 16-device TPU learner with exact sparse
@@ -14,6 +14,10 @@ The early trained models are weak; working training is not a strength claim.
 - [Interactive model guide](docs/model.html): illustrated graph, Go adapters,
   recurrent passes, retinal controls, measured studies and proposed extensions. Open directly in
   a browser; all images, data and controls work offline.
+- [Research notebook](notebooks/flygo_research_walkthrough.ipynb): a small
+  Hugging Face sample, the full Rust fly model, weight and signal plots,
+  spherical board inputs, and a training loop with held-out policy KL.
+  [Setup and artifact requirements](notebooks/README.md).
 - [PROGRESS.md](PROGRESS.md): current jobs, results and remaining gates.
 - [DESIGN.md](DESIGN.md): equations, module boundaries and extension rules.
 - [DATASET.md](DATASET.md): teacher, targets, splits and RAM storage policy.

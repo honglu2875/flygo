@@ -1,0 +1,220 @@
+{
+  "status": "passed",
+  "notebook_sha256": "20e69179f9dd0c846dc822df7ba03103d6f8f101a80d08ff74aa19e68f9fc504",
+  "seconds": 387.10359358787537,
+  "executed_cells": 10,
+  "experiment": {
+    "dataset_id": "6a26ffa743f3c7be95d783102f6b3596e0ce69893c5a8e28dcca154dc54f05f4",
+    "data_source": "hub",
+    "hf_dataset": "quintic/go9x9",
+    "hf_revision": "4f579b0a21c456f3bb568174d384056351124cd5",
+    "manifest_sha256": "68b05a2dca33859a9d0b3b9ee89d4ed242c45d427d0e3233c8093c91f3f16096",
+    "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+    "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+    "model": {
+      "steps": 8,
+      "features": 3574,
+      "groups": 2129,
+      "actions": 82,
+      "threads": 4,
+      "seed": 1,
+      "rate_softness": 0.0,
+      "readout_mean_scale": 1.0
+    },
+    "input_mode": "current",
+    "runtime": {
+      "attachments.py": "7094faa352ae40baf95e4dfb615ed7312910c87e7af5b6ffef28cc2236b4e116",
+      "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a",
+      "fly.py": "3cd1d14dde312e0d6d93cb59f853bed174b590d84d606861a7d66d96cb1f6a45",
+      "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+      "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+      "train.py": "f93627f0f7487cb6a9ff3b5583bb74dd03b90f3cdf5005022a9fedf05da07949",
+      "jax/model.py": "d2c5f266230260dd4a1687008975d4a51bea266926ccd37fd172876fdf66a4d8",
+      "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+      "native": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1"
+    },
+    "train_positions": 512,
+    "validation_positions": 256,
+    "train_families": 55,
+    "validation_families": 12,
+    "train_ids_sha256": "d15c6f34b28d56b77c9ae5c9f67a7ee674d0f508f6c5719d3f4055dc204dfc2d",
+    "val_ids_sha256": "2e8e467f6dfcd8d97313c827ef3dee5442e6c821d92fde634734bafe642219bd",
+    "schedule": {
+      "version": "absolute-update-rate-v1",
+      "peak": 0.03,
+      "warmup_steps": 100,
+      "decay_until": 0,
+      "final_ratio": 0.1
+    },
+    "epsilon": 1e-06,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "updates": 64,
+    "exposures": 2048,
+    "curve": [
+      {
+        "step": 0,
+        "exposures": 0,
+        "validation": {
+          "policy_kl": 2.0380651243488606,
+          "value_mse": 0.8899373106043366,
+          "policy_entropy": 3.633108504304945,
+          "top_probability": 0.03403918570623217,
+          "teacher_top1": 0.05078125
+        }
+      },
+      {
+        "step": 16,
+        "exposures": 512,
+        "training_batch": {
+          "policy_loss": 3.4132211996502657,
+          "value_loss": 0.9090767019661143,
+          "gradient_norm": 0.7685801060118772,
+          "step": 16
+        },
+        "validation": {
+          "policy_kl": 1.9919475886883833,
+          "value_mse": 0.9181939381724662,
+          "policy_entropy": 3.280293027442772,
+          "top_probability": 0.11078301926262608,
+          "teacher_top1": 0.1171875
+        }
+      },
+      {
+        "step": 32,
+        "exposures": 1024,
+        "training_batch": {
+          "policy_loss": 3.417151210356262,
+          "value_loss": 1.1838611522689462,
+          "gradient_norm": 2.0173770331829544,
+          "step": 32
+        },
+        "validation": {
+          "policy_kl": 1.9601214269693432,
+          "value_mse": 0.9459444143411323,
+          "policy_entropy": 3.439479884823964,
+          "top_probability": 0.08614945328046876,
+          "teacher_top1": 0.05859375
+        }
+      },
+      {
+        "step": 48,
+        "exposures": 1536,
+        "training_batch": {
+          "policy_loss": 3.4487142809037326,
+          "value_loss": 0.889742243103683,
+          "gradient_norm": 0.8383832094740852,
+          "step": 48
+        },
+        "validation": {
+          "policy_kl": 1.9702147214636192,
+          "value_mse": 0.8903295533271736,
+          "policy_entropy": 3.3808282711854676,
+          "top_probability": 0.10308721537660515,
+          "teacher_top1": 0.06640625
+        }
+      },
+      {
+        "step": 64,
+        "exposures": 2048,
+        "training_batch": {
+          "policy_loss": 3.543302897648238,
+          "value_loss": 0.8626361833303235,
+          "gradient_norm": 0.4058358388034829,
+          "step": 64
+        },
+        "validation": {
+          "policy_kl": 1.9013720086098855,
+          "value_mse": 0.9010808110544362,
+          "policy_entropy": 3.5004027344092514,
+          "top_probability": 0.08031686218485387,
+          "teacher_top1": 0.12109375
+        }
+      }
+    ],
+    "final_validation": {
+      "policy_kl": 1.9013720086098855,
+      "value_mse": 0.9010808110544362,
+      "policy_entropy": 3.5004027344092514,
+      "top_probability": 0.08031686218485387,
+      "teacher_top1": 0.12109375
+    },
+    "scope": "Small exploratory slice; not full validation, final test, or a CNN comparison."
+  },
+  "executed_notebook_sha256": "ff7e2b99082972e25c9360439edd11f07185fbdca16de359df13aa9db74baeeb",
+  "downloads": {
+    "selected_games": 96,
+    "selected_game_bytes": 2261049,
+    "index_bytes": 28318147
+  },
+  "host": "t1v-n-a09f5679-w-3",
+  "cpus": [
+    56,
+    57,
+    58,
+    59
+  ],
+  "environment": "environments/notebook-cpu-20260915-v1",
+  "requirements": [
+    "anyio==4.15.1",
+    "asttokens==3.0.2",
+    "attrs==26.1.0",
+    "certifi==2026.7.22",
+    "click==8.5.0",
+    "comm==0.2.3",
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "debugpy==1.8.21",
+    "executing==2.2.1",
+    "fastjsonschema==2.22.2",
+    "filelock==3.32.6",
+    "fonttools==4.65.0",
+    "fsspec==2026.7.0",
+    "h11==0.16.0",
+    "hf-xet==1.6.0",
+    "httpcore==1.0.9",
+    "httpx==0.28.1",
+    "huggingface-hub==1.31.0",
+    "idna==3.19",
+    "ipykernel==7.3.0",
+    "ipython==9.17.1",
+    "ipython-pygments-lexers==1.1.1",
+    "jedi==0.20.0",
+    "jsonschema==4.26.0",
+    "jsonschema-specifications==2025.9.1",
+    "jupyter-client==8.10.0",
+    "jupyter-core==5.9.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "matplotlib-inline==0.2.2",
+    "nbclient==0.11.0",
+    "nbformat==5.11.1",
+    "nest-asyncio2==1.7.2",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "parso==0.8.7",
+    "pexpect==4.9.0",
+    "pillow==12.3.0",
+    "platformdirs==4.11.8",
+    "prompt-toolkit==3.0.53",
+    "psutil==7.2.2",
+    "ptyprocess==0.7.0",
+    "pure-eval==0.2.4",
+    "pygments==2.21.0",
+    "pyparsing==3.3.2",
+    "python-dateutil==2.9.0.post0",
+    "pyyaml==6.0.3",
+    "pyzmq==27.2.0",
+    "referencing==0.37.0",
+    "rpds-py==2026.6.3",
+    "six==1.17.0",
+    "stack-data==0.6.3",
+    "tornado==6.5.9",
+    "tqdm==4.70.1",
+    "traitlets==5.16.1",
+    "typing-extensions==4.16.0",
+    "wcwidth==0.8.3"
+  ],
+  "note": "Default notebook executed against the pinned public Hugging Face release, using the qualified Rust CPU runtime and local full graph/spherical adapter. No TPU initialized. Notebook retains the actual rendered outputs."
+}

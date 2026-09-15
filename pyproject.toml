@@ -13,6 +13,7 @@ dependencies = ["numpy==2.5.3"]
 jax = ["jax==0.11.1", "jaxlib==0.11.1"]
 tpu = ["jax[tpu]==0.11.1", "jaxlib==0.11.1", "libtpu==0.0.46.1"]
 data = ["pyarrow==25.0.1"]
+notebook = ["matplotlib>=3.9,<4", "nbformat>=5.10,<6", "nbclient>=0.10,<1", "ipykernel>=6.29,<8", "jupyterlab>=4.4,<5", "huggingface_hub>=1.28,<2"]
 
 [project.scripts]
 flygo = "flygo.cli:main"

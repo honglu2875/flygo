@@ -670,3 +670,32 @@ all six initial/trained hard/smooth B1/B32 fixtures. Preserve its source and
 measurements; remove the unused candidate from the engine. Production dispatch
 was never changed. Later group-based layouts must pass whole-model performance
 and parity gates before adoption, rather than being inferred from edge density.
+
+### Output learnability and qualification revision — 2026-09-15
+
+The user prioritizes substantial learnability changes over small readout gains.
+`motor-learnability-v1` registers a separate frozen-core diagnostic before fitting:
+raw linear, training-standardized linear, top-128 positive-deviation gating and
+a 256-unit ReLU decoder, each at rates .003/.03/.3 on seeds 4/5/6. All residual
+heads begin at the original logits, use the same 16,384/8,192 training/validation
+bank and receive 131,072 additional labeled exposures. All 36 final endpoints
+are retained. [Results and limits](docs/motor-learnability-study.md) separate
+confidence, training fit, held-out fit and function-class equivalence. The next
+diagnostic should address convergence/regularization before a capacity claim,
+then isolate a propagation change under a common decoder contract. Soma-side
+confirmation remains a secondary control.
+
+`readout-confirmation-numerics-v2` explicitly revises the engineering inputs,
+following independent head reconstruction and initial-motor rounding probes.
+It combines checkpoint-aligned peak transitions with a free actual-warmup
+trajectory, at unchanged tolerances and unchanged scientific source/settings.
+All 18 numerical and nine recovery checks pass. The old two free constant-peak
+stress failures remain failures. The original operational v2 launch failed CPU
+affinity admission before initialization; attempt 2 changes only child affinity
+setup. Combined-report controller validation and scientific launch remain pending.
+
+The researcher notebook uses a separately pinned public `quintic/go9x9` sample,
+with 512/256 positions and 64 updates. Its executed outputs demonstrate the
+interface; they do not alter V0 study contracts or replace full-validation
+endpoints. The first local-V0 walkthrough is retained as an execution artifact.
+All notebook and current scientific work runs on CPU; TPU use remains paused.

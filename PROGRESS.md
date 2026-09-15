@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 05:25 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 06:36 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No advantage over the matched CNN has been established.
@@ -18,7 +18,7 @@ the current spherical/readout screens use a shorter 32k-exposure contract.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production stopped | Preserve stop markers; freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Visual/retinal and all four readout contrasts complete | Confirm the soma-side candidate on fresh seeds; keep persistent state separate |
+| M6: controlled studies | Attachment contrasts and 36 motor-decoder probes complete | Prioritize decoder conditioning and circuit learnability; soma confirmation is a secondary control |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -41,7 +41,9 @@ the current spherical/readout screens use a shorter 32k-exposure contract.
 | Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | All six endpoints, full validations, motor/cost probes and paired analysis complete |
 | Larger retinal allocation | One current 9×9 board per eye; paired seeds 1/2/3, K8, 32k exposures | All final checkpoints, replicas, full validations, diagnostics and paired analysis complete |
 | External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | All 12 endpoints, audits, probes, counts and four contrasts complete; soma-side is promising |
-| Readout confirmation | Dense / soma-side / same shuffled-side; fresh seeds 7/8/9, 32k exposures | Registered; 7/9 numerical cases pass, two soma-side failures retained; no science launched |
+| Readout confirmation | Dense / soma-side / same shuffled-side; fresh seeds 7/8/9, 32k exposures | Revised 18/18 numerical and 9/9 recovery checks pass; original two stress failures retained; controller integration and science launch pending |
+| Motor learnability | Four residual decoders × three rates × three frozen cores; 131,072 head exposures per case | All 36 endpoints and replicas complete; raw mixing helps modestly, tested gating/high rates worsen validation |
+| Research notebook | Public `quintic/go9x9` slice → full Rust model → plots → training → held-out KL | All cells execute on CPU; actual outputs included |
 | Persistent state | Separate Rust core primitive and training trajectory audit | Ten core tests pass; model/Python/JAX integration and scientific training remain pending |
 
 All studies retain their declared immutable sources, failed attempts and fixed
@@ -50,6 +52,22 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Findings and engineering
 
+- [Research walkthrough](notebooks/flygo_research_walkthrough.ipynb): 512 training
+  and 256 validation positions from 96 downloaded games, with disjoint opening
+  families. It explores weights, both spherical eye maps and recurrent signal
+  attenuation, then trains the full model for 64 B32 updates. The pinned public
+  Hub sample reaches KL **1.90137**, from **2.03807**, in **387 s on four CPU
+  cores**. This is an execution example on a different sample, not a new V0
+  benchmark. [Setup](notebooks/README.md) and
+  [execution record](docs/results/research-notebook-hf-v1.json).
+- [Motor learnability](docs/motor-learnability-study.md): mean subset KL
+  **1.68393 → 1.58499** with an additional raw linear residual at rate .03.
+  Standardized top-128 gating at .003 fits training KL **1.0092** but gives
+  validation **2.0042**. Much larger rates yield extremely confident, incorrect
+  policies. Raw and standardized linear heads have the same function class;
+  this screen does not establish a motor-information limit. Next separate
+  decoder convergence/regularization from missing circuit signal, then test
+  a substantial propagation change under the same decoder contract.
 - [Complete readout screen](docs/readout-roles-study.md): soma-side minus dense
   mean KL is **−.01401**, MSE **−.06375**, with both losses improving in each of
   three paired seeds. Teacher top-1 falls **.200 pp**. Mean counted B1 FLOPs are
@@ -59,14 +77,15 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   MSE +.03730). Keep dense as reference and confirm soma-side before promoting
   it. All 12 endpoint and decoder audits pass; policy logits reconstruct exactly,
   value within 1.2e-7. Ten focused analysis tests pass. No CNN benefit is established.
-- [Fresh-seed engineering](docs/results/readout-confirmation-gates-v1.json):
-  seven numerical cases and their exact recovery checks pass. Soma-side seeds
-  7/8 miss the unchanged three-update parity gate. An independent FP64-head
-  diagnostic clears seed 7 but leaves a smaller seed-8 mismatch; it is not an
-  accepted replacement qualification. Confirmation training remains gated.
-  [Identical-weight diagnostics](docs/results/readout-confirmation-drift-v1.json)
-  localize most of seed 8's mismatch to policy-weight drift across updates;
-  both forward implementations agree within 4.8e-7 at the same weights.
+- [Revised numerical checks](docs/results/readout-confirmation-numerics-v2.json):
+  **18/18** numerical and **9/9** exact recovery cases pass. Independent head
+  arithmetic reconstructs all captured policy gradients and Adam updates
+  exactly. Tiny initial motor rounding is amplified by nearly cancelling
+  gradients. The registered v2 checks align checkpoints for peak-rate
+  transitions and separately run the actual warmup trajectory; learner source,
+  tolerances and scientific settings are unchanged. The original two free
+  constant-peak failures remain failed. The controller still needs to validate
+  the combined two-protocol evidence before confirmation learning starts.
 - [State core and trajectory audit](docs/temporal-vision-study.md): explicit
   Rust initial/final states and their gradients pass ten core tests, including
   finite differences and split-trajectory composition. The new core is not in
