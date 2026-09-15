@@ -1,0 +1,255 @@
+{
+  "accounting": {
+    "accounting": "Includes original and reordered completion probes, both independent bias-audit attempts, and all recorded synthetic fixture updates. Counts are position evaluations, not FLOPs; no V0 optimizer update.",
+    "diagnostic_native_backward_positions": 1344,
+    "diagnostic_native_forward_positions": 2592,
+    "independent_bias_adjoint_positions": 192,
+    "native_update_exposures": 0,
+    "synthetic_fixture_updates": 10
+  },
+  "automatic_collector": {
+    "job": {
+      "command": [
+        "/dev/shm/flygo/runs/clipping-confirmation-collection-v1/tools/scripts/collect_clipping.py",
+        "coordinate",
+        "--config",
+        "/dev/shm/flygo/runs/clipping-confirmation-collection-v1/config.json"
+      ],
+      "created": 1789474822.6701112,
+      "pid": 3322317,
+      "source_sha256": "96c0708c7fd0982438b79fddeda8af84e232ee1375db531c0ca2be74329e996f"
+    },
+    "prelaunch_failure": {
+      "collector_source_changed": false,
+      "created": 1789474806.569627,
+      "error": "SyntaxError: unterminated string literal while generating remote test wrapper; no test or coordinator process started.",
+      "phase": "remote wrapper parse",
+      "scientific_updates": 0,
+      "status": "failed"
+    },
+    "scope": "Operational collection only. Confirmation scientific results remain pending; no model, endpoint, tolerance or statistics changed.",
+    "tests": {
+      "command": [
+        "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/dev/shm/flygo/runs/clipping-confirmation-collection-v1/tools/tests",
+        "-p",
+        "test_clipping_collection.py",
+        "-v"
+      ],
+      "host": 2,
+      "log_sha256": "c5174041fb27430c8ba58454c128c3aaecb2f23a1bbded29d28454b24472467d",
+      "source_sha256": "5514509848361d69762b2fded724e43a82df1a594190b10db20a1ab26e7073b8",
+      "status": "passed",
+      "tests": 5
+    }
+  },
+  "created": 1789478646.8745449,
+  "frozen_native_fixture": {
+    "log_sha256": "b51594785f1ce6dcb4f35e67a1e8dd87dcbbfbe5bce064216d8fc25ee0c2a4f6",
+    "source_sha256": "8aeb8f8ce821fa1d576a1d407acce1b1f1690dd5cd3810951ec5d10473514957",
+    "status": "passed",
+    "synthetic_updates": 4,
+    "tests": 2,
+    "v0_update_exposures": 0
+  },
+  "independent_bias_completed": {
+    "bytes": 18777,
+    "path": "runs/bias-reduction-audit-v2/result.json",
+    "sha256": "cce173867f4efc3144cc8bd5f3e7d24f500add91e7e317c1aaf6b74448604e5a"
+  },
+  "independent_bias_first_attempt": {
+    "created": 1789476739.001626,
+    "error": "Diagnostic policy head matrix had the wrong orientation (2129 instead of 82 in the contraction dimension). Native joint reproduction preceded this error; no independent adjoint completed and no model updated.",
+    "status": "failed",
+    "update_exposures": 0
+  },
+  "native_archives": {
+    "archived_bytes": 2074593280,
+    "created": 1789478289.2653527,
+    "files": 83,
+    "implementation_sha256": "3568bd4c513f481621e6215cfd81c5dd597d6a03a9c15c5e70b01e86011966eb",
+    "numerical_gate": "failed",
+    "records": [
+      {
+        "bytes": 942243840,
+        "files": 35,
+        "manifest_path": "runs/loss-balance-archive-v1/owner-1/manifest.json",
+        "manifest_sha256": "4624a4b7531aa9b1784a6c3564e1cba1ac430653a20a44cb91e8c521e59aaa33",
+        "owner": 1,
+        "path": "runs/loss-balance-archive-v1/owner-1/evidence.tar",
+        "sha256": "b6f5c4906feced5477156929af68388757a9d7320dfa7828708b063fd0df6fe5"
+      },
+      {
+        "bytes": 566773760,
+        "files": 25,
+        "manifest_path": "runs/loss-balance-archive-v1/owner-2/manifest.json",
+        "manifest_sha256": "8d95e342da06cff1cb36b8e8f8ad3b5732c764447022077b467096d6021c6313",
+        "owner": 2,
+        "path": "runs/loss-balance-archive-v1/owner-2/evidence.tar",
+        "sha256": "d1a27c31e02a84fcc74be89bc913c3c59a9892aafec9b123cc785e4c33ae38b2"
+      },
+      {
+        "bytes": 565575680,
+        "files": 23,
+        "manifest_path": "runs/loss-balance-archive-v1/owner-3/manifest.json",
+        "manifest_sha256": "ed0e9554884e32c5929b006bc99eac55eef7609d2fa7d194acf9b5b907784f60",
+        "owner": 3,
+        "path": "runs/loss-balance-archive-v1/owner-3/evidence.tar",
+        "sha256": "c763cc13afc58b586f3f680c3b4191d0ca37fe8716d746c75a791fcaf97febaf"
+      }
+    ],
+    "root_payload_bytes": 0,
+    "scope": "Nine unique cases, seven passing and two failed; both repeated seed-10 cases retained. Every archive member checked on owner and peer. No scientific rerun or numerical source change.",
+    "status": "complete",
+    "transfers": [
+      {
+        "owner": 1,
+        "peer": 2,
+        "peer_verification": {
+          "files": 35,
+          "sha256": "b6f5c4906feced5477156929af68388757a9d7320dfa7828708b063fd0df6fe5",
+          "status": "passed"
+        },
+        "transfer": {
+          "bytes": 942243840,
+          "sha256": "b6f5c4906feced5477156929af68388757a9d7320dfa7828708b063fd0df6fe5",
+          "status": "passed"
+        }
+      },
+      {
+        "owner": 2,
+        "peer": 3,
+        "peer_verification": {
+          "files": 25,
+          "sha256": "d1a27c31e02a84fcc74be89bc913c3c59a9892aafec9b123cc785e4c33ae38b2",
+          "status": "passed"
+        },
+        "transfer": {
+          "bytes": 566773760,
+          "sha256": "d1a27c31e02a84fcc74be89bc913c3c59a9892aafec9b123cc785e4c33ae38b2",
+          "status": "passed"
+        }
+      },
+      {
+        "owner": 3,
+        "peer": 2,
+        "peer_verification": {
+          "files": 23,
+          "sha256": "c763cc13afc58b586f3f680c3b4191d0ca37fe8716d746c75a791fcaf97febaf",
+          "status": "passed"
+        },
+        "transfer": {
+          "bytes": 565575680,
+          "sha256": "c763cc13afc58b586f3f680c3b4191d0ca37fe8716d746c75a791fcaf97febaf",
+          "status": "passed"
+        }
+      }
+    ],
+    "verifier_sha256": "96c0708c7fd0982438b79fddeda8af84e232ee1375db531c0ca2be74329e996f"
+  },
+  "native_collection": {
+    "bytes": 56668,
+    "path": "runs/loss-balance-collection-v1/result.json",
+    "sha256": "5a47dca9600415400e72f3d96d1450e8ba06b0ae3167aa218ccf8542bdb1cbe4"
+  },
+  "native_fixture_failure": {
+    "created": 1789475228.2656963,
+    "error": "Embedding callback receives the pre-tanh linear score; the diagnostic incorrectly required equality to the tanh value. Observed 0.029176613 versus 0.029168338. Scientific learner unchanged; no V0 checkpoint audit ran.",
+    "phase": "native fixture",
+    "status": "failed",
+    "synthetic_updates": 2,
+    "tests_failed": 1,
+    "tests_passed": 1,
+    "v0_update_exposures": 0,
+    "worker_sha256": "0c95a76c08ec56e073563338205b629c191e5cce1c1f409b4238abc3a0179404"
+  },
+  "numerical_gate": "failed",
+  "root_evidence_archive": {
+    "created": 1789478530.2612922,
+    "peer_verification": {
+      "files": 51,
+      "status": "passed"
+    },
+    "receipt": {
+      "bytes": 399360,
+      "files": 51,
+      "manifest_path": "runs/loss-balance-root-evidence-v1/manifest.json",
+      "manifest_sha256": "4e67c3dae01334b81f5f557176d8fd2a86d11172413c99527a546c0e94bad50f",
+      "owner": 0,
+      "path": "runs/loss-balance-root-evidence-v1/evidence.tar",
+      "peer": 2,
+      "sha256": "344dcb23d0f4f88a488d82742872425eca95ac3a4222585d99183559fb3a1fdf"
+    },
+    "scope": "Retained native source/control records, all gradient and independent-adjoint failures, summaries, and frozen automatic-collector source/tests. Excludes live collection status and logs; no numerical rerun.",
+    "status": "complete",
+    "transfer": {
+      "bytes": 399360,
+      "sha256": "344dcb23d0f4f88a488d82742872425eca95ac3a4222585d99183559fb3a1fdf",
+      "status": "passed"
+    }
+  },
+  "scope": "All original and reordered completion probes, raw gradients and numerical failures preserved; small root sources, failed attempts, summary and collection tests also have verified worker-2 archives. No V0 optimizer update, final-test access, TPU initialization or production learner change.",
+  "source_bindings": {
+    "bias-reduction-audit-v1/audit.py": {
+      "bytes": 8916,
+      "path": "runs/bias-reduction-audit-v1/audit.py",
+      "sha256": "3ff4065a65431c11a0d55d6530e0f6254e0425e0f9245cf5733b28df487c96d0"
+    },
+    "bias-reduction-audit-v1/plan.json": {
+      "bytes": 1153,
+      "path": "runs/bias-reduction-audit-v1/plan.json",
+      "sha256": "b6bd220f947d92f5d08984ee13d43031fa5e2444a0029b9fa2b9b67e2b73dac0"
+    },
+    "bias-reduction-audit-v2/audit.py": {
+      "bytes": 9071,
+      "path": "runs/bias-reduction-audit-v2/audit.py",
+      "sha256": "111a90446015c77680d2eba84008d354cbc1cf5d645dbb840e24d3073cae545d"
+    },
+    "bias-reduction-audit-v2/plan.json": {
+      "bytes": 1322,
+      "path": "runs/bias-reduction-audit-v2/plan.json",
+      "sha256": "eb9011b22fb086d1721548a73c4c265e58344ab95a4757012a250265df89abd0"
+    },
+    "clipping-confirmation-collection-v1/config.json": {
+      "bytes": 1464,
+      "path": "runs/clipping-confirmation-collection-v1/config.json",
+      "sha256": "9dee912e00c84c49f1df97aa8e19451c63ae592992bd63efd3442950dc99c2cd"
+    },
+    "clipping-confirmation-collection-v1/source.json": {
+      "bytes": 809,
+      "path": "runs/clipping-confirmation-collection-v1/source.json",
+      "sha256": "5514509848361d69762b2fded724e43a82df1a594190b10db20a1ab26e7073b8"
+    },
+    "loss-balance-collection-v1/collect.py": {
+      "bytes": 5849,
+      "path": "runs/loss-balance-collection-v1/collect.py",
+      "sha256": "47294b2ddd57b8df9af3bca9eb44b7c546199ee5cca07e51f09ce5780f0d95be"
+    },
+    "loss-balance-completion-v1/plan.json": {
+      "bytes": 7004,
+      "path": "runs/loss-balance-completion-v1/plan.json",
+      "sha256": "902bd4a5d07adee94a4345b3c580de49e9f793aecfaff0a1a168bd35835a4ba1"
+    },
+    "loss-balance-completion-v1/registration.json": {
+      "bytes": 1056,
+      "path": "runs/loss-balance-completion-v1/registration.json",
+      "sha256": "329de05bc763c996fef0f5dfba7cf518d1b8f4de600dfe1547bf6937efef020c"
+    },
+    "loss-balance-v1/plan.json": {
+      "bytes": 6462,
+      "path": "runs/loss-balance-v1/plan.json",
+      "sha256": "88ed906146bda25834e2deace716a9acc2c1efb738344ce1a13aaa5654ba3e60"
+    },
+    "loss-balance-v1/source.json": {
+      "bytes": 1052,
+      "path": "runs/loss-balance-v1/source.json",
+      "sha256": "8aeb8f8ce821fa1d576a1d407acce1b1f1690dd5cd3810951ec5d10473514957"
+    }
+  },
+  "status": "complete"
+}

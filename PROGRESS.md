@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 12:00 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 13:25 UTC**. Fixed fly topology, learnable strengths.
 Compare **prediction FLOPs and labeled-position exposures**; report training,
 tuning, memory and latency costs separately. No advantage over the matched CNN
 has been established. Detailed history stays in the linked study reports.
@@ -30,10 +30,18 @@ All 306 qualification evidence files have verified owner/peer archives.
 | 2 | Per-group, seed 13 | Global, seed 14 |
 | 3 | Global, seed 15 | Per-group, seed 14 |
 
-Next: audit every final endpoint, relay completed evidence to worker 2, run
-the frozen paired analysis, report measured prediction work and all failed
-cases, then decide whether to retain the optimizer candidate. Persistent
-state, propagation rules, and further input/output studies remain separate.
+The tested automatic collector waits for actual trainer exit and unlocked,
+completed followups, audits each endpoint, relays verified evidence to worker
+2 and runs the frozen paired analysis. Five collection checks pass. Final
+analysis and the optimizer decision remain pending.
+
+A separate [policy/value gradient audit](docs/loss-balance-study.md) is complete:
+all nine cases recorded, **seven passing / two failed numerical gates**. Value
+gradients dominate the shared circuit on the fixed 32-position training probe;
+an independent bias adjoint closely traces the failures to FP32 summation.
+All evidence has verified second-host copies. A value-to-circuit gradient
+scale is a proposed next study, pending the optimizer decision and separate
+qualification. Persistent state and propagation changes remain separate.
 
 ## Milestones
 
@@ -42,7 +50,7 @@ state, propagation rules, and further input/output studies remain separate.
 | M0–M2: design, Go engine, expert pilot | Complete | Optional throughput improvements |
 | M3: corpus | V0 complete; generation stopped | Preserve stop markers; separately register later releases |
 | M4–M5: fly execution and learning | Rust/Python/JAX paths qualified | Qualify each new numerical model independently |
-| M6: controlled studies | Clipping discovery complete; longer confirmation running | Close fixed endpoints, then isolate the next factor |
+| M6: controlled studies | Clipping confirmation running; loss-balance audit complete | Close fixed endpoints, then qualify a separate loss-routing study |
 | M7: four-host TPU | Default path qualified; use paused | Nondefault spherical/epsilon/smooth paths need separate TPU gates |
 | M8: online refinement | Pending a useful prior | Prior/PUCT/Gumbel interfaces and panels work |
 | Biological groups and interfaces | Mapping, readout and signal studies complete | Improve learnability through separately controlled changes |
@@ -73,6 +81,12 @@ state, propagation rules, and further input/output studies remain separate.
   most edge Adam denominators are epsilon-dominated. All motors are two to
   five hops from an eye. These measurements motivate isolating optimization;
   they do not establish a biological function. [Audit](docs/signal-flow-study.md).
+- **Policy/value pressure:** on the three passing per-group discovery endpoints,
+  shared value-gradient norms are 8.20–29.38 times policy norms and oppose
+  them. This is one training probe and raw gradient geometry, not an Adam-step
+  or validation result. Two other cases fail a native bias decomposition;
+  all 30 independent head-boundary checks pass. No learner changed.
+  [Audit, numerical failures and proposed follow-up](docs/loss-balance-study.md).
 - **Readouts and retinal mapping:** larger retinal allocation and soma-side
   policy heads do not show a repeatable policy benefit. The fresh-seed soma
   confirmation worsens mean KL by .01874 despite better value MSE. Retain

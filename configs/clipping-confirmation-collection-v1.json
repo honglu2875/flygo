@@ -1,0 +1,23 @@
+{
+  "analysis": "runs/clipping-confirmation-contract-v1/analysis.json",
+  "analysis_host": 2,
+  "analysis_sha256": "e09aa288bff1b46c2cfadf0844b89a9f29cdcc3275bf67d054288c6246eff96d",
+  "audit_cpus": [
+    56,
+    57,
+    58,
+    59
+  ],
+  "collector_sha256": "96c0708c7fd0982438b79fddeda8af84e232ee1375db531c0ca2be74329e996f",
+  "directory": "runs/clipping-confirmation-collection-v1",
+  "endpoint_helper_sha256": "6a6bce666e4d66820510aa0c0c1f9ebe31c84d3b1e96877f7af051f5ee9218cd",
+  "name": "clipping-confirmation-collection-v1",
+  "prior_goal_turn": {
+    "classification": "progress",
+    "evidence": "Published commit 1ed50dad600296b60d7a103dd95478b6df1d4ae3; verified common analysis inputs, qualification and executed notebook; six live CPU learners."
+  },
+  "pythonpath": "/dev/shm/flygo/runs/clipping-confirmation-numerics-v1/tools/scripts:/dev/shm/flygo/environments/1f19481174f3bc8e5449/site-packages:/dev/shm/flygo/environments/tpu-ec7b62e32ad49c203cdd/site-packages:/dev/shm/flygo/environments/analysis-pyarrow-cpu-v1/site-packages",
+  "root": "/dev/shm/flygo",
+  "scope": "Operational collection only. Wait for actual trainer exit and unlocked completed followups. Preserve owner evidence and checksum-verified peer archives; route bulk arrays through pipes to worker 2. Scientific plans, runtime, statistics and endpoint choices unchanged. No new learning, final test or TPU use.",
+  "tools": "runs/clipping-confirmation-numerics-v1/tools/scripts"
+}

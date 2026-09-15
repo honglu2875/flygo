@@ -671,3 +671,37 @@ All 13 focused checks pass both on root and on the designated analysis worker
 annotation rows. The six CPU learners and initial replicas are verified; final
 scientific results remain pending. [Contract and operations](clipping-confirmation-study.md),
 [engineering receipt](results/clipping-confirmation-engineering-v1.json).
+
+## Loss decomposition and automatic collection, 2026-09-15
+
+The read-only loss-balance audit records all nine registered discovery cases:
+seven pass and two fail the unchanged native decomposition gate. The failures
+each concern the bias shared by 1,772 Mi4 neurons. All 30 independently supplied
+head-boundary checks reproduce the native gradients exactly. A FP64 bias
+adjoint and serial FP32 reconstruction strongly support long-reduction error;
+the isolated seed-10 value-bias reference comparison still fails. Actual joint
+bias vectors pass the reference comparison in both diagnosed cases. No numerical
+learner, tolerance, checkpoint or running scientific trial changed.
+
+The original diagnostic fixture confused a linear score with a tanh value.
+Correcting that callback use gives two passing tests, also run on the frozen
+source. The first bias-adjoint harness transposed a policy matrix incorrectly;
+the failed and corrected attempts are both retained. A completion plan changes
+only owner-1 case order to reach the previously unattempted endpoint. Both
+repeated seed-10 cases reproduce all 27 gradient arrays exactly. All 83 native
+archive entries have member-verified owner/peer copies, and 51 small root-side
+source/evidence entries have an additional verified worker-2 archive.
+
+Accounting retains 2,592 native forward and 1,344 native backward position
+evaluations, 192 independent bias-adjoint views and ten synthetic fixture
+updates. There are no new V0 optimizer updates. Larger value gradients and
+training-batch conflict motivate a separately qualified loss-routing proposal;
+they do not establish improved validation or a biological mechanism.
+[Study](loss-balance-study.md), [receipts](results/loss-balance-engineering-v1.json).
+
+The frozen automatic clipping collector passes five focused archive/process
+readiness tests on worker 2. A wrapper parse failure occurred before any test
+or coordinator started; the corrected wrapper leaves collector source intact.
+The active coordinator preserves the registered endpoint/statistical rules and
+uses worker 2 for bulk analysis, within the original storage/RAM limits.
+Final confirmation results remain pending.

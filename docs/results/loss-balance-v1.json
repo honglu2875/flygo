@@ -1,0 +1,1299 @@
+{
+  "accounting": "Includes original and reordered completion probes, both independent bias-audit attempts, and all recorded synthetic fixture updates. Counts are position evaluations, not FLOPs; no V0 optimizer update.",
+  "cases": 9,
+  "created": 1789477583.325397,
+  "diagnostic_native_backward_positions": 1344,
+  "diagnostic_native_forward_positions": 2592,
+  "duplicates": [
+    {
+      "arrays": 27,
+      "case": "clipping-global-seed10-v1-step-00000000",
+      "exact": true
+    },
+    {
+      "arrays": 27,
+      "case": "clipping-global-seed10-v1-step-00001000",
+      "exact": true
+    }
+  ],
+  "failed_cases": 2,
+  "independent_bias_adjoint_positions": 192,
+  "native_update_exposures": 0,
+  "numerical_gate": "failed",
+  "passed_cases": 7,
+  "records": [
+    {
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "0a752f11193c57f598f8492e91c2a4bbf419f9c92250c526ba7f9e2bec9914fe",
+        "host": 1,
+        "run_id": "clipping-global-seed10-v1",
+        "seed": 10,
+        "step": 0
+      },
+      "directory": "runs/loss-balance-v1/host-1/clipping-global-seed10-v1-step-00000000",
+      "gradients_sha256": "1478c9e7c86de77d546798d50329a6bbd7eb0ac70fb1c84c27cc29e4fe0c4b67",
+      "groups": {
+        "bias": {
+          "cosine": 0.030799778259809448,
+          "dot": 0.0012432761615862333,
+          "joint_sgd_policy_dot": 0.00900567264063858,
+          "joint_sgd_value_dot": 0.211158633298966,
+          "policy_norm": 0.08810446344568672,
+          "policy_square": 0.007762396479052347,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.45816520725321314,
+          "value_square": 0.20991535713737977,
+          "value_squared_norm_share": 0.9643399642357097,
+          "value_to_policy_norm": 5.200249673339828
+        },
+        "edge": {
+          "cosine": -0.005082532677482061,
+          "dot": -6.541701354680975e-09,
+          "joint_sgd_policy_dot": 3.2275970710543396e-07,
+          "joint_sgd_value_dot": 5.024147414435837e-06,
+          "policy_norm": 0.000573847896624284,
+          "policy_square": 3.2930140846011496e-07,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.002242919774711195,
+          "value_square": 5.030689115790518e-06,
+          "value_squared_norm_share": 0.9385630614512787,
+          "value_to_policy_norm": 3.908561463595821
+        },
+        "input_gain": {
+          "cosine": 0.2046737686595835,
+          "dot": 3.505569162827867e-06,
+          "joint_sgd_policy_dot": 9.652291019328068e-06,
+          "joint_sgd_value_dot": 5.123092177177107e-05,
+          "policy_norm": 0.0024792583279078045,
+          "policy_square": 6.146721856500201e-06,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.006908353827717802,
+          "value_square": 4.7725352608943205e-05,
+          "value_squared_norm_share": 0.8859015191545473,
+          "value_to_policy_norm": 2.7864598658210906
+        },
+        "leak": {
+          "cosine": 0.23464316530045298,
+          "dot": 6.655344568206317e-08,
+          "joint_sgd_policy_dot": 1.2926212028718149e-07,
+          "joint_sgd_value_dot": 1.3494677618290528e-06,
+          "policy_norm": 0.00025041700142985164,
+          "policy_square": 6.27086746051183e-08,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.0011326580755669337,
+          "value_square": 1.2829143161469895e-06,
+          "value_squared_norm_share": 0.9533980356785754,
+          "value_to_policy_norm": 4.523087766004661
+        },
+        "readout_gain": {
+          "cosine": -0.0009867451275656681,
+          "dot": -5.810431634833437e-08,
+          "joint_sgd_policy_dot": 1.3262234762245152e-05,
+          "joint_sgd_value_dot": 0.00026025230193111915,
+          "policy_norm": 0.0036497039713644566,
+          "policy_square": 1.3320339078593487e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.01613413791460416,
+          "value_square": 0.0002603104062474675,
+          "value_squared_norm_share": 0.9513200204797131,
+          "value_to_policy_norm": 4.420670290300928
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 1.6065314412117004e-07,
+          "passed": true,
+          "relative_l2": 1.0148538632603316e-06
+        },
+        "edge": {
+          "max_abs": 4.8203219193965197e-11,
+          "passed": true,
+          "relative_l2": 1.2856231846470618e-07
+        },
+        "input_gain": {
+          "max_abs": 4.059984348714352e-09,
+          "passed": true,
+          "relative_l2": 1.3446443081643894e-06
+        },
+        "leak": {
+          "max_abs": 2.1827872842550278e-09,
+          "passed": true,
+          "relative_l2": 2.3565522433860066e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 3.4924596548080444e-10,
+          "passed": true,
+          "relative_l2": 1.2116545757112147e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "b29545f167ef7b5b092564f6864888255cf5fff4942899fb20c4eecdb6edd1d4",
+      "shared": {
+        "cosine": 0.030824164120374926,
+        "dot": 0.0012467836381770403,
+        "joint_sgd_policy_dot": 0.009029039188247545,
+        "joint_sgd_value_dot": 0.21147649013784517,
+        "policy_norm": 0.08821709329869414,
+        "policy_square": 0.007782255550070506,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 0.45850813133429613,
+        "value_square": 0.21022970649966813,
+        "value_squared_norm_share": 0.9643035387741934,
+        "value_to_policy_norm": 5.197497607202201
+      }
+    },
+    {
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "e7e38024ace9808d1be6691f4bceaa76be48ccec8955e0e86f0139f5efb55ceb",
+        "host": 1,
+        "run_id": "clipping-global-seed10-v1",
+        "seed": 10,
+        "step": 1000
+      },
+      "directory": "runs/loss-balance-v1/host-1/clipping-global-seed10-v1-step-00001000",
+      "gradients_sha256": "2567e292c0def66abff10a5db77ee8eb587d09748b269a863e3f34b15e42ca27",
+      "groups": {
+        "bias": {
+          "cosine": -0.8061199984911087,
+          "dot": -27.765295406679435,
+          "joint_sgd_policy_dot": -25.97178513580434,
+          "joint_sgd_value_dot": 633.6912800004287,
+          "policy_norm": 1.3392200233251805,
+          "policy_square": 1.7935102708750972,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 25.718798094139395,
+          "value_square": 661.4565754071082,
+          "value_squared_norm_share": 0.997295876307288,
+          "value_to_policy_norm": 19.204311200695457
+        },
+        "edge": {
+          "cosine": -0.5818074889422259,
+          "dot": -0.0040757926612497684,
+          "joint_sgd_policy_dot": -0.003489050014249666,
+          "joint_sgd_value_dot": 0.07956495301152657,
+          "policy_norm": 0.02422277124938644,
+          "policy_square": 0.0005867426470001023,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.2892070982406489,
+          "value_square": 0.08364074567277634,
+          "value_squared_norm_share": 0.9930338342184384,
+          "value_to_policy_norm": 11.939471964751947
+        },
+        "input_gain": {
+          "cosine": -0.02157017167606749,
+          "dot": -0.00023419252088560644,
+          "joint_sgd_policy_dot": 0.0046374781925882244,
+          "joint_sgd_value_dot": 0.02396277345693893,
+          "policy_norm": 0.06979735463091585,
+          "policy_square": 0.004871670713473831,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.1555537398387597,
+          "value_square": 0.024196965977824537,
+          "value_squared_norm_share": 0.8324080084934924,
+          "value_to_policy_norm": 2.228648072141392
+        },
+        "leak": {
+          "cosine": -0.30454490087964586,
+          "dot": -2.7760343961835006e-05,
+          "joint_sgd_policy_dot": -6.749920203055061e-06,
+          "joint_sgd_value_dot": 0.00036770844082281365,
+          "policy_norm": 0.004583712879182109,
+          "policy_square": 2.1010423758779945e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.019886396978453603,
+          "value_square": 0.00039546878478464867,
+          "value_squared_norm_share": 0.9495522865780969,
+          "value_to_policy_norm": 4.338490979391802
+        },
+        "readout_gain": {
+          "cosine": -0.4517712115228056,
+          "dot": -0.0003818400441480238,
+          "joint_sgd_policy_dot": -8.690853453965279e-05,
+          "joint_sgd_value_dot": 0.002040330196812823,
+          "policy_norm": 0.017173570089191445,
+          "policy_square": 0.00029493150960837103,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.04921554877232242,
+          "value_square": 0.0024221702409608467,
+          "value_squared_norm_share": 0.8914536382207311,
+          "value_to_policy_norm": 2.865772726155366
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 0.0001417398452758789,
+          "passed": false,
+          "relative_l2": 5.984818124334229e-06
+        },
+        "edge": {
+          "max_abs": 2.0023435354232788e-08,
+          "passed": true,
+          "relative_l2": 1.584430206535298e-07
+        },
+        "input_gain": {
+          "max_abs": 4.260800778865814e-08,
+          "passed": true,
+          "relative_l2": 4.535133491855105e-07
+        },
+        "leak": {
+          "max_abs": 6.789923645555973e-08,
+          "passed": true,
+          "relative_l2": 4.037916131375201e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 5.122274160385132e-09,
+          "passed": true,
+          "relative_l2": 1.2748692359101398e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": false,
+      "record_sha256": "647ee5798bc65bb04d398de285e26b2bb3197c76433d4758db3c2e41f07485d6",
+      "shared": {
+        "cosine": -0.804894921079835,
+        "dot": -27.77001499224968,
+        "joint_sgd_policy_dot": -25.970730366080744,
+        "joint_sgd_value_dot": 633.7972157655348,
+        "policy_norm": 1.3413741559195698,
+        "policy_square": 1.7992846261689384,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 25.720949258489362,
+        "value_square": 661.5672307577845,
+        "value_squared_norm_share": 0.9972876462944055,
+        "value_to_policy_norm": 19.17507441527867
+      }
+    },
+    {
+      "case": {
+        "arm": "parameter-group",
+        "checkpoint_sha256": "0ed63ac316b2d2c7e028a0f6ad82534994fde7cfd4864993d43bc654889f2826",
+        "host": 1,
+        "run_id": "clipping-parameter-group-seed12-v1",
+        "seed": 12,
+        "step": 1000
+      },
+      "directory": "runs/loss-balance-completion-v1/host-1/clipping-parameter-group-seed12-v1-step-00001000",
+      "gradients_sha256": "93cf85f8c8048751942e9c8257cb0626ff110995b8eee2701c03aabe95acae9c",
+      "groups": {
+        "bias": {
+          "cosine": -0.445742023967813,
+          "dot": -9.08732670134514,
+          "joint_sgd_policy_dot": -8.397957868664161,
+          "joint_sgd_value_dot": 593.8240482801566,
+          "policy_norm": 0.8302823812902318,
+          "policy_square": 0.6893688326809778,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 24.55425370442974,
+          "value_square": 602.9113749815017,
+          "value_squared_norm_share": 0.9988579059258197,
+          "value_to_policy_norm": 29.573376790524247
+        },
+        "edge": {
+          "cosine": -0.1921498330623351,
+          "dot": -0.0025473270312663296,
+          "joint_sgd_policy_dot": -0.001432698410935005,
+          "joint_sgd_value_dot": 0.1551263497989978,
+          "policy_norm": 0.03338605427916459,
+          "policy_square": 0.0011146286203313246,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.39708144861006056,
+          "value_square": 0.15767367683026415,
+          "value_squared_norm_share": 0.9929804111381608,
+          "value_to_policy_norm": 11.89363215220881
+        },
+        "input_gain": {
+          "cosine": -0.029431623943279795,
+          "dot": -0.0007483944823059484,
+          "joint_sgd_policy_dot": 0.006645267943807568,
+          "joint_sgd_value_dot": 0.08670427771968767,
+          "policy_norm": 0.08598640838012434,
+          "policy_square": 0.0073936624261135165,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.29572397975475984,
+          "value_square": 0.08745267220199361,
+          "value_squared_norm_share": 0.9220458813184074,
+          "value_to_policy_norm": 3.439194464867498
+        },
+        "leak": {
+          "cosine": -0.007564425543645069,
+          "dot": -5.539934320299681e-07,
+          "joint_sgd_policy_dot": 1.5525339962938275e-05,
+          "joint_sgd_value_dot": 0.00033301777447863017,
+          "policy_norm": 0.0040099044121984055,
+          "policy_square": 1.6079333394968242e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.01826394721604999,
+          "value_square": 0.00033357176791066014,
+          "value_squared_norm_share": 0.9540132053497714,
+          "value_to_policy_norm": 4.554708875475884
+        },
+        "readout_gain": {
+          "cosine": -0.493165570915547,
+          "dot": -0.001813302835916395,
+          "joint_sgd_policy_dot": -0.0011391608316002487,
+          "joint_sgd_value_dot": 0.01824082568824839,
+          "policy_norm": 0.025964244728398058,
+          "policy_square": 0.0006741420043161464,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.14161260016031338,
+          "value_square": 0.020054128524164785,
+          "value_squared_norm_share": 0.9674771706887043,
+          "value_to_policy_norm": 5.454139014697639
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 0.00023148953914642334,
+          "passed": true,
+          "relative_l2": 9.903571026497878e-06
+        },
+        "edge": {
+          "max_abs": 6.51925802230835e-08,
+          "passed": true,
+          "relative_l2": 2.0988400221373628e-07
+        },
+        "input_gain": {
+          "max_abs": 6.891787052154541e-08,
+          "passed": true,
+          "relative_l2": 4.231255251081753e-07
+        },
+        "leak": {
+          "max_abs": 9.098584996536374e-08,
+          "passed": true,
+          "relative_l2": 6.884821678490282e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 5.587935447692871e-09,
+          "passed": true,
+          "relative_l2": 5.1149213603372255e-08
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "7f6ce04f9155cf9439c0d50d96f33f29bd283faaa87f94b6241d560657aac6b6",
+      "shared": {
+        "cosine": -0.4429490549711941,
+        "dot": -9.09243627968806,
+        "joint_sgd_policy_dot": -8.393868934622926,
+        "joint_sgd_value_dot": 594.084452751138,
+        "policy_norm": 0.8358034129298191,
+        "policy_square": 0.6985673450651337,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 24.55965979061652,
+        "value_square": 603.176889030826,
+        "value_squared_norm_share": 0.9988431930165576,
+        "value_to_policy_norm": 29.384493303904172
+      }
+    },
+    {
+      "case": {
+        "arm": "parameter-group",
+        "checkpoint_sha256": "78d26816da45faa0cb7d28b1a6bbd2cf12f5a2f49225a699294be7faea70a644",
+        "host": 2,
+        "run_id": "clipping-parameter-group-seed10-v1",
+        "seed": 10,
+        "step": 1000
+      },
+      "directory": "runs/loss-balance-v1/host-2/clipping-parameter-group-seed10-v1-step-00001000",
+      "gradients_sha256": "5800161d8005caa2c860bdb608332d7622c6e07d9e927cd65ac91e545795350f",
+      "groups": {
+        "bias": {
+          "cosine": -0.5723149552758788,
+          "dot": -9.009171672227913,
+          "joint_sgd_policy_dot": -7.09447076030887,
+          "joint_sgd_value_dot": 120.40999279537813,
+          "policy_norm": 1.3837271811737464,
+          "policy_square": 1.9147009119190421,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 11.376254412925462,
+          "value_square": 129.41916446760604,
+          "value_squared_norm_share": 0.9854211181070015,
+          "value_to_policy_norm": 8.22145764548439
+        },
+        "edge": {
+          "cosine": -0.20755644735942924,
+          "dot": -0.0011777408454004905,
+          "joint_sgd_policy_dot": 0.0003028752639514839,
+          "joint_sgd_value_dot": 0.02056851769588368,
+          "policy_norm": 0.03847877479016158,
+          "policy_square": 0.0014806161093519744,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.14746612675894138,
+          "value_square": 0.021746258541284168,
+          "value_squared_norm_share": 0.9362541826387553,
+          "value_to_policy_norm": 3.832401825763074
+        },
+        "input_gain": {
+          "cosine": 0.27174269911507865,
+          "dot": 0.0032482785818574197,
+          "joint_sgd_policy_dot": 0.010556201702778892,
+          "joint_sgd_value_dot": 0.02280053110235665,
+          "policy_norm": 0.08548639143700869,
+          "policy_square": 0.0073079231209214725,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.13982936930594814,
+          "value_square": 0.01955225252049923,
+          "value_squared_norm_share": 0.7279272027673555,
+          "value_to_policy_norm": 1.6356915639488945
+        },
+        "leak": {
+          "cosine": 0.5228441160995273,
+          "dot": 4.256571032751398e-05,
+          "joint_sgd_policy_dot": 0.00010435863487114911,
+          "joint_sgd_value_dot": 0.00014982540846379834,
+          "policy_norm": 0.007860847571581269,
+          "policy_square": 6.179292454363513e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.010356625808451533,
+          "value_square": 0.00010725969813628436,
+          "value_squared_norm_share": 0.6344752091741723,
+          "value_to_policy_norm": 1.3174948011831529
+        },
+        "readout_gain": {
+          "cosine": -0.21551385724058617,
+          "dot": -0.00029727545975827627,
+          "joint_sgd_policy_dot": 0.0005598454880074936,
+          "joint_sgd_value_dot": 0.0019225846637180833,
+          "policy_norm": 0.029276628012217695,
+          "policy_square": 0.0008571209477657699,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.047115391577236834,
+          "value_square": 0.0022198601234763595,
+          "value_squared_norm_share": 0.7214409423000566,
+          "value_to_policy_norm": 1.609317560669032
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 9.572505950927734e-05,
+          "passed": true,
+          "relative_l2": 9.637611855310703e-06
+        },
+        "edge": {
+          "max_abs": 2.9336661100387573e-08,
+          "passed": true,
+          "relative_l2": 2.4066807401470227e-07
+        },
+        "input_gain": {
+          "max_abs": 5.587935447692871e-08,
+          "passed": true,
+          "relative_l2": 6.554663319213598e-07
+        },
+        "leak": {
+          "max_abs": 3.14321368932724e-08,
+          "passed": true,
+          "relative_l2": 2.7708234030367876e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 9.313225746154785e-09,
+          "passed": true,
+          "relative_l2": 1.9899461091959834e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "456bd0c2818c4a3604c1273bad60d170d0b67906bb3d3efa3bd0dfd83a6411a7",
+      "shared": {
+        "cosine": -0.5706584087868082,
+        "dot": -9.007355844240887,
+        "joint_sgd_policy_dot": -7.082947479219262,
+        "joint_sgd_value_dot": 120.45543425424853,
+        "policy_norm": 1.3872304657199628,
+        "policy_square": 1.924408365021625,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 11.378171650071438,
+        "value_square": 129.46279009848942,
+        "value_squared_norm_share": 0.9853531516957028,
+        "value_to_policy_norm": 8.20207739898954
+      }
+    },
+    {
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "e10338088ab4042d60408a914fbfbdf596a3514b6fdb7fdc6fd6bfd30fe81a06",
+        "host": 2,
+        "run_id": "clipping-global-seed11-v1",
+        "seed": 11,
+        "step": 0
+      },
+      "directory": "runs/loss-balance-v1/host-2/clipping-global-seed11-v1-step-00000000",
+      "gradients_sha256": "74010192332e0ad8fbc303e2d4404547abf6aebe7a0e8253629103aee1bfaf52",
+      "groups": {
+        "bias": {
+          "cosine": -0.07463402853011217,
+          "dot": -0.004351845690035877,
+          "joint_sgd_policy_dot": 0.005113811157513835,
+          "joint_sgd_value_dot": 0.3548366764941863,
+          "policy_norm": 0.09729160728217882,
+          "policy_square": 0.009465656847549712,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.599323386982539,
+          "value_square": 0.3591885221842222,
+          "value_squared_norm_share": 0.9743237500456114,
+          "value_to_policy_norm": 6.160072833870417
+        },
+        "edge": {
+          "cosine": -0.013338431028414548,
+          "dot": -1.831037586350922e-08,
+          "joint_sgd_policy_dot": 2.7395137626295836e-07,
+          "joint_sgd_value_dot": 6.429511630411466e-06,
+          "policy_norm": 0.0005406123862125872,
+          "policy_square": 2.922617521264676e-07,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.0025392561915401476,
+          "value_square": 6.447822006274975e-06,
+          "value_squared_norm_share": 0.9566382610954698,
+          "value_to_policy_norm": 4.69699965502016
+        },
+        "input_gain": {
+          "cosine": 0.27286416595640467,
+          "dot": 6.074553429597427e-06,
+          "joint_sgd_policy_dot": 1.0336581835160823e-05,
+          "joint_sgd_value_dot": 0.00012235839262133934,
+          "policy_norm": 0.0020644680684291043,
+          "policy_square": 4.262028405563396e-06,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.010783498467183177,
+          "value_square": 0.0001162838391917419,
+          "value_squared_norm_share": 0.9646439277387667,
+          "value_to_policy_norm": 5.223378666926324
+        },
+        "leak": {
+          "cosine": 0.03796101221965546,
+          "dot": 1.0414135810307491e-08,
+          "joint_sgd_policy_dot": 7.46979655887929e-08,
+          "joint_sgd_value_dot": 1.1811776055031827e-06,
+          "policy_norm": 0.0002535425600929465,
+          "policy_square": 6.42838297784854e-08,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.0010820182390758831,
+          "value_square": 1.170763469692875e-06,
+          "value_squared_norm_share": 0.9479503094286341,
+          "value_to_policy_norm": 4.267600037955066
+        },
+        "readout_gain": {
+          "cosine": 0.005753328132811875,
+          "dot": 3.735183153231301e-07,
+          "joint_sgd_policy_dot": 1.2396756965382535e-05,
+          "joint_sgd_value_dot": 0.0003509348811245417,
+          "policy_norm": 0.0034674542030226447,
+          "policy_square": 1.2023238650059404e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.01872328397501941,
+          "value_square": 0.0003505613628092186,
+          "value_squared_norm_share": 0.9668401840517495,
+          "value_to_policy_norm": 5.399720624629439
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 5.424953997135162e-07,
+          "passed": true,
+          "relative_l2": 1.5075469733802979e-06
+        },
+        "edge": {
+          "max_abs": 4.547473508864641e-11,
+          "passed": true,
+          "relative_l2": 1.2034372067603113e-07
+        },
+        "input_gain": {
+          "max_abs": 9.284121915698051e-09,
+          "passed": true,
+          "relative_l2": 1.7681457137479786e-06
+        },
+        "leak": {
+          "max_abs": 7.257767720147967e-10,
+          "passed": true,
+          "relative_l2": 1.1573908494912449e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 4.220055416226387e-10,
+          "passed": true,
+          "relative_l2": 1.139920912036508e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "aef0d81da666c46c1260b21e5d5b7b7e918e0946f7026a97c790a9c5b4ea889e",
+      "shared": {
+        "cosine": -0.07440902662666528,
+        "dot": -0.00434540551453101,
+        "joint_sgd_policy_dot": 0.00513689314565623,
+        "joint_sgd_value_dot": 0.35531758045716816,
+        "policy_norm": 0.09737709515172056,
+        "policy_square": 0.00948229866018724,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 0.5997190892173595,
+        "value_square": 0.35966298597169916,
+        "value_squared_norm_share": 0.9743128273475224,
+        "value_to_policy_norm": 6.158728480069709
+      }
+    },
+    {
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "c237ca0779639a0e3705bd314f87c37b1d6d641f835ab04ff36ee129e5ac199d",
+        "host": 2,
+        "run_id": "clipping-global-seed11-v1",
+        "seed": 11,
+        "step": 1000
+      },
+      "directory": "runs/loss-balance-v1/host-2/clipping-global-seed11-v1-step-00001000",
+      "gradients_sha256": "7da630fb2c487ba6d48c0297fa46dabf7ea366e30edea4c8ea5788bf9890f78a",
+      "groups": {
+        "bias": {
+          "cosine": -0.010066016865617713,
+          "dot": -0.28146128345622956,
+          "joint_sgd_policy_dot": -0.004326795088654967,
+          "joint_sgd_value_dot": 2820.902748808199,
+          "policy_norm": 0.5264356450389492,
+          "policy_square": 0.2771344883675746,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 53.11482100216149,
+          "value_square": 2821.184210091655,
+          "value_squared_norm_share": 0.9999017762589942,
+          "value_to_policy_norm": 100.89518349053225
+        },
+        "edge": {
+          "cosine": 0.09944920034811629,
+          "dot": 0.0012384560870135916,
+          "joint_sgd_policy_dot": 0.0014489099663357275,
+          "joint_sgd_value_dot": 0.738126818370919,
+          "policy_norm": 0.014507028617953987,
+          "policy_square": 0.00021045387932213595,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.8584220187552888,
+          "value_square": 0.7368883622839054,
+          "value_squared_norm_share": 0.9997144834929764,
+          "value_to_policy_norm": 59.17283555178905
+        },
+        "input_gain": {
+          "cosine": 0.09775299868192547,
+          "dot": 0.0022873629650110297,
+          "joint_sgd_policy_dot": 0.006704757771382853,
+          "joint_sgd_value_dot": 0.12623657679298078,
+          "policy_norm": 0.06646348475946641,
+          "policy_square": 0.004417394806371823,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.35206421832951124,
+          "value_square": 0.12394921382796975,
+          "value_squared_norm_share": 0.9655876644762426,
+          "value_to_policy_norm": 5.297107420768615
+        },
+        "leak": {
+          "cosine": 0.01978837652254061,
+          "dot": 4.126637620231702e-06,
+          "joint_sgd_policy_dot": 1.498653706115878e-05,
+          "joint_sgd_value_dot": 0.0040086103513638964,
+          "policy_norm": 0.0032954361533683333,
+          "policy_square": 1.0859899440927078e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.06328099014509543,
+          "value_square": 0.0040044837137436645,
+          "value_squared_norm_share": 0.9972953997248782,
+          "value_to_policy_norm": 19.2026145250651
+        },
+        "readout_gain": {
+          "cosine": 0.22336799030597823,
+          "dot": 0.0008454128984109155,
+          "joint_sgd_policy_dot": 0.0010086202204506016,
+          "joint_sgd_value_dot": 0.08861745984876157,
+          "policy_norm": 0.012775262112367246,
+          "policy_square": 0.00016320732203968605,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.29626347555908855,
+          "value_square": 0.08777204695035065,
+          "value_squared_norm_share": 0.9981440057984693,
+          "value_to_policy_norm": 23.190402901580164
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 0.0009791608899831772,
+          "passed": true,
+          "relative_l2": 1.856764402881931e-05
+        },
+        "edge": {
+          "max_abs": 9.615905582904816e-08,
+          "passed": true,
+          "relative_l2": 1.4435733917811725e-07
+        },
+        "input_gain": {
+          "max_abs": 1.9650906324386597e-07,
+          "passed": true,
+          "relative_l2": 6.849409494508926e-07
+        },
+        "leak": {
+          "max_abs": 2.350825525354594e-07,
+          "passed": true,
+          "relative_l2": 4.3106021857797e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 4.423782229423523e-08,
+          "passed": true,
+          "relative_l2": 1.4924464497561235e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "e1639a0cd2fa6696bf6b9bb51ab9d5bbdf829d1a0e91edc3f1c13f993e0570be",
+      "shared": {
+        "cosine": -0.009823129159100044,
+        "dot": -0.2770859248681738,
+        "joint_sgd_policy_dot": 0.004850479406575348,
+        "joint_sgd_value_dot": 2821.859738273563,
+        "policy_norm": 0.5309768396782943,
+        "policy_square": 0.28193640427474914,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 53.12378774333049,
+        "value_square": 2822.136824198431,
+        "value_squared_norm_share": 0.9999001082304971,
+        "value_to_policy_norm": 100.04916179680619
+      }
+    },
+    {
+      "case": {
+        "arm": "parameter-group",
+        "checkpoint_sha256": "e54bf0b15b27e9c9713c3e6c427854909c6f28a04b127500805a87e489d7731d",
+        "host": 3,
+        "run_id": "clipping-parameter-group-seed11-v1",
+        "seed": 11,
+        "step": 1000
+      },
+      "directory": "runs/loss-balance-v1/host-3/clipping-parameter-group-seed11-v1-step-00001000",
+      "gradients_sha256": "7c8f7ba3344c10cec73fca4f20b3a4e9a5d98d81d26dfd450d6a069a4b227803",
+      "groups": {
+        "bias": {
+          "cosine": -0.8462528754533633,
+          "dot": -13.617243817213334,
+          "joint_sgd_policy_dot": -11.684076022397948,
+          "joint_sgd_value_dot": 120.32222151057317,
+          "policy_norm": 1.3903840458000754,
+          "policy_square": 1.933167794815386,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 11.573221907826122,
+          "value_square": 133.9394653277865,
+          "value_squared_norm_share": 0.9857722062906441,
+          "value_to_policy_norm": 8.32375913891222
+        },
+        "edge": {
+          "cosine": -0.31537691125799744,
+          "dot": -0.0016428391775190731,
+          "joint_sgd_policy_dot": -0.0003090904008779948,
+          "joint_sgd_value_dot": 0.01870209444384702,
+          "policy_norm": 0.036520525415731336,
+          "policy_square": 0.0013337487766410783,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.14263566742356587,
+          "value_square": 0.020344933621366093,
+          "value_squared_norm_share": 0.9384764833879534,
+          "value_to_policy_norm": 3.905630212048513
+        },
+        "input_gain": {
+          "cosine": -0.19311914500742006,
+          "dot": -0.002282285564178266,
+          "joint_sgd_policy_dot": 0.006403648921779124,
+          "joint_sgd_value_dot": 0.013797222476292444,
+          "policy_norm": 0.09319836096175399,
+          "policy_square": 0.00868593448595739,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.12680500006100198,
+          "value_square": 0.01607950804047071,
+          "value_squared_norm_share": 0.6492719854818537,
+          "value_to_policy_norm": 1.3605925979002915
+        },
+        "leak": {
+          "cosine": -0.25490275667317125,
+          "dot": -1.2749505414044242e-05,
+          "joint_sgd_policy_dot": 1.3649074053678426e-06,
+          "joint_sgd_value_dot": 0.00016449582215464646,
+          "policy_norm": 0.003756915333010858,
+          "policy_square": 1.4114412819412085e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.013313351477696767,
+          "value_square": 0.0001772453275686907,
+          "value_squared_norm_share": 0.926241471739112,
+          "value_to_policy_norm": 3.543692177653419
+        },
+        "readout_gain": {
+          "cosine": -0.5988447245357511,
+          "dot": -0.0006270104283030319,
+          "joint_sgd_policy_dot": 8.542858376568458e-05,
+          "joint_sgd_value_dot": 0.000911758397090723,
+          "policy_norm": 0.02669155319700816,
+          "policy_square": 0.0007124390120687165,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.039227143987215725,
+          "value_square": 0.001538768825393755,
+          "value_squared_norm_share": 0.6835303252711808,
+          "value_to_policy_norm": 1.4696463595686395
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 0.00015419721603393555,
+          "passed": true,
+          "relative_l2": 1.5092990319199298e-05
+        },
+        "edge": {
+          "max_abs": 1.1175870895385742e-08,
+          "passed": true,
+          "relative_l2": 1.8922950111427806e-07
+        },
+        "input_gain": {
+          "max_abs": 6.379559636116028e-08,
+          "passed": true,
+          "relative_l2": 9.181518107921386e-07
+        },
+        "leak": {
+          "max_abs": 3.495574674161617e-08,
+          "passed": true,
+          "relative_l2": 4.117238838008501e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 1.1175870895385742e-08,
+          "passed": true,
+          "relative_l2": 3.7822659114270815e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "1dc2dcad9bb68845bcde8ea9e6837d52462ce2a4d55606c06ecedd3e551af406",
+      "shared": {
+        "cosine": -0.8440732623893699,
+        "dot": -13.621808701888748,
+        "joint_sgd_policy_dot": -11.677894670385875,
+        "joint_sgd_value_dot": 120.35579708171257,
+        "policy_norm": 1.394243175168117,
+        "policy_square": 1.9439140315028727,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 11.574869579550402,
+        "value_square": 133.97760578360132,
+        "value_squared_norm_share": 0.9856982615104126,
+        "value_to_policy_norm": 8.301901551825571
+      }
+    },
+    {
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "d2f46c20ceb6a087e473b1374e39b9d3c28dbb1aa6028773afc420782465f472",
+        "host": 3,
+        "run_id": "clipping-global-seed12-v1",
+        "seed": 12,
+        "step": 0
+      },
+      "directory": "runs/loss-balance-v1/host-3/clipping-global-seed12-v1-step-00000000",
+      "gradients_sha256": "709f0c493a8f7b72f56403bfa7f76f3194a9ddaf969c4e0afb5d4274a7cd52df",
+      "groups": {
+        "bias": {
+          "cosine": -0.0414826816201223,
+          "dot": -0.0025975912734957102,
+          "joint_sgd_policy_dot": 0.00794105674308173,
+          "joint_sgd_value_dot": 0.36947106603272223,
+          "policy_norm": 0.10265791745685006,
+          "policy_square": 0.01053864801657744,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.6099743087263741,
+          "value_square": 0.37206865730621796,
+          "value_squared_norm_share": 0.9724557062294295,
+          "value_to_policy_norm": 5.941814560798616
+        },
+        "edge": {
+          "cosine": -0.019005471060364747,
+          "dot": -2.9933343663958516e-08,
+          "joint_sgd_policy_dot": 2.918522489740429e-07,
+          "joint_sgd_value_dot": 7.678863342739935e-06,
+          "policy_norm": 0.0005672614852411553,
+          "policy_square": 3.2178559263800144e-07,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.0027764719855247763,
+          "value_square": 7.708796686403893e-06,
+          "value_squared_norm_share": 0.9599299799869068,
+          "value_to_policy_norm": 4.8945187673801565
+        },
+        "input_gain": {
+          "cosine": 0.1575070857464356,
+          "dot": 2.9184307395161024e-06,
+          "joint_sgd_policy_dot": 7.248745862797056e-06,
+          "joint_sgd_value_dot": 8.220125056425089e-05,
+          "policy_norm": 0.002080940922583088,
+          "policy_square": 4.330315123280953e-06,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.008904090061580397,
+          "value_square": 7.928281982473478e-05,
+          "value_squared_norm_share": 0.9482101092612637,
+          "value_to_policy_norm": 4.2788769084937215
+        },
+        "leak": {
+          "cosine": 0.29645505271528627,
+          "dot": 9.242095770509042e-08,
+          "joint_sgd_policy_dot": 1.6830256399372362e-07,
+          "joint_sgd_value_dot": 1.3732368273187922e-06,
+          "policy_norm": 0.00027546616178513323,
+          "policy_square": 7.58816062886332e-08,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.0011317313592958808,
+          "value_square": 1.2808158696137018e-06,
+          "value_squared_norm_share": 0.9440688822405565,
+          "value_to_policy_norm": 4.1084224354882615
+        },
+        "readout_gain": {
+          "cosine": 0.03188786391029687,
+          "dot": 2.339662618084307e-06,
+          "joint_sgd_policy_dot": 1.6408348973939328e-05,
+          "joint_sgd_value_dot": 0.0003849899720812242,
+          "policy_norm": 0.0037508247567508432,
+          "policy_square": 1.4068686355855022e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.01956144957469001,
+          "value_square": 0.0003826503094631399,
+          "value_squared_norm_share": 0.9645374017777714,
+          "value_to_policy_norm": 5.215239538846155
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 6.971531547605991e-07,
+          "passed": true,
+          "relative_l2": 1.6589984160399195e-06
+        },
+        "edge": {
+          "max_abs": 4.9112713895738125e-11,
+          "passed": true,
+          "relative_l2": 1.2018505748312545e-07
+        },
+        "input_gain": {
+          "max_abs": 9.007635526359081e-09,
+          "passed": true,
+          "relative_l2": 1.4096129232974363e-06
+        },
+        "leak": {
+          "max_abs": 3.0122464522719383e-09,
+          "passed": true,
+          "relative_l2": 3.3258716114486562e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 4.802132025361061e-10,
+          "passed": true,
+          "relative_l2": 1.188625840478716e-07
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": true,
+      "record_sha256": "3774cbb5d109faf65b34e258db797496c7244af73bbf49bb0f4b3c269219f6a0",
+      "shared": {
+        "cosine": -0.041334694505449514,
+        "dot": -0.0025922706925240687,
+        "joint_sgd_policy_dot": 0.007965173992731434,
+        "joint_sgd_value_dot": 0.3699473093555378,
+        "policy_norm": 0.10274942669064145,
+        "policy_square": 0.010557444685255503,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 0.6103602051641817,
+        "value_square": 0.37253958004806187,
+        "value_squared_norm_share": 0.9724418515319853,
+        "value_to_policy_norm": 5.9402784504273445
+      }
+    },
+    {
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "27f2937ffaaac8aee677231a935fa836c01a7ca5ccff1af721f87b17c9c80790",
+        "host": 3,
+        "run_id": "clipping-global-seed12-v1",
+        "seed": 12,
+        "step": 1000
+      },
+      "directory": "runs/loss-balance-v1/host-3/clipping-global-seed12-v1-step-00001000",
+      "gradients_sha256": "226310f8dacfda519cd6e7559db10ff77c9791ad987add820e3994823cfb96c0",
+      "groups": {
+        "bias": {
+          "cosine": 0.09982994519827829,
+          "dot": 1.391097949766439,
+          "joint_sgd_policy_dot": 1.6981560440631662,
+          "joint_sgd_value_dot": 633.7639327886159,
+          "policy_norm": 0.5541282291101286,
+          "policy_square": 0.3070580942967272,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 25.147024373449227,
+          "value_square": 632.3728348388495,
+          "value_squared_norm_share": 0.9995146706925153,
+          "value_to_policy_norm": 45.381236783104676
+        },
+        "edge": {
+          "cosine": 0.02163393683910613,
+          "dot": 0.00019236520835347212,
+          "joint_sgd_policy_dot": 0.0006560201341724769,
+          "joint_sgd_value_dot": 0.17071697387323664,
+          "policy_norm": 0.02153264790542503,
+          "policy_square": 0.0004636549258190048,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.4129462539664008,
+          "value_square": 0.17052460866488317,
+          "value_squared_norm_share": 0.9972883815761245,
+          "value_to_policy_norm": 19.17768106273457
+        },
+        "input_gain": {
+          "cosine": -0.13019868578045204,
+          "dot": -0.002656479424434089,
+          "joint_sgd_policy_dot": 0.005112413719970387,
+          "joint_sgd_value_dot": 0.05092819099168255,
+          "policy_norm": 0.08814132483917221,
+          "policy_square": 0.007768893144404475,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.2314836288295927,
+          "value_square": 0.053584670416116635,
+          "value_squared_norm_share": 0.8733750300136847,
+          "value_to_policy_norm": 2.6262780738997424
+        },
+        "leak": {
+          "cosine": -0.09396670055484957,
+          "dot": -1.031615522608376e-05,
+          "joint_sgd_policy_dot": 2.7792909786796857e-05,
+          "joint_sgd_value_dot": 0.0003059549289498122,
+          "policy_norm": 0.006173254005213184,
+          "policy_square": 3.8109065012880615e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.017784012038229616,
+          "value_square": 0.00031627108417589593,
+          "value_squared_norm_share": 0.8924627547561077,
+          "value_to_policy_norm": 2.8808165066934537
+        },
+        "readout_gain": {
+          "cosine": -0.06864916516107125,
+          "dot": -5.0250207439413826e-05,
+          "joint_sgd_policy_dot": 4.335382299622936e-05,
+          "joint_sgd_value_dot": 0.0056738950809619845,
+          "policy_norm": 0.009674917593222341,
+          "policy_square": 9.360403043564319e-05,
+          "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+          "value_norm": 0.07565808144806077,
+          "value_square": 0.005724145288401398,
+          "value_squared_norm_share": 0.9839106112508893,
+          "value_to_policy_norm": 7.8200233458383375
+        }
+      },
+      "native_linearity_checks": {
+        "bias": {
+          "max_abs": 0.0007081246003508568,
+          "passed": false,
+          "relative_l2": 2.8574618110733263e-05
+        },
+        "edge": {
+          "max_abs": 1.9208528101444244e-08,
+          "passed": true,
+          "relative_l2": 1.1020493927057843e-07
+        },
+        "input_gain": {
+          "max_abs": 1.3224780559539795e-07,
+          "passed": true,
+          "relative_l2": 6.906534498623267e-07
+        },
+        "leak": {
+          "max_abs": 1.2335385690676048e-07,
+          "passed": true,
+          "relative_l2": 8.288170223008377e-06
+        },
+        "policy_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "policy_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "readout_gain": {
+          "max_abs": 2.3283064365386963e-09,
+          "passed": true,
+          "relative_l2": 4.632292642683052e-08
+        },
+        "value_bias": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        },
+        "value_weight": {
+          "max_abs": 0.0,
+          "passed": true,
+          "relative_l2": 0.0
+        }
+      },
+      "passed": false,
+      "record_sha256": "4a9d016c23cf91bcb7d4a9e6399eafffaec016fad77c970456a65d840335395d",
+      "shared": {
+        "cosine": 0.09830077618414264,
+        "dot": 1.3885732691876929,
+        "joint_sgd_policy_dot": 1.703995624650092,
+        "joint_sgd_value_dot": 633.9915578034908,
+        "policy_norm": 0.5616247461271621,
+        "policy_square": 0.3154223554623992,
+        "scope": "Raw gradient inner products. A negative joint_sgd_policy_dot means infinitesimal joint SGD increases this batch policy loss; it is not an Adam update or a validation prediction.",
+        "value_norm": 25.151600039248063,
+        "value_square": 632.6029845343031,
+        "value_squared_norm_share": 0.9995016382016564,
+        "value_to_policy_norm": 44.78363927638132
+      }
+    }
+  ],
+  "scope": "All nine originally planned native cases are retained. Split-gradient linearity fails for one Mi4 type-bias coefficient in each of two cases. Raw norm/cosine summaries describe actual native outputs; they do not erase failed numerical gates or establish validation improvement.",
+  "status": "complete",
+  "synthetic_fixture_updates": 10,
+  "unattempted_cases": 0
+}

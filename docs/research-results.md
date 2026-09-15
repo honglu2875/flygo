@@ -57,6 +57,14 @@ A [fresh-seed 128k-exposure confirmation](clipping-confirmation-study.md) is
 now running on CPU. All 12 numerical and six recovery cases pass; final
 validation and the paired scientific result remain pending.
 
+The separate [policy/value gradient audit](loss-balance-study.md) records all
+nine discovery cases, including two failed native bias-decomposition checks.
+On the three passing per-group endpoints, shared value-gradient norms are
+8.20–29.38 times policy norms and oppose them on the fixed training probe.
+Independent checks closely reproduce the numerical failures through FP32
+bias accumulation. This motivates a separate value-to-circuit gradient study;
+it is not a new validation result or a change to the confirmation learners.
+
 ## Matched neural control, three seeds
 
 Both families receive 1,048,576 labeled-position exposures: 512 Adam updates at

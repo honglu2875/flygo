@@ -84,9 +84,22 @@ Worker 2 is the registered analysis host. Its frozen analysis tools pass the
 same tests, and the existing PyArrow dependency was copied and checked file by
 file; reading all 165,122 canonical annotation rows succeeds. Common novelty
 and probe selections are prepared there with verified identities. After all
-endpoints finish, perform the owner-side checkpoint audits and relay completed
-evidence through root pipes to worker 2. Keep member-verified peer archives,
-then run the frozen analyzer. Root receives small reports and receipts.
+endpoints finish, the [frozen collector](../scripts/collect_clipping.py) performs
+the owner-side checkpoint audits and relays completed evidence through root
+pipes to worker 2. It keeps member-verified peer archives, then runs the frozen
+analyzer. Root receives small reports and receipts. Its
+[operational configuration](../configs/clipping-confirmation-collection-v1.json)
+binds the collector, analysis and endpoint-helper hashes. Five checks cover
+corrupt and conflicting archives, path containment, idempotent extraction,
+and waiting for actual process exit and the followup lock. They pass on worker
+2. An earlier remote-wrapper syntax failure occurred before tests or collector
+launch; its record is retained. The corrected wrapper launches the unchanged
+collector. This does not alter the scientific registration.
 The default `finish_study.py collect` copies bulk arrays to root and must not
 be used for this study. Final collection, paired analysis and the scientific
 decision remain pending.
+
+While these learners run, a separate [loss-balance audit](loss-balance-study.md)
+measures gradients at already completed discovery checkpoints. Its nine cases,
+including two numerical failures, are closed and archived. No resulting
+loss-routing or precision change has been applied to this confirmation.

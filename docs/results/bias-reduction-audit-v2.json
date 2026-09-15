@@ -1,0 +1,632 @@
+{
+  "created": 1789476827.0135925,
+  "plan_sha256": "eb9011b22fb086d1721548a73c4c265e58344ab95a4757012a250265df89abd0",
+  "records": [
+    {
+      "bias": {
+        "joint": {
+          "cancellation_ratio": 1022.304402216104,
+          "fp64_bias": -0.0005744369728706688,
+          "full_bias_comparison": {
+            "max_abs": 7.984031189778307e-05,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 3.802248807619172e-06
+          },
+          "native_bias": -0.0005746976821683347,
+          "serial_fp32_of_reconstructed_messages": -0.0005746999522671103,
+          "sum_abs_messages": 0.5872494461613774
+        },
+        "policy": {
+          "cancellation_ratio": 100.03014610792738,
+          "fp64_bias": -0.00022746846515146014,
+          "full_bias_comparison": {
+            "max_abs": 1.8180121187150178e-05,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 1.3969713468613971e-05
+          },
+          "native_bias": -0.00022745155729353428,
+          "serial_fp32_of_reconstructed_messages": -0.00022745125170331448,
+          "sum_abs_messages": 0.022753703804046545
+        },
+        "value": {
+          "cancellation_ratio": 1647.3682862336161,
+          "fp64_bias": -0.0003469687188466051,
+          "full_bias_comparison": {
+            "max_abs": 4.3163123304879036e-05,
+            "mismatches": 1,
+            "passed": false,
+            "relative_l2": 2.3521272225706852e-06
+          },
+          "native_bias": -0.00036122737219557166,
+          "serial_fp32_of_reconstructed_messages": -0.0003612520231399685,
+          "sum_abs_messages": 0.5715852637430052
+        }
+      },
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "e7e38024ace9808d1be6691f4bceaa76be48ccec8955e0e86f0139f5efb55ceb",
+        "host": 1,
+        "run_id": "clipping-global-seed10-v1",
+        "seed": 10,
+        "step": 1000
+      },
+      "head_boundary_checks": {
+        "joint": {
+          "bias": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "edge": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "input_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "leak": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "readout_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          }
+        },
+        "policy": {
+          "bias": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "edge": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "input_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "leak": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "readout_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          }
+        },
+        "value": {
+          "bias": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "edge": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "input_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "leak": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "readout_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          }
+        }
+      },
+      "native_joint_exact": true,
+      "per_pass": [
+        {
+          "reverse_step": 7,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.0,
+              "mixture_sum": 0.0
+            },
+            "policy": {
+              "absolute_sum": 0.0,
+              "mixture_sum": 0.0
+            },
+            "value": {
+              "absolute_sum": 0.0,
+              "mixture_sum": 0.0
+            }
+          }
+        },
+        {
+          "reverse_step": 6,
+          "values": {
+            "joint": {
+              "absolute_sum": 2.7578296551503845e-05,
+              "mixture_sum": -6.321007039628973e-06
+            },
+            "policy": {
+              "absolute_sum": 2.743400565607656e-05,
+              "mixture_sum": -5.527268298752919e-06
+            },
+            "value": {
+              "absolute_sum": 3.048107282351438e-06,
+              "mixture_sum": -7.937386339878522e-07
+            }
+          }
+        },
+        {
+          "reverse_step": 5,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.07461330884584502,
+              "mixture_sum": -0.015465753570818476
+            },
+            "policy": {
+              "absolute_sum": 0.0028884115439631636,
+              "mixture_sum": 0.0006438142504001085
+            },
+            "value": {
+              "absolute_sum": 0.0725914963827564,
+              "mixture_sum": -0.016109568133706367
+            }
+          }
+        },
+        {
+          "reverse_step": 4,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.10860454355832093,
+              "mixture_sum": -0.016693485209771063
+            },
+            "policy": {
+              "absolute_sum": 0.004158156350191617,
+              "mixture_sum": 0.0007095604595290261
+            },
+            "value": {
+              "absolute_sum": 0.10572582908838407,
+              "mixture_sum": -0.01740304601173199
+            }
+          }
+        },
+        {
+          "reverse_step": 3,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.11166778927665852,
+              "mixture_sum": 0.0009169879046159312
+            },
+            "policy": {
+              "absolute_sum": 0.004314261824811733,
+              "mixture_sum": -9.24779757651208e-05
+            },
+            "value": {
+              "absolute_sum": 0.10870455234005158,
+              "mixture_sum": 0.0010094658100210996
+            }
+          }
+        },
+        {
+          "reverse_step": 2,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.1118442086544359,
+              "mixture_sum": 0.009529432808374863
+            },
+            "policy": {
+              "absolute_sum": 0.004343145065009789,
+              "mixture_sum": -0.00047320431098348806
+            },
+            "value": {
+              "absolute_sum": 0.10886239675032007,
+              "mixture_sum": 0.010002637218269321
+            }
+          }
+        },
+        {
+          "reverse_step": 1,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.09983922495931206,
+              "mixture_sum": 0.011124373027575957
+            },
+            "policy": {
+              "absolute_sum": 0.003864818297128771,
+              "mixture_sum": -0.0005381332694248121
+            },
+            "value": {
+              "absolute_sum": 0.09719290507611046,
+              "mixture_sum": 0.011662506500105007
+            }
+          }
+        },
+        {
+          "reverse_step": 0,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.08065279257025348,
+              "mixture_sum": 0.010020329074191692
+            },
+            "policy": {
+              "absolute_sum": 0.003157476717285392,
+              "mixture_sum": -0.00047150035060841873
+            },
+            "value": {
+              "absolute_sum": 0.07850503599810027,
+              "mixture_sum": 0.010491829636830333
+            }
+          }
+        }
+      ],
+      "source_checkpoint": {
+        "bytes": 189844784,
+        "path": "/dev/shm/flygo/runs/clipping-global-seed10-v1/checkpoints/step-00001000.npz",
+        "sha256": "e7e38024ace9808d1be6691f4bceaa76be48ccec8955e0e86f0139f5efb55ceb"
+      },
+      "source_gradients": {
+        "bytes": 187678264,
+        "path": "/dev/shm/flygo/runs/loss-balance-v1/host-1/clipping-global-seed10-v1-step-00001000/gradients.npz",
+        "sha256": "2567e292c0def66abff10a5db77ee8eb587d09748b269a863e3f34b15e42ca27"
+      },
+      "source_selection": {
+        "bytes": 139164,
+        "path": "/dev/shm/flygo/runs/loss-balance-v1/host-1/selection.npz",
+        "sha256": "0aa068cc3b12c1ffa5290c880eb1d0753d85e51eb04484ffd13a485c92b4d97f"
+      },
+      "status": "complete",
+      "type": {
+        "index": 8850,
+        "name": "Mi4",
+        "neurons": 1772,
+        "serial_additions": 453632
+      },
+      "unchanged_state": true
+    },
+    {
+      "bias": {
+        "joint": {
+          "cancellation_ratio": 194.72062640370785,
+          "fp64_bias": -0.0036524632867892676,
+          "full_bias_comparison": {
+            "max_abs": 0.0003210581314956329,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 1.3417744983858617e-05
+          },
+          "native_bias": -0.003647030331194401,
+          "serial_fp32_of_reconstructed_messages": -0.0036470338236540556,
+          "sum_abs_messages": 0.7112099391201518
+        },
+        "policy": {
+          "cancellation_ratio": 29.147100288557372,
+          "fp64_bias": -0.0009976464180111156,
+          "full_bias_comparison": {
+            "max_abs": 2.490291753018403e-07,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 1.025243955594661e-06
+          },
+          "native_bias": -0.0009976030560210347,
+          "serial_fp32_of_reconstructed_messages": -0.0009976025903597474,
+          "sum_abs_messages": 0.029078500198290013
+        },
+        "value": {
+          "cancellation_ratio": 259.83455300024207,
+          "fp64_bias": -0.0026548168956760654,
+          "full_bias_comparison": {
+            "max_abs": 0.00038712476744429125,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 1.648438504352991e-05
+          },
+          "native_bias": -0.0026665986515581608,
+          "serial_fp32_of_reconstructed_messages": -0.0026666156481951475,
+          "sum_abs_messages": 0.6898131613854807
+        }
+      },
+      "case": {
+        "arm": "global",
+        "checkpoint_sha256": "27f2937ffaaac8aee677231a935fa836c01a7ca5ccff1af721f87b17c9c80790",
+        "host": 3,
+        "run_id": "clipping-global-seed12-v1",
+        "seed": 12,
+        "step": 1000
+      },
+      "head_boundary_checks": {
+        "joint": {
+          "bias": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "edge": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "input_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "leak": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "readout_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          }
+        },
+        "policy": {
+          "bias": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "edge": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "input_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "leak": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "readout_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          }
+        },
+        "value": {
+          "bias": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "edge": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "input_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "leak": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          },
+          "readout_gain": {
+            "max_abs": 0.0,
+            "mismatches": 0,
+            "passed": true,
+            "relative_l2": 0.0
+          }
+        }
+      },
+      "native_joint_exact": true,
+      "per_pass": [
+        {
+          "reverse_step": 7,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.0,
+              "mixture_sum": 0.0
+            },
+            "policy": {
+              "absolute_sum": 0.0,
+              "mixture_sum": 0.0
+            },
+            "value": {
+              "absolute_sum": 0.0,
+              "mixture_sum": 0.0
+            }
+          }
+        },
+        {
+          "reverse_step": 6,
+          "values": {
+            "joint": {
+              "absolute_sum": 2.7680618463024655e-05,
+              "mixture_sum": 1.3102653001817969e-06
+            },
+            "policy": {
+              "absolute_sum": 2.76842990962785e-05,
+              "mixture_sum": 1.1502357047896782e-07
+            },
+            "value": {
+              "absolute_sum": 4.4198906936905265e-06,
+              "mixture_sum": 1.195242010848162e-06
+            }
+          }
+        },
+        {
+          "reverse_step": 5,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.13108967302958102,
+              "mixture_sum": -0.04862767265815773
+            },
+            "policy": {
+              "absolute_sum": 0.005602083188492672,
+              "mixture_sum": -0.0007130812367486834
+            },
+            "value": {
+              "absolute_sum": 0.12689014886294456,
+              "mixture_sum": -0.04791459075818972
+            }
+          }
+        },
+        {
+          "reverse_step": 4,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.1078247215442148,
+              "mixture_sum": -0.027744133904280325
+            },
+            "policy": {
+              "absolute_sum": 0.004650121124526428,
+              "mixture_sum": -0.0004680629033482217
+            },
+            "value": {
+              "absolute_sum": 0.10434477111296243,
+              "mixture_sum": -0.027276070627724164
+            }
+          }
+        },
+        {
+          "reverse_step": 3,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.09794103875001653,
+              "mixture_sum": -0.010621485075506917
+            },
+            "policy": {
+              "absolute_sum": 0.004056258523310631,
+              "mixture_sum": -0.00016984562371382745
+            },
+            "value": {
+              "absolute_sum": 0.0949577082636048,
+              "mixture_sum": -0.010451639310678502
+            }
+          }
+        },
+        {
+          "reverse_step": 2,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.11343459349939547,
+              "mixture_sum": 0.010686796039061572
+            },
+            "policy": {
+              "absolute_sum": 0.004570879481795586,
+              "mixture_sum": 7.121349134895944e-05
+            },
+            "value": {
+              "absolute_sum": 0.1100941212027673,
+              "mixture_sum": 0.010615582384496718
+            }
+          }
+        },
+        {
+          "reverse_step": 1,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.1278518646565656,
+              "mixture_sum": 0.03064583964374207
+            },
+            "policy": {
+              "absolute_sum": 0.005004733793868843,
+              "mixture_sum": 0.00012943158725818937
+            },
+            "value": {
+              "absolute_sum": 0.12422459333110263,
+              "mixture_sum": 0.03051640761843976
+            }
+          }
+        },
+        {
+          "reverse_step": 0,
+          "values": {
+            "joint": {
+              "absolute_sum": 0.1330403670219153,
+              "mixture_sum": 0.04200688240305185
+            },
+            "policy": {
+              "absolute_sum": 0.0051667397871995755,
+              "mixture_sum": 0.00015258324362199042
+            },
+            "value": {
+              "absolute_sum": 0.1292973987214053,
+              "mixture_sum": 0.04185429855596897
+            }
+          }
+        }
+      ],
+      "source_checkpoint": {
+        "bytes": 189844780,
+        "path": "/dev/shm/flygo/runs/clipping-global-seed12-v1/checkpoints/step-00001000.npz",
+        "sha256": "27f2937ffaaac8aee677231a935fa836c01a7ca5ccff1af721f87b17c9c80790"
+      },
+      "source_gradients": {
+        "bytes": 187678264,
+        "path": "/dev/shm/flygo/runs/loss-balance-v1/host-3/clipping-global-seed12-v1-step-00001000/gradients.npz",
+        "sha256": "226310f8dacfda519cd6e7559db10ff77c9791ad987add820e3994823cfb96c0"
+      },
+      "source_selection": {
+        "bytes": 139164,
+        "path": "/dev/shm/flygo/runs/loss-balance-v1/host-3/selection.npz",
+        "sha256": "0aa068cc3b12c1ffa5290c880eb1d0753d85e51eb04484ffd13a485c92b4d97f"
+      },
+      "status": "complete",
+      "type": {
+        "index": 8850,
+        "name": "Mi4",
+        "neurons": 1772,
+        "serial_additions": 453632
+      },
+      "unchanged_state": true
+    }
+  ],
+  "scope": "Independent read-only diagnostic; retain every comparison, including numerical failures. Serial FP32 emulation uses reconstructed messages and does not prove bitwise attribution to the native reduction. No model update, checkpoint payload file, final test or TPU use.",
+  "seconds": 85.49824070930481,
+  "status": "complete",
+  "update_exposures": 0
+}
