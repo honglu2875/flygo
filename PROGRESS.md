@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 14:43 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 15:26 UTC**. Fixed fly topology, learnable strengths.
 Compare **prediction FLOPs and labeled-position exposures**; report training,
 tuning, memory and latency costs separately. No advantage over the matched CNN
 has been established. Detailed history stays in the linked study reports.
@@ -101,10 +101,13 @@ Persistent state, attachment changes and precision changes remain separate.
   downloads 96 games from a pinned revision, selects 512 training / 256
   validation positions from disjoint opening families, explores weights,
   spherical eye mapping and recurrent propagation, then trains for 64 B32
-  updates. Actual plots and outputs are saved: KL **2.03807 → 1.90137**
-  in **387 s on four CPU cores**; value MSE **.88994 → .90108**.
+  updates using the qualified current runtime and confirmed per-group clipping.
+  Actual plots and outputs are saved: KL **2.03807 → 1.90477**
+  in **301 s on four CPU cores**; value MSE **.88994 → .90901**.
   This is a different public sample, not a V0 benchmark.
-  [Setup](notebooks/README.md), [execution record](docs/results/research-notebook-hf-v1.json).
+  Both notebook executions are retained, totaling **4,096** public-sample
+  training exposures. [Setup](notebooks/README.md),
+  [current execution record](docs/results/research-notebook-hf-v2.json).
 - **Persistent state:** ten Rust core tests pass, including finite differences
   and split-trajectory composition. The public model/training interfaces do
   not yet carry state across Go moves. The replay audit shows current-player

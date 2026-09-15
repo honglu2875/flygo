@@ -11,13 +11,26 @@ complete games. This is an exploratory example. Its result is not the V0
 full-validation 1.4903 smooth-rate result or a comparison with a CNN. TPU use is
 disabled.
 
-The checked run includes its actual plots and outputs. It completed in 387 s on
-four pinned CPU cores, with policy KL **2.03807 → 1.90137** on its 256-position
-validation slice (12 opening families). Value MSE was **.88994 → .90108**.
+The model uses the confirmed spherical baseline: current-board eye inputs,
+eight internal passes, and dense learned projections from all 2,129 motors.
+Adam clips each parameter group's gradient separately at norm 1. Both policy
+and value fully train the circuit. The short default fit finishes during the
+100-update learning-rate warmup; increase `UPDATES` to explore a longer fit.
+See the [clipping confirmation](../docs/clipping-confirmation-study.md) for the
+optimizer evidence, and keep attachment or neuron-rule changes separate.
+
+The checked run includes its actual plots and outputs. It completed in 301 s on
+four pinned CPU cores, with policy KL **2.03807 → 1.90477** on its 256-position
+validation slice (12 opening families). Value MSE was **.88994 → .90901**.
 The 512 training positions cover 55 families. About 2.3 MB of game payloads were
 fetched, in addition to the indices. See the
-[execution record](../docs/results/research-notebook-hf-v1.json) for exact data,
+[execution record](../docs/results/research-notebook-hf-v2.json) for exact data,
 native source, environment, sampling and schedule identities.
+
+The [earlier execution](../docs/results/research-notebook-hf-v1.json) is preserved
+with its older runtime and global clipping (KL 1.90137). The new default follows
+the full V0 clipping confirmation; this tiny walkthrough does not establish an
+optimizer advantage. Each execution adds 2,048 public-sample training exposures.
 
 Install Python 3.12, Rust, and the package with its notebook extra:
 
@@ -29,7 +42,7 @@ uv pip install --python .venv/bin/python -e '.[notebook]'
 ```
 
 On the existing research fleet, the notebook environment can instead import the
-qualified package under `/dev/shm/flygo/environments/2ba439e309df1e902b58/site-packages`.
+qualified package under `/dev/shm/flygo/environments/9471407cdd0c68b40179/site-packages`.
 Keep its native module and Python package together. The notebook records their
 hashes. Run on available pinned CPUs, for example `56–59` for a small exploration;
 do not start another numerical-library kernel on an occupied research lane.
@@ -42,6 +55,11 @@ pinned to commit `4f579b0a21c456f3bb568174d384056351124cd5`. The dataset has
 payloads. It verifies the manifest, indices and selected games; complete tar
 shards are not downloaded or extracted. The published opening-family splits
 and raw teacher policy/value targets are preserved.
+
+The teacher labels both players' turns. `raw_policy` has 82 probabilities
+(81 intersections and pass); `raw_value` is signed winrate from the player to
+move's perspective. Played actions are used to reconstruct history. They are
+not the policy target, and terminal wins/losses are not the value target.
 
 The existing artifact tree supplies the model assets and optional offline data:
 

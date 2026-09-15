@@ -1,0 +1,357 @@
+{
+  "status": "passed",
+  "notebook_sha256": "f9f7d8d7e934fe585286a91b8b414e9db6d41fa3f6cf838c478b812065cdf267",
+  "seconds": 300.9561011791229,
+  "executed_cells": 10,
+  "experiment": {
+    "dataset_id": "6a26ffa743f3c7be95d783102f6b3596e0ce69893c5a8e28dcca154dc54f05f4",
+    "data_source": "hub",
+    "hf_dataset": "quintic/go9x9",
+    "hf_revision": "4f579b0a21c456f3bb568174d384056351124cd5",
+    "manifest_sha256": "68b05a2dca33859a9d0b3b9ee89d4ed242c45d427d0e3233c8093c91f3f16096",
+    "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+    "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+    "model": {
+      "steps": 8,
+      "features": 3574,
+      "groups": 2129,
+      "actions": 82,
+      "threads": 4,
+      "seed": 1,
+      "rate_softness": 0.0,
+      "readout_mean_scale": 1.0
+    },
+    "input_mode": "current",
+    "runtime": {
+      "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+      "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a",
+      "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+      "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+      "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+      "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+      "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+      "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+      "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+      "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+      "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+      "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+      "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+      "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25"
+    },
+    "clip_mode": "parameter-group",
+    "value_core_scale": 1.0,
+    "train_positions": 512,
+    "validation_positions": 256,
+    "train_families": 55,
+    "validation_families": 12,
+    "train_ids_sha256": "d15c6f34b28d56b77c9ae5c9f67a7ee674d0f508f6c5719d3f4055dc204dfc2d",
+    "val_ids_sha256": "2e8e467f6dfcd8d97313c827ef3dee5442e6c821d92fde634734bafe642219bd",
+    "schedule": {
+      "version": "absolute-update-rate-v1",
+      "peak": 0.03,
+      "warmup_steps": 100,
+      "decay_until": 0,
+      "final_ratio": 0.1
+    },
+    "epsilon": 1e-06,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "updates": 64,
+    "exposures": 2048,
+    "curve": [
+      {
+        "step": 0,
+        "exposures": 0,
+        "validation": {
+          "policy_kl": 2.0380651243488606,
+          "value_mse": 0.8899373106043366,
+          "policy_entropy": 3.633108504304945,
+          "top_probability": 0.03403918570623217,
+          "teacher_top1": 0.05078125
+        }
+      },
+      {
+        "step": 16,
+        "exposures": 512,
+        "training_batch": {
+          "policy_loss": 3.3945725485956078,
+          "value_loss": 0.9225433117244393,
+          "gradient_norm": 0.8524857708755094,
+          "step": 16,
+          "clipping": {
+            "mode": "parameter-group",
+            "group_norms": {
+              "edge": 0.002103806187116968,
+              "leak": 0.0014813379714174993,
+              "bias": 0.6138011713314785,
+              "input_gain": 0.03321895608012786,
+              "readout_gain": 0.012186331664164074,
+              "policy_weight": 0.13328310337766536,
+              "policy_bias": 0.07959809070037763,
+              "value_weight": 0.5200457071084954,
+              "value_bias": 0.2327524572610855
+            },
+            "factors": {
+              "edge": 1.0,
+              "leak": 1.0,
+              "bias": 1.0,
+              "input_gain": 1.0,
+              "readout_gain": 1.0,
+              "policy_weight": 1.0,
+              "policy_bias": 1.0,
+              "value_weight": 1.0,
+              "value_bias": 1.0
+            },
+            "clipped": false
+          }
+        },
+        "validation": {
+          "policy_kl": 1.9746813294645238,
+          "value_mse": 0.945849768220858,
+          "policy_entropy": 3.3161883230710076,
+          "top_probability": 0.10355089372116764,
+          "teacher_top1": 0.11328125
+        }
+      },
+      {
+        "step": 32,
+        "exposures": 1024,
+        "training_batch": {
+          "policy_loss": 3.411504353681341,
+          "value_loss": 1.2661655079573393,
+          "gradient_norm": 2.233623867381879,
+          "step": 32,
+          "clipping": {
+            "mode": "parameter-group",
+            "group_norms": {
+              "edge": 0.0038571001684306705,
+              "leak": 0.002082199995201738,
+              "bias": 1.560381665551933,
+              "input_gain": 0.07962527578919865,
+              "readout_gain": 0.02776241455617919,
+              "policy_weight": 0.11936757178171026,
+              "policy_bias": 0.0961436803852886,
+              "value_weight": 1.2290141486942896,
+              "value_bias": 1.006571650505066
+            },
+            "factors": {
+              "edge": 1.0,
+              "leak": 1.0,
+              "bias": 0.6408688426017761,
+              "input_gain": 1.0,
+              "readout_gain": 1.0,
+              "policy_weight": 1.0,
+              "policy_bias": 1.0,
+              "value_weight": 0.8136602640151978,
+              "value_bias": 0.9934712648391724
+            },
+            "clipped": true
+          }
+        },
+        "validation": {
+          "policy_kl": 1.9615704546692576,
+          "value_mse": 0.9909706054400422,
+          "policy_entropy": 3.441482190174644,
+          "top_probability": 0.08261842771676056,
+          "teacher_top1": 0.09765625
+        }
+      },
+      {
+        "step": 48,
+        "exposures": 1536,
+        "training_batch": {
+          "policy_loss": 3.459851654066172,
+          "value_loss": 0.9154806199949235,
+          "gradient_norm": 0.993022520510201,
+          "step": 48,
+          "clipping": {
+            "mode": "parameter-group",
+            "group_norms": {
+              "edge": 0.0013082508291970133,
+              "leak": 0.0006089481198986506,
+              "bias": 0.7328640629630074,
+              "input_gain": 0.030252804299698934,
+              "readout_gain": 0.009893182892538155,
+              "policy_weight": 0.08152794642410528,
+              "policy_bias": 0.10536211175617957,
+              "value_weight": 0.3979972922784855,
+              "value_bias": 0.5213817954063416
+            },
+            "factors": {
+              "edge": 1.0,
+              "leak": 1.0,
+              "bias": 1.0,
+              "input_gain": 1.0,
+              "readout_gain": 1.0,
+              "policy_weight": 1.0,
+              "policy_bias": 1.0,
+              "value_weight": 1.0,
+              "value_bias": 1.0
+            },
+            "clipped": false
+          }
+        },
+        "validation": {
+          "policy_kl": 1.9637673548324268,
+          "value_mse": 0.8920670230992249,
+          "policy_entropy": 3.4083862887592096,
+          "top_probability": 0.09912957903569805,
+          "teacher_top1": 0.0390625
+        }
+      },
+      {
+        "step": 64,
+        "exposures": 2048,
+        "training_batch": {
+          "policy_loss": 3.5475329402753766,
+          "value_loss": 0.8654987951740623,
+          "gradient_norm": 0.46486600082139873,
+          "step": 64,
+          "clipping": {
+            "mode": "parameter-group",
+            "group_norms": {
+              "edge": 0.0015818651153979534,
+              "leak": 0.0015909388168014902,
+              "bias": 0.34384900928662465,
+              "input_gain": 0.06058041250421924,
+              "readout_gain": 0.007974639324791364,
+              "policy_weight": 0.06397000409092092,
+              "policy_bias": 0.10407478311220254,
+              "value_weight": 0.2182431855646628,
+              "value_bias": 0.17769590020179749
+            },
+            "factors": {
+              "edge": 1.0,
+              "leak": 1.0,
+              "bias": 1.0,
+              "input_gain": 1.0,
+              "readout_gain": 1.0,
+              "policy_weight": 1.0,
+              "policy_bias": 1.0,
+              "value_weight": 1.0,
+              "value_bias": 1.0
+            },
+            "clipped": false
+          }
+        },
+        "validation": {
+          "policy_kl": 1.9047678269222503,
+          "value_mse": 0.9090070828350676,
+          "policy_entropy": 3.482227752371295,
+          "top_probability": 0.08450230868132116,
+          "teacher_top1": 0.125
+        }
+      }
+    ],
+    "final_validation": {
+      "policy_kl": 1.9047678269222503,
+      "value_mse": 0.9090070828350676,
+      "policy_entropy": 3.482227752371295,
+      "top_probability": 0.08450230868132116,
+      "teacher_top1": 0.125
+    },
+    "scope": "Small exploratory slice; not full validation, final test, or a CNN comparison."
+  },
+  "executed_notebook_sha256": "3cf103e15654e834889ff4f95f09a665b0d77ef2a3a52f0ceae40a06c6362795",
+  "downloads": {
+    "selected_games": 96,
+    "selected_game_bytes": 2261049,
+    "index_bytes": 28318147
+  },
+  "host": "t1v-n-a09f5679-w-3",
+  "cpus": [
+    56,
+    57,
+    58,
+    59
+  ],
+  "environment": "environments/notebook-cpu-20260915-v1",
+  "requirements": [
+    "anyio==4.15.1",
+    "asttokens==3.0.2",
+    "attrs==26.1.0",
+    "certifi==2026.7.22",
+    "click==8.5.0",
+    "comm==0.2.3",
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "debugpy==1.8.21",
+    "executing==2.2.1",
+    "fastjsonschema==2.22.2",
+    "filelock==3.32.6",
+    "fonttools==4.65.0",
+    "fsspec==2026.7.0",
+    "h11==0.16.0",
+    "hf-xet==1.6.0",
+    "httpcore==1.0.9",
+    "httpx==0.28.1",
+    "huggingface-hub==1.31.0",
+    "idna==3.19",
+    "ipykernel==7.3.0",
+    "ipython==9.17.1",
+    "ipython-pygments-lexers==1.1.1",
+    "jedi==0.20.0",
+    "jsonschema==4.26.0",
+    "jsonschema-specifications==2025.9.1",
+    "jupyter-client==8.10.0",
+    "jupyter-core==5.9.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "matplotlib-inline==0.2.2",
+    "nbclient==0.11.0",
+    "nbformat==5.11.1",
+    "nest-asyncio2==1.7.2",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "parso==0.8.7",
+    "pexpect==4.9.0",
+    "pillow==12.3.0",
+    "platformdirs==4.11.8",
+    "prompt-toolkit==3.0.53",
+    "psutil==7.2.2",
+    "ptyprocess==0.7.0",
+    "pure-eval==0.2.4",
+    "pygments==2.21.0",
+    "pyparsing==3.3.2",
+    "python-dateutil==2.9.0.post0",
+    "pyyaml==6.0.3",
+    "pyzmq==27.2.0",
+    "referencing==0.37.0",
+    "rpds-py==2026.6.3",
+    "six==1.17.0",
+    "stack-data==0.6.3",
+    "tornado==6.5.9",
+    "tqdm==4.70.1",
+    "traitlets==5.16.1",
+    "typing-extensions==4.16.0",
+    "wcwidth==0.8.3"
+  ],
+  "previous_execution": "research-notebook-hf-v1.json",
+  "change": "Use the qualified current Rust runtime and confirmed per-parameter-group clipping control. Retain the pinned dataset, sample, seed and 64-update horizon. No value-gradient experimental scale is selected.",
+  "note": "Default notebook executed against the pinned public Hugging Face release, using the qualified Rust CPU runtime and local full graph/spherical adapter. No TPU initialized. Notebook retains the actual rendered outputs.",
+  "evidence": {
+    "status": "passed",
+    "created": 1789486021.95196,
+    "owner": 3,
+    "peer": 2,
+    "archive": {
+      "path": "runs/research-notebook-hf-v2/evidence.tar",
+      "bytes": 31467520,
+      "sha256": "cf7691371fe95f3b2b97271084b9151f0bb95b0f1612f34c1a56659b3e2b1bc6",
+      "manifest_path": "runs/research-notebook-hf-v2/evidence-manifest.json",
+      "manifest_sha256": "25c271f3bd913bf46286851d27202ce84dcf6455faca66347e49cf1f0de41c7d",
+      "files": 115
+    },
+    "replica": {
+      "status": "passed",
+      "sha256": "cf7691371fe95f3b2b97271084b9151f0bb95b0f1612f34c1a56659b3e2b1bc6",
+      "bytes": 31467520
+    },
+    "member_verification": {
+      "status": "passed",
+      "files": 115
+    }
+  },
+  "public_notebook_exposures_including_previous_execution": 4096
+}
