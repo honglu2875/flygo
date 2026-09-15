@@ -1,0 +1,48 @@
+{
+  "name": "retinal-allocation-v1",
+  "release": "v0-1m",
+  "environment": "environments/861175bf88bf1ba6b4f5",
+  "inference_environment": "environments/794c0cbd895d678a9e6d",
+  "replica_environment": "environments/b3263e4048fa5bc7b686",
+  "input_map": "ports/retinal-allocation-v1/attachment.npz",
+  "input_map_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+  "updates": 1000,
+  "batch_size": 32,
+  "passes": 8,
+  "groups": 2129,
+  "rate": 0.03,
+  "warmup_steps": 100,
+  "epsilon": 0.000001,
+  "clip": 1.0,
+  "rate_scales": {"bias": 0.01},
+  "eval_every": 250,
+  "eval_positions": 2048,
+  "eval_batch_size": 32,
+  "checkpoint_every": 1000,
+  "diagnostics_every": 250,
+  "diagnostic_batch_size": 32,
+  "qualifications": {
+    "1": "runs/retinal-allocation-qualification-v1/seed-1/result.json",
+    "2": "runs/retinal-allocation-qualification-v1/seed-2/result.json",
+    "3": "runs/retinal-allocation-qualification-v1/seed-3/result.json"
+  },
+  "io_qualifications": {
+    "1": "runs/retinal-allocation-preflight-v4/seed-1-result.json",
+    "2": "runs/retinal-allocation-preflight-v4/seed-2-result.json",
+    "3": "runs/retinal-allocation-preflight-v4/seed-3-result.json"
+  },
+  "reference_analysis": "runs/attachment-confirmation-analysis-v1/result.json",
+  "reference_analysis_sha256": "882aa1faf065b3098d6145210d4d2b530abb36ae694679110c504b0c8dabaef1",
+  "references": [
+    {"seed": 1, "run_id": "attachment-current-seed1-v1", "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782"},
+    {"seed": 2, "run_id": "attachment-current-seed2-v1", "checkpoint_sha256": "ceebcec433559642382ed09e6d001c176ac551e059299863d59ba4219c965957"},
+    {"seed": 3, "run_id": "attachment-current-seed3-v1", "checkpoint_sha256": "60ae42255518b59f94d4d0a00865ae459cb7503d49303d65365e7bcc9428b54c"}
+  ],
+  "matches": null,
+  "scope": "One larger current board per eye versus the adopted paired current-board montage endpoints. Same original immutable learner, ports, information, initialization, K8 and 32k exposure/optimizer contract. Only retinal sampling changes. Dense learned policy/value heads remain the baseline. No head-mask, physiology, memory, optimizer, final-test or TPU intervention.",
+  "jobs": [
+    {"run_id": "retinal-large-seed1-v1", "host": 1, "replica_host": 2, "mode": "current", "seed": 1, "passes": 8, "groups": 2129, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "retinal-large-seed2-v1", "host": 2, "replica_host": 3, "mode": "current", "seed": 2, "passes": 8, "groups": 2129, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]},
+    {"run_id": "retinal-large-seed3-v1", "host": 3, "replica_host": 1, "mode": "current", "seed": 3, "passes": 8, "groups": 2129, "cpus": [32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55]}
+  ]
+}

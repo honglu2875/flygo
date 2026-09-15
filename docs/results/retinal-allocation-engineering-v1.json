@@ -1,0 +1,1756 @@
+{
+  "anatomy": {
+    "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+    "interpretation": "Soma side is an anatomical proxy, not established output or receptive-field laterality; no head mask is applied.",
+    "motors": 2129,
+    "side_counts": {
+      "rootSide": {
+        "missing": 2129
+      },
+      "somaSide": {
+        "L": 1065,
+        "M": 10,
+        "R": 1054
+      }
+    },
+    "soma_side_by_superclass": {
+      "cb_motor": {
+        "L": 54,
+        "R": 53
+      },
+      "descending_neuron": {
+        "L": 656,
+        "M": 10,
+        "R": 648
+      },
+      "vnc_motor": {
+        "L": 355,
+        "R": 353
+      }
+    }
+  },
+  "created": 1789430094.1563623,
+  "fixed_weight_motor_probe": {
+    "path": "/dev/shm/flygo/runs/retinal-allocation-signal-v1/result.json",
+    "result": {
+      "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+      "cpus": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "created": 1789428463.6604402,
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+      "helpers_sha256": "083f93bb4eeaeb026ec167a8baa344c02fe0d914e3ed0b917e41f501a502dbaf",
+      "records": [
+        {
+          "checkpoint": "/dev/shm/flygo/runs/attachment-current-seed1-v1/checkpoints/step-00000000.npz",
+          "checkpoint_sha256": "d952f673c4cf9b882086ba71a15deee03579093aa3940df91004648f6d2eaa22",
+          "optimizer_step": 0,
+          "response_file": "case-0-responses.npz",
+          "response_sha256": "2069259176c6f3958cc609a7bb66fac2ce402ebda8f54db427a2d1e2b7e652e4",
+          "responses": {
+            "current": {
+              "cells": 2129,
+              "covariance_participation_rank": 1.2695461952865852,
+              "first_pc_variance_fraction": 0.8864901749415841,
+              "observations": 256,
+              "rms_input_variation": 3.4842719085519766e-06,
+              "sample_rank_ceiling": 255,
+              "standardized_participation_rank": 1.5562221051521723,
+              "std_floor": 1e-06,
+              "std_quantiles": [
+                1.0689546549481007e-09,
+                4.83411162021762e-09,
+                6.444076093250687e-08,
+                1.1603098420327989e-06,
+                8.994269118546206e-05
+              ],
+              "top_cells": [
+                {
+                  "bodyId": 69173,
+                  "node": 51667,
+                  "type": "DNpe018",
+                  "visual_variance_fraction": 0.3129911195637751
+                },
+                {
+                  "bodyId": 99955,
+                  "node": 75657,
+                  "type": "DNpe011",
+                  "visual_variance_fraction": 0.11893109106629378
+                },
+                {
+                  "bodyId": 56057,
+                  "node": 40771,
+                  "type": "DNpe011",
+                  "visual_variance_fraction": 0.09257155218806709
+                },
+                {
+                  "bodyId": 165031,
+                  "node": 111516,
+                  "type": "DNpe018",
+                  "visual_variance_fraction": 0.08824948183890749
+                },
+                {
+                  "bodyId": 49210,
+                  "node": 34895,
+                  "type": "DNpe011",
+                  "visual_variance_fraction": 0.0867126288646586
+                }
+              ],
+              "varying_cells": 242
+            },
+            "large": {
+              "cells": 2129,
+              "covariance_participation_rank": 1.4222232315645933,
+              "first_pc_variance_fraction": 0.8361132073871352,
+              "observations": 256,
+              "rms_input_variation": 3.4062250207652496e-06,
+              "sample_rank_ceiling": 255,
+              "standardized_participation_rank": 2.070696811638103,
+              "std_floor": 1e-06,
+              "std_quantiles": [
+                1.0938231052766004e-09,
+                5.246320808900578e-09,
+                6.753794143625068e-08,
+                1.2666982618534027e-06,
+                8.638670534016275e-05
+              ],
+              "top_cells": [
+                {
+                  "bodyId": 69173,
+                  "node": 51667,
+                  "type": "DNpe018",
+                  "visual_variance_fraction": 0.3021144451911977
+                },
+                {
+                  "bodyId": 99955,
+                  "node": 75657,
+                  "type": "DNpe011",
+                  "visual_variance_fraction": 0.12307994064785002
+                },
+                {
+                  "bodyId": 49210,
+                  "node": 34895,
+                  "type": "DNpe011",
+                  "visual_variance_fraction": 0.09404451582332868
+                },
+                {
+                  "bodyId": 165031,
+                  "node": 111516,
+                  "type": "DNpe018",
+                  "visual_variance_fraction": 0.08857270141625845
+                },
+                {
+                  "bodyId": 56057,
+                  "node": 40771,
+                  "type": "DNpe011",
+                  "visual_variance_fraction": 0.07681578146093912
+                }
+              ],
+              "varying_cells": 251
+            }
+          },
+          "seed": 1
+        },
+        {
+          "checkpoint": "/dev/shm/flygo/runs/attachment-current-seed1-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782",
+          "optimizer_step": 1000,
+          "response_file": "case-1-responses.npz",
+          "response_sha256": "e2041b0af5c9be285571daa0db86144b47e58d7fd95b56ab6ec4b76f399b3b2c",
+          "responses": {
+            "current": {
+              "cells": 2129,
+              "covariance_participation_rank": 1.0001899215501608,
+              "first_pc_variance_fraction": 0.9999050504437016,
+              "observations": 256,
+              "rms_input_variation": 0.0023504110566140383,
+              "sample_rank_ceiling": 255,
+              "standardized_participation_rank": 5.017383437176224,
+              "std_floor": 1e-06,
+              "std_quantiles": [
+                0.0,
+                0.0,
+                1.3102116692760398e-07,
+                6.165068371121491e-06,
+                0.10842995816989794
+              ],
+              "top_cells": [
+                {
+                  "bodyId": 10123,
+                  "node": 109,
+                  "type": "DNg30",
+                  "visual_variance_fraction": 0.9996207813008765
+                },
+                {
+                  "bodyId": 11614,
+                  "node": 1506,
+                  "type": "DNpe032",
+                  "visual_variance_fraction": 0.00010653075512530632
+                },
+                {
+                  "bodyId": 803010,
+                  "node": 145031,
+                  "type": "MNad17",
+                  "visual_variance_fraction": 8.088030769884126e-05
+                },
+                {
+                  "bodyId": 11931,
+                  "node": 1804,
+                  "type": "DNd04",
+                  "visual_variance_fraction": 6.742268368602464e-05
+                },
+                {
+                  "bodyId": 11662,
+                  "node": 1550,
+                  "type": "DNp24",
+                  "visual_variance_fraction": 4.423662308220796e-05
+                }
+              ],
+              "varying_cells": 621
+            },
+            "large": {
+              "cells": 2129,
+              "covariance_participation_rank": 1.0002195621308865,
+              "first_pc_variance_fraction": 0.9998902337645348,
+              "observations": 256,
+              "rms_input_variation": 0.002354792031341224,
+              "sample_rank_ceiling": 255,
+              "standardized_participation_rank": 5.369194805652808,
+              "std_floor": 1e-06,
+              "std_quantiles": [
+                0.0,
+                0.0,
+                1.5400342382627723e-07,
+                6.194661675310627e-06,
+                0.10863249912979342
+              ],
+              "top_cells": [
+                {
+                  "bodyId": 10123,
+                  "node": 109,
+                  "type": "DNg30",
+                  "visual_variance_fraction": 0.9996288118360112
+                },
+                {
+                  "bodyId": 11614,
+                  "node": 1506,
+                  "type": "DNpe032",
+                  "visual_variance_fraction": 9.808638884703646e-05
+                },
+                {
+                  "bodyId": 803010,
+                  "node": 145031,
+                  "type": "MNad17",
+                  "visual_variance_fraction": 7.969509251123182e-05
+                },
+                {
+                  "bodyId": 11931,
+                  "node": 1804,
+                  "type": "DNd04",
+                  "visual_variance_fraction": 6.75930526126555e-05
+                },
+                {
+                  "bodyId": 11662,
+                  "node": 1550,
+                  "type": "DNp24",
+                  "visual_variance_fraction": 4.4354172230098384e-05
+                }
+              ],
+              "varying_cells": 636
+            }
+          },
+          "seed": 1
+        }
+      ],
+      "scope": "Same 256 training-family positions and context, with weights fixed within each map comparison. Learned checkpoints were trained with the reference map; larger-map responses are a transfer diagnostic, not learned-C capacity or validation. No targets, new updates, action partition, test inputs or TPU.",
+      "seconds": 22.598469495773315,
+      "source_sha256": "77462b5d10a98176335573a9b5b585924bcf17fe92860120b2a030865a889585",
+      "status": "complete"
+    },
+    "sha256": "b748543223384b99547aa23f1ec8a30e7e3a5e26cf3e99e2239c82d50371bfe4"
+  },
+  "geometry": {
+    "path": "/dev/shm/flygo/ports/retinal-allocation-v1/result.json",
+    "result": {
+      "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+      "audits": [
+        {
+          "drive_by_eye_type": [
+            {
+              "eye": "L",
+              "illuminated_sensors": 206,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.10457856956553775,
+              "rms_initial_drive_contrast": 0.02091571391310755,
+              "sensors": 496,
+              "type": "R1-R6",
+              "varying_sensors": 206
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 43,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1521032227987783,
+              "rms_initial_drive_contrast": 0.030420644559755662,
+              "sensors": 54,
+              "type": "R7_unclear",
+              "varying_sensors": 43
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 3,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.05421281135775511,
+              "rms_initial_drive_contrast": 0.010842562271551023,
+              "sensors": 28,
+              "type": "R7d",
+              "varying_sensors": 3
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 34,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.17288269835191805,
+              "rms_initial_drive_contrast": 0.03457653967038361,
+              "sensors": 40,
+              "type": "R7p",
+              "varying_sensors": 34
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 72,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.16880337679038007,
+              "rms_initial_drive_contrast": 0.03376067535807602,
+              "sensors": 88,
+              "type": "R7y",
+              "varying_sensors": 72
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 126,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1415239566004166,
+              "rms_initial_drive_contrast": 0.028304791320083324,
+              "sensors": 185,
+              "type": "R8_unclear",
+              "varying_sensors": 126
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 6,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.053928930694192204,
+              "rms_initial_drive_contrast": 0.010785786138838441,
+              "sensors": 35,
+              "type": "R8d",
+              "varying_sensors": 6
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 129,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15769463904222786,
+              "rms_initial_drive_contrast": 0.031538927808445576,
+              "sensors": 172,
+              "type": "R8p",
+              "varying_sensors": 129
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 159,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.14835087038948974,
+              "rms_initial_drive_contrast": 0.02967017407789795,
+              "sensors": 230,
+              "type": "R8y",
+              "varying_sensors": 159
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 477,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.12563244511582725,
+              "rms_initial_drive_contrast": 0.02512648902316545,
+              "sensors": 887,
+              "type": "R1-R6",
+              "varying_sensors": 477
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 0,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.0,
+              "rms_initial_drive_contrast": 0.0,
+              "sensors": 13,
+              "type": "R7R8_unclear",
+              "varying_sensors": 0
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 130,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15245293251272854,
+              "rms_initial_drive_contrast": 0.03049058650254571,
+              "sensors": 177,
+              "type": "R7_unclear",
+              "varying_sensors": 130
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 6,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.05317464276734847,
+              "rms_initial_drive_contrast": 0.010634928553469696,
+              "sensors": 36,
+              "type": "R7d",
+              "varying_sensors": 6
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 108,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15329996679346358,
+              "rms_initial_drive_contrast": 0.030659993358692718,
+              "sensors": 144,
+              "type": "R7p",
+              "varying_sensors": 108
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 154,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.14592665486910045,
+              "rms_initial_drive_contrast": 0.02918533097382009,
+              "sensors": 227,
+              "type": "R7y",
+              "varying_sensors": 154
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 142,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1372040121294757,
+              "rms_initial_drive_contrast": 0.02744080242589514,
+              "sensors": 236,
+              "type": "R8_unclear",
+              "varying_sensors": 142
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 6,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.05245114452765739,
+              "rms_initial_drive_contrast": 0.010490228905531479,
+              "sensors": 37,
+              "type": "R8d",
+              "varying_sensors": 6
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 114,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15073074188148053,
+              "rms_initial_drive_contrast": 0.030146148376296106,
+              "sensors": 158,
+              "type": "R8p",
+              "varying_sensors": 114
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 162,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1433900547702751,
+              "rms_initial_drive_contrast": 0.028678010954055023,
+              "sensors": 247,
+              "type": "R8y",
+              "varying_sensors": 162
+            }
+          ],
+          "eyes": [
+            {
+              "condition": 15.177425125767542,
+              "covered_points": 81,
+              "eye": "L",
+              "illuminated_sensors": 778,
+              "rank": 81,
+              "sensors": 1328,
+              "singular_values": [
+                4.346891064203903,
+                3.5669087690770835,
+                3.248435167185244,
+                3.111305501045078,
+                3.0266531456138575,
+                2.874259227595671,
+                2.6824375484441307,
+                2.5282404104076273,
+                2.5160846173165154,
+                2.4685042997532842,
+                2.3768896099012977,
+                2.368547175254597,
+                2.2553400481950723,
+                2.2385185179016123,
+                2.200878432809043,
+                2.1165104693415913,
+                2.0659149156819434,
+                1.9806003678089452,
+                1.965174317760878,
+                1.9525743414804693,
+                1.8975693028552107,
+                1.823680693064148,
+                1.7814082993853622,
+                1.761767340804812,
+                1.6916412623655457,
+                1.6563025395222266,
+                1.6227562076733366,
+                1.5825406769051653,
+                1.5697612092395574,
+                1.5086484772158164,
+                1.451935197937022,
+                1.3942473455131492,
+                1.3927368334052541,
+                1.3492265879017622,
+                1.3020382320008121,
+                1.2584741810900733,
+                1.2259842437839974,
+                1.2033181377296849,
+                1.1602259901788048,
+                1.1347566226197852,
+                1.1081899120494323,
+                1.0934739014454635,
+                1.047868946813376,
+                1.0365947271718332,
+                0.9926427498987231,
+                0.9554999712307681,
+                0.9296471333140092,
+                0.9044675812917812,
+                0.8858085888532092,
+                0.8590331411597055,
+                0.8406818604149401,
+                0.8243907423610548,
+                0.8020705426718309,
+                0.7567177065037034,
+                0.7475490853392818,
+                0.7069462613473965,
+                0.6894656007704518,
+                0.6822225241577716,
+                0.6544723026413114,
+                0.6479417027084381,
+                0.6112823054317622,
+                0.6008163363946807,
+                0.5886450393021264,
+                0.5679832748185305,
+                0.5438601136456505,
+                0.5392263820342338,
+                0.5133005473497918,
+                0.5109997032789148,
+                0.4833139656649263,
+                0.4670099536414053,
+                0.4388236192425215,
+                0.4157111049697513,
+                0.4125343615369401,
+                0.39191840801757855,
+                0.3770796752361757,
+                0.3639270509881676,
+                0.3422329093925083,
+                0.32552929585836515,
+                0.31333533815008335,
+                0.3077328490271353,
+                0.28640504091988234
+              ]
+            },
+            {
+              "condition": 13.774227442140655,
+              "covered_points": 81,
+              "eye": "R",
+              "illuminated_sensors": 1299,
+              "rank": 81,
+              "sensors": 2162,
+              "singular_values": [
+                4.91441784601195,
+                4.514463118381392,
+                4.223241515625597,
+                3.9791748166700454,
+                3.915486802266032,
+                3.7511315536937806,
+                3.725029295269515,
+                3.4716284510868527,
+                3.354176948264969,
+                3.2588922921721983,
+                3.157087252954591,
+                3.061060729361848,
+                3.0133929252670244,
+                2.9150849746293415,
+                2.7846800860568277,
+                2.756820795803104,
+                2.729610158176613,
+                2.5905455460901625,
+                2.571093576161856,
+                2.485932764649191,
+                2.432058716234867,
+                2.4009514348454393,
+                2.337205438540514,
+                2.3023202132064458,
+                2.19464757622184,
+                2.134673114077325,
+                2.061227110870061,
+                2.0416020104317596,
+                2.019332432555542,
+                1.9627282114584441,
+                1.9322015980722111,
+                1.8679949541243144,
+                1.8153314523482402,
+                1.7316722607849924,
+                1.6973162779602362,
+                1.6373961148251022,
+                1.621223611483964,
+                1.599499573107407,
+                1.5443325945955828,
+                1.5151538678551464,
+                1.494617847456608,
+                1.4354738013411028,
+                1.3792811555991205,
+                1.3456010903927582,
+                1.2802689625275105,
+                1.2534748382270102,
+                1.2438022951847951,
+                1.198682844687204,
+                1.1562103122823393,
+                1.1382593168305546,
+                1.1181613307127278,
+                1.0847080133786233,
+                1.0793909039730734,
+                1.011933675276192,
+                0.9817280334545091,
+                0.9407718383349998,
+                0.9080010976642865,
+                0.9023301370901393,
+                0.8488051821620641,
+                0.8258927466963143,
+                0.8119468381438357,
+                0.8018224929821308,
+                0.7620170771864265,
+                0.7558212793383734,
+                0.72609570878287,
+                0.7147255783482851,
+                0.6954903878171558,
+                0.6755486964362867,
+                0.627818360115488,
+                0.6068587155431677,
+                0.5965304787090903,
+                0.5605403621909303,
+                0.5465742905300707,
+                0.5299304510859043,
+                0.5090116158519827,
+                0.489604365496643,
+                0.4552196941213289,
+                0.42136896856296474,
+                0.41587149474523066,
+                0.39992010223562474,
+                0.3567835558585926
+              ]
+            }
+          ],
+          "name": "reference_current",
+          "patches": [
+            {
+              "covered_board_points": 81,
+              "eye": "L",
+              "illuminated_sensors": 329,
+              "lag": 0,
+              "point_mass_max": 6.802724599838257,
+              "point_mass_min": 1.8326732367277145,
+              "sensors": 391
+            },
+            {
+              "covered_board_points": 81,
+              "eye": "L",
+              "illuminated_sensors": 449,
+              "lag": 2,
+              "point_mass_max": 22.124244317412376,
+              "point_mass_min": 1.5626357793807983,
+              "sensors": 937
+            },
+            {
+              "covered_board_points": 81,
+              "eye": "R",
+              "illuminated_sensors": 607,
+              "lag": 1,
+              "point_mass_max": 16.07526382803917,
+              "point_mass_min": 2.649323970079422,
+              "sensors": 802
+            },
+            {
+              "covered_board_points": 81,
+              "eye": "R",
+              "illuminated_sensors": 692,
+              "lag": 3,
+              "point_mass_max": 27.904699087142944,
+              "point_mass_min": 3.1252715587615967,
+              "sensors": 1360
+            }
+          ]
+        },
+        {
+          "drive_by_eye_type": [
+            {
+              "eye": "L",
+              "illuminated_sensors": 206,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.10034277669511223,
+              "rms_initial_drive_contrast": 0.020068555339022447,
+              "sensors": 496,
+              "type": "R1-R6",
+              "varying_sensors": 206
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 41,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1547046311625264,
+              "rms_initial_drive_contrast": 0.03094092623250528,
+              "sensors": 54,
+              "type": "R7_unclear",
+              "varying_sensors": 41
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 3,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.04621670805857021,
+              "rms_initial_drive_contrast": 0.009243341611714043,
+              "sensors": 28,
+              "type": "R7d",
+              "varying_sensors": 3
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 34,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.17512342233162043,
+              "rms_initial_drive_contrast": 0.035024684466324084,
+              "sensors": 40,
+              "type": "R7p",
+              "varying_sensors": 34
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 72,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1790187994453442,
+              "rms_initial_drive_contrast": 0.035803759889068844,
+              "sensors": 88,
+              "type": "R7y",
+              "varying_sensors": 72
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 120,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1446953641308706,
+              "rms_initial_drive_contrast": 0.028939072826174125,
+              "sensors": 185,
+              "type": "R8_unclear",
+              "varying_sensors": 120
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 6,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.05108403860548837,
+              "rms_initial_drive_contrast": 0.010216807721097676,
+              "sensors": 35,
+              "type": "R8d",
+              "varying_sensors": 6
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 128,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.16744188960129433,
+              "rms_initial_drive_contrast": 0.03348837792025887,
+              "sensors": 172,
+              "type": "R8p",
+              "varying_sensors": 128
+            },
+            {
+              "eye": "L",
+              "illuminated_sensors": 159,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15625855400170907,
+              "rms_initial_drive_contrast": 0.031251710800341816,
+              "sensors": 230,
+              "type": "R8y",
+              "varying_sensors": 159
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 473,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.12579080765156261,
+              "rms_initial_drive_contrast": 0.025158161530312525,
+              "sensors": 887,
+              "type": "R1-R6",
+              "varying_sensors": 473
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 0,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.0,
+              "rms_initial_drive_contrast": 0.0,
+              "sensors": 13,
+              "type": "R7R8_unclear",
+              "varying_sensors": 0
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 127,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1604551232260517,
+              "rms_initial_drive_contrast": 0.032091024645210346,
+              "sensors": 177,
+              "type": "R7_unclear",
+              "varying_sensors": 127
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 6,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.05036954133883501,
+              "rms_initial_drive_contrast": 0.010073908267767002,
+              "sensors": 36,
+              "type": "R7d",
+              "varying_sensors": 6
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 107,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.16059668028357768,
+              "rms_initial_drive_contrast": 0.03211933605671554,
+              "sensors": 144,
+              "type": "R7p",
+              "varying_sensors": 107
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 152,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15287723192949773,
+              "rms_initial_drive_contrast": 0.030575446385899548,
+              "sensors": 227,
+              "type": "R7y",
+              "varying_sensors": 152
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 139,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.1444326981288374,
+              "rms_initial_drive_contrast": 0.028886539625767482,
+              "sensors": 236,
+              "type": "R8_unclear",
+              "varying_sensors": 139
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 6,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.049684209522838835,
+              "rms_initial_drive_contrast": 0.009936841904567768,
+              "sensors": 37,
+              "type": "R8d",
+              "varying_sensors": 6
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 112,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.15757067620051946,
+              "rms_initial_drive_contrast": 0.031514135240103894,
+              "sensors": 158,
+              "type": "R8p",
+              "varying_sensors": 112
+            },
+            {
+              "eye": "R",
+              "illuminated_sensors": 160,
+              "initial_gain": 0.2,
+              "rms_contrast": 0.14923514281714156,
+              "rms_initial_drive_contrast": 0.029847028563428316,
+              "sensors": 247,
+              "type": "R8y",
+              "varying_sensors": 160
+            }
+          ],
+          "eyes": [
+            {
+              "condition": 27.264775728825025,
+              "covered_points": 81,
+              "eye": "L",
+              "illuminated_sensors": 769,
+              "rank": 81,
+              "sensors": 1328,
+              "singular_values": [
+                4.678932912255234,
+                3.615667253800489,
+                3.4395848479893387,
+                3.008708691676917,
+                2.8445383943008697,
+                2.815889592535678,
+                2.7477054080044714,
+                2.6888913148324924,
+                2.5635446927357597,
+                2.4665290704804548,
+                2.3795425529264036,
+                2.3525250954125294,
+                2.335364448584798,
+                2.2994247661631952,
+                2.242246700939201,
+                2.2323945562307594,
+                2.213331137287407,
+                2.174379843343612,
+                2.164544172576747,
+                2.1605657337348627,
+                2.1123526870800235,
+                2.0972331110462163,
+                2.0310842158092965,
+                2.014276022132682,
+                1.9779384190190945,
+                1.904134937369548,
+                1.8801323416853208,
+                1.862436330821384,
+                1.848785524054235,
+                1.8143325113405615,
+                1.7800511720984444,
+                1.6952437655160628,
+                1.6282665025596832,
+                1.5735054640607151,
+                1.532823817488483,
+                1.5214529783742017,
+                1.496035500380829,
+                1.4294666008531647,
+                1.3723618686402386,
+                1.3529545729626538,
+                1.3062008608682385,
+                1.2823343049770697,
+                1.2245303510386008,
+                1.1542636759235572,
+                1.1387190177618636,
+                1.1061750330183449,
+                1.0319076001465366,
+                0.9992793811738349,
+                0.9730825359062373,
+                0.890239177098805,
+                0.8687612360540409,
+                0.8619152036941713,
+                0.8202056156570402,
+                0.7869021476898008,
+                0.7838808552900901,
+                0.7108203703858291,
+                0.6646704051127474,
+                0.6128799791224994,
+                0.5983820589619344,
+                0.5944861874555629,
+                0.5503047827394275,
+                0.5450213121857292,
+                0.5254845175118581,
+                0.4721536964476233,
+                0.4572876232206092,
+                0.4366962729836496,
+                0.42329072859699113,
+                0.4034045808063121,
+                0.3793252159115866,
+                0.34732137875490204,
+                0.3360785544960672,
+                0.32567387844037976,
+                0.30066481925507454,
+                0.29489402580605956,
+                0.2587095968648696,
+                0.24482206304213988,
+                0.23916275255443117,
+                0.22818805920361893,
+                0.22375008761912274,
+                0.21128010510382683,
+                0.17161090774381632
+              ]
+            },
+            {
+              "condition": 27.37990232839654,
+              "covered_points": 81,
+              "eye": "R",
+              "illuminated_sensors": 1282,
+              "rank": 81,
+              "sensors": 2162,
+              "singular_values": [
+                5.000698235000365,
+                4.233423744315578,
+                4.003082601393423,
+                3.964436990412925,
+                3.917389039145156,
+                3.8337440743410838,
+                3.582379449825305,
+                3.5773232604351173,
+                3.4837936379986045,
+                3.4421565210833,
+                3.33120559626397,
+                3.3017556982983454,
+                3.261071366284469,
+                3.133487459941489,
+                3.0922760985748448,
+                3.027233886247519,
+                2.9694880704578703,
+                2.914118900211542,
+                2.8581738361910216,
+                2.8141503470914317,
+                2.7243934866744444,
+                2.7049052913005918,
+                2.6451331228032604,
+                2.616112986519611,
+                2.607743049488417,
+                2.5452201478099363,
+                2.4950917853356867,
+                2.4844621695145195,
+                2.4599397772416336,
+                2.390733294915528,
+                2.3315173004902854,
+                2.2554773898200158,
+                2.139371055632485,
+                2.1190719648115004,
+                2.078472891017723,
+                1.9901819100732796,
+                1.957608780476418,
+                1.8850753812553975,
+                1.84588624262522,
+                1.7560720363539368,
+                1.7101490697893527,
+                1.6561749535143582,
+                1.6364817016740896,
+                1.557043873106561,
+                1.4574197618297187,
+                1.4469611972341632,
+                1.3952833967835085,
+                1.3336202395697745,
+                1.2777123265163692,
+                1.243828871247692,
+                1.1350801687102234,
+                1.1276210587933926,
+                1.1210245783411437,
+                1.008664583906389,
+                0.9930247354721444,
+                0.9602045267969705,
+                0.8670516222864936,
+                0.8254656782326834,
+                0.796367531918171,
+                0.7465612499853187,
+                0.7288021977687835,
+                0.7069791507342014,
+                0.6808684512415645,
+                0.628285879629799,
+                0.5889731768195983,
+                0.5434840288433004,
+                0.5205008520159425,
+                0.5155963804974575,
+                0.45713908284772037,
+                0.4421753262425538,
+                0.4131099072688867,
+                0.40154941749573475,
+                0.38562813526963813,
+                0.35886533185389285,
+                0.3375766363640523,
+                0.3184835917477674,
+                0.31095107613970135,
+                0.29390213429628864,
+                0.2801106934725387,
+                0.24973178234488144,
+                0.18264120065227504
+              ]
+            }
+          ],
+          "name": "large_current",
+          "patches": [
+            {
+              "covered_board_points": 81,
+              "eye": "L",
+              "illuminated_sensors": 769,
+              "lag": 0,
+              "point_mass_max": 29.843604177236557,
+              "point_mass_min": 4.4087961465120316,
+              "sensors": 1328
+            },
+            {
+              "covered_board_points": 81,
+              "eye": "R",
+              "illuminated_sensors": 1282,
+              "lag": 0,
+              "point_mass_max": 36.50665435940027,
+              "point_mass_min": 7.751875206828117,
+              "sensors": 2162
+            }
+          ]
+        }
+      ],
+      "created": 1789428294.317018,
+      "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+      "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+      "renderer_source_sha256": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a",
+      "scope": "Geometry and visual drive on 256 fixed training-family positions. No target labels, neural updates, output remapping, final-test inputs or TPU.",
+      "source_attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+      "source_sha256": "973feca6966ee1db7f630ac3bef60885460df1959e4f9862daa083b16669623f",
+      "spec": {
+        "halfwidth_degrees": [
+          25.0,
+          55.0
+        ],
+        "neighbors": 4,
+        "patch_centers_degrees": [
+          [
+            -25.0,
+            0.0
+          ]
+        ],
+        "patch_lags": [
+          [
+            0,
+            0
+          ]
+        ],
+        "sigma_degrees": 5.0
+      },
+      "status": "complete"
+    },
+    "sha256": "04b9f3ffc404a2557bed862acba607935a0cce1810604823236b5f1fe526902f"
+  },
+  "initialization_and_recovery": {
+    "guard_rejections": [
+      {
+        "error": "Attachment qualification does not cover this actual seed and corpus",
+        "field": "seed"
+      },
+      {
+        "error": "Input map differs from the registered attachment",
+        "field": "input_map_sha256"
+      },
+      {
+        "error": "Adopted paired analysis differs from the registered reference",
+        "field": "reference_analysis_sha256"
+      }
+    ],
+    "path": "/dev/shm/flygo/runs/retinal-allocation-preflight-v4/result.json",
+    "records": [
+      {
+        "host": 1,
+        "result": {
+          "created": 1789430020.495795,
+          "fresh_process": {
+            "pid": 1702082,
+            "runtime_sha256": {
+              "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+              "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+              "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+              "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+              "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+              "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+              "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+            },
+            "status": "passed",
+            "updated": 1789430020.3457518
+          },
+          "initial_arrays": 31,
+          "input_contract": {
+            "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+            "mode": "current",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "model_config": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 1,
+            "steps": 8,
+            "threads": 24
+          },
+          "plan_sha256": "6dfb459c517b59d31a17e5bb1ca53196c44373df794c430b347b0dce3d7c6009",
+          "reference_checkpoint": {
+            "bytes": 189665905,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "path": "/dev/shm/flygo/runs/attachment-current-seed1-v1/checkpoints/step-00000000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-0",
+            "replica_method": "root pull and SHA-256 verification",
+            "replica_status": "verified",
+            "sha256": "d952f673c4cf9b882086ba71a15deee03579093aa3940df91004648f6d2eaa22",
+            "step": 0
+          },
+          "reference_sha256": "3526de3a679cb126dbca2584b9b0accfab2ad9b09f2d9ab582599105a3a216a5",
+          "runtime_sha256": {
+            "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+            "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+            "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+            "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+            "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+            "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+            "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+          },
+          "scope": "Paired initial arrays/ports/sampler, B1/B32 full states and predictions through the Go player, and exact next batch/loss/parameters/moments after fresh-process checkpoint recovery. Two engineering updates on training examples, not a scientific endpoint. CPU only.",
+          "seed": 1,
+          "source_sha256": "8e95fa558390fea77bddc9039625dd15a94f7fa5da4052a5076ce6710d88e38f",
+          "status": "passed",
+          "training_contract": {
+            "batch_size": 32,
+            "clip": 1.0,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            },
+            "schedule": {
+              "decay_until": 0,
+              "final_ratio": 0.1,
+              "peak": 0.03,
+              "version": "absolute-update-rate-v1",
+              "warmup_steps": 100
+            }
+          }
+        },
+        "seed": 1
+      },
+      {
+        "host": 2,
+        "result": {
+          "created": 1789430018.4403899,
+          "fresh_process": {
+            "pid": 2202466,
+            "runtime_sha256": {
+              "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+              "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+              "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+              "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+              "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+              "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+              "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+            },
+            "status": "passed",
+            "updated": 1789430018.2891214
+          },
+          "initial_arrays": 31,
+          "input_contract": {
+            "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+            "mode": "current",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "model_config": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 2,
+            "steps": 8,
+            "threads": 24
+          },
+          "plan_sha256": "6dfb459c517b59d31a17e5bb1ca53196c44373df794c430b347b0dce3d7c6009",
+          "reference_checkpoint": {
+            "bytes": 189665905,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-3",
+            "path": "/dev/shm/flygo/runs/attachment-current-seed2-v1/checkpoints/step-00000000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-1",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "cb374fa1d5e2f10f727f688ceb6aa15dd298f358840e1edc5a2689bdc93af998",
+            "step": 0
+          },
+          "reference_sha256": "3fbc37d2051d85aba6f006594efff2a23246f485b69e743c2c1781702c618e96",
+          "runtime_sha256": {
+            "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+            "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+            "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+            "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+            "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+            "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+            "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+          },
+          "scope": "Paired initial arrays/ports/sampler, B1/B32 full states and predictions through the Go player, and exact next batch/loss/parameters/moments after fresh-process checkpoint recovery. Two engineering updates on training examples, not a scientific endpoint. CPU only.",
+          "seed": 2,
+          "source_sha256": "8e95fa558390fea77bddc9039625dd15a94f7fa5da4052a5076ce6710d88e38f",
+          "status": "passed",
+          "training_contract": {
+            "batch_size": 32,
+            "clip": 1.0,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            },
+            "schedule": {
+              "decay_until": 0,
+              "final_ratio": 0.1,
+              "peak": 0.03,
+              "version": "absolute-update-rate-v1",
+              "warmup_steps": 100
+            }
+          }
+        },
+        "seed": 2
+      },
+      {
+        "host": 3,
+        "result": {
+          "created": 1789430016.9765036,
+          "fresh_process": {
+            "pid": 1719093,
+            "runtime_sha256": {
+              "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+              "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+              "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+              "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+              "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+              "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+              "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+            },
+            "status": "passed",
+            "updated": 1789430016.8241408
+          },
+          "initial_arrays": 31,
+          "input_contract": {
+            "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+            "mode": "current",
+            "version": "spherical-context-h4-ablation-v1"
+          },
+          "model_config": {
+            "actions": 82,
+            "features": 3574,
+            "groups": 2129,
+            "rate_softness": 0.0,
+            "readout_mean_scale": 1.0,
+            "seed": 3,
+            "steps": 8,
+            "threads": 24
+          },
+          "plan_sha256": "6dfb459c517b59d31a17e5bb1ca53196c44373df794c430b347b0dce3d7c6009",
+          "reference_checkpoint": {
+            "bytes": 189665905,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-1",
+            "path": "/dev/shm/flygo/runs/attachment-current-seed3-v1/checkpoints/step-00000000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-2",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "2ef5e577b3f0e476dbe28430a9babca9f2b9817c9b0541e6a695926121a4af09",
+            "step": 0
+          },
+          "reference_sha256": "633584451308d3a619efb95ea7080a4a12eec225390c708905bbed30d5e23776",
+          "runtime_sha256": {
+            "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+            "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+            "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+            "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+            "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+            "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+            "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+          },
+          "scope": "Paired initial arrays/ports/sampler, B1/B32 full states and predictions through the Go player, and exact next batch/loss/parameters/moments after fresh-process checkpoint recovery. Two engineering updates on training examples, not a scientific endpoint. CPU only.",
+          "seed": 3,
+          "source_sha256": "8e95fa558390fea77bddc9039625dd15a94f7fa5da4052a5076ce6710d88e38f",
+          "status": "passed",
+          "training_contract": {
+            "batch_size": 32,
+            "clip": 1.0,
+            "epsilon": 1e-06,
+            "rate": 0.03,
+            "rate_scales": {
+              "bias": 0.01
+            },
+            "schedule": {
+              "decay_until": 0,
+              "final_ratio": 0.1,
+              "peak": 0.03,
+              "version": "absolute-update-rate-v1",
+              "warmup_steps": 100
+            }
+          }
+        },
+        "seed": 3
+      }
+    ],
+    "sha256": "1ff28b2f736344435a2f16cf8db9cc88f781908adb4357d90d4181e0a4b3a99d"
+  },
+  "operational_attempts": [
+    {
+      "outcome": "Learner-only package lacked the visual Go adapter; first engineering updates retained, no scientific learner.",
+      "run": "retinal-allocation-preflight-v1"
+    },
+    {
+      "outcome": "Production-health assumption failed after external stop markers appeared. Read-only failure; markers preserved.",
+      "run": "retinal-allocation-preflight-v2"
+    },
+    {
+      "outcome": "Diagnostic hash helper expected an array but the existing full-state trace is a list. First engineering updates retained; helper corrected, no neuronal change.",
+      "run": "retinal-allocation-preflight-v3"
+    }
+  ],
+  "plan": {
+    "batch_size": 32,
+    "checkpoint_every": 1000,
+    "clip": 1.0,
+    "diagnostic_batch_size": 32,
+    "diagnostics_every": 250,
+    "environment": "environments/861175bf88bf1ba6b4f5",
+    "epsilon": 1e-06,
+    "eval_batch_size": 32,
+    "eval_every": 250,
+    "eval_positions": 2048,
+    "groups": 2129,
+    "inference_environment": "environments/794c0cbd895d678a9e6d",
+    "input_map": "ports/retinal-allocation-v1/attachment.npz",
+    "input_map_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+    "io_qualifications": {
+      "1": "runs/retinal-allocation-preflight-v4/seed-1-result.json",
+      "2": "runs/retinal-allocation-preflight-v4/seed-2-result.json",
+      "3": "runs/retinal-allocation-preflight-v4/seed-3-result.json"
+    },
+    "jobs": [
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 1,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 2,
+        "run_id": "retinal-large-seed1-v1",
+        "seed": 1
+      },
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 2,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 3,
+        "run_id": "retinal-large-seed2-v1",
+        "seed": 2
+      },
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 3,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 1,
+        "run_id": "retinal-large-seed3-v1",
+        "seed": 3
+      }
+    ],
+    "matches": null,
+    "name": "retinal-allocation-v1",
+    "passes": 8,
+    "qualifications": {
+      "1": "runs/retinal-allocation-qualification-v1/seed-1/result.json",
+      "2": "runs/retinal-allocation-qualification-v1/seed-2/result.json",
+      "3": "runs/retinal-allocation-qualification-v1/seed-3/result.json"
+    },
+    "rate": 0.03,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "reference_analysis": "runs/attachment-confirmation-analysis-v1/result.json",
+    "reference_analysis_sha256": "882aa1faf065b3098d6145210d4d2b530abb36ae694679110c504b0c8dabaef1",
+    "references": [
+      {
+        "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782",
+        "run_id": "attachment-current-seed1-v1",
+        "seed": 1
+      },
+      {
+        "checkpoint_sha256": "ceebcec433559642382ed09e6d001c176ac551e059299863d59ba4219c965957",
+        "run_id": "attachment-current-seed2-v1",
+        "seed": 2
+      },
+      {
+        "checkpoint_sha256": "60ae42255518b59f94d4d0a00865ae459cb7503d49303d65365e7bcc9428b54c",
+        "run_id": "attachment-current-seed3-v1",
+        "seed": 3
+      }
+    ],
+    "release": "v0-1m",
+    "replica_environment": "environments/b3263e4048fa5bc7b686",
+    "scope": "One larger current board per eye versus the adopted paired current-board montage endpoints. Same original immutable learner, ports, information, initialization, K8 and 32k exposure/optimizer contract. Only retinal sampling changes. Dense learned policy/value heads remain the baseline. No head-mask, physiology, memory, optimizer, final-test or TPU intervention.",
+    "updates": 1000,
+    "warmup_steps": 100
+  },
+  "plan_sha256": "6dfb459c517b59d31a17e5bb1ca53196c44373df794c430b347b0dce3d7c6009",
+  "qualifications": [
+    {
+      "max_absolute_error_by_phase": {
+        "first": 5.438923835754395e-07,
+        "forward": 7.62939453125e-06,
+        "gradient": 2.6702880859375e-05,
+        "loss": 1.7592747667549702e-06,
+        "param": 2.6188790798187256e-06,
+        "second": 2.8812792152166367e-09
+      },
+      "path": "/dev/shm/flygo/runs/retinal-allocation-qualification-v1/seed-1/result.json",
+      "record": {
+        "batch_size": 32,
+        "input_contract": {
+          "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+          "mode": "current",
+          "version": "spherical-context-h4-ablation-v1"
+        },
+        "model": {
+          "actions": 82,
+          "features": 3574,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 1,
+          "steps": 8,
+          "threads": 24
+        },
+        "optimizer": {
+          "clip": 1,
+          "epsilon": 1e-06,
+          "rate": 0.03,
+          "rate_scales": {
+            "bias": 0.01
+          }
+        },
+        "ports": "/dev/shm/flygo/ports/retinal-allocation-v1/attachment.npz",
+        "ports_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+        "readout_neurons": 2129,
+        "updates": 3
+      },
+      "runtime_sha256": {
+        "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+        "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+        "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+        "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+        "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+        "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+        "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+      },
+      "seconds": 69.06782650947571,
+      "seed": 1,
+      "sha256": "c58b0a43386c8bfc9b8876a6ee243f4f4110e96ba8cbecd5d2dc32501619f06e"
+    },
+    {
+      "max_absolute_error_by_phase": {
+        "first": 1.7881393432617188e-07,
+        "forward": 7.152557373046875e-06,
+        "gradient": 9.5367431640625e-06,
+        "loss": 1.1273135527289924e-06,
+        "param": 1.563131809234619e-05,
+        "second": 5.820766091346741e-10
+      },
+      "path": "/dev/shm/flygo/runs/retinal-allocation-qualification-v1/seed-2/result.json",
+      "record": {
+        "batch_size": 32,
+        "input_contract": {
+          "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+          "mode": "current",
+          "version": "spherical-context-h4-ablation-v1"
+        },
+        "model": {
+          "actions": 82,
+          "features": 3574,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 2,
+          "steps": 8,
+          "threads": 24
+        },
+        "optimizer": {
+          "clip": 1,
+          "epsilon": 1e-06,
+          "rate": 0.03,
+          "rate_scales": {
+            "bias": 0.01
+          }
+        },
+        "ports": "/dev/shm/flygo/ports/retinal-allocation-v1/attachment.npz",
+        "ports_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+        "readout_neurons": 2129,
+        "updates": 3
+      },
+      "runtime_sha256": {
+        "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+        "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+        "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+        "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+        "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+        "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+        "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+      },
+      "seconds": 68.48382329940796,
+      "seed": 2,
+      "sha256": "d8d9cbe7bcff2ad952351e525284f140096f364c745c4528ab4375097ef26aae"
+    },
+    {
+      "max_absolute_error_by_phase": {
+        "first": 1.300126314163208e-06,
+        "forward": 1.2874603271484375e-05,
+        "gradient": 4.756450653076172e-05,
+        "loss": 1.3771297915354808e-06,
+        "param": 1.0279938578605652e-05,
+        "second": 7.203198038041592e-09
+      },
+      "path": "/dev/shm/flygo/runs/retinal-allocation-qualification-v1/seed-3/result.json",
+      "record": {
+        "batch_size": 32,
+        "input_contract": {
+          "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+          "mode": "current",
+          "version": "spherical-context-h4-ablation-v1"
+        },
+        "model": {
+          "actions": 82,
+          "features": 3574,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 3,
+          "steps": 8,
+          "threads": 24
+        },
+        "optimizer": {
+          "clip": 1,
+          "epsilon": 1e-06,
+          "rate": 0.03,
+          "rate_scales": {
+            "bias": 0.01
+          }
+        },
+        "ports": "/dev/shm/flygo/ports/retinal-allocation-v1/attachment.npz",
+        "ports_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+        "readout_neurons": 2129,
+        "updates": 3
+      },
+      "runtime_sha256": {
+        "attachments.py": "140c9084ed9b346773209f9c49ab79c7d13ae17f03dc581ba08f885a3d3df4a3",
+        "fly.py": "6c2112c939abf81a9ccb43ed643a7cb962643dc31bd64cf32ed69cf615d0449c",
+        "jax/model.py": "1063545608aca724dbab03bed7e19e672653fccec2de37571bc2dbe43cd1ff34",
+        "native": "0d8dfb7772e33ae5aff2355c2203e3faad032a089fd65dae66fe48e38da41944",
+        "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+        "train.py": "7231e4ec0a92d6fdee0ff5b0519c85a409e24bb1abdc0fd258f0d2b0cbe6acd4",
+        "vision.py": "db5fe5609905610f414f3c337f94780bf37424ba5cee544355428424af33d900"
+      },
+      "seconds": 69.09562635421753,
+      "seed": 3,
+      "sha256": "af684483db73629ef1c1abc8f22aa82869a1e9ef3911ddd292c01cc86e3a52df"
+    }
+  ],
+  "scope": "Geometry and numerical/interface qualification plus fixed-weight transfer diagnostics. No larger-map validation endpoint or advantage is claimed. Dense jointly learned policy/value heads remain the baseline. TPU paused.",
+  "status": "engineering_passed",
+  "tests": {
+    "path": "/dev/shm/flygo/runs/retinal-allocation-engineering-v1/python-tests.log",
+    "python": 97,
+    "sha256": "1dfdb70a060cb89d66fc02795b8de7bd46126ece4566df2f4591b68a623e9669",
+    "status": "passed"
+  }
+}

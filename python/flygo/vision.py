@@ -38,7 +38,7 @@ def hex_chart(coordinates, *, origin, radians_per_column, reflect=False):
 
 @dataclass(frozen=True)
 class SphericalRenderer:
-    """Two 9x9 patches per eye: L lags 0/2, R lags 1/3.
+    """Compact spherical image sampling; default L lags 0/2, R lags 1/3.
 
     Each receptor samples only its nearest patch with a compact angular kernel.
     Own/opponent/empty luminances are .95/.05/.5. Uncovered or missing history
@@ -55,7 +55,8 @@ class SphericalRenderer:
 
     @classmethod
     def build(cls, unit, side, *, size=9, sigma_degrees=5.0, neighbors=4,
-              patch_centers_degrees=((-25.,-30.),(-25.,30.)), halfwidth_degrees=25.):
+              patch_centers_degrees=((-25.,-30.),(-25.,30.)), halfwidth_degrees=25.,
+              patch_lags=((0,1),(2,3))):
         unit = np.asarray(unit, np.float64)
         side = np.asarray(side)
         if (unit.ndim != 2 or unit.shape[1] != 3 or len(side) != len(unit)
@@ -66,19 +67,25 @@ class SphericalRenderer:
         # Equal allocation first. No claim of a measured fovea or recency acuity.
         centers = np.asarray(patch_centers_degrees,np.float64)
         if centers.shape==(2,):centers=np.column_stack([centers,np.zeros(2)])
-        if (centers.shape!=(2,2) or not np.isfinite(centers).all() or np.array_equal(centers[0],centers[1])
-                or not np.isfinite(halfwidth_degrees) or halfwidth_degrees<=0
-                or np.max(np.abs(centers))+halfwidth_degrees>=90):
-            raise ValueError('Two distinct patch centers and a positive hemisphere-bounded halfwidth are required')
+        halfwidth = np.broadcast_to(np.asarray(halfwidth_degrees,np.float64),(2,))
+        lags = np.asarray(patch_lags)
+        if (centers.ndim!=2 or centers.shape[1]!=2 or not 1<=len(centers)<=2
+                or not np.isfinite(centers).all() or len(np.unique(centers,axis=0))!=len(centers)
+                or not np.isfinite(halfwidth).all() or np.any(halfwidth<=0)
+                or np.any(np.abs(centers)+halfwidth>=90)
+                or lags.shape!=(len(centers),2) or lags.dtype.kind not in 'iu'
+                or np.any((lags<0)|(lags>=4))):
+            raise ValueError('Distinct patch centers, hemisphere-bounded halfwidths and per-eye lags 0..3 are required')
         centers = np.deg2rad(centers)
-        grid = np.linspace(-np.deg2rad(halfwidth_degrees), np.deg2rad(halfwidth_degrees), size)
-        row, col = np.meshgrid(grid, grid, indexing='ij')
+        azimuth = np.linspace(-np.deg2rad(halfwidth[0]), np.deg2rad(halfwidth[0]), size)
+        elevation = np.linspace(-np.deg2rad(halfwidth[1]), np.deg2rad(halfwidth[1]), size)
+        row, col = np.meshgrid(elevation, azimuth, indexing='ij')
         patch_center = directions(centers[:,0],centers[:,1])
         patch = np.argmax(unit @ patch_center.T, axis=1)
         index = np.empty((len(unit),neighbors),np.int32)
         weight = np.zeros((len(unit),neighbors),np.float32)
         sigma = np.deg2rad(sigma_degrees)
-        for p in range(2):
+        for p in range(len(centers)):
             cells = np.flatnonzero(patch == p)
             points = directions(col.ravel()+centers[p,0], centers[p,1]-row.ravel())
             angle = np.arccos(np.clip(unit[cells] @ points.T, -1, 1))
@@ -86,7 +93,7 @@ class SphericalRenderer:
             d = np.take_along_axis(angle, closest, axis=1)
             w = np.where(d <= 2*sigma, np.exp(-.5*(d/sigma)**2), 0.)
             w /= np.maximum(w.sum(axis=1,keepdims=True), 1.)
-            lag = 2*p + (side[cells] == 'R').astype(np.int32)
+            lag = lags[p,(side[cells] == 'R').astype(np.int32)]
             index[cells] = closest + lag[:,None]*size*size
             weight[cells] = w.astype(np.float32)
         return cls(index, weight, unit.copy(), side.copy(), patch.astype(np.int32), size)
@@ -107,11 +114,12 @@ class SphericalRenderer:
     def audit(self):
         rows = []
         for eye in ('L','R'):
-            for patch in range(2):
+            for patch in np.unique(self.patch):
                 use = (self.side == eye) & (self.patch == patch)
                 idx, w = self.index[use], self.weight[use]
                 mass = np.bincount((idx % self.size**2).ravel(), weights=w.ravel(), minlength=self.size**2)
-                rows.append(dict(eye=eye, lag=2*patch+(eye=='R'), sensors=int(use.sum()),
+                lags = np.unique(idx//self.size**2)
+                rows.append(dict(eye=eye, lag=int(lags[0]) if len(lags)==1 else None, sensors=int(use.sum()),
                     illuminated_sensors=int(np.count_nonzero(w.sum(axis=1))),
                     covered_board_points=int(np.count_nonzero(mass)),
                     point_mass_min=float(mass.min()), point_mass_max=float(mass.max())))

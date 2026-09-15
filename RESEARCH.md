@@ -55,8 +55,19 @@ neutral by .10320/.19931, while policy KL worsens by .04083/.03674. History's
 value benefit occurs in all three observed seeds; current versus history has
 substantial seed variation. Motor responses remain concentrated, with dominant
 cell identity changing across seeds. Do not infer permanent action groups from
-one fitted endpoint. The next input factor remains larger retinal allocation;
-TPU remains paused and is not required for this phase.
+one fitted endpoint. [Larger retinal allocation](docs/retinal-allocation-study.md)
+passes geometry, all three CPU numerical gates, paired initialization and
+fresh-process recovery. Three 32k-exposure trials now run with the original
+learner and unchanged dense heads. Full validation and signal/cost diagnostics
+are queued. TPU remains paused and is not required for this phase.
+
+Keep [dense jointly learned policy/value projections](docs/readout-roles-study.md)
+as the output baseline: a Go action may combine many motor signals. Raw variance
+concentration alone does not establish poor features. Deliberately connecting
+dominant cells to value, or using soma-side policy blocks, are separate proposed
+attachment factors. They must outperform the dense decoder; biological labels
+do not make those constraints mandatory. Count all decoder work and any
+candidate-discovery pretraining in the comparison.
 
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,

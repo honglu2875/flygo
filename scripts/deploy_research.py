@@ -32,6 +32,10 @@ def attachment_files(plan,root,environment):
     if qualified!=runtime_hashes():
         raise ValueError('Controller and selected attachment learner have different numerical sources')
     path=root/plan['input_map']
+    if plan.get('input_map_sha256') and sha256(path)!=plan['input_map_sha256']:
+        raise ValueError('Input map differs from the registered attachment')
+    if plan.get('reference_analysis') and sha256(root/plan['reference_analysis'])!=plan['reference_analysis_sha256']:
+        raise ValueError('Adopted paired analysis differs from the registered reference')
     manifest=json.loads((root/'releases'/plan['release']/'manifest.json').read_text())
     graph=json.loads((root/'runs/m4/graph.json').read_text())
     graph_manifest=json.loads((Path(graph['path'])/'manifest.json').read_text())
@@ -95,6 +99,14 @@ def main():
         raise ValueError('An explicit source must be a published immutable environment')
     if plan.get('environment') and environment.resolve()!=(root/plan['environment']).resolve():
         raise ValueError('Selected source differs from the registered environment')
+    # Operational helpers may need newer transfer code while the scientific
+    # learner retains its previously qualified numerical implementation.
+    replica_environment=root/plan['replica_environment'] if plan.get('replica_environment') else environment
+    if not (replica_environment/'snapshot.json').is_file():
+        raise ValueError('Replica source must be a published immutable environment')
+    subprocess.run([str(root/'venv/bin/python'),'-B','-c',
+        'from flygo.replication import replicate_file, replicate_stream'],check=True,timeout=30,
+        env={**os.environ,'PYTHONPATH':str(replica_environment/'site-packages'),'OPENBLAS_NUM_THREADS':'1'})
     release = root / 'releases' / plan['release']
     manifest = json.loads((release / 'manifest.json').read_text())
     if json.loads((release / 'replication.json').read_text())['status'] != 'passed':
@@ -103,6 +115,15 @@ def main():
     graph_path = Path(json.loads(graph_record.read_text())['path'])
     files = {graph_record, *(root / record['path'] for record in manifest['records'])}
     files.update(attachment_files(plan,root,environment))
+    if plan.get('io_qualifications'):
+        from flygo.qualify import sha256
+        for job in plan['jobs']:
+            path=root/plan['io_qualifications'][str(job['seed'])]
+            report=json.loads(path.read_text())
+            if (report['status']!='passed' or report['seed']!=job['seed']
+                    or report['plan_sha256']!=sha256(args.config)):
+                raise ValueError('Initial pairing and recovery gate does not cover this launch plan')
+            files.add(path)
     for job in plan['jobs']:
         if job.get('ports'):
             path=root/job['ports'];files.update((path,path.with_suffix('.json')))
@@ -231,8 +252,9 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
     with (output / 'replicas.log').open('a') as log:
         process = subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=log,
                                    stderr=subprocess.STDOUT, start_new_session=True,
-                                   env={**os.environ, 'OPENBLAS_NUM_THREADS': '1'})
-    atomic_json(coordinator, dict(pid=process.pid))
+                                   env={**os.environ, 'OPENBLAS_NUM_THREADS': '1',
+                                        'PYTHONPATH':str(replica_environment/'site-packages')})
+    atomic_json(coordinator, dict(pid=process.pid,environment=str(replica_environment)))
 
 
 if __name__ == '__main__':

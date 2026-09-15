@@ -50,6 +50,46 @@ class AttachmentTests(unittest.TestCase):
         np.testing.assert_array_equal(ports['input_index'],context_ports(100,[1,2],[98,99],np.arange(3,98))['input_index'])
         with self.assertRaises(ValueError):context_ports(100,[1,2],[98,99],np.arange(2,98))
 
+    def test_one_large_board_is_bilateral_local_and_independent_of_history(self):
+        row,col=np.meshgrid(np.linspace(55,-55,9),np.linspace(-50,0,9),indexing='ij')
+        points=directions(np.deg2rad(col.ravel()),np.deg2rad(row.ravel()))
+        unit=np.tile(points,(2,1));side=np.repeat(['L','R'],81)
+        renderer=SphericalRenderer.build(unit,side,patch_centers_degrees=[[-25,0]],
+            halfwidth_degrees=[25,55],patch_lags=[[0,0]])
+        adapter=VisualContext(renderer)
+        x=self.x.copy();x[:,4,4,0]=1
+        encoded=adapter.encode(x,'current')
+        np.testing.assert_array_equal(encoded[:,:81],encoded[:,81:162])
+        altered=x.copy();altered[...,2:8]=1
+        np.testing.assert_array_equal(encoded,adapter.encode(altered,'current'))
+        np.testing.assert_array_equal(encoded,adapter.encode(altered,'history'))
+        distance=np.arccos(np.clip(unit@points[40],-1,1))
+        self.assertTrue(np.all(encoded[:,:162][:,distance>np.deg2rad(10)+1e-12]==.5))
+        self.assertTrue(np.all(encoded[:,[40,121]]>.5))
+        np.testing.assert_array_equal(adapter.encode(x,'neutral')[:,:162],.5)
+        self.assertEqual([row['covered_board_points'] for row in renderer.audit()],[81,81])
+        self.assertEqual([row['lag'] for row in renderer.audit()],[0,0])
+        for kwargs in (dict(patch_lags=[[0,4]]),dict(patch_lags=[[0.,0.]]),
+                       dict(halfwidth_degrees=[25,90]),dict(patch_lags=[[0,1],[2,3]])):
+            spec=dict(patch_centers_degrees=[[-25,0]],halfwidth_degrees=[25,55],patch_lags=[[0,0]])
+            with self.assertRaises(ValueError):SphericalRenderer.build(unit,side,**(spec|kwargs))
+
+    def test_training_qualification_must_match_the_actual_head_and_sampler_seed(self):
+        from dataclasses import replace
+        from flygo.attachments import require_qualification
+        from flygo.fly import FlyConfig
+        config=FlyConfig(seed=2)
+        contract=dict(version=VERSION,attachment_sha256='fixture',mode='current')
+        optimizer=dict(batch_size=32,rate=.03,epsilon=1e-6,clip=1,rate_scales={'bias':.01})
+        report=dict(status='complete',runtime_sha256={},records=[dict(input_contract=contract,
+            batch_size=32,updates=3,optimizer={k:v for k,v in optimizer.items() if k!='batch_size'},
+            model=asdict(config))])
+        with tempfile.TemporaryDirectory() as temp,patch('flygo.attachments.runtime_hashes',return_value={}):
+            path=Path(temp)/'qualification.json';path.write_text(json.dumps(report))
+            require_qualification(path,contract,config,**optimizer)
+            with self.assertRaisesRegex(ValueError,'No matching full-circuit'):
+                require_qualification(path,contract,replace(config,seed=3),**optimizer)
+
     def test_checkpoint_player_restores_the_external_encoding(self):
         from flygo.fly import FlyConfig,RustFly
         from flygo.checkpoint import save_checkpoint

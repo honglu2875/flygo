@@ -7,7 +7,11 @@ including the negative spherical embedding pilot, keep their original contracts.
 The first [supervised attachment screen](attachment-study.md) completes A/B and
 a neutral visual control at 32,000 exposures each, including full validation.
 Visual drive becomes measurable but concentrates heavily in one descending
-neuron. C/D remain planned; no persistent model is being trained yet.
+neuron. The [C map](retinal-allocation-study.md) now passes geometry, numerical
+and recovery gates; three paired CPU trials are running. D remains planned;
+no persistent model is being trained yet. Dense jointly learned policy/value
+heads remain fixed within the input comparison; their structural alternatives
+have a [separate design](readout-roles-study.md).
 
 The broader research order is attachment, execution, then optimization. Within
 attachment, vary inputs before outputs. A change to a loss, optimizer, synaptic

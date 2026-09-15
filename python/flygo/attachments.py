@@ -105,6 +105,6 @@ def require_qualification(path, contract, config, *, batch_size, rate, epsilon, 
         if (record.get('input_contract') == contract and record['batch_size'] == batch_size
                 and record['updates'] == 3 and record['optimizer'] == expected
                 and all(record['model'][k] == getattr(config,k) for k in
-                        ('steps','features','groups','actions','rate_softness','readout_mean_scale'))):
+                        ('seed','steps','features','groups','actions','rate_softness','readout_mean_scale'))):
             return
     raise ValueError('No matching full-circuit attachment/optimizer qualification')
