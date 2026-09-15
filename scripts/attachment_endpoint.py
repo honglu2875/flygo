@@ -9,6 +9,7 @@ import numpy as np
 from flygo import _native
 from flygo.data.corpus import atomic_json
 from flygo.qualify import sha256
+from flygo.optimizer import saved_clipping_mode,check_clipping_restore
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
 
@@ -57,6 +58,9 @@ def main():
             passes=job['passes'],groups=job['groups'],input_mode=job['mode'],
             input_map=str(args.root/plan['input_map']),rate=plan['rate'],epsilon=plan['epsilon'],
             warmup_steps=plan['warmup_steps'],rate_scales=plan['rate_scales'],clip=plan['clip'])
+        clip_mode=job.get('clip_mode',plan.get('clip_mode','global'))
+        if config['arguments'].get('clip_mode','global')!=clip_mode:
+            raise ValueError('Learner clipping mode differs from its declared optimizer contract')
         expected_head=None
         if job.get('head_mask'):
             from flygo.readout import load_head_mask
@@ -80,6 +84,10 @@ def main():
         with np.load(paths[0],allow_pickle=False) as initial,np.load(paths[1],allow_pickle=False) as final:
             metadata=json.loads(final['metadata'].tobytes())
             initial_metadata=json.loads(initial['metadata'].tobytes())
+            for metadata_part,arrays_part in [(initial_metadata,initial),(metadata,final)]:
+                if saved_clipping_mode(metadata_part)!=clip_mode:
+                    raise ValueError('Checkpoint clipping mode differs from the registered trial')
+                check_clipping_restore(clip_mode,arrays_part)
             head=head_state(initial,final,expected_head)
             numerical_runtime=metadata.get('numerical_runtime','rust-fp32-f64-norm-v1')
             if numerical_runtime!=initial_metadata.get('numerical_runtime','rust-fp32-f64-norm-v1'):

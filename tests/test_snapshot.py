@@ -1,5 +1,7 @@
 """Concurrent deployment must never publish an incomplete or misidentified source."""
 from concurrent.futures import ThreadPoolExecutor
+import hashlib
+import json
 from pathlib import Path
 import shutil
 import tempfile
@@ -86,6 +88,16 @@ class Snapshot(unittest.TestCase):
         self.assertEqual((baseline/'site-packages/flygo/_native.test.so').read_bytes(),previous)
         self.assertEqual(installed.read_bytes(),previous)
         self.assertEqual(alternate,cluster.snapshot(self.root,native_path=candidate))
+
+    def test_worker_build_receipt_must_match_the_selected_native_binary(self):
+        candidate=self.root/'worker.so';candidate.write_bytes(b'worker native fixture')
+        receipt=self.root/'worker-build.json'
+        receipt.write_text(json.dumps(dict(native_sha256='wrong')))
+        with self.assertRaisesRegex(ValueError,'Build receipt differs'):
+            cluster.snapshot(self.root,native_path=candidate,build_record=receipt)
+        receipt.write_text(json.dumps(dict(native_sha256=hashlib.sha256(candidate.read_bytes()).hexdigest(),cpus=[56,57])))
+        environment=cluster.snapshot(self.root,native_path=candidate,build_record=receipt)
+        self.assertEqual((environment/'build.json').read_bytes(),receipt.read_bytes())
 
 
 if __name__ == '__main__': unittest.main()

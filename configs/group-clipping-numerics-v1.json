@@ -1,0 +1,127 @@
+{
+  "acceptance": "All 12 numerical protocols, six exact recovery cases, source-bound fixture checks and six exact legacy/global comparisons must pass before any scientific update. Retain failed cases; do not substitute seeds or relax tolerances.",
+  "arms": [
+    "global",
+    "parameter-group"
+  ],
+  "batch_size": 32,
+  "clip": 1.0,
+  "clipping_tolerance": "Use the existing gradient/parameter tolerance for actual norms and factors.",
+  "cpus": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+  ],
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "epsilon": 1e-06,
+  "factor": "optimizer clipping scope only",
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "head_mask": "ports/readout-masks-v1/dense.npz",
+  "head_mask_sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_map_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+  "input_mode": "current",
+  "measure_clipping": true,
+  "name": "group-clipping-numerics-v1",
+  "owners": [
+    {
+      "host": 1,
+      "seed": 10
+    },
+    {
+      "host": 2,
+      "seed": 11
+    },
+    {
+      "host": 3,
+      "seed": 12
+    }
+  ],
+  "platform": "cpu",
+  "protocols": [
+    {
+      "alignment": "Copy native parameters and both moment arrays before each reference forward, derivative and transition.",
+      "checks": "Full states, logits, value, losses, all parameter gradients, updated parameters and both moments at each of three successive native checkpoints. Report parameter-delta differences separately.",
+      "name": "aligned-peak",
+      "rates": [
+        0.03,
+        0.03,
+        0.03
+      ]
+    },
+    {
+      "alignment": "Identical initialization only; independent parameter and moment trajectories thereafter.",
+      "checks": "Full states, logits, value, losses, all parameter gradients, updated parameters and both moments for the first three actual scheduled updates. Report parameter-delta differences separately.",
+      "name": "free-warmup",
+      "rates": [
+        0.0003,
+        0.0006,
+        0.0009
+      ]
+    }
+  ],
+  "rate": 0.03,
+  "rate_scales": {
+    "bias": 0.01
+  },
+  "rate_softness": 0.0,
+  "readout_mean_scale": 1.0,
+  "reference": "Independent flygo.jax.model with explicit clipping mode on CPU",
+  "resources": "CPU only; 24-core numerical lanes, separate IO lanes, shared-RAM limits unchanged. TPU stays paused.",
+  "runtime_sha256": {
+    "attachments.py": "c30e3f89530b8cf15691fc0761ce906a4f7ec56f1add5d1796771308c7fbfe17",
+    "checkpoint.py": "66481200ebb218b2de9076a2889ece92db1bdadf2eac7e39fb1f69cdf930c0a3",
+    "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+    "fly.py": "6ec1f2636cfda3468c4aa31ef36ac0f691a56ee4024fd36bfa18ba064305fb7a",
+    "jax/learner.py": "4352ce533cf7c2e5a8ed3a7966ec1bab7e410fc4968192281c6680ac33fe9d76",
+    "jax/model.py": "e5476ef53fe7299e89c2a242c4593114375817cbb28a327c0c4f105c3c387ae6",
+    "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+    "native": "9b34b4da315fda00686e501debe507fdeb76d06fa07f153fcb2d4c7b0074536f",
+    "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+    "play.py": "b76a88eb0e3522e00e5ac2db0bdef904c357620716735c39bc443f4dfa6016d8",
+    "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+    "train.py": "662a39bbe3274755703a71d3c262f71aae305eb52bdd086d0cbd66a2be8dc8fc",
+    "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+  },
+  "seeds": [
+    10,
+    11,
+    12
+  ],
+  "source": "environments/1f19481174f3bc8e5449",
+  "steps": 8,
+  "study_sha256": "caa7bf795069b4ae20a03eb9dd443d2016b6bdbe9ee6843f9221b58b35939dfc",
+  "tolerances": {
+    "gradients_parameters_moments": {
+      "atol": 5e-06,
+      "rtol": 0.003
+    },
+    "states_outputs_losses": {
+      "atol": 3e-06,
+      "rtol": 0.0003
+    }
+  },
+  "updates": 3,
+  "warmup_steps": 100
+}

@@ -14,6 +14,7 @@ from .qualify import sha256
 from .storage import GIB,StorageBudget
 from .replication import replicate_file
 from .fly import MODEL_VERSION, OPTIMIZER_VERSION
+from .optimizer import DEFAULT_CLIP_MODE, optimizer_version, saved_clipping_mode
 
 
 def save_checkpoint(model,sampler,path:Path,metadata:dict,*,root:Path,peer:str|None=None):
@@ -23,6 +24,9 @@ def save_checkpoint(model,sampler,path:Path,metadata:dict,*,root:Path,peer:str|N
                   graph_id=model.graph['manifest']['graph_id'],model_version=getattr(model,'model_version',MODEL_VERSION),
                   optimizer_version=OPTIMIZER_VERSION,**metadata)
         info['numerical_runtime']=getattr(model,'numerical_runtime','rust-fp32-f64-norm-v1')
+        info['optimizer_clip_mode']=getattr(model,'clip_mode',DEFAULT_CLIP_MODE)
+        info['optimizer_version']=optimizer_version(info['optimizer_clip_mode'])
+        saved_clipping_mode(info)
         arrays['metadata']=np.frombuffer(json.dumps(info,sort_keys=True,allow_nan=False).encode(),np.uint8)
         for name,array in model.ports.items():
             arrays['port/'+name]=array
@@ -64,10 +68,13 @@ def load_checkpoint(path:Path,model,sampler=None,*,dataset_id=None,numerical_run
         if (numerical_runtime is not None
                 and info.get('numerical_runtime','rust-fp32-f64-norm-v1') != numerical_runtime):
             raise ValueError('Checkpoint numerical runtime differs; training continuation requires its original runtime')
+        mode=saved_clipping_mode(info)
+        if mode!=getattr(model,'clip_mode',DEFAULT_CLIP_MODE):
+            raise ValueError('Checkpoint clipping mode differs from the learner')
         # Early schema-1 checkpoints predate explicit names and contain this same
         # first model/optimizer. Future variants must use distinct version names.
         if info.get('schema_version')!=1 or info.get('model_version',MODEL_VERSION)!=getattr(model,'model_version',MODEL_VERSION) \
-                or info.get('optimizer_version',OPTIMIZER_VERSION)!=OPTIMIZER_VERSION:
+                or info.get('optimizer_version',OPTIMIZER_VERSION)!=optimizer_version(mode):
             raise ValueError('Unsupported checkpoint model or optimizer contract')
         if info['graph_id']!=model.graph['manifest']['graph_id']:
             raise ValueError('Checkpoint topology differs from the fixed graph')

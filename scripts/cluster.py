@@ -34,12 +34,15 @@ def remote(host, code, *, timeout=30):
     return subprocess.check_output(SSH + ['cubic27@' + host, 'python3 -c ' + shlex.quote(code)], text=True, timeout=timeout)
 
 
-def snapshot(root, *, native_path=None):
+def snapshot(root, *, native_path=None, build_record=None):
     installed = root / 'venv/lib/python3.12/site-packages'
     native = next((installed / 'flygo').glob('_native*.so'))
     # Freeze the bytes before hashing/copying: editing source during deployment
     # must not produce different content under the same source identity.
     native_bytes = (native_path or native).read_bytes()
+    build_bytes = None if build_record is None else Path(build_record).read_bytes()
+    if build_bytes is not None and json.loads(build_bytes)['native_sha256'] != hashlib.sha256(native_bytes).hexdigest():
+        raise ValueError('Build receipt differs from the selected native binary')
     sources = {path.relative_to(REPO): path.read_bytes()
                for path in sorted((REPO / 'python/flygo').rglob('*.py'))}
     numpy_metadata = next(installed.glob('numpy-*.dist-info/METADATA')).read_bytes()
@@ -78,7 +81,9 @@ def snapshot(root, *, native_path=None):
                 (staging / 'snapshot.json').write_text(json.dumps(dict(snapshot=key, created=time.time(),
                     native_sha256=hashlib.sha256(native_bytes).hexdigest(),
                     numpy=Parser().parsestr(numpy_metadata.decode())['Version']), indent=2)+'\n')
-                if (root / 'venv/build.json').exists():
+                if build_bytes is not None:
+                    (staging / 'build.json').write_bytes(build_bytes)
+                elif (root / 'venv/build.json').exists():
                     shutil.copyfile(root / 'venv/build.json', staging / 'build.json')
                 staging.rename(target)
             finally:

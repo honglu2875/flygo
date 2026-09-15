@@ -772,6 +772,14 @@ must reproduce its prior behavior, and resume must bind clipping mode.
 Report actual pre-update group norms/factors instead of inferring group
 clipping from the global norm. No TPU work is authorized by this registration.
 
+The [qualified clipping launch](configs/group-clipping-trials-v1.json) now
+uses one frozen source for both arms. All 12 numerical protocols, six exact
+recovery cases and six native legacy regressions pass. The six 1,000-update
+CPU learners have started; the [paired analysis](configs/group-clipping-analysis-v1.json)
+was frozen before their first update. It also retains entropy and top
+probability, so confidence cannot substitute for lower validation KL.
+No input/output or propagation change is combined with this comparison.
+
 This advances the optimizer line first because of the measured imbalance;
 the separately scoped propagation and persistent-state ideas remain pending.
 The readout confirmation's failed policy benefit also means soma-side is

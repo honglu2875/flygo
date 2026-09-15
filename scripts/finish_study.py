@@ -105,9 +105,9 @@ def worker(args):
                 expected.update(input_map=str(root/plan['input_map']),input_mode=job['mode'],
                     qualification=str(root/(job.get('qualification') or plan['qualifications'][str(job['seed'])])))
             if job.get('head_mask'):expected['head_mask']=str(root/job['head_mask'])
-            for key in ('warmup_steps','decay_until','final_rate_ratio','rate_softness','readout_mean_scale','epsilon'):
+            for key in ('warmup_steps','decay_until','final_rate_ratio','rate_softness','readout_mean_scale','epsilon','clip_mode'):
                 if key in job or key in plan:expected[key]=job.get(key,plan.get(key))
-            defaults=dict(rate_scales={},model='fly',backend='cpu',epsilon=1e-8)
+            defaults=dict(rate_scales={},model='fly',backend='cpu',epsilon=1e-8,clip_mode='global')
             if any(original['arguments'].get(k,defaults.get(k))!=v for k,v in expected.items()):
                 raise ValueError('Source trial differs from frozen study contract')
             if sha256(checkpoint)!=receipt['sha256']:
@@ -120,7 +120,8 @@ def worker(args):
             for analysis in plan.get('analyses',['validation']):
                 if analysis=='validation':
                     stages.append(('validation',[sys.executable,str(out/'compare_checkpoints.py'),*common,
-                        '--release',plan['release'],'--checkpoints',str(checkpoint),'--output',str(out/'validation')]))
+                        '--release',plan['release'],'--checkpoints',str(checkpoint),'--output',str(out/'validation'),
+                        *(['--confidence'] if plan.get('measure_confidence') else [])]))
                 elif analysis=='signal':
                     stages.append(('signal',[sys.executable,str(out/'probe_attachment_signal.py'),
                         '--root',str(root),'--cpus',cpus,'--study',str(root/'runs'/plan['name']),

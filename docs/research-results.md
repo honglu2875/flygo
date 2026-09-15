@@ -43,9 +43,11 @@ full-validation or matched-CNN result.
 The [signal-flow audit](signal-flow-study.md) independently reproduces the
 existing recurrence and gradients. It finds weak typical visual motor
 responses, much sparser positive motor activity after training, and a large
-imbalance between type-bias gradients and edge optimizer scales. The next
-registered comparison isolates clipping scope; implementation and qualification
-remain pending. This diagnostic adds no validation, match or CNN result.
+imbalance between type-bias gradients and edge optimizer scales. The
+[clipping-scope comparison](group-clipping-study.md) now passes 12 full-CNS
+numerical checks, six exact recovery cases and six exact legacy regressions.
+Its six paired CPU trials are running; the diagnostic and engineering checks
+add no validation, match or CNN result.
 
 ## Matched neural control, three seeds
 

@@ -14,7 +14,8 @@ import numpy as np
 from .model import forward,loss,adam
 from .sparse import build_layout
 from ..fly import FlyConfig,initialize
-from ..optimizer import DEFAULT_EPSILON,validate_epsilon
+from ..optimizer import (DEFAULT_EPSILON, validate_epsilon, DEFAULT_CLIP_MODE,
+                         validate_clip_mode, clipping_arrays, check_clipping_restore, clipping_metrics)
 from ..readout import check_restore
 
 
@@ -22,7 +23,14 @@ class JaxLearner:
     """Shared sharding, optimizer and checkpoint mechanics for a pure model."""
     numerical_runtime='jax-highest-fp32-norm-v1'
 
-    def __init__(self,graph,config,*,ports,params,compute_graph,forward_function,loss_function,kwargs,mesh=None):
+    @property
+    def clip_mode(self):
+        return self._clip_mode
+
+    def __init__(self,graph,config,*,ports,params,compute_graph,forward_function,loss_function,kwargs,mesh=None,
+                 clip_mode=DEFAULT_CLIP_MODE):
+        validate_clip_mode(clip_mode)
+        self._clip_mode=clip_mode
         self.graph,self.config=graph,config
         self.ports=ports
         self.mesh=mesh or jax.make_mesh((jax.device_count(),),('data',))
@@ -50,9 +58,10 @@ class JaxLearner:
         self._gradient=mapped(derivative,(P(),P(),P(),(P('data'),)*4),(P(),P()))
         def update(p,first,second,g,a,b,corrections,rate,clip,epsilon):
             parts,gradient=derivative(p,g,a,b)
-            p,first,second,norm=adam(p,gradient,first,second,0,rate=rate,clip=clip,
-                                    corrections=corrections,norm_dtype=jnp.float32,epsilon=epsilon)
-            return p,first,second,(*parts,norm)
+            p,first,second,norm,norms,factors=adam(p,gradient,first,second,0,rate=rate,clip=clip,
+                                    corrections=corrections,norm_dtype=jnp.float32,epsilon=epsilon,
+                                    clip_mode=clip_mode,return_stats=True)
+            return p,first,second,(*parts,norm,norms,factors)
         self._update=mapped(update,(P(),P(),P(),P(),P(),(P('data'),)*4,P(),P(),P(),P()),(P(),P(),P(),P()))
 
     def _put(self,tree,sharding=None):
@@ -137,6 +146,8 @@ class JaxLearner:
         metrics=dict(policy_loss=float(parts[0]),value_loss=float(parts[1]),gradient_norm=float(parts[2]),step=self.step)
         if not all(np.isfinite(v) for v in metrics.values()):
             raise FloatingPointError('Non-finite learner metrics')
+        norms,factors=self._host(parts[3:])
+        metrics['clipping']=clipping_metrics(self.clip_mode,norms,factors)
         return metrics
 
     def parameters(self):
@@ -144,9 +155,11 @@ class JaxLearner:
 
     def checkpoint_arrays(self):
         return {**{prefix+k:v for prefix,group in [('param/',self._params),('first/',self._first),('second/',self._second)]
-                   for k,v in self._host(group).items()},'optimizer_step':np.asarray(self.step,np.uint64)}
+                   for k,v in self._host(group).items()},'optimizer_step':np.asarray(self.step,np.uint64),
+                **clipping_arrays(self.clip_mode)}
 
     def restore_arrays(self,arrays):
+        check_clipping_restore(self.clip_mode,arrays)
         step=np.asarray(arrays['optimizer_step'])
         if step.shape!=() or step.dtype.kind not in 'ui' or not 0<=int(step)<2**64:
             raise ValueError('Invalid optimizer step')
@@ -169,7 +182,8 @@ class JaxFly(JaxLearner):
     def model_version(self):
         return self.config.model_version + ('+masked-readout-v1' if self.head_mask is not None else '')
 
-    def __init__(self,graph,config=FlyConfig(),*,ports=None,params=None,mesh=None,head_mask=None):
+    def __init__(self,graph,config=FlyConfig(),*,ports=None,params=None,mesh=None,head_mask=None,
+                 clip_mode=DEFAULT_CLIP_MODE):
         self.head_mask = head_mask
         if head_mask is not None: head_mask.validate_shape(actions=config.actions,groups=config.groups)
         initial_ports,initial_params=initialize(graph,config)
@@ -180,7 +194,7 @@ class JaxFly(JaxLearner):
             forward_function=forward,loss_function=loss,
             kwargs=dict(steps=config.steps,groups=config.groups,actions=config.actions,
                         rate_softness=config.rate_softness,readout_mean_scale=config.readout_mean_scale,
-                        head_mask=None if head_mask is None else head_mask.parameter_masks()),mesh=mesh)
+                        head_mask=None if head_mask is None else head_mask.parameter_masks()),mesh=mesh,clip_mode=clip_mode)
 
     def checkpoint_arrays(self):
         return {**super().checkpoint_arrays(), **({} if self.head_mask is None else self.head_mask.checkpoint_arrays())}

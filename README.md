@@ -103,7 +103,15 @@ checkpoints are the run's small operational interface.
 Fly trials accept `--ports <qualified.npz>` and `--rate-scales '{"bias":0.01}'`.
 `--epsilon` controls Adam's denominator outside the square root (default 1e-8).
 It is saved in the training contract; resume rejects an unintended change.
-Rate multipliers affect the final Adam step after common global clipping and
+`--clip-mode global` is the default; `--clip-mode parameter-group` clips each
+of the nine fly parameter groups independently before updating Adam moments.
+The Python equivalent is `RustFly(..., clip_mode='parameter-group')`, also
+supported by `JaxFly` for CPU checks. Checkpoints bind this choice and reject
+resuming under a different mode. Training metrics include actual pre-update
+group norms and applied clipping factors. The
+[registered clipping study](configs/group-clipping-study-v1.json) holds the
+network, attachments, learning rate and horizon fixed while testing this factor.
+Rate multipliers affect the final Adam step after the selected clipping and
 moment estimation. The defaults preserve the baseline. `--model cnn` selects
 the separate control; it uses the same data, loss, sampler and JAX optimizer.
 TPU launch performs source/runtime replication and collective setup; do not

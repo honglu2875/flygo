@@ -92,19 +92,23 @@ def input_contract(receipt, mode):
 def runtime_hashes():
     from . import _native
     base = Path(__file__).parent
-    names = ('attachments.py','vision.py','fly.py','readout.py','optimizer.py','train.py','jax/model.py','jax/numerics.py')
+    names = ('attachments.py','vision.py','fly.py','readout.py','optimizer.py','train.py',
+             'checkpoint.py','play.py','diagnostics.py','jax/learner.py','jax/model.py','jax/numerics.py')
     return {**{name:sha256(base/name) for name in names}, 'native':sha256(Path(_native.__file__))}
 
 
-def require_qualification(path, contract, config, *, batch_size, rate, epsilon, clip, rate_scales, head_mask=None):
+def require_qualification(path, contract, config, *, batch_size, rate, epsilon, clip, rate_scales, head_mask=None,
+                          clip_mode='global'):
+    from .optimizer import validate_clip_mode
+    validate_clip_mode(clip_mode)
     report = json.loads(Path(path).read_text())
-    expected = dict(rate=rate, epsilon=epsilon, clip=clip, rate_scales=rate_scales)
+    expected = dict(rate=rate, epsilon=epsilon, clip=clip, rate_scales=rate_scales, clip_mode=clip_mode)
     if report.get('status') != 'complete' or report.get('runtime_sha256') != runtime_hashes():
         raise ValueError('Attachment training requires a completed qualification of this runtime')
     for record in report['records']:
         if (record.get('input_contract') == contract and record['batch_size'] == batch_size
                 and record.get('head_mask') == (None if head_mask is None else head_mask.contract)
-                and record['updates'] == 3 and record['optimizer'] == expected
+                and record['updates'] == 3 and {'clip_mode':'global', **record['optimizer']} == expected
                 and all(record['model'][k] == getattr(config,k) for k in
                         ('seed','steps','features','groups','actions','rate_softness','readout_mean_scale'))):
             return

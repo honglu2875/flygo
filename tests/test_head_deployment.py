@@ -55,6 +55,13 @@ class HeadDeployment(unittest.TestCase):
         report=json.loads((base/'result.json').read_text());report['head_mask']={'arm':'different'};self.write(base/'result.json',report)
         with self.assertRaisesRegex(ValueError,'trial contract'):head_io_files(self.plan,self.root)
 
+    def test_clipping_mode_cannot_reuse_global_recovery(self):
+        self.plan['jobs'][0]['clip_mode']='parameter-group'
+        with self.assertRaisesRegex(ValueError,'trial contract'):head_io_files(self.plan,self.root)
+        base=self.root/'dense';report=json.loads((base/'result.json').read_text())
+        report['training_contract']['clip_mode']='parameter-group';self.write(base/'result.json',report)
+        with self.assertRaisesRegex(ValueError,'mode-mismatch evidence'):head_io_files(self.plan,self.root)
+
 
 class CombinedNumericalDeployment(unittest.TestCase):
     def setUp(self):
@@ -91,6 +98,10 @@ class CombinedNumericalDeployment(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'schedule'):self.check()
         self.plan.pop('numerical_plan')
         with self.assertRaisesRegex(ValueError,'explicit launch'):self.check()
+
+    def test_clipping_mode_cannot_reuse_global_numerical_updates(self):
+        self.job['clip_mode']='parameter-group'
+        with self.assertRaisesRegex(ValueError,'complete numerical'):self.check()
 
     def test_missing_checkpoint_alignment_cannot_be_hidden_by_rehashing(self):
         self.report['records'][0]['aligned_checkpoints'].pop()

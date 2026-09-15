@@ -37,7 +37,7 @@ def measure(model,batch,before,training_metrics,*,clip,training_batch_size=None)
     return dict(kind='diagnostics',step=training_metrics['step'],
                 rate_softness=model.config.rate_softness,
                 training_gradient_norm=training_metrics['gradient_norm'],
-                clipped=bool(training_metrics['gradient_norm']>clip),clip=clip,groups=groups,
+                clipped=training_metrics['clipping']['clipped'],clipping=training_metrics['clipping'],clip=clip,groups=groups,
                 edge_strength=dict(mean=float(strength.mean(dtype=np.float64)),max=float(strength.max()),
                                    step_ratio_quantiles=np.quantile(ratio,[0,.01,.5,.99,1]).tolist()),
                 states=states,value_saturated_fraction=float(np.mean(np.abs(output['value'])>.98)),

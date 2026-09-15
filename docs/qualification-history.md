@@ -621,3 +621,21 @@ the explicitly deferred mean-conditioning proposal, which never launched
 scientific training after its failed update gate. Generation and checkpoint
 replication remain active. At 09:10 the fleet has 105,902 published games,
 32 healthy workers and all original storage buffers intact.
+
+## Clipping scope — 2026-09-15
+
+Source `1f19481174f3bc8e5449` passes 56 Rust and 121 Python checks, all
+12 full-CNS numerical protocols, six exact recovery cases and six exact
+legacy/global regressions. Numerical tolerances are unchanged. Global remains
+the default; the separate group mode is bound to checkpoint metadata and arrays.
+The first launcher attempt failed before remote execution. Two fixture harness
+issues were corrected without changing numerical assertions. Concurrent source
+archive staging was refused by the root storage cap; sequential transfers
+completed with identical source and plans.
+
+The [complete record](results/group-clipping-engineering-v2.json) separates
+3,456 native and 1,152 JAX reference update exposures and includes verified
+second-worker archives for 456 files. The six scientific CPU learners and their
+queued endpoint analyses use the predeclared clipping-only contract. Final
+learning results and isolated optimizer overhead remain pending. TPU remains
+paused and the data-generation stop markers are preserved.

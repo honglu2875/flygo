@@ -16,7 +16,8 @@ from .data.loader import load_release,Sampler
 from .fly import FlyConfig,RustFly,load_graph
 from .runtime import cpu_profile,pin
 from .schedule import Schedule
-from .optimizer import DEFAULT_EPSILON,validate_epsilon,check_epsilon_resume
+from .optimizer import (DEFAULT_EPSILON,validate_epsilon,check_epsilon_resume,
+                        CLIP_MODES,DEFAULT_CLIP_MODE,check_clipping_resume)
 from .storage import GIB,StorageBudget,StoragePressure
 
 
@@ -71,6 +72,7 @@ def main(argv=None):
     parser.add_argument('--channels',type=int,default=64,help='CNN control width')
     parser.add_argument('--blocks',type=int,default=10,help='CNN control residual blocks')
     parser.add_argument('--clip',type=float,default=1.0)
+    parser.add_argument('--clip-mode',choices=CLIP_MODES,default=DEFAULT_CLIP_MODE)
     parser.add_argument('--epsilon',type=float,default=DEFAULT_EPSILON,help='Adam denominator epsilon, outside the square root')
     parser.add_argument('--diagnostics-every',type=int,default=0,help='Zero disables extra gradient/activity measurements')
     parser.add_argument('--diagnostic-batch-size',type=int,default=32,help='Bound extra full-state/gradient measurements independently of the training batch')
@@ -82,6 +84,8 @@ def main(argv=None):
     parser.add_argument('--resume',type=Path)
     parser.add_argument('--peer',default='cubic27@t1v-n-a09f5679-w-1')
     args=parser.parse_args(argv)
+    if args.model=='cnn' and args.clip_mode!=DEFAULT_CLIP_MODE:
+        parser.error('This clipping study is scoped to the fly model')
     if min(args.steps,args.passes,args.groups,args.batch_size,args.threads,args.eval_every,
            args.eval_batch_size,args.eval_positions,args.checkpoint_every,args.diagnostic_batch_size)<=0:
         parser.error('Step, batch, thread and interval counts must be positive')
@@ -162,14 +166,15 @@ def run_training(args,cpus,run):
                     attachment_sha256=port_contract['sha256'])
                 head_mask.validate_shape(actions=config.actions,groups=config.groups)
             require_qualification(args.qualification,visual_contract,config,batch_size=args.batch_size,
-                rate=args.rate,epsilon=args.epsilon,clip=args.clip,rate_scales=args.rate_scales,head_mask=head_mask)
+                rate=args.rate,epsilon=args.epsilon,clip=args.clip,rate_scales=args.rate_scales,head_mask=head_mask,
+                clip_mode=args.clip_mode)
             transform=lambda features:adapter.encode(features,args.input_mode)
         if args.model=='cnn':model=JaxCNN(config)
         elif args.backend=='tpu':
             from .jax.learner import JaxFly
-            model=JaxFly(graph,config,ports=ports)
+            model=JaxFly(graph,config,ports=ports,clip_mode=args.clip_mode)
         else:
-            model=RustFly(graph,config,ports=ports,head_mask=head_mask)
+            model=RustFly(graph,config,ports=ports,head_mask=head_mask,clip_mode=args.clip_mode)
         diagnostic_size=min(args.batch_size,args.diagnostic_batch_size)
         if args.diagnostics_every and hasattr(model,'mesh') and diagnostic_size%model.mesh.size:
             raise ValueError('Diagnostic batch must divide evenly across the data mesh')
@@ -182,6 +187,7 @@ def run_training(args,cpus,run):
                 raise ValueError('Checkpoint external input encoding differs')
             schedule.check_resume(previous.get('training_contract',{}))
             check_epsilon_resume(args.epsilon,previous.get('training_contract',{}))
+            check_clipping_resume(args.clip_mode,previous.get('training_contract',{}))
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                     dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,input_contract=visual_contract,
@@ -212,7 +218,7 @@ def run_training(args,cpus,run):
             try:
                 receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics,
                     port_contract=port_contract,input_contract=visual_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
-                        clip=args.clip,rate_scales=args.rate_scales,schedule=schedule.contract(),epsilon=args.epsilon)),
+                        clip=args.clip,clip_mode=args.clip_mode,rate_scales=args.rate_scales,schedule=schedule.contract(),epsilon=args.epsilon)),
                     root=root,peer=args.peer or None)
             except Exception as failure:
                 error=failure
@@ -250,8 +256,9 @@ def run_training(args,cpus,run):
             begin=time.perf_counter();metrics=model.train_step(*batch,rate=rate,clip=args.clip,
                                                               rate_scales=args.rate_scales or None,epsilon=args.epsilon)
             elapsed=time.perf_counter()-begin;step=metrics['step']
-            observed_updates+=1;clipped_updates+=int(metrics['gradient_norm']>args.clip)
-            record=dict(kind='train',**metrics,learning_rate=rate,clipped=metrics['gradient_norm']>args.clip,
+            clipped=metrics['clipping']['clipped']
+            observed_updates+=1;clipped_updates+=int(clipped)
+            record=dict(kind='train',**metrics,learning_rate=rate,clipped=clipped,
                         clipping_fraction=clipped_updates/observed_updates,
                         clipping_scope='updates since this process started',
                         seconds=elapsed,positions_per_second=args.batch_size/elapsed,

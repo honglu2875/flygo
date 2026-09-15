@@ -9,13 +9,14 @@ from pathlib import Path
 import numpy as np
 
 from . import _native
-from .optimizer import DEFAULT_EPSILON,validate_epsilon
+from .optimizer import (DEFAULT_EPSILON, validate_epsilon, DEFAULT_CLIP_MODE,
+                        validate_clip_mode, clipping_arrays, check_clipping_restore, clipping_metrics,
+                        OPTIMIZER_VERSION)
 from .readout import check_restore
 
 PARAMETERS = ('edge', 'leak', 'bias', 'input_gain', 'readout_gain', 'policy_weight',
               'policy_bias', 'value_weight', 'value_bias')
 MODEL_VERSION = 'leaky-rate-v1'
-OPTIMIZER_VERSION = 'adam-fp32-v1'
 
 
 @dataclass(frozen=True)
@@ -103,10 +104,17 @@ class RustFly:
     numerical_runtime = 'rust-fp32-circuit-f64-head-reductions-v3'
 
     @property
+    def clip_mode(self):
+        return self._clip_mode
+
+    @property
     def model_version(self):
         return self.config.model_version + ('+masked-readout-v1' if self.head_mask is not None else '')
 
-    def __init__(self, graph: dict, config: FlyConfig = FlyConfig(), *, ports=None, params=None, head_mask=None):
+    def __init__(self, graph: dict, config: FlyConfig = FlyConfig(), *, ports=None, params=None, head_mask=None,
+                 clip_mode=DEFAULT_CLIP_MODE):
+        validate_clip_mode(clip_mode)
+        self._clip_mode = clip_mode
         self.graph, self.config = graph, config
         self.head_mask = head_mask
         if head_mask is not None: head_mask.validate_shape(actions=config.actions, groups=config.groups)
@@ -155,7 +163,7 @@ class RustFly:
         if de.shape != embedding.shape or dv.shape != value.shape:
             raise ValueError('Objective cotangents must match the embedding and value shapes')
         grad, result = self.native.embedding_backward(x, self.config.steps,
-            np.ascontiguousarray(de.T), np.ascontiguousarray(dv), revision, update)
+            np.ascontiguousarray(de.T), np.ascontiguousarray(dv), revision, update, self.clip_mode)
         return metrics, grad, result
 
     def embedding_loss_and_grad(self, features, objective):
@@ -172,7 +180,11 @@ class RustFly:
         scales = [1.0 if rate_scales is None else rate_scales.get(name, 1.0) for name in PARAMETERS]
         metrics, _, (norm, step) = self._embedding_objective(features, objective,
             (rate, clip, scales, epsilon))
-        return dict(metrics, gradient_norm=norm, step=step)
+        return dict(metrics, gradient_norm=norm, step=step, clipping=self._clipping_metrics())
+
+    def _clipping_metrics(self):
+        norms, factors = self.native.update_statistics()
+        return clipping_metrics(self.clip_mode, dict(zip(PARAMETERS, norms)), dict(zip(PARAMETERS, factors)))
 
     def loss_and_grad(self, features, legal, policy, value):
         pl,vl,grad = self.native.loss_and_grad(self._input(features),self.config.steps,
@@ -187,8 +199,8 @@ class RustFly:
         scales=None if rate_scales is None else [rate_scales.get(name,1.0) for name in PARAMETERS]
         pl,vl,norm,step = self.native.train_step(self._input(features),self.config.steps,
             np.ascontiguousarray(legal,dtype=np.uint8),np.ascontiguousarray(policy,dtype=np.float32),
-            np.ascontiguousarray(value,dtype=np.float32),rate,clip,scales,epsilon)
-        return dict(policy_loss=pl,value_loss=vl,gradient_norm=norm,step=step)
+            np.ascontiguousarray(value,dtype=np.float32),rate,clip,scales,epsilon,self.clip_mode)
+        return dict(policy_loss=pl,value_loss=vl,gradient_norm=norm,step=step,clipping=self._clipping_metrics())
 
     def profile_sparse(self,features,*,repetitions=5):
         """Read-only warm kernel timings; synthetic cotangent, no optimizer update."""
@@ -198,9 +210,11 @@ class RustFly:
         params,first,second,step = self.native.checkpoint()
         return {**{prefix+name:array for prefix,group in [('param/',params),('first/',first),('second/',second)]
                    for name,array in zip(PARAMETERS,group)},'optimizer_step':np.asarray(step,dtype=np.uint64),
-                **({} if self.head_mask is None else self.head_mask.checkpoint_arrays())}
+                **({} if self.head_mask is None else self.head_mask.checkpoint_arrays()),
+                **clipping_arrays(self.clip_mode)}
 
     def restore_arrays(self, arrays):
+        check_clipping_restore(self.clip_mode, arrays)
         check_restore(self.head_mask, arrays)
         self.native.restore(*[[np.ascontiguousarray(arrays[prefix+name],dtype=np.float32) for name in PARAMETERS]
                               for prefix in ('param/','first/','second/')],int(arrays['optimizer_step']))

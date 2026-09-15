@@ -40,6 +40,7 @@ def main():
     if any(plan[key]!=value for key,value in settings.items()):raise ValueError('Qualification plan settings differ')
     out.resolve().relative_to(root.resolve());pin(list(range(92,116)))
     arm=next(a for a in plan['arms'] if a['arm']==args.arm)
+    clip_mode=arm.get('clip_mode','global')
     if args.seed not in [j['seed'] for j in plan['jobs']]:raise ValueError('Unregistered qualification seed')
     with StorageBudget(root).reserve(files=16<<20,heap=24*GIB,purpose='masked head IO qualification'):
         if not args.resume_only:out.mkdir(parents=True,exist_ok=False)
@@ -51,15 +52,18 @@ def main():
         mask=load_head_mask(root/arm['path'],graph_id=graph['manifest']['graph_id'],attachment_sha256=receipt['sha256'])
         cfg=FlyConfig(steps=8,features=adapter.features,groups=receipt['groups'],seed=args.seed,threads=24)
         contract=input_contract(receipt,'current');schedule=Schedule(.03,100,0,.1)
-        training=dict(batch_size=32,rate=.03,clip=1,rate_scales={'bias':.01},epsilon=1e-6,schedule=schedule.contract())
+        training=dict(batch_size=32,rate=.03,clip=1,clip_mode=clip_mode,rate_scales={'bias':.01},epsilon=1e-6,schedule=schedule.contract())
         qualification=args.plan.parent/f'seed-{args.seed}'/args.arm/'result.json'
-        require_qualification(qualification,contract,cfg,batch_size=32,rate=.03,epsilon=1e-6,clip=1,rate_scales={'bias':.01},head_mask=mask)
-        model=RustFly(graph,cfg,ports=ports,head_mask=mask);sampler=Sampler(arrays,indexes,args.seed)
+        require_qualification(qualification,contract,cfg,batch_size=32,rate=.03,epsilon=1e-6,clip=1,rate_scales={'bias':.01},head_mask=mask,clip_mode=clip_mode)
+        model=RustFly(graph,cfg,ports=ports,head_mask=mask,clip_mode=clip_mode);sampler=Sampler(arrays,indexes,args.seed)
         checkpoint=out/'continuation.npz';control=None
         def update(m,batch,step):return m.train_step(adapter.encode(batch[0],'current'),*batch[1:],
             rate=schedule.rate(step),clip=1,rate_scales={'bias':.01},epsilon=1e-6)
         def common_state(m):
-            return hashes({**{k:v for k,v in m.checkpoint_arrays().items() if not k.startswith('readout_mask/')},
+            # The paired initialization compares numerical arrays, not fixed head
+            # masks or the explicit optimizer-mode tag. Recovery below checks all.
+            return hashes({**{k:v for k,v in m.checkpoint_arrays().items()
+                              if not k.startswith('readout_mask/') and k!='optimizer_clip_mode'},
                            **{'port/'+k:v for k,v in ports.items()}})
         def compare_control(batch,step,metrics):
             expected=update(control,batch,step);left,right=common_state(model),common_state(control)
@@ -69,13 +73,23 @@ def main():
                     differing_arrays=differing,masked_arrays=left,unmasked_arrays=right))
                 raise AssertionError('All-enabled update differs from the unmasked control; see control-mismatch.json')
         if args.resume_only:
+            wrong=RustFly(graph,cfg,ports=ports,head_mask=mask,
+                          clip_mode='parameter-group' if clip_mode=='global' else 'global')
+            wrong_before=hashes(wrong.checkpoint_arrays());sampler_before=sampler.state()
+            try:load_checkpoint(checkpoint,wrong,sampler,dataset_id=manifest['dataset_id'])
+            except ValueError as error:
+                if 'clipping mode differs' not in str(error):raise
+            else:raise AssertionError('Recovery silently changed optimizer clipping mode')
+            if wrong_before!=hashes(wrong.checkpoint_arrays()) or sampler_before!=sampler.state():
+                raise AssertionError('Rejected recovery changed model or sampler state')
+            del wrong
             metadata=load_checkpoint(checkpoint,model,sampler,dataset_id=manifest['dataset_id'])
             if metadata['input_contract']!=contract or metadata['training_contract']!=training:
                 raise ValueError('Saved training or input contract differs')
         else:
             initial=dict(arrays=common_state(model),sampler=sampler.state(),model_config=asdict(cfg),dataset_id=manifest['dataset_id'])
             atomic_json(out/'initial.json',initial)
-            if args.arm=='dense':control=RustFly(graph,cfg,ports=ports)
+            if args.arm=='dense':control=RustFly(graph,cfg,ports=ports,clip_mode=clip_mode)
             for step in range(1,4):
                 batch=sampler.batch(32)
                 if control is not None:
@@ -111,7 +125,8 @@ def main():
             loss=metrics,arrays=hashes(model.checkpoint_arrays()),sampler=sampler.state())
         if args.resume_only:
             if record!=json.loads((out/'expected.json').read_text()):raise AssertionError('Fresh-process state, prediction, arithmetic, sampler or next update differs')
-            atomic_json(out/'fresh-process.json',dict(status='passed',pid=os.getpid(),runtime_sha256=runtime_hashes()))
+            atomic_json(out/'fresh-process.json',dict(status='passed',pid=os.getpid(),runtime_sha256=runtime_hashes(),
+                clip_mode=clip_mode,wrong_mode_restore_rejected=True))
         else:
             atomic_json(out/'expected.json',record)
             subprocess.run([sys.executable,'-B',str(Path(__file__).resolve()),*sys.argv[1:],'--resume-only'],check=True)

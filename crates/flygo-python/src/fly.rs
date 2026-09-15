@@ -1,5 +1,5 @@
 //! Thin NumPy boundary for the owned Rust model and optimizer.
-use fly_core::{CoreParams, Graph, Model, Params, Ports, Rate, Targets, optim::Adam};
+use fly_core::{CoreParams, Graph, Model, Params, Ports, Rate, Targets, optim::{Adam, ClipMode, UpdateStats}};
 use numpy::{IntoPyArray, PyArray1, PyReadonlyArray1, PyReadonlyArray2, PyUntypedArrayMethods};
 use pyo3::{
     exceptions::{PyRuntimeError, PyValueError},
@@ -13,6 +13,7 @@ struct State {
     adam: Adam,
     prepared: Option<fly_core::recurrent::Prepared>,
     revision: u64,
+    last_update: Option<UpdateStats>,
 }
 #[pyclass]
 pub struct FlyModel {
@@ -119,6 +120,7 @@ impl FlyModel {
                     adam,
                     prepared: None,
                     revision: 0,
+                    last_update: None,
                 })
             })
             .map_err(PyValueError::new_err)?;
@@ -211,12 +213,14 @@ impl FlyModel {
     /// Recompute a tape, apply external readout cotangents, optionally update.
     /// No full-CNS tape crosses Python. Revisions reject intervening updates or restores.
     #[allow(clippy::too_many_arguments)]
-    #[pyo3(signature=(input, steps, cotangent, value_cotangent, revision, update=None))]
+    #[pyo3(signature=(input, steps, cotangent, value_cotangent, revision, update=None, clip_mode="global"))]
     fn embedding_backward<'py>(
         &self, py: Python<'py>, input: PyReadonlyArray2<'py, f32>, steps: usize,
         cotangent: PyReadonlyArray2<'py, f32>, value_cotangent: PyReadonlyArray1<'py, f32>,
         revision: u64, update: Option<(f32, f32, Vec<f32>, f32)>,
+        clip_mode: &str,
     ) -> PyResult<(Arrays<'py>, Option<(f64, u64)>)> {
+        let clip_mode = clip_mode.parse::<ClipMode>().map_err(PyValueError::new_err)?;
         let batch = input.shape()[1];
         let cotangent_shape = cotangent.shape().to_vec();
         let (input, cotangent, value_cotangent) = (
@@ -229,14 +233,16 @@ impl FlyModel {
             if cotangent_shape != [state.model.ports.groups, batch] {
                 return Err("Expected group-major embedding cotangent [G,B]".into());
             }
-            let State { model, params, adam, prepared, revision } = &mut *state;
+            let State { model, params, adam, prepared, revision, last_update } = &mut *state;
             let output = model.forward_prepared(params, &input, batch, steps, prepared.as_ref())?;
             let grad = model.backward_with_embedding(
                 params, &input, &output, &vec![0.0; batch * model.ports.actions],
                 &vec![0.0; batch], Some(&cotangent), Some(&value_cotangent),
             )?;
             if let Some((rate, clip, scales, epsilon)) = update {
-                let norm = adam.update_with_epsilon(model, params, &grad, rate, clip, &scales, epsilon)?;
+                let stats = adam.update_with_clipping(model, params, &grad, rate, clip, &scales, epsilon, clip_mode)?;
+                let norm = stats.norm;
+                *last_update = Some(stats);
                 *prepared = None;
                 *revision += 1;
                 Ok::<_, String>((None, Some((norm, adam.step))))
@@ -381,7 +387,7 @@ impl FlyModel {
         Ok((pl, vl, export(py, &grad)))
     }
     #[allow(clippy::too_many_arguments)]
-    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None, epsilon=1e-8))]
+    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None, epsilon=1e-8, clip_mode="global"))]
     fn train_step(
         &self,
         py: Python<'_>,
@@ -394,7 +400,9 @@ impl FlyModel {
         clip: f32,
         rate_scales: Option<Vec<f32>>,
         epsilon: f32,
+        clip_mode: &str,
     ) -> PyResult<(f64, f64, f64, u64)> {
+        let clip_mode = clip_mode.parse::<ClipMode>().map_err(PyValueError::new_err)?;
         if !epsilon.is_finite() || epsilon <= 0.0 {
             return Err(PyValueError::new_err("Adam epsilon must be finite and positive"));
         }
@@ -413,6 +421,7 @@ impl FlyModel {
                 adam,
                 prepared,
                 revision,
+                last_update,
             } = &mut *state;
             let (pl, vl, grad) = model.loss_and_grad(
                 params,
@@ -425,13 +434,19 @@ impl FlyModel {
                     value: &value,
                 },
             )?;
-            let norm = adam.update_with_epsilon(model, params, &grad, rate, clip,
-                rate_scales.as_deref().unwrap_or(&[1.0; 9]), epsilon)?;
+            let stats = adam.update_with_clipping(model, params, &grad, rate, clip,
+                rate_scales.as_deref().unwrap_or(&[1.0; 9]), epsilon, clip_mode)?;
+            let norm = stats.norm;
+            *last_update = Some(stats);
             *prepared = None;
             *revision += 1;
             Ok::<_, String>((pl, vl, norm, adam.step))
         })
         .map_err(PyValueError::new_err)
+    }
+    fn update_statistics(&self) -> PyResult<Option<(Vec<f64>, Vec<f32>)>> {
+        let state = self.state.lock().map_err(|e| PyRuntimeError::new_err(e.to_string()))?;
+        Ok(state.last_update.as_ref().map(|stats| (stats.group_norms.to_vec(), stats.clip_factors.to_vec())))
     }
     fn checkpoint<'py>(
         &self,
@@ -474,6 +489,7 @@ impl FlyModel {
             state.params = params;
             state.prepared = None;
             state.revision += 1;
+            state.last_update = None;
             state.adam = Adam {
                 first,
                 second,

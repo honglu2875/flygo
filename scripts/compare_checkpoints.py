@@ -17,8 +17,8 @@ from flygo.runtime import cpu_profile, pin
 from flygo.storage import GIB, StorageBudget
 
 
-def predict_metrics(model, arrays, indices, batch_size):
-    rows = []
+def predict_metrics(model, arrays, indices, batch_size, *, confidence=False):
+    rows = []; confidence_rows = []
     for begin in range(0, len(indices), batch_size):
         selected = indices[begin:begin + batch_size]
         result = model.infer(arrays['features'][selected])
@@ -31,20 +31,27 @@ def predict_metrics(model, arrays, indices, batch_size):
         rows.append(np.stack([cross_entropy - entropy,
                               np.square(result['value'] - arrays['raw_value'][selected]),
                               logits.argmax(axis=1) == target.argmax(axis=1)], axis=1))
-    return np.concatenate(rows)
+        if confidence:
+            probability=np.exp(logp)
+            confidence_rows.append(np.stack([-(probability*logp).sum(axis=1,dtype=np.float64),
+                                             probability.max(axis=1)],axis=1))
+    metrics=np.concatenate(rows)
+    return (metrics,np.concatenate(confidence_rows)) if confidence else metrics
 
 
-def summarize(metrics, games, *, seed=709, bootstrap=1000):
+def summarize(metrics, games, *, seed=709, bootstrap=1000,
+              names=('policy_kl','value_mse','teacher_top1_agreement')):
+    if metrics.ndim!=2 or metrics.shape[1]!=len(names):
+        raise ValueError('Metric columns differ from their declared names')
     if not len(metrics):
         return {'positions': 0, 'games': 0}
     unique, membership = np.unique(games, return_inverse=True)
     counts = np.bincount(membership)
-    totals = np.stack([np.bincount(membership, weights=metrics[:, i]) for i in range(3)], axis=1)
+    totals = np.stack([np.bincount(membership, weights=metrics[:, i]) for i in range(len(names))], axis=1)
     rng = np.random.default_rng(seed)
     sample = rng.integers(len(unique), size=(bootstrap, len(unique)))
     distribution = totals[sample].sum(axis=1) / counts[sample].sum(axis=1)[:, None]
     interval = np.quantile(distribution, [.025, .975], axis=0)
-    names = ('policy_kl', 'value_mse', 'teacher_top1_agreement')
     return dict(positions=len(metrics), games=len(unique), **{
         name: {'mean': float(metrics[:, i].mean()), 'game_bootstrap_95': interval[:, i].tolist()}
         for i, name in enumerate(names)})
@@ -59,6 +66,7 @@ def main(argv=None):
     parser.add_argument('--threads', type=int, default=24)
     parser.add_argument('--cpus')
     parser.add_argument('--batch-size', type=int, default=32)
+    parser.add_argument('--confidence',action='store_true',help='Also retain policy entropy and top probability per position')
     args = parser.parse_args(argv)
     cpus = list(map(int, args.cpus.split(','))) if args.cpus else cpu_profile()['research_cpus'][:args.threads]
     if not 0 < args.threads <= len(cpus) or args.batch_size <= 0:
@@ -88,16 +96,22 @@ def main(argv=None):
             model, metadata = load_player(checkpoint, graph, threads=args.threads)
             if metadata['dataset_id'] != manifest['dataset_id']:
                 raise ValueError('Checkpoint and evaluation release must match for this comparison')
-            metrics = predict_metrics(model, arrays, indices, args.batch_size)
+            prediction = predict_metrics(model, arrays, indices, args.batch_size,confidence=args.confidence)
+            metrics,confidence=prediction if args.confidence else (prediction,None)
             groups = arrays['game_index'][indices]
             # Keep aligned per-position evidence for later paired comparisons.
             np.savez(args.output / (checkpoint.stem + '-' + sha256(checkpoint)[:12] + '-metrics.npz'),
-                     indices=indices, game_index=groups, metrics=metrics)
+                     indices=indices, game_index=groups, metrics=metrics,
+                     **({} if confidence is None else {'confidence':confidence}))
             record = dict(checkpoint=str(checkpoint), sha256=sha256(checkpoint),
                           model=metadata['model_config'], dataset_id=metadata['dataset_id'],
                           optimizer_step=int(model.checkpoint_arrays()['optimizer_step']),
+                          optimizer_clip_mode=metadata.get('optimizer_clip_mode','global'),
                           seconds=time.perf_counter() - started,
                           slices={name: summarize(metrics[mask], groups[mask]) for name, mask in slices.items()})
+            if confidence is not None:
+                record['confidence_slices']={name:summarize(confidence[mask],groups[mask],
+                    names=('policy_entropy','mean_top_probability')) for name,mask in slices.items()}
             records.append(record)
             atomic_json(args.output / 'result.json', dict(status='complete' if len(records) == len(args.checkpoints) else 'running',
                 release=args.release, dataset_id=manifest['dataset_id'], cpus=cpus, records=records,
