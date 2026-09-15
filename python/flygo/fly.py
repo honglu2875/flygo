@@ -13,6 +13,7 @@ from .optimizer import (DEFAULT_EPSILON, validate_epsilon, DEFAULT_CLIP_MODE,
                         validate_clip_mode, clipping_arrays, check_clipping_restore, clipping_metrics,
                         OPTIMIZER_VERSION)
 from .readout import check_restore
+from .objectives import value_core_scale as canonical_value_core_scale, objective_arrays, check_objective_restore
 
 PARAMETERS = ('edge', 'leak', 'bias', 'input_gain', 'readout_gain', 'policy_weight',
               'policy_bias', 'value_weight', 'value_bias')
@@ -108,13 +109,18 @@ class RustFly:
         return self._clip_mode
 
     @property
+    def value_core_scale(self):
+        return self._value_core_scale
+
+    @property
     def model_version(self):
         return self.config.model_version + ('+masked-readout-v1' if self.head_mask is not None else '')
 
     def __init__(self, graph: dict, config: FlyConfig = FlyConfig(), *, ports=None, params=None, head_mask=None,
-                 clip_mode=DEFAULT_CLIP_MODE):
+                 clip_mode=DEFAULT_CLIP_MODE, value_core_scale=1.0):
         validate_clip_mode(clip_mode)
         self._clip_mode = clip_mode
+        self._value_core_scale = canonical_value_core_scale(value_core_scale)
         self.graph, self.config = graph, config
         self.head_mask = head_mask
         if head_mask is not None: head_mask.validate_shape(actions=config.actions, groups=config.groups)
@@ -167,7 +173,7 @@ class RustFly:
         return metrics, grad, result
 
     def embedding_loss_and_grad(self, features, objective):
-        """Objective returns (metrics, d_embedding, d_linear_score). Recomputes the tape."""
+        """Literal (metrics, d_embedding, d_linear_score) VJP; no supervised gradient scaling."""
         metrics, grad, _ = self._embedding_objective(features, objective)
         return metrics, dict(zip(PARAMETERS, grad))
 
@@ -189,7 +195,7 @@ class RustFly:
     def loss_and_grad(self, features, legal, policy, value):
         pl,vl,grad = self.native.loss_and_grad(self._input(features),self.config.steps,
             np.ascontiguousarray(legal,dtype=np.uint8),np.ascontiguousarray(policy,dtype=np.float32),
-            np.ascontiguousarray(value,dtype=np.float32))
+            np.ascontiguousarray(value,dtype=np.float32),self.value_core_scale)
         return dict(policy_loss=pl,value_loss=vl),dict(zip(PARAMETERS,grad))
 
     def train_step(self, features, legal, policy, value, *, rate=0.003,clip=1.0,rate_scales=None,epsilon=DEFAULT_EPSILON):
@@ -199,7 +205,7 @@ class RustFly:
         scales=None if rate_scales is None else [rate_scales.get(name,1.0) for name in PARAMETERS]
         pl,vl,norm,step = self.native.train_step(self._input(features),self.config.steps,
             np.ascontiguousarray(legal,dtype=np.uint8),np.ascontiguousarray(policy,dtype=np.float32),
-            np.ascontiguousarray(value,dtype=np.float32),rate,clip,scales,epsilon,self.clip_mode)
+            np.ascontiguousarray(value,dtype=np.float32),rate,clip,scales,epsilon,self.clip_mode,self.value_core_scale)
         return dict(policy_loss=pl,value_loss=vl,gradient_norm=norm,step=step,clipping=self._clipping_metrics())
 
     def profile_sparse(self,features,*,repetitions=5):
@@ -211,9 +217,10 @@ class RustFly:
         return {**{prefix+name:array for prefix,group in [('param/',params),('first/',first),('second/',second)]
                    for name,array in zip(PARAMETERS,group)},'optimizer_step':np.asarray(step,dtype=np.uint64),
                 **({} if self.head_mask is None else self.head_mask.checkpoint_arrays()),
-                **clipping_arrays(self.clip_mode)}
+                **clipping_arrays(self.clip_mode), **objective_arrays(self.value_core_scale)}
 
     def restore_arrays(self, arrays):
+        check_objective_restore(self.value_core_scale, arrays)
         check_clipping_restore(self.clip_mode, arrays)
         check_restore(self.head_mask, arrays)
         self.native.restore(*[[np.ascontiguousarray(arrays[prefix+name],dtype=np.float32) for name in PARAMETERS]

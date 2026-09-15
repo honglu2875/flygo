@@ -1,0 +1,28 @@
+{
+  "name": "value-core-engineering-v1",
+  "prior_goal_turn": {
+    "classification": "progress",
+    "evidence": "Published e1c56e9074311e2b1707d09c43143de0656cddb6; closed and replicated nine-case loss-balance audit, retained two numerical failures and independent bias checks, deployed tested automatic confirmation collector."
+  },
+  "factor": "value_core_scale",
+  "candidate_scales": [1.0, 0.1, 0.0],
+  "shared_gradient": "g_policy + value_core_scale * g_value for edge, leak, bias, input_gain and readout_gain",
+  "head_gradient": "Original unscaled policy and value gradients. The chosen clipping and Adam rules subsequently act on these gradients; global clipping can change head updates when shared norms change.",
+  "prediction": "Unchanged forward equations, topology, inputs, readout coefficients and inference counting rules. Generic embedding objectives retain their literal cotangents.",
+  "compatibility": "Scale one retains legacy numerical arrays. Nondefault scales carry an FP32 checkpoint tag and objective metadata; mismatched metadata, arrays, continuation or qualification must fail before mutation.",
+  "engineering_checks": [
+    "Rust workspace regression suite",
+    "Python regression suite with JAX restricted to CPU",
+    "Exact outputs, losses and head gradients across scales at common parameters",
+    "Scale-zero shared gradients equal the native policy-only objective",
+    "Finite differences of weighted loss for shared parameters and unweighted loss for heads",
+    "Independent Rust/JAX gradients, updates, masks and restoration",
+    "Exact legacy scale-one full-CNS regression against frozen 1f19481174f3bc8e5449",
+    "Separately registered full-CNS transition and fresh-process recovery gates before scientific training"
+  ],
+  "build_host": 1,
+  "build_cpus": [56, 57, 58, 59],
+  "resource_policy": "Original 100 GiB own-file cap, 64 GiB free-filesystem floor and 96 GiB available-RAM floor. New native/package payloads stay on workers; root retains small source and control records.",
+  "scientific_status": "No trial registration or launch. Close the already running clipping confirmation before selecting the fixed optimizer control and registering the loss-routing study.",
+  "scope": "Optimization only. No precision fix, attachment change, recurrence change, CNN comparison, final-test access or TPU use. Preserve all failed engineering attempts."
+}

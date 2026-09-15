@@ -1,0 +1,158 @@
+{
+  "acceptance": "All eighteen actual-seed/scale numerical protocols and nine fresh-process recovery cases must pass unchanged tolerances before scientific training. Preserve failures; do not substitute a seed or infer nondefault qualification from scale one.",
+  "arms": [
+    "full",
+    "reduced",
+    "policy-only"
+  ],
+  "batch_size": 32,
+  "clip": 1.0,
+  "clip_mode": "parameter-group",
+  "clip_modes": [
+    "parameter-group"
+  ],
+  "clipping_tolerance": "Use the existing gradient/parameter tolerance for actual norms and factors.",
+  "cpus": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+  ],
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "engineering_contract_sha256": "479bb8770293a3672999d43b0836cce5195f61017061f58c0740272ce3a5d444",
+  "engineering_labeled_update_exposures": {
+    "jax_numerical": 1728,
+    "native_numerical": 1728,
+    "native_recovery": 1440,
+    "total": 4896
+  },
+  "epsilon": 1e-06,
+  "exact_regression_plan_sha256": "53238d684579cbe358a776af62fc87b077e2c4805a8787937f40191ad1b9c155",
+  "factor": "supervised value-to-circuit gradient scale only",
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "head_mask": "ports/readout-masks-v1/dense.npz",
+  "head_mask_sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+  "helper_sha256": {
+    "count_inference.py": "098570c2010a7b69a03e5581d9d9bd798ae0b936eade0f717445a8d3a6042b80",
+    "qualify_attachment_io.py": "8e95fa558390fea77bddc9039625dd15a94f7fa5da4052a5076ce6710d88e38f",
+    "qualify_clipping.py": "a19f813d51530ebfc192caf366885e43f6a3fd6be9882ee8050bf49019ffb459",
+    "qualify_head_io.py": "35ddeb0ab1fbaac69c24a5d5dd894bfcdd2cbc49f0e0b6a2ed88d562623d1354",
+    "qualify_ports.py": "6b25e2b7266ad35eccb81f6161027604fed4055adf77f08a7c31fc2be4713d92"
+  },
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_map_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+  "input_mode": "current",
+  "measure_clipping": true,
+  "name": "value-core-numerics-v1",
+  "owners": [
+    {
+      "host": 1,
+      "seed": 16
+    },
+    {
+      "host": 2,
+      "seed": 17
+    },
+    {
+      "host": 3,
+      "seed": 18
+    }
+  ],
+  "platform": "cpu",
+  "protocols": [
+    {
+      "alignment": "Copy native parameters and both moment arrays before each reference forward, derivative and transition.",
+      "checks": "Full states, logits, value, losses, all parameter gradients, updated parameters and both moments at each of three successive native checkpoints. Report parameter-delta differences separately.",
+      "name": "aligned-peak",
+      "rates": [
+        0.03,
+        0.03,
+        0.03
+      ]
+    },
+    {
+      "alignment": "Identical initialization only; independent parameter and moment trajectories thereafter.",
+      "checks": "Full states, logits, value, losses, all parameter gradients, updated parameters and both moments for the first three actual scheduled updates. Report parameter-delta differences separately.",
+      "name": "free-warmup",
+      "rates": [
+        0.0003,
+        0.0006,
+        0.0009
+      ]
+    }
+  ],
+  "rate": 0.03,
+  "rate_scales": {
+    "bias": 0.01
+  },
+  "rate_softness": 0.0,
+  "readout_mean_scale": 1.0,
+  "reference": "Independent CPU JAX value-boundary gradient scaling; both heads retain full gradients.",
+  "resources": "CPU only; 24-core numerical lanes, separate IO lanes, shared-RAM limits unchanged. TPU stays paused.",
+  "runtime_sha256": {
+    "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+    "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+    "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+    "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+    "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+    "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+    "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+    "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+    "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+    "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+    "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+    "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+    "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+    "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+  },
+  "scientific_status": "Engineering only; no scientific endpoints registered or launched by this protocol.",
+  "seeds": [
+    16,
+    17,
+    18
+  ],
+  "source": "environments/9471407cdd0c68b40179",
+  "steps": 8,
+  "tolerances": {
+    "gradients_parameters_moments": {
+      "atol": 5e-06,
+      "rtol": 0.003
+    },
+    "states_outputs_losses": {
+      "atol": 3e-06,
+      "rtol": 0.0003
+    }
+  },
+  "updates": 3,
+  "value_core_arms": {
+    "full": 1.0,
+    "policy-only": 0.0,
+    "reduced": 0.1
+  },
+  "value_core_scales": [
+    1.0,
+    0.1,
+    0.0
+  ],
+  "warmup_steps": 100
+}

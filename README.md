@@ -114,6 +114,11 @@ network, attachments, learning rate and horizon fixed while testing this factor.
 Rate multipliers affect the final Adam step after the selected clipping and
 moment estimation. The defaults preserve the baseline. `--model cnn` selects
 the separate control; it uses the same data, loss, sampler and JAX optimizer.
+Experimental `--value-core-scale .1` changes the shared fly gradient to
+`g_policy + .1 * g_value`, keeping both head gradients fully trained. The
+Python equivalent is `RustFly(..., value_core_scale=.1)`. Default one preserves
+the previous learner. Checkpoints and CPU qualification bind this coefficient;
+see the [gradient-routing study](docs/value-core-study.md) for current evidence.
 TPU launch performs source/runtime replication and collective setup; do not
 start unrelated cohorts on the same devices concurrently.
 

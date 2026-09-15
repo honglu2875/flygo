@@ -14,6 +14,7 @@ from flygo.data.loader import load_release,Sampler
 from flygo.fly import FlyConfig,RustFly,initialize,load_graph
 from flygo.ports import load_ports
 from flygo.optimizer import CLIP_MODES,validate_epsilon
+from flygo.objectives import value_core_scale
 from flygo.qualify import sha256
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
@@ -35,6 +36,7 @@ def main():
     p.add_argument('--rate',type=float,default=.01)
     p.add_argument('--rate-scales',type=json.loads,default={})
     p.add_argument('--clip-mode',choices=CLIP_MODES,default='global')
+    p.add_argument('--value-core-scale',type=value_core_scale,default=1.0)
     p.add_argument('--protocol',choices=('aligned-peak','free-warmup'))
     p.add_argument('--numerical-plan',type=Path,help='Registered transition protocol; required with --protocol')
     p.add_argument('--output',type=Path,required=True)
@@ -52,7 +54,8 @@ def main():
                 or args.input_modes!=[numerical_plan['input_mode']] or cpus!=numerical_plan['cpus']
                 or args.input_map!=args.root/numerical_plan['input_map']
                 or args.head_mask!=args.root/numerical_plan['head_mask']
-                or args.clip_mode not in numerical_plan['arms'] or numerical_plan['clip']!=1
+                or args.clip_mode not in numerical_plan.get('clip_modes',numerical_plan['arms']) or numerical_plan['clip']!=1
+                or args.value_core_scale not in [value_core_scale(s) for s in numerical_plan.get('value_core_scales',[1.0])]
                 or args.rate_softness!=numerical_plan['rate_softness']
                 or args.readout_mean_scale!=numerical_plan['readout_mean_scale']
                 or numerical_plan['platform']!='cpu' or numerical_plan['updates']!=3
@@ -109,13 +112,15 @@ def main():
             ports,params=initialize(graph,cfg)
             if adapter:ports=visual_ports
             elif path:ports,_=load_ports(path,graph_id=graph['manifest']['graph_id'],features=cfg.features,groups=cfg.groups,seed=cfg.seed)
-            rust=RustFly(graph,cfg,ports=ports,params=params,head_mask=head_mask,clip_mode=args.clip_mode)
+            rust=RustFly(graph,cfg,ports=ports,params=params,head_mask=head_mask,clip_mode=args.clip_mode,
+                         value_core_scale=args.value_core_scale)
             sampler=Sampler(arrays,indexes,cfg.seed);jports=jax.tree.map(jnp.asarray,ports)
             jp=jax.tree.map(jnp.asarray,params);first=jax.tree.map(jnp.zeros_like,jp);second=jax.tree.map(jnp.zeros_like,jp)
             kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,rate_softness=cfg.rate_softness,readout_mean_scale=cfg.readout_mean_scale,
                 head_mask=None if head_mask is None else head_mask.parameter_masks())
             infer=jax.jit(lambda p,g,a,x:forward(p,g,a,x,**kwargs))
-            derivative=jax.jit(jax.value_and_grad(lambda p,g,a,*batch:loss(p,g,a,*batch,**kwargs),has_aux=True))
+            derivative=jax.jit(jax.value_and_grad(lambda p,g,a,*batch:loss(p,g,a,*batch,**kwargs,
+                value_core_scale=args.value_core_scale),has_aux=True))
             multipliers={k:np.float32(args.rate_scales.get(k,1)) for k in params}
             update=jax.jit(lambda p,g,m,v,step,rate:adam(p,g,m,v,step,
                 rate={k:rate*scale for k,scale in multipliers.items()},clip=np.float32(1),norm_dtype=jnp.float64,
@@ -168,7 +173,7 @@ def main():
                     for key,value in group.items():check(saved[prefix+key],value,f'{step}/'+prefix+key)
                 atomic_json(args.output/'status.json',dict(state='qualifying',port=str(path),completed_updates=step+1))
             records.append(dict(ports=str(args.input_map or path) if path else None,ports_sha256=receipt['sha256'],input_contract=visual_contract,model=asdict(cfg),readout_neurons=int((ports['output_group']>=0).sum()),
-                                updates=3,batch_size=args.batch_size,optimizer=dict(rate=args.rate,rate_scales=args.rate_scales,epsilon=args.epsilon,clip=1,clip_mode=args.clip_mode),errors=errors,
+                                updates=3,batch_size=args.batch_size,optimizer=dict(rate=args.rate,rate_scales=args.rate_scales,epsilon=args.epsilon,clip=1,clip_mode=args.clip_mode,value_core_scale=args.value_core_scale),errors=errors,
                                 numerical_protocol=args.protocol,actual_rates=used_rates,aligned_checkpoints=aligned,
                                 update_differences=deltas,clipping=clipping,
                                 **({} if head_mask is None else {'head_mask':head_mask.contract})))

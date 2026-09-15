@@ -1,9 +1,15 @@
 # Clipping confirmation at 128k exposures
 
-Six CPU learners compare global and per-parameter-group clipping at **4,000
-B32 updates**, using fresh paired seeds **13/14/15**. Each endpoint receives
-128,000 labeled-position exposures; the total is **768,000**. Training and
-queued endpoint probes are in progress. No confirmation result is available.
+Per-parameter-group clipping improves mean full-validation policy KL
+**1.64356 → 1.53649** and value MSE **.60288 → .55816**. Policy improves in all
+three fresh seeds, satisfying the registered candidate rule. Retain it as the
+optimizer control for the next separately qualified study. Counted warm B1
+prediction work rises **5.73%**; this does not establish an advantage over a CNN.
+
+All six CPU endpoints and their followups are complete at **4,000 B32 updates**,
+using paired seeds **13/14/15**. Each receives 128,000 labeled-position exposures;
+the total is **768,000**. [Complete result](results/clipping-confirmation-v1.json),
+[verified evidence closure](results/clipping-confirmation-closure-v1.json).
 
 The completed [32k-exposure discovery](group-clipping-study.md) improved mean
 policy KL by .07761 and value MSE by .06130, but raised counted warm B1
@@ -11,6 +17,46 @@ prediction FLOPs by 8.81%. The new experiment tests whether the optimizer
 benefit persists at a longer fixed horizon. Both seeds and horizon differ
 from discovery, so differences between the two studies cannot isolate the
 effect of training longer.
+
+## Fixed-endpoint results
+
+Lower KL and MSE are better. These are all 70,425 natural validation positions,
+covering 254 opening families; no endpoint is selected by its best observed step.
+
+| Seed | Global KL | Per-group KL | Global MSE | Per-group MSE |
+|---|---:|---:|---:|---:|
+| 13 | 1.674849 | 1.527102 | .595777 | .539034 |
+| 14 | 1.618026 | 1.553017 | .581559 | .564239 |
+| 15 | 1.637798 | 1.529350 | .631313 | .571215 |
+| Mean | 1.643557 | 1.536490 | .602883 | .558162 |
+
+The paired mean KL difference is **−.10707**, with conditional opening-family
+95% interval **[−.12566, −.07015]** and paired-seed sample SD **.04139**.
+The MSE difference is **−.04472**, interval **[−.06742, −.03575]**, seed SD
+**.02379**. Family intervals condition on these trained weights; three seeds
+do not characterize all training randomness. On the fixed 62,984-position
+source-novel slice, mean KL improves **1.58683 → 1.52293** and MSE
+**.63359 → .59409**. Validation families have been reused during development.
+
+Teacher top-move agreement increases **19.68% → 21.16%**. Policy entropy falls
+**3.30413 → 3.20173** and mean peak probability rises **.10442 → .12255**.
+The policy becomes sharper while improving KL, but motor diversity remains
+limited: candidate varying-motor counts are **125 / 148 / 85**, versus
+**97 / 78 / 111** for global clipping. The leading component still explains
+**90.96–99.70%** of raw current-minus-neutral motor variance. These probes do
+not establish biological function or resolve the representation bottleneck.
+
+Complete warm prediction arithmetic on the same 64 training probes changes
+as learned activity changes, despite identical topology and inference rules.
+
+| Batch | Global FLOPs / position | Per-group FLOPs / position | Increase |
+|---|---:|---:|---:|
+| 1 | 163.81M | 173.19M | 5.73% |
+| 32 | 171.60M | 186.40M | 8.63% |
+
+These counts include visual encoding and dense heads. Equal exposure and
+fixed inference equations do not imply equal executed sparse work. There is
+no new matched-CNN comparison, playing-strength panel or untouched-test result.
 
 ## Fixed comparison
 
@@ -67,8 +113,8 @@ checks pass on root and worker 2. The learner implementation is unchanged.
 | 3 | Global, seed 15 | Per-group, seed 14 |
 
 Actual learner commands and every native thread's affinity were checked;
-all six initial checkpoints have verified recovery copies. Followup workers
-wait for trainer exit and the verified final replica before using the released
+all initial and final checkpoints have verified recovery copies. Followup workers
+waited for trainer exit and the verified final replica before using the released
 lane for full validation, motor probes and arithmetic. All 306 qualification
 evidence files, including continuation checkpoint arrays, have verified
 owner/peer archives. TPU remains paused.
@@ -77,17 +123,18 @@ owner/peer archives. TPU remains paused.
 
 The root host is near its own-file allowance. Retain the existing 100 GiB
 cap, 64 GiB free-filesystem floor and 96 GiB available-RAM floor, including
-reservations. A live reservation protects additional coordinator log space.
+reservations. A reservation protected additional coordinator log space.
 Bulk response arrays and checkpoint payloads stay on workers.
 
 Worker 2 is the registered analysis host. Its frozen analysis tools pass the
 same tests, and the existing PyArrow dependency was copied and checked file by
 file; reading all 165,122 canonical annotation rows succeeds. Common novelty
-and probe selections are prepared there with verified identities. After all
-endpoints finish, the [frozen collector](../scripts/collect_clipping.py) performs
-the owner-side checkpoint audits and relays completed evidence through root
-pipes to worker 2. It keeps member-verified peer archives, then runs the frozen
-analyzer. Root receives small reports and receipts. Its
+and probe selections were prepared there with verified identities. After all
+endpoints finished, the [frozen collector](../scripts/collect_clipping.py) performed
+the owner-side checkpoint audits and relayed completed evidence through root
+pipes to worker 2. All **183** archived evidence files were checked member by
+member on a second host. The frozen analyzer succeeded, and its full report
+has verified copies on workers 2 and 3. Root retains small reports and receipts. Its
 [operational configuration](../configs/clipping-confirmation-collection-v1.json)
 binds the collector, analysis and endpoint-helper hashes. Five checks cover
 corrupt and conflicting archives, path containment, idempotent extraction,
@@ -96,10 +143,10 @@ and waiting for actual process exit and the followup lock. They pass on worker
 launch; its record is retained. The corrected wrapper launches the unchanged
 collector. This does not alter the scientific registration.
 The default `finish_study.py collect` copies bulk arrays to root and must not
-be used for this study. Final collection, paired analysis and the scientific
-decision remain pending.
+be used for this study. Collection, paired analysis and the optimizer decision
+are now closed; the registered endpoints were not rerun.
 
-While these learners run, a separate [loss-balance audit](loss-balance-study.md)
-measures gradients at already completed discovery checkpoints. Its nine cases,
+The separate [loss-balance audit](loss-balance-study.md)
+measures gradients at completed discovery checkpoints. Its nine cases,
 including two numerical failures, are closed and archived. No resulting
 loss-routing or precision change has been applied to this confirmation.

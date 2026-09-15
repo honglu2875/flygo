@@ -19,6 +19,7 @@ from .schedule import Schedule
 from .optimizer import (DEFAULT_EPSILON,validate_epsilon,check_epsilon_resume,
                         CLIP_MODES,DEFAULT_CLIP_MODE,check_clipping_resume)
 from .storage import GIB,StorageBudget,StoragePressure
+from .objectives import value_core_scale, check_objective_resume
 
 
 def evaluate(model,arrays,indices,*,batch_size=32,limit=512,transform=None):
@@ -73,6 +74,8 @@ def main(argv=None):
     parser.add_argument('--blocks',type=int,default=10,help='CNN control residual blocks')
     parser.add_argument('--clip',type=float,default=1.0)
     parser.add_argument('--clip-mode',choices=CLIP_MODES,default=DEFAULT_CLIP_MODE)
+    parser.add_argument('--value-core-scale',type=value_core_scale,default=1.0,
+                        help='Scale supervised value gradients entering the fly circuit; keep both heads fully trained')
     parser.add_argument('--epsilon',type=float,default=DEFAULT_EPSILON,help='Adam denominator epsilon, outside the square root')
     parser.add_argument('--diagnostics-every',type=int,default=0,help='Zero disables extra gradient/activity measurements')
     parser.add_argument('--diagnostic-batch-size',type=int,default=32,help='Bound extra full-state/gradient measurements independently of the training batch')
@@ -86,6 +89,10 @@ def main(argv=None):
     args=parser.parse_args(argv)
     if args.model=='cnn' and args.clip_mode!=DEFAULT_CLIP_MODE:
         parser.error('This clipping study is scoped to the fly model')
+    if args.value_core_scale!=1 and args.model!='fly':
+        parser.error('Value-to-circuit gradient scaling applies only to the fly model')
+    if args.value_core_scale!=1 and args.backend!='cpu':
+        parser.error('Value-to-circuit scaling requires separate actual TPU qualification before TPU use')
     if min(args.steps,args.passes,args.groups,args.batch_size,args.threads,args.eval_every,
            args.eval_batch_size,args.eval_positions,args.checkpoint_every,args.diagnostic_batch_size)<=0:
         parser.error('Step, batch, thread and interval counts must be positive')
@@ -167,14 +174,14 @@ def run_training(args,cpus,run):
                 head_mask.validate_shape(actions=config.actions,groups=config.groups)
             require_qualification(args.qualification,visual_contract,config,batch_size=args.batch_size,
                 rate=args.rate,epsilon=args.epsilon,clip=args.clip,rate_scales=args.rate_scales,head_mask=head_mask,
-                clip_mode=args.clip_mode)
+                clip_mode=args.clip_mode,value_core_scale=args.value_core_scale)
             transform=lambda features:adapter.encode(features,args.input_mode)
         if args.model=='cnn':model=JaxCNN(config)
         elif args.backend=='tpu':
             from .jax.learner import JaxFly
-            model=JaxFly(graph,config,ports=ports,clip_mode=args.clip_mode)
+            model=JaxFly(graph,config,ports=ports,clip_mode=args.clip_mode,value_core_scale=args.value_core_scale)
         else:
-            model=RustFly(graph,config,ports=ports,head_mask=head_mask,clip_mode=args.clip_mode)
+            model=RustFly(graph,config,ports=ports,head_mask=head_mask,clip_mode=args.clip_mode,value_core_scale=args.value_core_scale)
         diagnostic_size=min(args.batch_size,args.diagnostic_batch_size)
         if args.diagnostics_every and hasattr(model,'mesh') and diagnostic_size%model.mesh.size:
             raise ValueError('Diagnostic batch must divide evenly across the data mesh')
@@ -188,6 +195,7 @@ def run_training(args,cpus,run):
             schedule.check_resume(previous.get('training_contract',{}))
             check_epsilon_resume(args.epsilon,previous.get('training_contract',{}))
             check_clipping_resume(args.clip_mode,previous.get('training_contract',{}))
+            check_objective_resume(args.value_core_scale,previous.get('training_contract',{}))
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                     dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,input_contract=visual_contract,
@@ -218,7 +226,8 @@ def run_training(args,cpus,run):
             try:
                 receipt=save_checkpoint(model,sampler,path,dict(dataset_id=manifest['dataset_id'],metrics=metrics,
                     port_contract=port_contract,input_contract=visual_contract,training_contract=dict(batch_size=args.batch_size,rate=args.rate,
-                        clip=args.clip,clip_mode=args.clip_mode,rate_scales=args.rate_scales,schedule=schedule.contract(),epsilon=args.epsilon)),
+                        clip=args.clip,clip_mode=args.clip_mode,value_core_scale=args.value_core_scale,
+                        rate_scales=args.rate_scales,schedule=schedule.contract(),epsilon=args.epsilon)),
                     root=root,peer=args.peer or None)
             except Exception as failure:
                 error=failure

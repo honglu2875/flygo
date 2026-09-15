@@ -432,6 +432,22 @@ impl Model {
         dembedding: Option<&[f32]>,
         dscores: Option<&[f32]>,
     ) -> Result<Grad, String> {
+        self.backward_routed(params, input, output, dlogits, dvalues, dembedding, dscores, 1.0)
+    }
+    /// Scale only the value-head contribution entering the shared representation.
+    /// Generic embedding VJPs retain their literal cotangents and use scale one.
+    #[allow(clippy::too_many_arguments)]
+    fn backward_routed(
+        &self,
+        params: &Params,
+        input: &[f32],
+        output: &Output,
+        dlogits: &[f32],
+        dvalues: &[f32],
+        dembedding: Option<&[f32]>,
+        dscores: Option<&[f32]>,
+        value_core_scale: f32,
+    ) -> Result<Grad, String> {
         let p = &self.ports;
         let batch = output.tape.batch;
         if dlogits.len() != batch * p.actions
@@ -464,10 +480,11 @@ impl Model {
             let g = dvalues[b] * (1.0 - output.values[b] * output.values[b])
                 + dscores.map_or(0.0, |g| g[b]);
             let g = f64::from(g);
+            let core_g = if value_core_scale == 1.0 { g } else { g * f64::from(value_core_scale) };
             value_bias += g;
             self.value_groups(|group| {
                 value_weight[group] += g * f64::from(output.pooled[group * batch + b]);
-                dpool[group * batch + b] += g * f64::from(params.value_weight[group]);
+                dpool[group * batch + b] += core_g * f64::from(params.value_weight[group]);
             });
         }
         grad.policy_weight = policy_weight.into_iter().map(|x| x as f32).collect();
@@ -521,6 +538,23 @@ impl Model {
         steps: usize,
         targets: Targets<'_>,
     ) -> Result<(f64, f64, Grad), String> {
+        self.loss_and_grad_with_value_core_scale(params, input, batch, steps, targets, 1.0)
+    }
+    /// CE + MSE metrics and full head gradients; shared gradient is g_policy + scale*g_value.
+    /// Prediction, recurrence, and both task-head derivatives are unchanged.
+    #[allow(clippy::too_many_arguments)]
+    pub fn loss_and_grad_with_value_core_scale(
+        &self,
+        params: &Params,
+        input: &[f32],
+        batch: usize,
+        steps: usize,
+        targets: Targets<'_>,
+        value_core_scale: f32,
+    ) -> Result<(f64, f64, Grad), String> {
+        if !value_core_scale.is_finite() || value_core_scale < 0.0 {
+            return Err("Value core scale must be finite and nonnegative".into());
+        }
         let Targets {
             legal,
             policy,
@@ -573,7 +607,8 @@ impl Model {
             value_loss += f64::from(delta * delta) / batch as f64;
             dvalues[b] = 2.0 * delta / batch as f32;
         }
-        let grad = self.backward(params, input, &output, &dlogits, &dvalues)?;
+        let grad = self.backward_routed(params, input, &output, &dlogits, &dvalues,
+            None, None, value_core_scale)?;
         Ok((policy_loss, value_loss, grad))
     }
 }

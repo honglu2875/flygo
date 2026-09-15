@@ -53,9 +53,14 @@ in all three seeds. Counted B1 prediction FLOPs rise **8.81%**; entropy falls
 only .04047. This is a short-horizon optimizer improvement, with no new
 matched-CNN or playing-strength result. [Full study](group-clipping-study.md).
 
-A [fresh-seed 128k-exposure confirmation](clipping-confirmation-study.md) is
-now running on CPU. All 12 numerical and six recovery cases pass; final
-validation and the paired scientific result remain pending.
+The [fresh-seed 128k-exposure confirmation](clipping-confirmation-study.md) is
+complete. Per-group clipping improves mean full-validation KL
+**1.64356 → 1.53649** and value MSE **.60288 → .55816**, with policy gains in
+all three fresh seeds. The paired KL difference is −.10707, conditional
+family 95% interval [−.12566, −.07015], paired-seed SD .04139. Counted warm B1
+prediction work rises **5.73%**. Retain per-group clipping as the next study's
+optimizer control; motor concentration and the CNN gap remain unresolved.
+All endpoints, full validations and verified evidence copies are closed.
 
 The separate [policy/value gradient audit](loss-balance-study.md) records all
 nine discovery cases, including two failed native bias-decomposition checks.

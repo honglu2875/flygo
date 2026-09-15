@@ -10,6 +10,7 @@ from pathlib import Path
 import shlex
 import shutil
 import subprocess
+import sys
 
 from cluster import snapshot, SSH, PYTHON
 from flygo.data.corpus import atomic_json
@@ -23,6 +24,7 @@ def numerical_protocol_files(plan,job,root,report,records):
     """Require both registered checks when a trial uses the combined v2 report."""
     from flygo.qualify import sha256
     from flygo.schedule import Schedule
+    from flygo.objectives import value_core_scale
     if not plan.get('numerical_plan'):
         if report.get('numerical_protocol') or len(records)!=1:
             raise ValueError('A revised numerical protocol needs an explicit launch contract')
@@ -49,15 +51,22 @@ def numerical_protocol_files(plan,job,root,report,records):
         for family,names in [('forward',('states','logits','value')),('loss',('policy_loss','value_loss')),
                              *[(f,parameters) for f in ('gradient','param','first','second')]] for name in names}
     clip_mode=job.get('clip_mode',plan.get('clip_mode','global'))
+    scale=value_core_scale(job.get('value_core_scale',plan.get('value_core_scale',1.0)))
     if spec.get('measure_clipping'):
         checks.update(f'{step}/{family}/{name}' for step in range(3)
                       for family in ('group_norm','clip_factor') for name in parameters)
         checks.update(f'{step}/clipping/norm' for step in range(3))
-        if clip_mode!=job['arm'] or spec.get('factor')!='optimizer clipping scope only':
+        if (spec.get('factor')=='optimizer clipping scope only' and clip_mode!=job['arm']) or (
+                spec.get('factor') not in ('optimizer clipping scope only','supervised value-to-circuit gradient scale only')):
             raise ValueError('Clipping evidence differs from the actual trial mode')
+    if scale not in [value_core_scale(v) for v in spec.get('value_core_scales',[1.0])]:
+        raise ValueError('Value core scale differs from the registered numerical protocol')
+    if spec.get('factor')=='supervised value-to-circuit gradient scale only' and (
+            clip_mode!=spec['clip_mode'] or scale!=value_core_scale(spec['value_core_arms'][job['arm']])):
+        raise ValueError('Value core evidence differs from the actual trial arm')
     expected_optimizer=dict(rate=schedule.peak,epsilon=job.get('epsilon',plan['epsilon']),
         clip=job.get('clip',plan.get('clip',1.)),rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),
-        clip_mode=clip_mode)
+        clip_mode=clip_mode,value_core_scale=scale)
     files={path};seen=set()
     for evidence,record in zip(report['constituent_reports'],records):
         constituent=Path(evidence['path']);constituent.resolve().relative_to(root.resolve())
@@ -76,7 +85,7 @@ def numerical_protocol_files(plan,job,root,report,records):
                 or record['aligned_checkpoints']!=alignment or set(record['errors'])!=checks
                 or record['model']!=records[0]['model'] or record['model']['seed']!=job['seed']
                 or record['updates']!=3 or record['batch_size']!=plan['batch_size']
-                or {'clip_mode':'global',**record['optimizer']}!=expected_optimizer):
+                or {'clip_mode':'global','value_core_scale':1.0,**record['optimizer']}!=expected_optimizer):
             raise ValueError('Both complete numerical trajectories must cover the actual trial')
         seen.add(protocol);files.add(constituent)
     return files
@@ -87,6 +96,7 @@ def head_io_files(plan,root):
     from flygo.attachments import runtime_hashes
     from flygo.qualify import sha256
     from flygo.schedule import Schedule
+    from flygo.objectives import value_core_scale
     files=set();initial_by_seed={}
     for job in plan['jobs']:
         if not job.get('head_mask'):continue
@@ -103,17 +113,21 @@ def head_io_files(plan,root):
         training=dict(batch_size=plan['batch_size'],rate=job.get('rate',plan['rate']),
             clip=job.get('clip',plan.get('clip',1.0)),epsilon=job.get('epsilon',plan['epsilon']),
             rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),schedule=schedule.contract(),
-            clip_mode=job.get('clip_mode',plan.get('clip_mode','global')))
+            clip_mode=job.get('clip_mode',plan.get('clip_mode','global')),
+            value_core_scale=value_core_scale(job.get('value_core_scale',plan.get('value_core_scale',1.0))))
         if (record is None or native.get('status')!='complete' or report.get('status')!='passed' or report['seed']!=job['seed']
                 or report['runtime_sha256']!=runtime_hashes() or report['qualification_sha256']!=sha256(qualification)
                 or report['head_mask']!=record['head_mask'] or report['input_contract']!=record['input_contract']
-                or report['model']!=record['model'] or {'clip_mode':'global',**report['training_contract']}!=training
+                or report['model']!=record['model'] or {'clip_mode':'global','value_core_scale':1.0,**report['training_contract']}!=training
                 or report['fresh_process']['status']!='passed'
                 or report['fresh_process']['runtime_sha256']!=runtime_hashes()):
             raise ValueError('Head recovery qualification differs from the trial contract')
         if training['clip_mode']!='global' and (report['fresh_process'].get('clip_mode')!=training['clip_mode']
                 or report['fresh_process'].get('wrong_mode_restore_rejected') is not True):
             raise ValueError('Group clipping needs exact recovery and mode-mismatch evidence')
+        if training['value_core_scale']!=1 and (report['fresh_process'].get('value_core_scale')!=training['value_core_scale']
+                or report['fresh_process'].get('wrong_scale_restore_rejected') is not True):
+            raise ValueError('Value core scaling needs exact recovery and scale-mismatch evidence')
         for name,key in [('initial.json','initial_sha256'),('expected.json','expected_sha256')]:
             evidence=path.with_name(name)
             if sha256(evidence)!=report[key]:raise ValueError('Head recovery evidence changed')
@@ -133,7 +147,7 @@ def attachment_files(plan,root,environment):
     from flygo.fly import FlyConfig
     from flygo.qualify import sha256
     code='from flygo.attachments import runtime_hashes;import json;print(json.dumps(runtime_hashes()))'
-    qualified=json.loads(subprocess.check_output([str(root/'venv/bin/python'),'-B','-c',code],text=True,
+    qualified=json.loads(subprocess.check_output([sys.executable,'-B','-c',code],text=True,
         env={**os.environ,'PYTHONPATH':str(environment/'site-packages'),'OPENBLAS_NUM_THREADS':'1'},timeout=30))
     if qualified!=runtime_hashes():
         raise ValueError('Controller and selected attachment learner have different numerical sources')
@@ -170,7 +184,8 @@ def attachment_files(plan,root,environment):
         require_qualification(qualification,contract,config,batch_size=plan['batch_size'],
             rate=job.get('rate',plan['rate']),epsilon=job.get('epsilon',plan['epsilon']),
             clip=job.get('clip',plan.get('clip',1.0)),rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),head_mask=head_mask,
-            clip_mode=job.get('clip_mode',plan.get('clip_mode','global')))
+            clip_mode=job.get('clip_mode',plan.get('clip_mode','global')),
+            value_core_scale=job.get('value_core_scale',plan.get('value_core_scale',1.0)))
         records=[r for r in report['records'] if r['input_contract']==contract
                  and r.get('head_mask')==(None if head_mask is None else head_mask.contract)]
         if (report['dataset_id']!=manifest['dataset_id'] or report['graph_id']!=graph_manifest['graph_id']
@@ -182,6 +197,7 @@ def attachment_files(plan,root,environment):
 
 
 def main():
+    from flygo.objectives import value_core_scale
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True, type=Path)
     parser.add_argument('--root', type=Path, default=Path('/dev/shm/flygo'))
@@ -298,7 +314,8 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                     expected=dict(run_id=run_id,release=plan['release'],passes=job['passes'],
                         groups=job.get('groups',plan.get('groups',656)),seed=job['seed'],
                         steps=plan['updates'],batch_size=plan['batch_size'],rate=job.get('rate',plan['rate']),
-                        clip=job.get('clip',plan.get('clip',1.0)),clip_mode=job.get('clip_mode',plan.get('clip_mode','global')),backend='cpu',
+                        clip=job.get('clip',plan.get('clip',1.0)),clip_mode=job.get('clip_mode',plan.get('clip_mode','global')),
+                        value_core_scale=value_core_scale(job.get('value_core_scale',plan.get('value_core_scale',1.0))),backend='cpu',
                         diagnostics_every=plan.get('diagnostics_every',0),
                         ports=str(root/job['ports']) if job.get('ports') else None,
                         rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),
@@ -311,7 +328,7 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                             qualification=str(root/(job.get('qualification') or plan['qualifications'][str(job['seed'])])))
                     expected['head_mask']=str(root/job['head_mask']) if job.get('head_mask') else None
                     valid=(config.get('dataset_id')==manifest['dataset_id'] and config.get('cpus')==job['cpus']
-                           and all(arguments.get(key,dict(clip=1.0,clip_mode='global',backend='cpu',diagnostics_every=0,rate_scales={},
+                           and all(arguments.get(key,dict(clip=1.0,clip_mode='global',value_core_scale=1.0,backend='cpu',diagnostics_every=0,rate_scales={},
                                     warmup_steps=0,decay_until=0,final_rate_ratio=.1,diagnostic_batch_size=32,rate_softness=0.0,readout_mean_scale=1.0,epsilon=1e-8).get(key))==value
                                    for key,value in expected.items()))
                     if not valid or not (old['status'].get('state')=='complete' or
@@ -341,6 +358,9 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
             for key in ('warmup_steps','decay_until','final_rate_ratio','diagnostic_batch_size','rate_softness','readout_mean_scale','epsilon','clip_mode'):
                 if key in job or key in plan:
                     command+=['--'+key.replace('_','-'),str(job.get(key,plan.get(key)))]
+            scale=value_core_scale(job.get('value_core_scale',plan.get('value_core_scale',1.0)))
+            if scale!=1:
+                command+=['--value-core-scale',str(scale)]
             if job.get('ports'):command+=['--ports',str(root/job['ports'])]
             if plan.get('input_map'):
                 command+=['--input-map',str(root/plan['input_map']),'--input-mode',job['mode'],

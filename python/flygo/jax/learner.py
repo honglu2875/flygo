@@ -17,6 +17,7 @@ from ..fly import FlyConfig,initialize
 from ..optimizer import (DEFAULT_EPSILON, validate_epsilon, DEFAULT_CLIP_MODE,
                          validate_clip_mode, clipping_arrays, check_clipping_restore, clipping_metrics)
 from ..readout import check_restore
+from ..objectives import value_core_scale as canonical_value_core_scale, objective_arrays, check_objective_restore
 
 
 class JaxLearner:
@@ -28,7 +29,7 @@ class JaxLearner:
         return self._clip_mode
 
     def __init__(self,graph,config,*,ports,params,compute_graph,forward_function,loss_function,kwargs,mesh=None,
-                 clip_mode=DEFAULT_CLIP_MODE):
+                 clip_mode=DEFAULT_CLIP_MODE, loss_kwargs=None):
         validate_clip_mode(clip_mode)
         self._clip_mode=clip_mode
         self.graph,self.config=graph,config
@@ -42,6 +43,7 @@ class JaxLearner:
         self._first=jax.tree.map(jnp.zeros_like,self._params)
         self._second=jax.tree.map(jnp.zeros_like,self._params)
         self.step=0
+        loss_kwargs = {} if loss_kwargs is None else dict(loss_kwargs)
 
         def mapped(fun,inputs,outputs):
             return jax.jit(jax.shard_map(fun,mesh=self.mesh,in_specs=inputs,
@@ -53,7 +55,7 @@ class JaxLearner:
         self._trace=mapped(lambda p,g,a,x:forward_function(p,g,a,x,**kwargs),(P(),P(),P(),P('data')),
                            dict(logits=P('data'),value=P('data'),states=P(None,None,'data')))
         def derivative(p,g,a,b):
-            (_,parts),gradient=jax.value_and_grad(loss_function,has_aux=True)(p,g,a,*b,**kwargs)
+            (_,parts),gradient=jax.value_and_grad(loss_function,has_aux=True)(p,g,a,*b,**kwargs,**loss_kwargs)
             return jax.lax.pmean(parts,'data'),jax.lax.pmean(gradient,'data')
         self._gradient=mapped(derivative,(P(),P(),P(),(P('data'),)*4),(P(),P()))
         def update(p,first,second,g,a,b,corrections,rate,clip,epsilon):
@@ -179,11 +181,16 @@ class JaxFly(JaxLearner):
     numerical_runtime='jax-highest-fp32-norm-buckets-v1'
 
     @property
+    def value_core_scale(self):
+        return self._value_core_scale
+
+    @property
     def model_version(self):
         return self.config.model_version + ('+masked-readout-v1' if self.head_mask is not None else '')
 
     def __init__(self,graph,config=FlyConfig(),*,ports=None,params=None,mesh=None,head_mask=None,
-                 clip_mode=DEFAULT_CLIP_MODE):
+                 clip_mode=DEFAULT_CLIP_MODE, value_core_scale=1.0):
+        self._value_core_scale = canonical_value_core_scale(value_core_scale)
         self.head_mask = head_mask
         if head_mask is not None: head_mask.validate_shape(actions=config.actions,groups=config.groups)
         initial_ports,initial_params=initialize(graph,config)
@@ -194,11 +201,14 @@ class JaxFly(JaxLearner):
             forward_function=forward,loss_function=loss,
             kwargs=dict(steps=config.steps,groups=config.groups,actions=config.actions,
                         rate_softness=config.rate_softness,readout_mean_scale=config.readout_mean_scale,
-                        head_mask=None if head_mask is None else head_mask.parameter_masks()),mesh=mesh,clip_mode=clip_mode)
+                        head_mask=None if head_mask is None else head_mask.parameter_masks()),mesh=mesh,clip_mode=clip_mode,
+            loss_kwargs=dict(value_core_scale=self.value_core_scale))
 
     def checkpoint_arrays(self):
-        return {**super().checkpoint_arrays(), **({} if self.head_mask is None else self.head_mask.checkpoint_arrays())}
+        return {**super().checkpoint_arrays(), **({} if self.head_mask is None else self.head_mask.checkpoint_arrays()),
+                **objective_arrays(self.value_core_scale)}
 
     def restore_arrays(self,arrays):
+        check_objective_restore(self.value_core_scale, arrays)
         check_restore(self.head_mask,arrays)
         super().restore_arrays(arrays)

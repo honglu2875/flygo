@@ -668,8 +668,8 @@ The analyzer supports explicitly registered seeds and horizons, binds its
 implementation hash and retains the original statistics and selection rule.
 All 13 focused checks pass both on root and on the designated analysis worker
 2. Its copied PyArrow dependency passes all 748 file checks and reads 165,122
-annotation rows. The six CPU learners and initial replicas are verified; final
-scientific results remain pending. [Contract and operations](clipping-confirmation-study.md),
+annotation rows. The six CPU learners and initial replicas were verified before
+training. [Contract, operations and final results](clipping-confirmation-study.md),
 [engineering receipt](results/clipping-confirmation-engineering-v1.json).
 
 ## Loss decomposition and automatic collection, 2026-09-15
@@ -702,6 +702,44 @@ they do not establish improved validation or a biological mechanism.
 The frozen automatic clipping collector passes five focused archive/process
 readiness tests on worker 2. A wrapper parse failure occurred before any test
 or coordinator started; the corrected wrapper leaves collector source intact.
-The active coordinator preserves the registered endpoint/statistical rules and
-uses worker 2 for bulk analysis, within the original storage/RAM limits.
-Final confirmation results remain pending.
+The coordinator preserved the registered endpoint/statistical rules and used
+worker 2 for bulk analysis, within the original storage/RAM limits. Collection
+is complete: all 183 scientific evidence files have member-verified peer
+archives, initial/final checkpoints have verified replicas, and the full
+analysis report is identical on workers 2 and 3. The fixed candidate rule passes:
+policy improves in all fresh seeds and mean value MSE improves. Prediction
+work rises. [Result](results/clipping-confirmation-v1.json),
+[closure](results/clipping-confirmation-closure-v1.json).
+
+## Value-to-circuit gradient engineering, 2026-09-15
+
+The new shared-gradient coefficient preserves full policy/value head gradients
+and prediction equations. The native build passes 56 Rust tests, with one
+existing ignored test. All 178 Python checks pass in a complete isolated CPU
+bundle, including seven independent derivative/recovery tests and two new
+rejection checks at deployment. The original 169-test attempt has eight setup
+errors from missing PyArrow and existing fixtures; its new gradient tests pass.
+Both attempts use identical learner bytes and remain available in verified
+archives. No numerical tolerance changed.
+
+Four default-compatibility cases match the prior runtime bit for bit: both
+clipping modes at peak and actual warmup rates, including states, losses,
+gradients, parameters, moments, sampling and restoration of genuine prior
+checkpoints. The two phases use 448 engineering update exposures each. There
+are 226 member-verified test/regression archive entries on second workers;
+the initial build/source and full runtime archive are verified on three workers.
+[Implementation and scope](value-core-study.md),
+[completed engineering receipt](results/value-core-engineering-v1.json).
+
+Actual seeds 16/17/18 pass all 18 numerical and nine recovery cases, using
+4,896 additional engineering exposures. All 159 qualification archive entries,
+including full continuation checkpoints, have verified peer copies. All nine
+exact prospective deployment contracts pass on worker 2, including initial
+pairing, runtime, coefficient, schedule and recovery checks.
+[Qualification receipt](results/value-core-qualification-v1.json). An unlaunched IO
+draft retained the earlier numerical-plan digest; v2 fixes only that reference
+before staging. A sandbox-only `/dev/shm` lookup was also initially mistaken
+for missing host artifacts. A host-view check confirms that the original root
+artifacts are intact; both observations are retained. None of these control
+corrections changes a learner or a scientific endpoint. Scientific trials
+remain unregistered; TPU stays paused.

@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 13:25 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 14:43 UTC**. Fixed fly topology, learnable strengths.
 Compare **prediction FLOPs and labeled-position exposures**; report training,
 tuning, memory and latency costs separately. No advantage over the matched CNN
 has been established. Detailed history stays in the linked study reports.
@@ -10,38 +10,35 @@ has been established. Detailed history stays in the linked study reports.
 
 ## Current priority
 
-[Clipping confirmation](docs/clipping-confirmation-study.md) is running on CPU:
-global versus per-parameter-group clipping, fresh paired seeds **13/14/15**,
-**4,000 B32 updates / 128,000 exposures per endpoint**. All six learners have
-verified thread affinity and initial checkpoint replicas. Full validation,
-motor probes and prediction counts are queued after each final checkpoint
-and verified recovery copy. **Final results remain pending.**
+[Clipping confirmation](docs/clipping-confirmation-study.md) is complete.
+Per-group clipping improves mean full-validation KL **1.64356 → 1.53649**
+and value MSE **.60288 → .55816**, with policy gains in all three fresh seeds.
+All six 128k-exposure endpoints, validation, motor probes, prediction counts
+and evidence copies are closed. Counted warm B1 prediction FLOPs rise **5.73%**.
+Retain per-group clipping as the optimizer control; the motor bottleneck and
+CNN gap remain unresolved. Scientific exposure: **768,000**; separate
+qualification exposure: **3,264**. All 306 qualification and 183 scientific
+archive entries have verified owner/peer copies.
 
-Only clipping differs within a pair. Keep B's current-board spherical input,
-dense 2,129-motor heads, K8 hard recurrence, reset state and optimization
-settings fixed. All **12 numerical / six exact recovery** gates pass; **13
-analysis checks** pass on root and worker 2. Qualification adds **3,264** V0
-update exposures separately from **768,000** planned scientific exposures.
-All 306 qualification evidence files have verified owner/peer archives.
+The next priority is [value-to-circuit gradient routing](docs/value-core-study.md):
+keep both task heads fully trained while testing shared gradients
+`g_policy + lambda * g_value`, with proposed scales **1 / .1 / 0**.
+The [gradient audit](docs/loss-balance-study.md) motivates this optimization-only
+intervention; keep B's current-board spherical input, dense motor projections,
+K8 hard recurrence and reset state fixed.
 
-| Worker | CPUs 32–55 | CPUs 92–115 |
-|---|---|---|
-| 1 | Global, seed 13 | Per-group, seed 15 |
-| 2 | Per-group, seed 13 | Global, seed 14 |
-| 3 | Global, seed 15 | Per-group, seed 14 |
-
-The tested automatic collector waits for actual trainer exit and unlocked,
-completed followups, audits each endpoint, relays verified evidence to worker
-2 and runs the frozen paired analysis. Five collection checks pass. Final
-analysis and the optimizer decision remain pending.
-
-A separate [policy/value gradient audit](docs/loss-balance-study.md) is complete:
-all nine cases recorded, **seven passing / two failed numerical gates**. Value
-gradients dominate the shared circuit on the fixed 32-position training probe;
-an independent bias adjoint closely traces the failures to FP32 summation.
-All evidence has verified second-host copies. A value-to-circuit gradient
-scale is a proposed next study, pending the optimizer decision and separate
-qualification. Persistent state and propagation changes remain separate.
+The new learner passes **56 Rust / 178 Python tests**, including independent
+finite differences and Rust/JAX CPU comparisons. Both the initial incomplete
+test-bundle failure and successful correction are retained. Exact scale-one
+full-CNS regression passes in both clipping modes, including prior-runtime
+checkpoint continuation (**896** engineering update exposures). Seeds
+**16/17/18** pass all **18** Rust/JAX numerical and **nine** exact recovery
+cases at scales **1 / .1 / 0**, adding **4,896** engineering exposures. All 159
+qualification archive entries have verified peer copies, and all nine exact
+deployment contracts pass on worker 2. **Next: register the paired scientific
+comparison and its analysis, then launch fixed-horizon CPU trials.** Scientific
+training for this factor has not started.
+Persistent state, attachment changes and precision changes remain separate.
 
 ## Milestones
 
@@ -50,7 +47,7 @@ qualification. Persistent state and propagation changes remain separate.
 | M0–M2: design, Go engine, expert pilot | Complete | Optional throughput improvements |
 | M3: corpus | V0 complete; generation stopped | Preserve stop markers; separately register later releases |
 | M4–M5: fly execution and learning | Rust/Python/JAX paths qualified | Qualify each new numerical model independently |
-| M6: controlled studies | Clipping confirmation running; loss-balance audit complete | Close fixed endpoints, then qualify a separate loss-routing study |
+| M6: controlled studies | Clipping confirmation complete; value routing qualified | Register paired value-routing trials and analysis, then train |
 | M7: four-host TPU | Default path qualified; use paused | Nondefault spherical/epsilon/smooth paths need separate TPU gates |
 | M8: online refinement | Pending a useful prior | Prior/PUCT/Gumbel interfaces and panels work |
 | Biological groups and interfaces | Mapping, readout and signal studies complete | Improve learnability through separately controlled changes |
@@ -73,8 +70,9 @@ qualification. Persistent state and propagation changes remain separate.
   **1.70966 → 1.63205** and value MSE **.64897 → .58767**, in every seed.
   Warm B1 prediction FLOPs rise **185.12M → 201.43M** (+8.81%). Entropy
   falls only .04047; the leading motor component still explains 96.95–99.71%
-  of raw visual-response variance. A provisional optimizer candidate, with
-  no CNN or playing-strength claim. [Complete study](docs/group-clipping-study.md).
+  of raw visual-response variance. Confirmed at 128k exposures in fresh seeds:
+  KL **1.64356 → 1.53649**, MSE **.60288 → .55816**, B1 cost **+5.73%**.
+  No CNN or playing-strength claim. [Complete study](docs/group-clipping-study.md).
 - **Signal flow:** 48 recurrence and 75 independent VJP group checks pass.
   Initial motor visual variation is about 2,322 times smaller than total
   variation. Trained responses and gradients are strongly concentrated;
@@ -85,7 +83,8 @@ qualification. Persistent state and propagation changes remain separate.
   shared value-gradient norms are 8.20–29.38 times policy norms and oppose
   them. This is one training probe and raw gradient geometry, not an Adam-step
   or validation result. Two other cases fail a native bias decomposition;
-  all 30 independent head-boundary checks pass. No learner changed.
+  all 30 independent head-boundary checks pass. The audit changes no learner;
+  its separate gradient-routing follow-up is undergoing qualification.
   [Audit, numerical failures and proposed follow-up](docs/loss-balance-study.md).
 - **Readouts and retinal mapping:** larger retinal allocation and soma-side
   policy heads do not show a repeatable policy benefit. The fresh-seed soma

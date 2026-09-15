@@ -12,6 +12,7 @@ import numpy as np
 from .checkpoint import load_checkpoint
 from .fly import FlyConfig,RustFly,load_graph,MODEL_VERSION
 from .optimizer import saved_clipping_mode
+from .objectives import saved_value_core_scale
 from .go import Game,GameConfig,GumbelConfig
 from .gtp import action_to_vertex,vertex_to_action
 from .runtime import cpu_profile,pin
@@ -56,7 +57,7 @@ def load_player(checkpoint:Path,graph_path:Path,*,threads=16):
     else:
         config=FlyConfig(**{**metadata['model_config'],'threads':threads})
         model=RustFly(load_graph(graph_path),config,ports=ports,head_mask=head_mask,
-                      clip_mode=saved_clipping_mode(metadata))
+                      clip_mode=saved_clipping_mode(metadata),value_core_scale=saved_value_core_scale(metadata))
     visual=metadata.get('input_contract')
     if config.actions!=82 or (not visual and config.features!=972):
         raise ValueError('This GTP profile requires a trained 9x9 Go model')

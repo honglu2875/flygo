@@ -1,0 +1,391 @@
+{
+  "created": 1789482781.301544,
+  "engineering_contract_sha256": "479bb8770293a3672999d43b0836cce5195f61017061f58c0740272ce3a5d444",
+  "evidence": {
+    "archives": [
+      {
+        "bytes": 380538880,
+        "files": 23,
+        "manifest": "runs/value-core-evidence-v1/owner-1/manifest.json",
+        "manifest_sha256": "2614d39a75baee82bf0053fc2f6e951f012e0b3b2cdd52e16ec336cdd2b1eb46",
+        "member_verification": {
+          "files": 23,
+          "status": "passed"
+        },
+        "owner": 1,
+        "path": "runs/value-core-evidence-v1/owner-1/evidence.tar",
+        "peer": 2,
+        "sha256": "cfb2ee877e2d5df298efe7f3a5065c4fc6a5703efa2457efdd839d23d7b717fe",
+        "transfer": {
+          "bytes": 380538880,
+          "sha256": "cfb2ee877e2d5df298efe7f3a5065c4fc6a5703efa2457efdd839d23d7b717fe",
+          "status": "passed"
+        }
+      },
+      {
+        "bytes": 2385920,
+        "files": 203,
+        "manifest": "runs/value-core-evidence-v1/owner-2/manifest.json",
+        "manifest_sha256": "f57406211e4828b9627c0613a949c0df252ba56ae62065ec804d1f40f07e6735",
+        "member_verification": {
+          "files": 203,
+          "status": "passed"
+        },
+        "owner": 2,
+        "path": "runs/value-core-evidence-v1/owner-2/evidence.tar",
+        "peer": 3,
+        "sha256": "f3922ed75d555961c80b13db099a56ea1eea924d6bc79e39f7d824af1664c677",
+        "transfer": {
+          "bytes": 2385920,
+          "sha256": "f3922ed75d555961c80b13db099a56ea1eea924d6bc79e39f7d824af1664c677",
+          "status": "passed"
+        }
+      }
+    ],
+    "created": 1789482650.4772782,
+    "files": 226,
+    "runtime_archive": {
+      "archive": "runs/value-core-runtime-transfer-v1/payload.tar",
+      "bytes": 78018560,
+      "files": 1157,
+      "manifest": "runs/value-core-runtime-transfer-v1/manifest.json",
+      "manifest_sha256": "acbefe304fb51d351c1c462835d3d71b6300d631c13b6590cbbc598558c55251",
+      "sha256": "36f32bfb8eb761cef01ddda520986999f45d463678d6cce2a6200b5c66a965c2",
+      "status": "packed"
+    },
+    "runtime_worker_2": {
+      "archive": "runs/value-core-runtime-transfer-v1/payload.tar",
+      "bytes": 78018560,
+      "extraction": {
+        "extracted": 1158,
+        "files": 1157
+      },
+      "files": 1157,
+      "manifest": "runs/value-core-runtime-transfer-v1/manifest.json",
+      "manifest_sha256": "acbefe304fb51d351c1c462835d3d71b6300d631c13b6590cbbc598558c55251",
+      "sha256": "36f32bfb8eb761cef01ddda520986999f45d463678d6cce2a6200b5c66a965c2",
+      "status": "passed"
+    },
+    "runtime_worker_3": {
+      "extraction": {
+        "extracted": 1158,
+        "files": 1157
+      },
+      "transfer": {
+        "bytes": 78018560,
+        "sha256": "36f32bfb8eb761cef01ddda520986999f45d463678d6cce2a6200b5c66a965c2",
+        "status": "passed"
+      }
+    },
+    "scope": "Completed build, fixture attempts and exact native regression have verified worker copies. The initial build and entire native/Python package are in the runtime archive. Full actual-seed numerical/recovery gates are separately running.",
+    "status": "passed"
+  },
+  "exact_default_compatibility": {
+    "bitwise_case_equality": true,
+    "phases": {
+      "candidate": {
+        "cases": 4,
+        "labeled_update_exposures": 448,
+        "path": "runs/value-core-regression-v1/checks/candidate/result.json",
+        "runtime_sha256": {
+          "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+          "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+          "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+          "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+          "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+          "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+          "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+          "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+          "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+          "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+          "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+          "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+          "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+          "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+        },
+        "sha256": "c00c65651ba4450cbedfd339920d76db74cc2bb0531a1ae8d08e37f1cc370f73"
+      },
+      "legacy": {
+        "cases": 4,
+        "labeled_update_exposures": 448,
+        "path": "runs/value-core-regression-v1/checks/legacy/result.json",
+        "runtime_sha256": {
+          "attachments.py": "c30e3f89530b8cf15691fc0761ce906a4f7ec56f1add5d1796771308c7fbfe17",
+          "checkpoint.py": "66481200ebb218b2de9076a2889ece92db1bdadf2eac7e39fb1f69cdf930c0a3",
+          "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+          "fly.py": "6ec1f2636cfda3468c4aa31ef36ac0f691a56ee4024fd36bfa18ba064305fb7a",
+          "jax/learner.py": "4352ce533cf7c2e5a8ed3a7966ec1bab7e410fc4968192281c6680ac33fe9d76",
+          "jax/model.py": "e5476ef53fe7299e89c2a242c4593114375817cbb28a327c0c4f105c3c387ae6",
+          "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+          "native": "9b34b4da315fda00686e501debe507fdeb76d06fa07f153fcb2d4c7b0074536f",
+          "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+          "play.py": "b76a88eb0e3522e00e5ac2db0bdef904c357620716735c39bc443f4dfa6016d8",
+          "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+          "train.py": "662a39bbe3274755703a71d3c262f71aae305eb52bdd086d0cbd66a2be8dc8fc",
+          "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+        },
+        "sha256": "28c2dcb54707e8ae094d20ef74422b80a0d8dbb36b8de8debfbc2653059e68c5"
+      }
+    },
+    "result": {
+      "created": 1789482049.9806776,
+      "engineering_labeled_update_exposures": {
+        "candidate": 448,
+        "legacy": 448,
+        "total": 896
+      },
+      "evidence": {
+        "candidate": "c00c65651ba4450cbedfd339920d76db74cc2bb0531a1ae8d08e37f1cc370f73",
+        "legacy": "28c2dcb54707e8ae094d20ef74422b80a0d8dbb36b8de8debfbc2653059e68c5"
+      },
+      "plan_sha256": "53238d684579cbe358a776af62fc87b077e2c4805a8787937f40191ad1b9c155",
+      "records": [
+        {
+          "command": [
+            "taskset",
+            "--cpu-list",
+            "32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55",
+            "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+            "-B",
+            "/dev/shm/flygo/runs/value-core-regression-v1/scripts/qualify_global_regression.py",
+            "--root",
+            "/dev/shm/flygo",
+            "--plan",
+            "/dev/shm/flygo/runs/value-core-regression-v1/plan.json",
+            "--output",
+            "/dev/shm/flygo/runs/value-core-regression-v1/checks",
+            "--phase",
+            "legacy"
+          ],
+          "log_sha256": "1ee6d4931f548a7205479bf7e4d5367eeb2fe2c3f501ac97545c71b9ba81a07d",
+          "phase": "legacy",
+          "returncode": 0,
+          "seconds": 65.80540561676025
+        },
+        {
+          "command": [
+            "taskset",
+            "--cpu-list",
+            "32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55",
+            "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+            "-B",
+            "/dev/shm/flygo/runs/value-core-regression-v1/scripts/qualify_global_regression.py",
+            "--root",
+            "/dev/shm/flygo",
+            "--plan",
+            "/dev/shm/flygo/runs/value-core-regression-v1/plan.json",
+            "--output",
+            "/dev/shm/flygo/runs/value-core-regression-v1/checks",
+            "--phase",
+            "candidate"
+          ],
+          "log_sha256": "3f7cb9e063acf65841262c79da91440ddbd02441c73f6cb3e4dd3ceaf00c17f9",
+          "phase": "candidate",
+          "returncode": 0,
+          "seconds": 66.75161862373352
+        }
+      ],
+      "status": "passed",
+      "worker_sha256": "d0bb4ed24c007e735798cba2dc8bb6c4f6bc6674db9c0db40e4e95a81bf27691"
+    }
+  },
+  "first_python_attempt": {
+    "correction": "Same learner bytes; provide PyArrow and three existing plan/result fixtures. Also include current deployment contract checks in the corrected source bundle.",
+    "errors": 8,
+    "failure": {
+      "created": 1789480174.9275892,
+      "records": [
+        {
+          "command": [
+            "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+            "test",
+            "--workspace",
+            "--locked",
+            "--offline",
+            "-j",
+            "4"
+          ],
+          "log_sha256": "bde44e33ca7dff551cddbbf2379ba8b5aa7dc045432ac7fb53256c255e81a3f4",
+          "name": "rust-tests",
+          "returncode": 0,
+          "seconds": 15.707966566085815
+        },
+        {
+          "command": [
+            "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+            "build",
+            "--release",
+            "--workspace",
+            "--all-targets",
+            "--locked",
+            "--offline",
+            "-j",
+            "4"
+          ],
+          "log_sha256": "6aeb354b7fe48e857dcb34d586cc79a1ca10c2cde5224193a754e90c975fb81b",
+          "name": "native-build",
+          "returncode": 0,
+          "seconds": 47.628764152526855
+        },
+        {
+          "command": [
+            "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-v"
+          ],
+          "log_sha256": "d6942e4229833b261e38ec82355573739cefac1d81e89eae623b8a3397e488b4",
+          "name": "python-tests",
+          "returncode": 1,
+          "seconds": 40.74775671958923
+        }
+      ],
+      "status": "failed",
+      "traceback": "Traceback (most recent call last):\n  File \"/dev/shm/flygo/runs/value-core-build-v1/worker.py\", line 89, in <module>\n    run([sys.executable, '-B', '-m', 'unittest', 'discover', '-s', 'tests', '-v'], 'python-tests')\n  File \"/dev/shm/flygo/runs/value-core-build-v1/worker.py\", line 56, in run\n    if result.returncode: raise RuntimeError('Failed ' + name + '; preserve the frozen attempt')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Failed python-tests; preserve the frozen attempt\n"
+    },
+    "new_value_core_tests_passed": 7,
+    "tests": 169
+  },
+  "full_numeric_qualification": {
+    "io_plan": "configs/value-core-io-v2.json",
+    "io_sha256": "67e0b7cb132dcd5e8729d94e069104116b4b189048c049be74761b16b2902933",
+    "plan": "configs/value-core-numerics-v1.json",
+    "planned_labeled_update_exposures": 4896,
+    "required_numerical_cases": 18,
+    "required_recovery_cases": 9,
+    "scientific_training_started": false,
+    "sha256": "1278cc49184fd9f2ea2d22fc97cfd0e6d2537b0f922a5e792eb72c3a7cd69af3",
+    "status": "running"
+  },
+  "limitations": "No policy/value validation benefit, matched-FLOP comparison or biological mechanism is established by these engineering gates. TPU remains paused.",
+  "native_build": {
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "created": 1789480134.1680367,
+    "environment": "environments/9471407cdd0c68b40179",
+    "native_bytes": 12381536,
+    "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+    "package_manifest_sha256": "4b75bb5351c16066a888b7d02131d685c434ac251bbe70fe26d11deb5b31b4a0",
+    "results": [
+      {
+        "command": [
+          "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "-j",
+          "4"
+        ],
+        "log_sha256": "bde44e33ca7dff551cddbbf2379ba8b5aa7dc045432ac7fb53256c255e81a3f4",
+        "name": "rust-tests",
+        "returncode": 0,
+        "seconds": 15.707966566085815
+      },
+      {
+        "command": [
+          "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/cargo",
+          "build",
+          "--release",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--offline",
+          "-j",
+          "4"
+        ],
+        "log_sha256": "6aeb354b7fe48e857dcb34d586cc79a1ca10c2cde5224193a754e90c975fb81b",
+        "name": "native-build",
+        "returncode": 0,
+        "seconds": 47.628764152526855
+      }
+    ],
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "rustc_sha256": "859254978c0a0402c32f949f6de0d99aee73be8d15f45aac00ae1448aac51e74",
+    "rustflags": "-C target-cpu=native",
+    "source_manifest_sha256": "1ed240ed3466291a2866d76ba3d9458cb1ab2101f6574bf4f2cd85416316251e",
+    "status": "passed"
+  },
+  "observations": {
+    "invalid_scale_warning": "An oversized invalid coefficient emits a NumPy cast warning before being rejected; valid proposed coefficients do not.",
+    "io_prelaunch_correction": {
+      "previous_plan": "configs/value-core-io-v1.json",
+      "previous_sha256": "d6460feda913474f1753af471497cd74b8eb1ce2613bfd0f0306f02dcae75fc2",
+      "reason": "The unlaunched initial IO draft retained the clipping-confirmation numerical-plan digest. Bind the new value-core numerical plan before staging or any updates. No settings, tolerances, seeds or learner bytes changed."
+    },
+    "root_visibility_correction": {
+      "correction_of": "root-interruption.json",
+      "created": 1789481834.8842502,
+      "finding": "The absence was observed only in the isolated default tool /dev/shm view. The host execution view retains the original root artifacts, including the V1 build job, confirmation collection/closure and v7 publication record. No actual root loss or interruption is established.",
+      "response": "Retain both observations; continue the original resource caps and worker-only payload policy."
+    }
+  },
+  "python_tests": {
+    "new_deployment_tests": 2,
+    "new_value_core_tests": 7,
+    "record": {
+      "command": [
+        "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cpus": [
+        56,
+        57,
+        58,
+        59
+      ],
+      "created": 1789481590.8893783,
+      "log_sha256": "baa2ac953ca1555beddca6f9e509cfde793b89358fd81611bfda6bb339b6ab80",
+      "previous_attempt": "runs/value-core-build-v1/failure.json",
+      "returncode": 0,
+      "runtime_sha256": {
+        "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+        "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+        "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+        "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+        "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+        "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+        "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+        "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+        "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+        "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+        "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+        "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+        "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+      },
+      "scope": "Synthetic CPU tests only; no V0 learning, scientific endpoint, final-test access or TPU.",
+      "seconds": 55.13356637954712,
+      "setup_correction": "Same learner bytes; add PyArrow and the existing three plan/result fixtures. Current deployment scripts and two contract-rejection tests are included.",
+      "source_manifest_sha256": "27089c31ddebff891c2b39c413df51673da6664e1948a2bf52f8c042d2205d55",
+      "status": "passed"
+    },
+    "tests": 178
+  },
+  "rust_tests": {
+    "ignored": 1,
+    "passed": 56
+  },
+  "scope": "Build, complete synthetic fixtures and exact default native compatibility. Actual-seed/scale numerical and recovery qualification is separately running; no scientific trial has started.",
+  "status": "passed",
+  "synthetic_value_core_fixture_updates": {
+    "note": "Counts only the seven new tests; the broader suite also executes pre-existing synthetic tests. None uses V0 training labels.",
+    "per_suite_jax": 15,
+    "per_suite_native": 30,
+    "suite_executions": 2
+  }
+}

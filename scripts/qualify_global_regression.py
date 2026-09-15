@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Compare a candidate global optimizer with a separately loaded legacy runtime."""
+"""Compare a candidate's default arithmetic with a separately loaded legacy runtime."""
 import argparse
 from dataclasses import asdict
+from itertools import product
 import json
 from pathlib import Path
 import time
@@ -44,11 +45,15 @@ def main():
         schedule=Schedule(plan['rate'],plan['warmup_steps']);cases=[]
         for seed in plan['seeds']:
             cfg=FlyConfig(steps=plan['steps'],features=adapter.features,groups=receipt['groups'],seed=seed,threads=len(plan['cpus']))
-            for protocol in ('aligned-peak','free-warmup'):
+            modes=plan.get('clip_modes',['global'])
+            for mode,protocol in product(modes,('aligned-peak','free-warmup')):
                 # Both native runtimes run freely. Checkpoint alignment belongs
                 # to the independent JAX test, not this exact regression.
-                model=RustFly(graph,cfg,ports=ports,head_mask=mask);sampler=Sampler(arrays,indexes,seed)
+                options={'clip_mode':mode} if 'clip_modes' in plan else {}
+                model=RustFly(graph,cfg,ports=ports,head_mask=mask,**options);sampler=Sampler(arrays,indexes,seed)
                 row=dict(seed=seed,rate_protocol=protocol,model=asdict(cfg),initial=hashes(model.checkpoint_arrays()),updates=[])
+                if 'clip_modes' in plan:row['clip_mode']=mode
+                label=f'seed-{seed}'+('-'+mode if 'clip_modes' in plan else '')
                 def transition(batch,step):
                     x=adapter.encode(batch[0],plan['input_mode'])
                     prediction={str(size):hashes(model.infer(x[:size],trace=True)) for size in (1,32)}
@@ -60,7 +65,7 @@ def main():
                         arrays=hashes(model.checkpoint_arrays()),sampler=sampler.state())
                 for step in range(1,4):row['updates'].append(transition(sampler.batch(plan['batch_size']),step))
                 if protocol=='free-warmup':
-                    checkpoint=args.output/'legacy'/f'seed-{seed}.npz'
+                    checkpoint=args.output/'legacy'/(label+'.npz')
                     if args.phase=='legacy':
                         save_checkpoint(model,sampler,checkpoint,dict(dataset_id=manifest['dataset_id'],
                             input_contract=input_contract(receipt,plan['input_mode']),
@@ -69,7 +74,11 @@ def main():
                     else:
                         before=hashes(model.checkpoint_arrays());sampling=sampler.state()
                         metadata=load_checkpoint(checkpoint,model,sampler,dataset_id=manifest['dataset_id'],numerical_runtime=model.numerical_runtime)
-                        if 'optimizer_clip_mode' in metadata:raise AssertionError('Expected an actual legacy checkpoint')
+                        if plan.get('legacy_checkpoint_contract')=='unscaled-objective':
+                            if 'objective_version' in metadata or 'value_core_scale' in metadata:
+                                raise AssertionError('Expected an actual checkpoint predating value-core routing')
+                        elif 'optimizer_clip_mode' in metadata:
+                            raise AssertionError('Expected an actual legacy checkpoint')
                         if before!=hashes(model.checkpoint_arrays()) or sampling!=sampler.state():
                             raise AssertionError('Legacy restored state differs from the independently repeated trajectory')
                         player,_=load_player(checkpoint,graph_path,threads=len(plan['cpus']))
@@ -80,14 +89,14 @@ def main():
                         del player
                     row['continuation']=transition(sampler.batch(plan['batch_size']),4)
                 cases.append(row)
-                atomic_json(out/f'seed-{seed}-{protocol}.json',row)
+                atomic_json(out/(label+'-'+protocol+'.json'),row)
                 del model
         if args.phase=='candidate':
             expected=json.loads((args.output/'legacy/result.json').read_text())
             if expected['cases']!=cases:raise AssertionError('Candidate global arithmetic differs from the legacy runtime; compare retained per-case reports')
         atomic_json(out/'result.json',dict(status='passed',phase=args.phase,cases=cases,runtime_sha256=runtime_hashes(),
             helper_sha256=sha256(Path(__file__)),plan_sha256=sha256(args.plan),seconds=time.time()-started,
-            labeled_update_exposures=len(plan['seeds'])*7*plan['batch_size'],
+            labeled_update_exposures=len(plan['seeds'])*len(plan.get('clip_modes',['global']))*7*plan['batch_size'],
             scope='Exact states, losses, gradients, parameters, moments, sampler and updates at peak/warmup rates. '
                   'Candidate additionally restores actual legacy checkpoints and checks Go-player inference. Engineering only; no TPU.'))
         print(json.dumps(dict(status='passed',phase=args.phase,cases=len(cases))),flush=True)

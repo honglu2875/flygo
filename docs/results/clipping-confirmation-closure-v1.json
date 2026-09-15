@@ -1,0 +1,161 @@
+{
+  "archives": [
+    {
+      "bytes": 36321280,
+      "endpoints": [
+        {
+          "host": 1,
+          "path": "runs/clipping-confirmation-endpoints-v1/clipping-confirmation-global-seed13-v1.json",
+          "run_id": "clipping-confirmation-global-seed13-v1",
+          "sha256": "02c0d27c83db5c1d7c5708fdc7d25b04ee2ba76803112234c1a03c2ec2280e9f"
+        },
+        {
+          "host": 1,
+          "path": "runs/clipping-confirmation-endpoints-v1/clipping-confirmation-parameter-group-seed15-v1.json",
+          "run_id": "clipping-confirmation-parameter-group-seed15-v1",
+          "sha256": "9974fff9e63285b9991541286e3e5ef631491bb835e656e92943ee551344fb53"
+        }
+      ],
+      "files": 61,
+      "manifest_path": "runs/clipping-confirmation-collection-v1/owner-1/manifest.json",
+      "manifest_sha256": "e359ed5eaa722d37a1512a7cab7d0512345d852a00f7f0dbd75a19720367743d",
+      "owner": 1,
+      "path": "runs/clipping-confirmation-collection-v1/owner-1/evidence.tar",
+      "sha256": "33a40f92ed4de8e2ddfe54a4e312ace45ec455343f0f3338cfde7396756a07ab"
+    },
+    {
+      "bytes": 36321280,
+      "endpoints": [
+        {
+          "host": 2,
+          "path": "runs/clipping-confirmation-endpoints-v1/clipping-confirmation-parameter-group-seed13-v1.json",
+          "run_id": "clipping-confirmation-parameter-group-seed13-v1",
+          "sha256": "4bf091270ba0a0ca38da4b73fdd88d1459586caed78e2425c88c5179f09e92a0"
+        },
+        {
+          "host": 2,
+          "path": "runs/clipping-confirmation-endpoints-v1/clipping-confirmation-global-seed14-v1.json",
+          "run_id": "clipping-confirmation-global-seed14-v1",
+          "sha256": "f44d3e77902f762db4401dbf3cd742f659614df417331fcd71cd73c961a1e461"
+        }
+      ],
+      "files": 61,
+      "manifest_path": "runs/clipping-confirmation-collection-v1/owner-2/manifest.json",
+      "manifest_sha256": "62251fc2eba2964b4b5e014fc9d502608921377e6d09e5f5fd2ca8992051e190",
+      "owner": 2,
+      "path": "runs/clipping-confirmation-collection-v1/owner-2/evidence.tar",
+      "sha256": "a26604d5433c3f04817cc3b03809991990c39a2d6d830ab55f529ee0358c6023"
+    },
+    {
+      "bytes": 36321280,
+      "endpoints": [
+        {
+          "host": 3,
+          "path": "runs/clipping-confirmation-endpoints-v1/clipping-confirmation-parameter-group-seed14-v1.json",
+          "run_id": "clipping-confirmation-parameter-group-seed14-v1",
+          "sha256": "d715c9ce66f0337fff45bec6131519da5906502fad3345360868ad6691c2755f"
+        },
+        {
+          "host": 3,
+          "path": "runs/clipping-confirmation-endpoints-v1/clipping-confirmation-global-seed15-v1.json",
+          "run_id": "clipping-confirmation-global-seed15-v1",
+          "sha256": "e17519218cd10176e31f654a59f9be73ec1aab9944d3c00c41c403c2c7a71820"
+        }
+      ],
+      "files": 61,
+      "manifest_path": "runs/clipping-confirmation-collection-v1/owner-3/manifest.json",
+      "manifest_sha256": "84f5466ceb3d84b5225f03550aa7f10af2cc95a3f1b8c1950c1b647ca5a3cfd2",
+      "owner": 3,
+      "path": "runs/clipping-confirmation-collection-v1/owner-3/evidence.tar",
+      "sha256": "7f815a1efdce35cfd70316220868262595cf17d61b2b7a814dd53b626c198cca"
+    }
+  ],
+  "created": 1789480247.200566,
+  "decision": {
+    "mean_value_difference": -0.04472065724483675,
+    "mean_value_nonworse": true,
+    "paired_policy_differences": [
+      -0.14774633361438938,
+      -0.06500880611010659,
+      -0.10844768926277158
+    ],
+    "policy_improves_each_seed": true,
+    "provisional_candidate": true,
+    "rule": "Natural validation KL improves in every paired seed, with nonworse mean value MSE; fixed endpoints only."
+  },
+  "files": 183,
+  "report": {
+    "bytes": 1128651,
+    "owner": 2,
+    "path": "runs/clipping-confirmation-analysis-v1/result.json",
+    "peer": 3,
+    "sha256": "07548ad102809287b07b24ea6688c66a1e011de87ece435b43c7baf21a6f0dc0",
+    "transfer": {
+      "bytes": 1128651,
+      "sha256": "07548ad102809287b07b24ea6688c66a1e011de87ece435b43c7baf21a6f0dc0",
+      "status": "passed"
+    }
+  },
+  "scope": "All six registered 128k endpoints, checkpoint replicas, owner audits, complete validation, motor responses and prediction counts verified. Frozen analysis succeeded on worker 2; full report independently replicated on worker 3 and copied to root/repository. No scientific rerun.",
+  "source_sha256": "0dc96a5e96ecae899689b735005d3f8fd79ea157b5b86e80ec71c176b7c9e963",
+  "status": "complete",
+  "transfers": [
+    {
+      "analysis_host": 2,
+      "extraction": {
+        "extracted": 55,
+        "files": 61,
+        "status": "passed"
+      },
+      "owner": 1,
+      "peer": 2,
+      "peer_verification": {
+        "files": 61,
+        "status": "passed"
+      },
+      "transfer": {
+        "bytes": 36321280,
+        "sha256": "33a40f92ed4de8e2ddfe54a4e312ace45ec455343f0f3338cfde7396756a07ab",
+        "status": "passed"
+      }
+    },
+    {
+      "analysis_host": 2,
+      "extraction": {
+        "extracted": 0,
+        "files": 61,
+        "status": "passed"
+      },
+      "owner": 2,
+      "peer": 3,
+      "peer_verification": {
+        "files": 61,
+        "status": "passed"
+      },
+      "transfer": {
+        "bytes": 36321280,
+        "sha256": "a26604d5433c3f04817cc3b03809991990c39a2d6d830ab55f529ee0358c6023",
+        "status": "passed"
+      }
+    },
+    {
+      "analysis_host": 2,
+      "extraction": {
+        "extracted": 59,
+        "files": 61,
+        "status": "passed"
+      },
+      "owner": 3,
+      "peer": 2,
+      "peer_verification": {
+        "files": 61,
+        "status": "passed"
+      },
+      "transfer": {
+        "bytes": 36321280,
+        "sha256": "7f815a1efdce35cfd70316220868262595cf17d61b2b7a814dd53b626c198cca",
+        "status": "passed"
+      }
+    }
+  ]
+}

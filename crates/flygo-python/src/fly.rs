@@ -352,6 +352,7 @@ impl FlyModel {
         .map_err(PyValueError::new_err)
     }
     #[allow(clippy::too_many_arguments)]
+    #[pyo3(signature=(input, steps, legal, policy, value, value_core_scale=1.0))]
     fn loss_and_grad<'py>(
         &self,
         py: Python<'py>,
@@ -360,6 +361,7 @@ impl FlyModel {
         legal: PyReadonlyArray2<'py, u8>,
         policy: PyReadonlyArray2<'py, f32>,
         value: PyReadonlyArray1<'py, f32>,
+        value_core_scale: f32,
     ) -> PyResult<(f64, f64, Arrays<'py>)> {
         let batch = input.shape()[1];
         let (input, legal, policy, value) = (
@@ -371,7 +373,7 @@ impl FlyModel {
         let (pl, vl, grad) = py
             .detach(|| {
                 let state = self.state.lock().map_err(|e| e.to_string())?;
-                state.model.loss_and_grad(
+                state.model.loss_and_grad_with_value_core_scale(
                     &state.params,
                     &input,
                     batch,
@@ -381,13 +383,14 @@ impl FlyModel {
                         policy: &policy,
                         value: &value,
                     },
+                    value_core_scale,
                 )
             })
             .map_err(PyValueError::new_err)?;
         Ok((pl, vl, export(py, &grad)))
     }
     #[allow(clippy::too_many_arguments)]
-    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None, epsilon=1e-8, clip_mode="global"))]
+    #[pyo3(signature=(input, steps, legal, policy, value, rate, clip, rate_scales=None, epsilon=1e-8, clip_mode="global", value_core_scale=1.0))]
     fn train_step(
         &self,
         py: Python<'_>,
@@ -401,6 +404,7 @@ impl FlyModel {
         rate_scales: Option<Vec<f32>>,
         epsilon: f32,
         clip_mode: &str,
+        value_core_scale: f32,
     ) -> PyResult<(f64, f64, f64, u64)> {
         let clip_mode = clip_mode.parse::<ClipMode>().map_err(PyValueError::new_err)?;
         if !epsilon.is_finite() || epsilon <= 0.0 {
@@ -423,7 +427,7 @@ impl FlyModel {
                 revision,
                 last_update,
             } = &mut *state;
-            let (pl, vl, grad) = model.loss_and_grad(
+            let (pl, vl, grad) = model.loss_and_grad_with_value_core_scale(
                 params,
                 &input,
                 batch,
@@ -433,6 +437,7 @@ impl FlyModel {
                     policy: &policy,
                     value: &value,
                 },
+                value_core_scale,
             )?;
             let stats = adam.update_with_clipping(model, params, &grad, rate, clip,
                 rate_scales.as_deref().unwrap_or(&[1.0; 9]), epsilon, clip_mode)?;

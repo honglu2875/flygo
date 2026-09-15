@@ -128,8 +128,9 @@ g_{\text{shared}}=g_P+\lambda g_V,
 
 Prediction and full-strength value-head training would stay the same. Values
 such as 1, .1 and 0 would separate ordinary shared training, reduced pressure,
-and a value head trained on policy-learned features. This is a proposal, not a
-registered or launched study. First close clipping confirmation and fix the
-optimizer control; then qualify the new gradient contract in Rust and JAX,
-check exact recovery, and register paired seeds and fixed horizons. Keep any
-precision change separate from the loss-routing comparison. TPU remains paused.
+and a value head trained on policy-learned features. Clipping confirmation is
+now complete and supports per-group clipping as the control. The
+[separate implementation and qualification](value-core-study.md) passes its
+synthetic checks, exact legacy regression, and all 18 actual-seed numerical /
+nine recovery cases. The scientific comparison is the next step. Keep any precision change separate
+from the loss-routing comparison. TPU remains paused.

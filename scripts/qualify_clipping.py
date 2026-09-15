@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the registered clipping transitions and fresh-process recovery for one seed."""
+"""Run registered optimizer transitions and fresh-process recovery for one seed."""
 import argparse
 import json
 from pathlib import Path
@@ -32,6 +32,8 @@ def main():
             atomic_json(out/'status.json',dict(state='qualifying',records=records,updated=time.time()))
             return row
         for arm in plan['arms']:
+            clip_mode=plan.get('clip_mode',arm)
+            scale=plan.get('value_core_arms',{}).get(arm,1.0)
             paths=[]
             for protocol in plan['protocols']:
                 target=out/arm/protocol['name']
@@ -39,9 +41,11 @@ def main():
                     '--root',str(root),'--input-map',str(root/plan['input_map']),'--head-mask',str(root/plan['head_mask']),
                     '--input-modes',plan['input_mode'],'--seed',str(args.seed),'--passes',str(plan['steps']),
                     '--batch-size',str(plan['batch_size']),'--rate',str(plan['rate']),'--epsilon',str(plan['epsilon']),
-                    '--rate-scales',json.dumps(plan['rate_scales']),'--clip-mode',arm,
+                    '--rate-scales',json.dumps(plan['rate_scales']),'--clip-mode',clip_mode,
                     '--cpus',','.join(map(str,plan['cpus'])),'--protocol',protocol['name'],
                     '--numerical-plan',str(args.plan),'--output',str(target)]
+                if scale!=1:
+                    command+=['--value-core-scale',str(scale)]
                 row=run(command,arm,protocol['name'])
                 if row['returncode']==0:
                     path=target/'result.json';report=json.loads(path.read_text())

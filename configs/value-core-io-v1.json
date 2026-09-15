@@ -1,0 +1,70 @@
+{
+  "arms": [
+    {
+      "arm": "full",
+      "clip_mode": "parameter-group",
+      "path": "ports/readout-masks-v1/dense.npz",
+      "sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "value_core_scale": 1.0
+    },
+    {
+      "arm": "reduced",
+      "clip_mode": "parameter-group",
+      "path": "ports/readout-masks-v1/dense.npz",
+      "sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "value_core_scale": 0.1
+    },
+    {
+      "arm": "policy-only",
+      "clip_mode": "parameter-group",
+      "path": "ports/readout-masks-v1/dense.npz",
+      "sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "value_core_scale": 0.0
+    }
+  ],
+  "batch_size": 32,
+  "clip": 1,
+  "epsilon": 1e-06,
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_map_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+  "jobs": [
+    {
+      "host": 1,
+      "seed": 16
+    },
+    {
+      "host": 2,
+      "seed": 17
+    },
+    {
+      "host": 3,
+      "seed": 18
+    }
+  ],
+  "name": "value-core-io-v1",
+  "numerical_plan_sha256": "298fb3b9c3cd6486e6fce7498dc07e0a4603e075719a54a513c2a85ce3cfd818",
+  "rate": 0.03,
+  "rate_scales": {
+    "bias": 0.01
+  },
+  "runtime_sha256": {
+    "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+    "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+    "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+    "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+    "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+    "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+    "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+    "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+    "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+    "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+    "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+    "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+    "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+    "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+  },
+  "scope": "Nine exact fresh-process recovery cases for the value-to-circuit gradient coefficient. Both wrong clipping mode and wrong gradient scale must be rejected before model/sampler mutation.",
+  "source": "environments/9471407cdd0c68b40179",
+  "steps": 8,
+  "updates": 3
+}
