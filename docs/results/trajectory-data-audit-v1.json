@@ -1,0 +1,1306 @@
+{
+  "checked_families": 128,
+  "checked_games": 128,
+  "checked_positions": 13085,
+  "created": 1789445088.1632752,
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "native_sha256": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1",
+  "nonterminal_pass_transitions": 854,
+  "occupied_pass_transitions": 854,
+  "records": [
+    {
+      "game_id": "b72e0ae9220e7280884ded0328c9ee55df44f97a1342dc43ba7672d3810e7069",
+      "game_index": 9619,
+      "nonterminal_pass_transitions": 13,
+      "offset": 938008,
+      "opening_family": "8e39c64d7f29f2642b5606c73e19a7d0ec9eb256db832a1f5d4cfeb801de5634",
+      "rows": 126,
+      "sha256": "507b05c4684ac29db7007e61af8099c7571d891df10270ca70ad959bd1657b98",
+      "terminal": true
+    },
+    {
+      "game_id": "e0764c6fef10c445d9e6be731709da35d799d727f28ee279ac968126fc9e59f6",
+      "game_index": 9729,
+      "nonterminal_pass_transitions": 9,
+      "offset": 948559,
+      "opening_family": "9ad802f7790d02d64cb7f236ceff07463488e5883bf2e82a8037dcd32a35ddc2",
+      "rows": 141,
+      "sha256": "dcc9cd1aa8dec0227c8ed808bed9902c07376812482177fc766176f7d8614e70",
+      "terminal": true
+    },
+    {
+      "game_id": "4dfd8c78723f1d59985373d9bf0f9f0babdd80111d30175738865e4bfddd5fd5",
+      "game_index": 4577,
+      "nonterminal_pass_transitions": 5,
+      "offset": 446353,
+      "opening_family": "cf4623fe3ce96f3f48ac1ac0fc6d380cde302e4c4aa9becbbcf6e3c11514bf28",
+      "rows": 121,
+      "sha256": "4acf702fd58fc83228ca6a68a599c4c7ba206c236336956412e547fc0f194536",
+      "terminal": true
+    },
+    {
+      "game_id": "61060c82124e96433a6791a1428d08b636b480db27911989fd5bd01b3f4628bb",
+      "game_index": 4339,
+      "nonterminal_pass_transitions": 5,
+      "offset": 423323,
+      "opening_family": "37d917a9ab2e947f964148ef979bec16f6a21577b7633d6e4b869366c679ea5f",
+      "rows": 120,
+      "sha256": "f5eb048ebd0c49f97f931696073cfac80e0fbbf9a5bdf21b89522f8696d2a2fa",
+      "terminal": true
+    },
+    {
+      "game_id": "1b248a82e0dc824ce5d2ffec0128dd088ddb769c50f7467c379d924d6ab3f35f",
+      "game_index": 4692,
+      "nonterminal_pass_transitions": 3,
+      "offset": 457631,
+      "opening_family": "8f237ffbc289f7a5430761804375aad7f53b51d9d403b0ff0475af8e8652b1cd",
+      "rows": 83,
+      "sha256": "d1dbb3ad572c1dba653f1f5908741ddeb871e792b3203127b9034e098ad07010",
+      "terminal": true
+    },
+    {
+      "game_id": "60d5b488465edcfa793d6fb5cdb4380bfa13a4e5216ea95efc13dfa85c6e39f9",
+      "game_index": 4435,
+      "nonterminal_pass_transitions": 20,
+      "offset": 432573,
+      "opening_family": "35ca7370bd9a77137c98efb60f498098e4c61fa6283665fbc930e474f0a91cab",
+      "rows": 147,
+      "sha256": "db07a30d6712494c7d9d6d58831f707f727416f7e598afc8b2ca7b0afebf3297",
+      "terminal": true
+    },
+    {
+      "game_id": "36465713777e6c0537efc935fc04b68d79d877b2d25d01128c37c16c10851951",
+      "game_index": 9917,
+      "nonterminal_pass_transitions": 2,
+      "offset": 967290,
+      "opening_family": "62e1ebc47dbcbbb9f268fd67c6c9f1fa6b2d2ade376a4aab50646292378b7bf7",
+      "rows": 57,
+      "sha256": "5f15edf2b6d51e1352b3221b87388003a660bc1f0a0e5e80d23fc525e9e3f51f",
+      "terminal": true
+    },
+    {
+      "game_id": "dbfe7197a80aaf65045856bf8b90aa4324c16f9343d044ea49be484cba9f5d82",
+      "game_index": 2113,
+      "nonterminal_pass_transitions": 3,
+      "offset": 205710,
+      "opening_family": "3678355feb6940dfb1f467c67a3fbb885e648a002c53f6ed3774e9d00d5ecec8",
+      "rows": 140,
+      "sha256": "23ea5e75afc2d918be18f784bf35118e1a9626dbed1b05b99ecc3a44066b8b6d",
+      "terminal": true
+    },
+    {
+      "game_id": "b762e28360af0944a0674c66b38a5bc00555a35f45dca6c9c394b06cc815951e",
+      "game_index": 9714,
+      "nonterminal_pass_transitions": 13,
+      "offset": 947160,
+      "opening_family": "60e7ad98d3bba5e3a988a62ba170c1894c031630e1613c5009eaebf41a8c53f6",
+      "rows": 130,
+      "sha256": "420570b6ec31473c72207f382ab67835ed9feb441ad9a4f78ed9200c32e81f47",
+      "terminal": true
+    },
+    {
+      "game_id": "838cbfc9bdf79ce8da6c18309b48dd3dda1f672670e04ad224bd7cc60a915bab",
+      "game_index": 5522,
+      "nonterminal_pass_transitions": 12,
+      "offset": 539246,
+      "opening_family": "21b1495e04cff52394ae8061cd9d26168a78b5a1506a6bcbbe7cc23e52135654",
+      "rows": 109,
+      "sha256": "cdb4e167f99671d5b748dd40a41ce6084a2a752eff0e0d3839c2a2bc851eaf46",
+      "terminal": true
+    },
+    {
+      "game_id": "06980038952c104b0dc76d6411b7f58571e8ac8ff9269ca8731f32e631f4217c",
+      "game_index": 5594,
+      "nonterminal_pass_transitions": 9,
+      "offset": 546338,
+      "opening_family": "536f7f8edd19046921cb2f85ff25b002983ed4df365d84fead95f5cbf1ee4a60",
+      "rows": 99,
+      "sha256": "c1e9d43e34569ff65c918ce541e159b1d7330c10db5687a7c185f826efa7c6e8",
+      "terminal": true
+    },
+    {
+      "game_id": "31ca65ac33d8d4b945c01b18d1e38111855067272206e59c3a4167f72b9f4908",
+      "game_index": 578,
+      "nonterminal_pass_transitions": 14,
+      "offset": 55804,
+      "opening_family": "46f94cddad302b40a035328d672c93c9b6ab10f4a5ad8834471b413f387595b1",
+      "rows": 140,
+      "sha256": "a922674bc8499c62af89727b298f542908cbb258fdc3742be66ab80b84789e1a",
+      "terminal": true
+    },
+    {
+      "game_id": "fbc3442bfe893024ddfafc0a685238d8c7378f2dbe0fd02ce9bc6b6bfbc46bd2",
+      "game_index": 2096,
+      "nonterminal_pass_transitions": 6,
+      "offset": 203846,
+      "opening_family": "311b85256ab6d29b29156af2a82aa0697c44dc693dacb64fd6a9a26dd564cf71",
+      "rows": 126,
+      "sha256": "f2d3414a19bce642430bc251aeb21086c4bff416340321ec37f455ecfc1cc54e",
+      "terminal": true
+    },
+    {
+      "game_id": "ddcfb02c08bf2fdf6c865d3bfaba7dafd54b56f299b2c13a0af2de8befd42e48",
+      "game_index": 3833,
+      "nonterminal_pass_transitions": 10,
+      "offset": 373549,
+      "opening_family": "4d9c6d47d92db6e67bcb59d3da90a49f73496a2be054a78ceb464613599522b9",
+      "rows": 125,
+      "sha256": "d5ab664ace0ec04275b6ef88c968ebc9d9973aeecf2ba4544c575d079ea2b305",
+      "terminal": true
+    },
+    {
+      "game_id": "4bfaafa97a0189129d506ad2ec7de8d94e565de288b27090e58e5eae53854db3",
+      "game_index": 5314,
+      "nonterminal_pass_transitions": 9,
+      "offset": 518786,
+      "opening_family": "596509cd0d6d855f455761c7ebc820c6ec137a55b9086794ea35b06eda681ead",
+      "rows": 97,
+      "sha256": "2ec8d81a418345d00fab18a76423bd5b1fbc1259a4ded43ebc575dcac17d6236",
+      "terminal": true
+    },
+    {
+      "game_id": "ec8ec9ffa783ae27174376d06b4b6ef9d5c9a6c3ca646a712d4d44a0b55b9317",
+      "game_index": 10116,
+      "nonterminal_pass_transitions": 2,
+      "offset": 986678,
+      "opening_family": "11757e89eff51e81d484f0b2699c8acb435ffa9dfb52ef50773f7210ceb0977d",
+      "rows": 85,
+      "sha256": "5db3555a4ff0fbbc4ca748cffd1bd0446c5c194712592ce95f2bda3a5fda3220",
+      "terminal": true
+    },
+    {
+      "game_id": "fcc03fb60a2b8d53c18d1853ace5ca89dafafb2ad6ad9da590ad8b7b4fea333f",
+      "game_index": 913,
+      "nonterminal_pass_transitions": 9,
+      "offset": 88023,
+      "opening_family": "595e135b3425b2c9eb3876bb9ea66ffc034984a33faf465cd2d5d2a266a4b373",
+      "rows": 139,
+      "sha256": "ff24486c24968fee3c69c836e2cb172c6085645a8a1ffcd3ef25190a8ce4ee3c",
+      "terminal": true
+    },
+    {
+      "game_id": "a575ed1f36931e6e26c00495d394d7e327e3afcecb5e5198446dbc64da90f77b",
+      "game_index": 4661,
+      "nonterminal_pass_transitions": 9,
+      "offset": 454674,
+      "opening_family": "11a36df4c9f4c2d8adb7d18ff62c344e691d4fbf4f6b63543ef37857b52b7211",
+      "rows": 92,
+      "sha256": "1acee6fc681606165b878640070eac1de604917fdc57e1e1b16d0fc530e30596",
+      "terminal": true
+    },
+    {
+      "game_id": "bd9d7e75ecde3024f8d14e23a95439009d0ff7f6ed39d76da78022be50b36bad",
+      "game_index": 10159,
+      "nonterminal_pass_transitions": 2,
+      "offset": 990737,
+      "opening_family": "7a9576d35e1368ce5eadb57475eb9d0591b69e3c6c4eb8bec0682076a4499641",
+      "rows": 69,
+      "sha256": "dffbfced345670c703e0d929cca5fbb4ebe5597e54900d645c74644047ae66e6",
+      "terminal": true
+    },
+    {
+      "game_id": "a2b6d310b45d68a5134d60c0fbe207ed676975eb623c0f034ece5691e49e4e2b",
+      "game_index": 1064,
+      "nonterminal_pass_transitions": 7,
+      "offset": 102990,
+      "opening_family": "d95af7e7b0b370bf4a6d99e9f98a95aa4bc8a8f8a5f05e02b4109d061a7d16dc",
+      "rows": 71,
+      "sha256": "d7681e63af9bdcb430a018fa1a80e8daf4386220a136fb325c8321a93bd9001d",
+      "terminal": true
+    },
+    {
+      "game_id": "6437fcfe2931fe21b2a2222cf1174b918525203ed0c544ff62db8701ec9782d5",
+      "game_index": 5920,
+      "nonterminal_pass_transitions": 4,
+      "offset": 578396,
+      "opening_family": "03786d71d72d745169ed8578fa0ebf349f9294a09a5ca9881c20bb28292aa791",
+      "rows": 100,
+      "sha256": "bd11522095b5200f1306403113fccb7cfd687877789b7d39dcf2096fb4b74d90",
+      "terminal": true
+    },
+    {
+      "game_id": "912f48c0840fd655f0c5dc5ff1c4ab26621f5c5d2b9c5488eef7934057e28e11",
+      "game_index": 1485,
+      "nonterminal_pass_transitions": 6,
+      "offset": 143779,
+      "opening_family": "918322483d001b6e1aa7e3dc24038a63b19694dc3db4dda96ecd8055000312c6",
+      "rows": 72,
+      "sha256": "c78ad44a0951753a3d88feb7329ff32987aa951372c11a529e33bdbf2539850b",
+      "terminal": true
+    },
+    {
+      "game_id": "aa6fe42f9aeb420720389594593c4754ab13c963438e9d3d67c40f27a5617555",
+      "game_index": 2876,
+      "nonterminal_pass_transitions": 6,
+      "offset": 279713,
+      "opening_family": "001880ca5292407a9532e0716024dba0218a1487d1c92ee17e141161fb240e44",
+      "rows": 86,
+      "sha256": "c67256ce17794dfaa31ce1d500419704e2adad9832fb3e203bf2eca2651a453b",
+      "terminal": true
+    },
+    {
+      "game_id": "52b1254c5a41d4ac964eee7aea0195c4fd0c08e8dba0cb1f38df6be79486b980",
+      "game_index": 9176,
+      "nonterminal_pass_transitions": 2,
+      "offset": 895085,
+      "opening_family": "4ef2aa01c19fa840b3c92ea29db501222da5dcd7dc8e3173bf90490789b2e078",
+      "rows": 93,
+      "sha256": "9aa2b59b58c7166ed3bbc714f63c56fee7fd3cfb456a7233d8e4b7582a299763",
+      "terminal": true
+    },
+    {
+      "game_id": "de98ca1506ba09b6d2cddde32524e29e8259ce858f650ce454f689374c0af33d",
+      "game_index": 2221,
+      "nonterminal_pass_transitions": 2,
+      "offset": 216326,
+      "opening_family": "ed3cb7d536c3b8038b5ddc8870b2611a4197e0648a0ef0f4e808e4408f321d3d",
+      "rows": 75,
+      "sha256": "d30090eac08d2c979d30cef85c0097231d73e8830cf934a62362316728245156",
+      "terminal": true
+    },
+    {
+      "game_id": "6b1fc76d086f16a7a70b787626d78cac7bbb69a7e5ca234d93811bd1f9dddd2c",
+      "game_index": 3732,
+      "nonterminal_pass_transitions": 11,
+      "offset": 363316,
+      "opening_family": "ce79e78cdc31ae6421f9b750af389f7d27c8b3225fb30bbb25aa56d91e642ee1",
+      "rows": 115,
+      "sha256": "f2ec8e872b0580359b3b74689798c52e042a071c6430f8d7903192b813012163",
+      "terminal": true
+    },
+    {
+      "game_id": "88934eac0d72015dc783168fe7faba7fd6d6716690c72dafc994f11a6eb96bed",
+      "game_index": 4085,
+      "nonterminal_pass_transitions": 8,
+      "offset": 398260,
+      "opening_family": "f5966cbf70efe78c0a501e46b61c94aaf9b7b1e588717724c5e20ef1a2b23204",
+      "rows": 96,
+      "sha256": "d59158e454e8467178aef053bc698b5774dd814ce11b807461dfb805afb555ae",
+      "terminal": true
+    },
+    {
+      "game_id": "5367e278931c9a730a692f2c9df3f551d3144b7636763d2b48f137a43105ead5",
+      "game_index": 208,
+      "nonterminal_pass_transitions": 8,
+      "offset": 20087,
+      "opening_family": "82dbc2fa9cda1d91da8349d50a66b9bdbb518bbd3912665aef28c360d40ef6fd",
+      "rows": 112,
+      "sha256": "5cecd9fcbfeaab82d8cac96a5e333d5decc0dfe79f1c7aa0cc374d6db9fb1a30",
+      "terminal": true
+    },
+    {
+      "game_id": "832c1126af57f62d9754183b1780681ade8e5170109138393e95a33b768ebdec",
+      "game_index": 113,
+      "nonterminal_pass_transitions": 4,
+      "offset": 10941,
+      "opening_family": "83488342248a5fba95fdf5ada2420a837e7536cf44a759be350c1da7a0701d6e",
+      "rows": 105,
+      "sha256": "b799eec8729ed4733cd38b3fc9cf7fb2b7bf0955c5028a24600ffd79994a9879",
+      "terminal": true
+    },
+    {
+      "game_id": "ecf9a11d1c6d7b176ae0d7f2214e884d5a0369dd4fbd471560a004d5ba2ad7e8",
+      "game_index": 5498,
+      "nonterminal_pass_transitions": 2,
+      "offset": 536934,
+      "opening_family": "74b50396045f31634ae27531df0101fa5cf6923fd0c97bbf4c0b8c870d1f5a6c",
+      "rows": 61,
+      "sha256": "2477f5d184e60353e3840d139a6424c0f05e75e534c76661beed201d6f64bba7",
+      "terminal": true
+    },
+    {
+      "game_id": "8f3bdebf430ea79d46985265a263b01ec913e416c1e8e5a40e54d9699bb0ad17",
+      "game_index": 7989,
+      "nonterminal_pass_transitions": 2,
+      "offset": 779124,
+      "opening_family": "59d88e7d8305e1b76ac94b074b545c02be068fd0290b6efecf058a6fda036cbb",
+      "rows": 98,
+      "sha256": "0c3f2c61c1dbbb7c22da9af265e021a96898d9ff0474e5642ffc0f363e004072",
+      "terminal": true
+    },
+    {
+      "game_id": "2fe1c840657398d9915c060df7c407fdd8300a8e8a3834826e52b96facd038d0",
+      "game_index": 9377,
+      "nonterminal_pass_transitions": 4,
+      "offset": 914629,
+      "opening_family": "61354a7a446f623c32d393e4c4373e7690bf31b770f5824cc418a630628491f1",
+      "rows": 101,
+      "sha256": "b30cfca46ca1966129c8e46d180b4d1b50af0bf678cfa1d41e492562bca60f18",
+      "terminal": true
+    },
+    {
+      "game_id": "cb5313c66462c577b7a807ecea63efe889e19fa92e6d0b0b9f29d21f9fccc355",
+      "game_index": 3526,
+      "nonterminal_pass_transitions": 7,
+      "offset": 343338,
+      "opening_family": "600ea5134f02e10b1f6fffad32dd243949c6ece3bd9de34efb2519b5ea89f3de",
+      "rows": 103,
+      "sha256": "49bf1290c090d5cd5a66504411e3693be9ca83bfdc0e79b35e980e9e51493216",
+      "terminal": true
+    },
+    {
+      "game_id": "64ec3793c8547e6e0dc88167c29a35654297d6dc76cb87848c8de0711d8d4753",
+      "game_index": 7145,
+      "nonterminal_pass_transitions": 5,
+      "offset": 697441,
+      "opening_family": "7f3d0a9dd8b069e439e4f815db7f791a243d78027a714f7f811cf156d2f1add4",
+      "rows": 60,
+      "sha256": "4c1a2bdc02afad4d4f594a0348147728a76e682b6cac290ae9c699dfa50d4a1a",
+      "terminal": true
+    },
+    {
+      "game_id": "2e81921e1278c39c4f37c50db96bbb23fa39b1c1ba03806c20a453a3c3154602",
+      "game_index": 1711,
+      "nonterminal_pass_transitions": 1,
+      "offset": 166292,
+      "opening_family": "1c2037d1983c213bf1aabe3f1cdac9554aa11170878e37cf5fc97c03a0c21cac",
+      "rows": 71,
+      "sha256": "ac672af069274370b7af912c3e1824b6524fddd74efce4d3d17d8ac28be3723b",
+      "terminal": true
+    },
+    {
+      "game_id": "f0072443bf2e590c98497684c3c6c0ced4b32ead0bd07fdcfbbd19ff87ce7305",
+      "game_index": 820,
+      "nonterminal_pass_transitions": 11,
+      "offset": 79222,
+      "opening_family": "0f6f4cebac882dfab8385962737364f50f5ee37523d72c9fa876c47cdccde8c5",
+      "rows": 127,
+      "sha256": "b4f95b496b20314b32dee82c90a155e12b5014ceb81e154df672770d69906a9a",
+      "terminal": true
+    },
+    {
+      "game_id": "266e8153f2c14a4f03f1512836940b3437f81bfb09e619d078d3e4567d0c2165",
+      "game_index": 912,
+      "nonterminal_pass_transitions": 4,
+      "offset": 87915,
+      "opening_family": "643b534040ceea955364355a270e217dc4ab2c3e29792de1400740e8f7eaf0c5",
+      "rows": 108,
+      "sha256": "12112414673c3cb027427e1c50f9212746d66455cc1b5cd7879c4879cabeb527",
+      "terminal": true
+    },
+    {
+      "game_id": "2a932e316aabff7f9a5708734542074fdf1567a01d74667835983f318cf9d866",
+      "game_index": 709,
+      "nonterminal_pass_transitions": 8,
+      "offset": 68366,
+      "opening_family": "3d2b7dd1465121daea9ff3747a29f0088a32806cdd838294812b1204c36cd159",
+      "rows": 104,
+      "sha256": "c11abd4eea0f6431cced886151bb587a0b371b1eadf28cf6422378160f42fd1f",
+      "terminal": true
+    },
+    {
+      "game_id": "4b527e43af824073a043fa80cf7bbd6916b62f875777f7066ca9c9b163d0a04e",
+      "game_index": 9990,
+      "nonterminal_pass_transitions": 5,
+      "offset": 974445,
+      "opening_family": "20f96cd71d0a928b4b39b1164267d6a4f0ce36ed284f437a2c63180b82fd5b23",
+      "rows": 97,
+      "sha256": "94bce0fd7c1a159b725a7d550a9d3c898a9132f4dc13a6245ae6c7147ece059a",
+      "terminal": true
+    },
+    {
+      "game_id": "cb62a005d5140bb308cd910d822ba4045a82876db6e5b8c90456d00233a6343e",
+      "game_index": 6881,
+      "nonterminal_pass_transitions": 7,
+      "offset": 671857,
+      "opening_family": "655fb11dcfb99614a4ad742cc4b90ca1e62f4f59c4e59173ac3fb83e9bb80e71",
+      "rows": 137,
+      "sha256": "5bf78d27628ccaa5a27bfce460ed6cea8de43656e087a777316b2450453614fd",
+      "terminal": true
+    },
+    {
+      "game_id": "5af6eed20efb395e57f576c0d422680a9dc6035888a3f66e6cc29b877566620a",
+      "game_index": 3712,
+      "nonterminal_pass_transitions": 7,
+      "offset": 361237,
+      "opening_family": "4a2f6a577ba11ec4dd0d375e30cf3f868c4a6905f88f99e7cdd308bf16f4d3b3",
+      "rows": 122,
+      "sha256": "215f4099082700a9124f19a41014fa897570c289fc11cd9fd7f76a97e857e04b",
+      "terminal": true
+    },
+    {
+      "game_id": "f286fdc7fab545339c918da53fce7fb8c2011fc591c48f3b166794afb5517ef8",
+      "game_index": 4247,
+      "nonterminal_pass_transitions": 12,
+      "offset": 414163,
+      "opening_family": "13a5cd0a26d1c83ee8ac8f19bdb2987278cb2361e5e97cd4071190b7841cab7a",
+      "rows": 85,
+      "sha256": "47f45b28fdcbc6812040bd256184fe7b0066d013761467d33ddf435d86fd7c89",
+      "terminal": true
+    },
+    {
+      "game_id": "b7244e21a5c05f784299f6bed265c66ad5be3aeacbf70f4b26f0ae384d5a73a4",
+      "game_index": 5152,
+      "nonterminal_pass_transitions": 11,
+      "offset": 502551,
+      "opening_family": "fb70ac1e1939f07f2c899380363d2cd1f4a731c366ead699e2910301e18136f4",
+      "rows": 126,
+      "sha256": "722477cd499eca2dd7742d59e020c176229483c4549aa0f4c5899f72349e0810",
+      "terminal": true
+    },
+    {
+      "game_id": "45ce660500ad4e02d2c6a33e46539666f6167357e2c719cf181cdcf21ce8a9df",
+      "game_index": 480,
+      "nonterminal_pass_transitions": 7,
+      "offset": 46122,
+      "opening_family": "49e0890cec692c67a661896d94e01ba34fd181d0b92053bab6835824696ecc52",
+      "rows": 112,
+      "sha256": "a4267d9b07e4b7c35c7a082ed6db3fc740a238a4b1ef1873d953b6203351cb2b",
+      "terminal": true
+    },
+    {
+      "game_id": "45e525defbc28f4b67af32bc2384d4998241ea151c93d8f83d6df1c537adef32",
+      "game_index": 4594,
+      "nonterminal_pass_transitions": 19,
+      "offset": 448074,
+      "opening_family": "c09d256364b565e1c4d3f25f67993a79b6f46c57cf12969955bbb2d38d68b108",
+      "rows": 140,
+      "sha256": "72857a7308376f580bd8159785194956d7120f5f3534b7b52bcf2337d7c88fd0",
+      "terminal": true
+    },
+    {
+      "game_id": "75b67f31abfeb87689fff95fe32245220d069e5fec920c1ce65c7f16ea96f8c5",
+      "game_index": 4835,
+      "nonterminal_pass_transitions": 3,
+      "offset": 471812,
+      "opening_family": "8e0dab8fcef865670d820b59ffb2335d73c078a337cd7e08b26466dbf507f867",
+      "rows": 132,
+      "sha256": "3fd246381210f6649de10af7889bca14f5ff7cbbbc015f6b0065aeab18c96256",
+      "terminal": true
+    },
+    {
+      "game_id": "383e38c2654f3060be5f5a3a93f7791547a187864d88432bd2bb188e12ddf290",
+      "game_index": 1248,
+      "nonterminal_pass_transitions": 6,
+      "offset": 121020,
+      "opening_family": "b65df0e75d8e9b7b4caa3f76e5ca2399650785752e2fbf8a06b22f7903e1187a",
+      "rows": 118,
+      "sha256": "afa27f34bc42a14fb55e1020d6e533e6655c9f3944c831b7de4a317f53933808",
+      "terminal": true
+    },
+    {
+      "game_id": "bde18b8e505b347f3884d7dca97eb5ea1c8c46f4e71a7bf313a5902aecc42d30",
+      "game_index": 10102,
+      "nonterminal_pass_transitions": 12,
+      "offset": 985252,
+      "opening_family": "39419ba35c4d07c88aa03d6b65f22c1242ecd3de0156d41c697dfd60e019634e",
+      "rows": 96,
+      "sha256": "77b7d01a70a7693ec53b555d1cd6f964a99f37326433dcb176cdf9d1b2d74052",
+      "terminal": true
+    },
+    {
+      "game_id": "f0877a93752831abb7cc5bceccfeefb95e33514cf62057db971a2afcfc82be13",
+      "game_index": 4372,
+      "nonterminal_pass_transitions": 5,
+      "offset": 426681,
+      "opening_family": "9994bbdda84957f1feff614ccef4fcbc66d151cc1b73aa559b7fb7cc87e2552c",
+      "rows": 99,
+      "sha256": "3e2142d219dd394523a044d4dd30e7ae6653fab4510f9adebbde603d62d65033",
+      "terminal": true
+    },
+    {
+      "game_id": "222f45644153abf1feb82338538ca8c35f88b95daf20a7084b1e9ab3140d6214",
+      "game_index": 1698,
+      "nonterminal_pass_transitions": 15,
+      "offset": 165120,
+      "opening_family": "658386070798257bef36a11224a7656f29355d46ade5ae60f250ff99adacbee5",
+      "rows": 118,
+      "sha256": "1c2307bb18095cc16c09ae8bf3636491c413f39f428f47d07c6027ddeb51791a",
+      "terminal": true
+    },
+    {
+      "game_id": "ae36713a60690caca7eb6fbdb03dda178cd5f0416e1de2a46beb76d11196fd3f",
+      "game_index": 9151,
+      "nonterminal_pass_transitions": 1,
+      "offset": 892690,
+      "opening_family": "e2cb947f5e5cdba57bd5ba26900be0d7694d94c0c26de298b354860111e6f856",
+      "rows": 56,
+      "sha256": "e222a3b06d10219a6e455f4a55ad4fe89da5b9977f66f70ee732591d4deca0f8",
+      "terminal": true
+    },
+    {
+      "game_id": "dd975dbbfb59e9ad1bcc6fc6ca0a2e01cbd539179eced66ecf39e054fcd38470",
+      "game_index": 8466,
+      "nonterminal_pass_transitions": 3,
+      "offset": 825556,
+      "opening_family": "f96e7de458a2d7e7a97fc74d41fe8ef84a449660090716cfd787657aa1d5f73e",
+      "rows": 89,
+      "sha256": "9600e58a034c84e970d1d68503db234efb90aa25e7afb0b0e18105f45946c496",
+      "terminal": true
+    },
+    {
+      "game_id": "2e62b204588bfafa02e2536fcce08a099a3142f86dde657e3ad0bca5ab17f49d",
+      "game_index": 7469,
+      "nonterminal_pass_transitions": 9,
+      "offset": 728598,
+      "opening_family": "a795d42550d494bda148db908f0cffe71fea730b3cb8aabb7e06ab76a26820a1",
+      "rows": 78,
+      "sha256": "8fe8bbbb6770ee6526b6df633099bfecf003a774b49639f627a9f25bde9d7008",
+      "terminal": true
+    },
+    {
+      "game_id": "3a7e98108708d797f3950f8d0259844abd108fe2680b1f83a897cc2d7601ebfd",
+      "game_index": 9973,
+      "nonterminal_pass_transitions": 5,
+      "offset": 972791,
+      "opening_family": "68e7f39438132a5975f60fe43c582c540eda6cbd4bfced0b4148ec37aca89ff7",
+      "rows": 98,
+      "sha256": "55a13e9bdf82695ba4727923d2668e89493fbf49a10b53a6f161af9a513a433f",
+      "terminal": true
+    },
+    {
+      "game_id": "a5c3cc7c8615ebbe9e9760ef151c75dead9993bd83455936672460355d3915f8",
+      "game_index": 6199,
+      "nonterminal_pass_transitions": 2,
+      "offset": 605475,
+      "opening_family": "d4466582d7688e26a549e3c0eac0b728a72431a9d13dd7d0a9912331689fa9a4",
+      "rows": 84,
+      "sha256": "78b36d2af681f7c71d79e3ff003471e7b6e0faee6f8f86374fe64291c9cf7a74",
+      "terminal": true
+    },
+    {
+      "game_id": "80f4d9557be31c03443963c57ca8b0957334636d5a9ca4d895eefb0e9a607ced",
+      "game_index": 3507,
+      "nonterminal_pass_transitions": 10,
+      "offset": 341499,
+      "opening_family": "b3fea061f2f0ea996f5cac5ef846e02cfcbe4acbf1ab7e660e1f9d98d8d1e944",
+      "rows": 137,
+      "sha256": "34fb0a5315e287049f6f15cf27faa7c16fcbdf47ea151d0a3f790428cce0980d",
+      "terminal": true
+    },
+    {
+      "game_id": "6ddb83ebfa283522405514eb463ae2910333421f5858c24a89bbed947e61b97b",
+      "game_index": 8381,
+      "nonterminal_pass_transitions": 1,
+      "offset": 817396,
+      "opening_family": "bccf7d12a0cf5b3c39fd2dd17a938816e38fc7edd4fdc59a96593d283a2fe979",
+      "rows": 62,
+      "sha256": "3dc1f2585f744a9f02b591dca09bca6e95e2e5720beb3acdc0fa1151f4245c5f",
+      "terminal": true
+    },
+    {
+      "game_id": "7573cea5d244806dfdc14a9b98c12e84380b5388d738ba717a06532d4282ce1b",
+      "game_index": 5431,
+      "nonterminal_pass_transitions": 4,
+      "offset": 530600,
+      "opening_family": "6d889f19a22d1b734aedc2d9280c26cd6f3780b3917018447acaeb3310680cb3",
+      "rows": 102,
+      "sha256": "dafcf9b4236ca4bd4ccedc366c868ecdb4944013dada9204e30d2971dc9b77c7",
+      "terminal": true
+    },
+    {
+      "game_id": "1850ba944da9d73f6706a0473097636af8c669a4a4e6be3ee87a070f2f77bbeb",
+      "game_index": 1929,
+      "nonterminal_pass_transitions": 10,
+      "offset": 187662,
+      "opening_family": "25947a3a3fd023e9b2e778d4383be219e2063dde957240886f9ed521fcdd9da6",
+      "rows": 94,
+      "sha256": "259b6f740b16bcc4706fcee38af655994fa0de92098095886bd39e0d438b26ef",
+      "terminal": true
+    },
+    {
+      "game_id": "85974cbea049058363b67929a5912d69bc4d1501426174489ee2eaa31a1e6f84",
+      "game_index": 2483,
+      "nonterminal_pass_transitions": 2,
+      "offset": 241524,
+      "opening_family": "f27b92c51848d11f99ff309b54fac0ae57f7cffbe86bf3ae65d4cd5ff51e7f14",
+      "rows": 155,
+      "sha256": "76d7a7c319ea583794bbc1d7706e32948c3c2dba24dc5433636d83fa89eb4b89",
+      "terminal": true
+    },
+    {
+      "game_id": "b6a4b421a64229352484c935cda23dd92f11e0033796526468dcfd954d28625f",
+      "game_index": 8021,
+      "nonterminal_pass_transitions": 7,
+      "offset": 782265,
+      "opening_family": "26561eac5d67cf48fd4b244ced121d16986fbacfe387ca6b7299266a638c6f1a",
+      "rows": 108,
+      "sha256": "4989566f2826e252315c45a8b7ab6989121da51cdb3151f2fc5efbc3d391743d",
+      "terminal": true
+    },
+    {
+      "game_id": "fff0f9553b5363c7628b2e2036ee6778c46258e2f325c0810769075797446a11",
+      "game_index": 5666,
+      "nonterminal_pass_transitions": 4,
+      "offset": 553510,
+      "opening_family": "4d53943919973378de113ff381dff579e68c61ac9e0b6e36d92852ff27273f97",
+      "rows": 129,
+      "sha256": "344fd617d77697314a93bf0eba3722631c8834fde726f6bc6b2075643063213d",
+      "terminal": true
+    },
+    {
+      "game_id": "7fc249f8703a46e9c88a05edfdb3990172b1700e10edc538537aef35c3dfc4ad",
+      "game_index": 7251,
+      "nonterminal_pass_transitions": 11,
+      "offset": 707631,
+      "opening_family": "de9bf8a8e0c16b236f6b14404e4bd764102e7a651e470c2926dae72c157ae652",
+      "rows": 98,
+      "sha256": "0966df503f7772e42f04549886c81d4e7a072050cda6941a13713fe5efad6188",
+      "terminal": true
+    },
+    {
+      "game_id": "5c4d4f57857f45cc2689646e97d22bbf0aae02558496aad6e0b6b1cb27380517",
+      "game_index": 4962,
+      "nonterminal_pass_transitions": 13,
+      "offset": 484386,
+      "opening_family": "09d3f7a65bd2b930df4a705a6513b115bd9f2c30d1d3e85b627bed29aa21281c",
+      "rows": 108,
+      "sha256": "f5b8803a309a55dd89ef4cd952dcf77baef2e553ab1160df0a5c146b983e61b2",
+      "terminal": true
+    },
+    {
+      "game_id": "94576322fc40ca3ccc55df4845868b2b4eb850252622c1f3407b385fb7cecea7",
+      "game_index": 1364,
+      "nonterminal_pass_transitions": 9,
+      "offset": 132136,
+      "opening_family": "b720fe9f0f0e7633b2ca0ee0541c8fad38debbd149e7c7ce0ab3175585a292cf",
+      "rows": 113,
+      "sha256": "55a51cd6c8b5d5e8385d1812f25265ff2b842f4c749611b5076a93189fdc3d10",
+      "terminal": true
+    },
+    {
+      "game_id": "52f5c3cd0d6b6ffadc62402bb9f9b10671b14590e514583790940eec21519bb5",
+      "game_index": 5849,
+      "nonterminal_pass_transitions": 1,
+      "offset": 571592,
+      "opening_family": "d6853318e24fca08458c7f6f38589f0967e8d53044eee9c5b1fb049346330b4d",
+      "rows": 74,
+      "sha256": "1d1fdd8d96fc5d107177abdddf92339ac8e286a91878418da46aed685bd0fa43",
+      "terminal": true
+    },
+    {
+      "game_id": "9d74f1dc807fae198fb9c7e3de0ea5429b490091d31484cdcf2e2eeecf56a9e3",
+      "game_index": 243,
+      "nonterminal_pass_transitions": 18,
+      "offset": 23442,
+      "opening_family": "847413441d1364bdea9b2fb26ad46706b2cf6f2069036f8ef6cfccd1017f95a7",
+      "rows": 149,
+      "sha256": "28fc65cd81f7bab9d9e835645b559230b2dd3acd099a1dd0244e6f0011ec6013",
+      "terminal": true
+    },
+    {
+      "game_id": "232eebb8967211147c8daf17000c9cc445e8d1a570f691d786dfc750efaebc01",
+      "game_index": 7919,
+      "nonterminal_pass_transitions": 4,
+      "offset": 772380,
+      "opening_family": "df391ac2eca4156d8539811be39a7eed11647a60c341fe02af40bf5d8cccd605",
+      "rows": 77,
+      "sha256": "b26d96f1c282337e36407ad3bf5d6c24017e606426c2abd29c96e8361c477432",
+      "terminal": true
+    },
+    {
+      "game_id": "f0f4bf2ecea99abd457b7844e73d2c56c1f5ea197b2ddc8108c1452101662988",
+      "game_index": 9178,
+      "nonterminal_pass_transitions": 1,
+      "offset": 895234,
+      "opening_family": "8dbb752f9c6e0e62943f5bbc874a8dcb4f0a5e7645758f714e4ce1963800725a",
+      "rows": 61,
+      "sha256": "f61d37f8a858f7eb340c2e1b7a5115d2bb8e66b6ec780ef4ae557c9a899b9795",
+      "terminal": true
+    },
+    {
+      "game_id": "c7aea9a17408b031cbe48d443308db21d68619bfd540002c24efd3ec67a2c885",
+      "game_index": 7152,
+      "nonterminal_pass_transitions": 11,
+      "offset": 697955,
+      "opening_family": "ce55eda4cbce739d1736ff064499ba4bc6b27e7f0872f8e90b03d57a77f45467",
+      "rows": 140,
+      "sha256": "f1f17246e004973054d8404fc3eff9b9544ab71f1003ecae28f922d17a37869b",
+      "terminal": true
+    },
+    {
+      "game_id": "d922af3934c5ae8c69d4d9f46bb58aae9c2e4ef33fd6df15cdd94ea34cef3a17",
+      "game_index": 3812,
+      "nonterminal_pass_transitions": 5,
+      "offset": 371355,
+      "opening_family": "b26285d6ced697f701d97f69c57db2a2455507b49fcddf3ca8fe1d36be4a3a2f",
+      "rows": 93,
+      "sha256": "d683d141e2b1dc0533e556162f69aa9f8a6150d01eccef1e1c6a4f8398e94bd0",
+      "terminal": true
+    },
+    {
+      "game_id": "727a1dfff6401daebdc44a0d7d449b537015f94c04f4ff23ecaea18c088d0e5c",
+      "game_index": 4179,
+      "nonterminal_pass_transitions": 7,
+      "offset": 407410,
+      "opening_family": "dba355c4eea2062de80379ea92f9340f8535629f1c515c35f8822a95be2c0dc1",
+      "rows": 124,
+      "sha256": "7f20aab18a3555e16f86f98e6d72041cec2490f422408c866414bf8ea2abe55b",
+      "terminal": true
+    },
+    {
+      "game_id": "3f908a0fba7134711c4c07bbcbe9b1fa7189761403487287fa7ce31bd1efbb6f",
+      "game_index": 4717,
+      "nonterminal_pass_transitions": 2,
+      "offset": 460029,
+      "opening_family": "73c2e00ed9428660ab8b22d329b7c3b49994d01c2f5246c32db42624fa54dcdb",
+      "rows": 80,
+      "sha256": "753f9ef3c0defe24d687a576fba9d208483f485bf437363f5c6cec63ef051f1e",
+      "terminal": true
+    },
+    {
+      "game_id": "1f1d380ec0301210b6e3d87fe05a0dfa1a1a5e5b304de54323a09b8d64e81098",
+      "game_index": 5763,
+      "nonterminal_pass_transitions": 6,
+      "offset": 563093,
+      "opening_family": "09700f201f87ea273d359435d9a1a048151368babc5273fd4811b0bafdea66f6",
+      "rows": 112,
+      "sha256": "92ca49286c852fd009b27ac5b049b3727bbb5d202d6068140d1315bac809126d",
+      "terminal": true
+    },
+    {
+      "game_id": "f244847aa3cfd211f24761d4a81c3cc8017092717abc3ffe30fed716ac58b4e7",
+      "game_index": 2142,
+      "nonterminal_pass_transitions": 1,
+      "offset": 208564,
+      "opening_family": "14de0a9fed3eb70f7fdf280d8708d823da046c1f0f6efb3926f9bd534ff476c8",
+      "rows": 82,
+      "sha256": "c58443500be331663678cf7d50afcf65e698a04be186d619b3d52229e882cf47",
+      "terminal": true
+    },
+    {
+      "game_id": "0e1a2063fcc697bd470bc85fbddfc4eed2d0f2845d3684386445ede8e1d9e036",
+      "game_index": 8431,
+      "nonterminal_pass_transitions": 3,
+      "offset": 822163,
+      "opening_family": "36005aa7eee91390df83682f974bc56110f0971541956f8ce932a53d130d3035",
+      "rows": 95,
+      "sha256": "4a28b119c035bc0042683a253cd8b6c0728c0a85f4f71ec242e177b9165dfd3e",
+      "terminal": true
+    },
+    {
+      "game_id": "12e56a8b57a770c1782169384a63a3f759f9d3a39b8b5e691597d75dfcfb8bdf",
+      "game_index": 1476,
+      "nonterminal_pass_transitions": 5,
+      "offset": 142868,
+      "opening_family": "98c60353a5f355946c58906515963fa94f8a0ecb0dbfc9a478d7ea31b630cbd1",
+      "rows": 92,
+      "sha256": "a105e0fa4d156d780c6fb8336e61af973a85ebe0441cfbe91c49b5ced3b05983",
+      "terminal": true
+    },
+    {
+      "game_id": "e9fcba3a2357ec09ae206284e59598aead9e37e80a189a488e379b8a83374a93",
+      "game_index": 10248,
+      "nonterminal_pass_transitions": 10,
+      "offset": 999588,
+      "opening_family": "e3603497a6299b6a3f1edc04afd7f8a254901e627ec248aab4dd93b6fce2abb7",
+      "rows": 101,
+      "sha256": "b29b2e774cf27ad7a217fc60931501e8c185d0aa4d4707bceec7a4c3c510d839",
+      "terminal": true
+    },
+    {
+      "game_id": "fa713e334f552d4e31ab6e386150b34a94243754a9ecf1974aded21196c966ce",
+      "game_index": 5858,
+      "nonterminal_pass_transitions": 13,
+      "offset": 572373,
+      "opening_family": "428289dffe258f3f2897703d4affc09410f81a3985bc1bbaac37af6c264c1d64",
+      "rows": 139,
+      "sha256": "29b8b18d3711519e8f2a0393a14002da4491bb9c002aca227d8c3d26d2941367",
+      "terminal": true
+    },
+    {
+      "game_id": "9c1b6559d39387455f73af0e1d7fbdd4b9cee11a6f85870cb959bbdaa000a0e9",
+      "game_index": 9370,
+      "nonterminal_pass_transitions": 8,
+      "offset": 914064,
+      "opening_family": "1575fb705c6870f9b6c5e014b2e46f95826c5691156f438572d091071b155f6a",
+      "rows": 90,
+      "sha256": "9299236f230a762b1e91ab0430710ef99d871c46811cc849ca19768031f53c5c",
+      "terminal": true
+    },
+    {
+      "game_id": "cf09e885b176fd5479885c30e72e778512e76c2913f1601bc0f97f130d6257c3",
+      "game_index": 8674,
+      "nonterminal_pass_transitions": 16,
+      "offset": 845635,
+      "opening_family": "9b7343c66f441c6a3da6ff212426f473d800775ed925687f179dd5bb8f9c89f8",
+      "rows": 106,
+      "sha256": "066d030874c6aa8c1b52f3418d95167e163ff4c96dcdffd6e421cb526f5e9298",
+      "terminal": true
+    },
+    {
+      "game_id": "9e17d8219bbfb398c9eec7e4af358d959531440c303f47122027d070f667f716",
+      "game_index": 7524,
+      "nonterminal_pass_transitions": 6,
+      "offset": 734137,
+      "opening_family": "f4363c27e88a6e9c435b2ffb0d18c512fef2667687d3b90f0066e6ac24a0d35f",
+      "rows": 99,
+      "sha256": "be6e830f1af0bde75e43e28140e919db6e2410f7bb3ec1da25f6f99d6bf52351",
+      "terminal": true
+    },
+    {
+      "game_id": "cf8a9271e3a853bc76365cb35c524d91fca10cc1545816bf531184de6d5f790d",
+      "game_index": 1033,
+      "nonterminal_pass_transitions": 2,
+      "offset": 100039,
+      "opening_family": "733467ba24bd8cb66b9eaf9c4ea32ade84db1dda73b93a0f3a7593802728c562",
+      "rows": 98,
+      "sha256": "07cc72ef8d6a762ba8187a9ae5414592e3e6549fd7ae0ebfc74778f7e8a72562",
+      "terminal": true
+    },
+    {
+      "game_id": "b34686ca43a392bfceb8d62d3820d47ea9adaf261d09e6d686bea834932d1c8f",
+      "game_index": 7615,
+      "nonterminal_pass_transitions": 3,
+      "offset": 742880,
+      "opening_family": "0d726316e23013c5829aedd5347f42e3b45bb100b705b4f63d6c423a536dec1a",
+      "rows": 93,
+      "sha256": "3dc768bccccc889c1e2fcc7f9ba0bfb2b4767d971dbba3ab18719047b385b69f",
+      "terminal": true
+    },
+    {
+      "game_id": "463543a676b83e677b60cb55cae6563ede499df02432b86b6e5928b1a226b8ef",
+      "game_index": 2725,
+      "nonterminal_pass_transitions": 7,
+      "offset": 264748,
+      "opening_family": "9b3b4ef3b64569a7cb21a2e9e9c45d2aff4352aa4df733cf6a1bc2bd7cfbd7e1",
+      "rows": 98,
+      "sha256": "8f1baa1d3b3319b250834d875c005ef95ea864706dac2b701a10ea98299e39e4",
+      "terminal": true
+    },
+    {
+      "game_id": "5e04d02b19d7b9fe680493793e939494ea0df8a6bafa5b289f2b7b37a1124afa",
+      "game_index": 9721,
+      "nonterminal_pass_transitions": 5,
+      "offset": 947912,
+      "opening_family": "d22a633d7c0ba866e3cb89ff35653c3b789249ff9c33a0d38097277edcf8a037",
+      "rows": 74,
+      "sha256": "6e84936d2e3a78027461977b65f8f960f0afabed18a894d816d4d2171486e62a",
+      "terminal": true
+    },
+    {
+      "game_id": "2a93015d35307750e766faf6536df6e9f6baa87d93c24dc6c5acfa67ba55e5e1",
+      "game_index": 1602,
+      "nonterminal_pass_transitions": 11,
+      "offset": 155326,
+      "opening_family": "f1f06ad1e3d218be183c295ce79835e50bf75032a5a2032bddf0ab72b8e2c228",
+      "rows": 154,
+      "sha256": "6e9140e6f933021c4d80d5ea05b7d5fb887d7a75786166d7bcd9ce35b5c51bbe",
+      "terminal": true
+    },
+    {
+      "game_id": "ab9dfd7aa98f4a172a7df6f551118b29b2086e6cf76c7ed3771adcd37c24166f",
+      "game_index": 355,
+      "nonterminal_pass_transitions": 12,
+      "offset": 34264,
+      "opening_family": "458d5404366bb7101b872f867c0c2b4b664739cd45030a049d17bee5d16d72a5",
+      "rows": 141,
+      "sha256": "e238b36a20290fc3c5f8e8ab997fd734a6bec8b527cbe1a2b425f916ae6be7bd",
+      "terminal": true
+    },
+    {
+      "game_id": "4395ec9b6343a4b0ab501f662580e17c47182aeceaea0fbb96215fcf430cf17a",
+      "game_index": 9922,
+      "nonterminal_pass_transitions": 11,
+      "offset": 967760,
+      "opening_family": "4bac91e0e51b6a577e9e387d844c570574334f9eeefd2070ada2defb0ff74206",
+      "rows": 122,
+      "sha256": "aed5266667ff5f831ccb05d0d61ba4b9ebe98d23e0d706d04c1291065e03a53e",
+      "terminal": true
+    },
+    {
+      "game_id": "d42ba0294e8319ab25e02b45339cab18cd0b5017d6b8ae9f5de7305830448e48",
+      "game_index": 945,
+      "nonterminal_pass_transitions": 5,
+      "offset": 91165,
+      "opening_family": "a131df551619fdd9f56a876a06cb0b2434d3caac11860bd61ab31937b0021313",
+      "rows": 133,
+      "sha256": "4fbe0ef94727fa97a3f582531cecf1697afc34d561c36f8170c4fac65aeb2f31",
+      "terminal": true
+    },
+    {
+      "game_id": "c25fc44883dee63e72d33dbeb80bc692cac423778a6a1bb8ab83885daec76cd6",
+      "game_index": 6698,
+      "nonterminal_pass_transitions": 10,
+      "offset": 654066,
+      "opening_family": "51954a28ebb8b8f80069a0f163320472d1ddbe7c2e8916ef8249d662c74a34dc",
+      "rows": 97,
+      "sha256": "693c85b391ead16445f0a7b7c6c6e94ed0d05031c3c4dff195eeae745b13a390",
+      "terminal": true
+    },
+    {
+      "game_id": "a03dabc2380e36b7e009115fc04f0cf9490c60e622095127a91a9bb7380b01d3",
+      "game_index": 1219,
+      "nonterminal_pass_transitions": 10,
+      "offset": 118239,
+      "opening_family": "92e81f597c51e9bd68e0ec9982b70c916a3452fc967b3286c5d47c1bcad73566",
+      "rows": 96,
+      "sha256": "e2774c1202fa830fbaf88c67885568078c976aa1cc127a9996cfcd0d2495c7d6",
+      "terminal": true
+    },
+    {
+      "game_id": "15017b771065b979b918cd3a37129409c5817c4ae9ac2a26a35aec867af4b493",
+      "game_index": 7958,
+      "nonterminal_pass_transitions": 10,
+      "offset": 776187,
+      "opening_family": "bb7bec7618624a92d1c2455af5849c16da81703fa174d1f570c000ae7bd6cfee",
+      "rows": 110,
+      "sha256": "959a663b444d34184ea427c3192a1434a684f065f94610dad85cf9c5a01bc45d",
+      "terminal": true
+    },
+    {
+      "game_id": "5d1c984e630b23d519ed8db30a0ff39654537b938e4c73a81c28bdbe3adbe152",
+      "game_index": 6185,
+      "nonterminal_pass_transitions": 2,
+      "offset": 604149,
+      "opening_family": "7cb75616660edb61389665a36a36520722d4f827afe09f867dda8b79b642d620",
+      "rows": 65,
+      "sha256": "f80adc22fa7af3ebd2285862b1122749f14b311008fe93ca10a6031c1d2352eb",
+      "terminal": true
+    },
+    {
+      "game_id": "1358c6a96cf0834297b45bf7fd2e275d2d0f98ba8c6df92d5b7a1d4e84a1ddad",
+      "game_index": 625,
+      "nonterminal_pass_transitions": 4,
+      "offset": 60226,
+      "opening_family": "9f9f0247baa0f32593b1f33b415c7ebf1b0e5f579e2e8f466407df19fc323d73",
+      "rows": 119,
+      "sha256": "6f9235a86d0076dcf3f7c8c9781c60a611f2e798b9e0ec2c95313b0e0cbd3e03",
+      "terminal": true
+    },
+    {
+      "game_id": "9a3b0d0fb79a632fdee797c1308814a3d18e0ba817d8f490aa2784b4c0ddfadf",
+      "game_index": 133,
+      "nonterminal_pass_transitions": 9,
+      "offset": 13010,
+      "opening_family": "c94a913000aeb3f783106eb6a437fafaa58a7dab55ac85b2734449364a06c384",
+      "rows": 86,
+      "sha256": "4090b1a1a95e35e799e3f704e657b9935985f5141935c295d20396fdeadc7ec5",
+      "terminal": true
+    },
+    {
+      "game_id": "70ed4b684e23ab2966d0441781a8ca82f0474dc2ef76d19fa839d742c07e216d",
+      "game_index": 8919,
+      "nonterminal_pass_transitions": 4,
+      "offset": 869671,
+      "opening_family": "c5326e87aedd9d508bc8d54728445a525e39d993256faf2132f08c91c90d4aa7",
+      "rows": 82,
+      "sha256": "d00c4363d3810d0c76497acdb4833e32332c30b8b0f7b1bdaf066c946749d4fb",
+      "terminal": true
+    },
+    {
+      "game_id": "1a0c604ab5a2c7fc9deb4cc499755560bde02a6775e06195321f4dcd6bc130d6",
+      "game_index": 1488,
+      "nonterminal_pass_transitions": 4,
+      "offset": 144003,
+      "opening_family": "319ef7f326dc0f19f06ffe45389c73f512111e2307bc3a6b0ab431b3bbcc8238",
+      "rows": 118,
+      "sha256": "cc687750d522d623aae5913f9336b70fe747b05091faa8503d38ddd225cc536a",
+      "terminal": true
+    },
+    {
+      "game_id": "1270b41fcd227e1cfbc901b7449d998ab13969c9dcd36da656026a8b00512276",
+      "game_index": 9985,
+      "nonterminal_pass_transitions": 10,
+      "offset": 973825,
+      "opening_family": "f715084f6ef1de15bfac7b293bcd136a18103897dd2adb41f9de2952f45f5672",
+      "rows": 137,
+      "sha256": "4637cba660d4324530300ef96e5ea563602ba1380f813adfd1495cfe6cedf464",
+      "terminal": true
+    },
+    {
+      "game_id": "b04dbfec13bdb5054e80b4dd269436479a19a7dca6bcf1827ffc58ddacd49dd9",
+      "game_index": 8637,
+      "nonterminal_pass_transitions": 10,
+      "offset": 842121,
+      "opening_family": "614b2976253b0121015ab79109555f25aeaa7709747c7b7f860d9f185b876f30",
+      "rows": 84,
+      "sha256": "d31440190252bb4e7e46253c7012505e38c91889053d4fb76c1ae420e2922983",
+      "terminal": true
+    },
+    {
+      "game_id": "4d28254075a6ba8f765ecfee3766d17f842470722b171e140c3ba6f57ffc4c09",
+      "game_index": 6308,
+      "nonterminal_pass_transitions": 6,
+      "offset": 615951,
+      "opening_family": "1b0d5b2dea68935103149a52b1dd45b23af8cd46247ab790b51c8fff1f3f89ae",
+      "rows": 85,
+      "sha256": "16232aaa521e489a224a72ad3e2fca04b209e70decff08220b3dc09640239350",
+      "terminal": true
+    },
+    {
+      "game_id": "9d1884e68c67423e7ffcb9c04cc7669e6ba03c09c54a02dce5efc18881e16ab7",
+      "game_index": 8842,
+      "nonterminal_pass_transitions": 10,
+      "offset": 862161,
+      "opening_family": "f37bbe787cf97d6d6a42c6f04223be90b36dec2d27e9d8e64af03b0d7b3c5e7c",
+      "rows": 93,
+      "sha256": "d55911ee4b7694726863c0915c962840b168e08fec9a720ec78afa008c2940a3",
+      "terminal": true
+    },
+    {
+      "game_id": "9658275a167b910716b54fe919dcbc15a490eb7231637a0ccc9bc028a906695e",
+      "game_index": 2477,
+      "nonterminal_pass_transitions": 2,
+      "offset": 240915,
+      "opening_family": "1892e1fa3e85084d7c1774a235ac6845fcb844f803b33f34505b2c7d4a434035",
+      "rows": 85,
+      "sha256": "7989de2c7acf2d32d489b21aee1797cf637ae23c77e0ef447aa8b8f355aaa4ae",
+      "terminal": true
+    },
+    {
+      "game_id": "4128258fb0798092abf749e2d6e2391b70f7240ab759803117eac18eb7008b36",
+      "game_index": 964,
+      "nonterminal_pass_transitions": 7,
+      "offset": 93209,
+      "opening_family": "fc27b380546004a6ebfd683bc2b8cd530d06105095f51caa0c99a8b5ca512019",
+      "rows": 103,
+      "sha256": "457e3c1fda2d9dfbd2e511a123a9e45079ab042ad18ee8aec84c14c5914cd829",
+      "terminal": true
+    },
+    {
+      "game_id": "7b4a193eb13f3c1bc46b9892d519f1cbd0845848c3b430bcca44f0019837ae34",
+      "game_index": 2966,
+      "nonterminal_pass_transitions": 6,
+      "offset": 288572,
+      "opening_family": "eff64e25e168be3a96814b23556d0ac859b929fdbb85613844d73b67ac866fa9",
+      "rows": 83,
+      "sha256": "41fb8852ce129886c2bf19d634763c8d219d001be5f8740660a1c930796febbf",
+      "terminal": true
+    },
+    {
+      "game_id": "1a10f262c7779ee1673a08f4efb17f5a238b1b76e1b0aaef391263d838e6de56",
+      "game_index": 6414,
+      "nonterminal_pass_transitions": 3,
+      "offset": 626479,
+      "opening_family": "c91e97abf4da350ddb1b281320c64f04393fc3b3bf1f24cfdc10629a7443db24",
+      "rows": 62,
+      "sha256": "e3bef6b6707c5aa8ea3bef855b16da89568bae9bbe7d4a96b44ab718cf48d26a",
+      "terminal": true
+    },
+    {
+      "game_id": "de08f30b11d74ce02a9fc3ac3ccaacc3436665e705eb1488402870ae24c3ab27",
+      "game_index": 6772,
+      "nonterminal_pass_transitions": 10,
+      "offset": 661322,
+      "opening_family": "d8705d7f257eafd4c1fcbd7f9ccdddfac996d332ea283d4f6eb5b74c5834041f",
+      "rows": 107,
+      "sha256": "48a85612e69077b4561bbc01902ec8e74be5fbf4fc984a2050b300145895a3fe",
+      "terminal": true
+    },
+    {
+      "game_id": "36bc778fa40a67e56e16d3525d1f1eb0e3695d327a6bf2fc729f73aad32de9a5",
+      "game_index": 5714,
+      "nonterminal_pass_transitions": 9,
+      "offset": 558402,
+      "opening_family": "0dc42385ec3f7ec25230b2b0ec16985e9ae854a5e5955d21d91d00c4162135b2",
+      "rows": 118,
+      "sha256": "6f0313a2f10d3c2f50cc7b1f41114f07d76665dd5182b7c28251c7760a666f28",
+      "terminal": true
+    },
+    {
+      "game_id": "c0e7656ea499ced6b88d10d98c1c3ac8322d446e2ab38d39e9a4001221d8acf2",
+      "game_index": 6207,
+      "nonterminal_pass_transitions": 1,
+      "offset": 606109,
+      "opening_family": "5bebeb45002141ce355cc8112fcec9b1c566da865dbe5e635ecadb73b1fa82c3",
+      "rows": 68,
+      "sha256": "ae0073d5e9ea9389b3ef7e1f7986c631b5293c9f0ce1f84fc4bb7e5150a8b5dc",
+      "terminal": true
+    },
+    {
+      "game_id": "28a2783b4dc9e3915e3cabf342e213288ca09ffb875956d1b34a86cf8621e3ef",
+      "game_index": 5625,
+      "nonterminal_pass_transitions": 3,
+      "offset": 549489,
+      "opening_family": "06035f561c79d2d6e8e92f855cf9f3072d2832eee0c8f2e8c9a336d014d4efae",
+      "rows": 78,
+      "sha256": "adbb52338cf73f87e5fb84b9610017362c156ea44d27d60c952c1239fc9ba41a",
+      "terminal": true
+    },
+    {
+      "game_id": "8ccf8d24db5b94f506d4310093a6e4056530f89287d0aea03852d00598ee8e32",
+      "game_index": 8962,
+      "nonterminal_pass_transitions": 12,
+      "offset": 873933,
+      "opening_family": "d288c74294036aa862c8b2fa403a1cf082018f3e439fe41f74b40dce3d0025d0",
+      "rows": 123,
+      "sha256": "f777fd47c6ec7a995e772bfd4ea4a9d3e645b2006f4ee2696a17addffba0c379",
+      "terminal": true
+    },
+    {
+      "game_id": "7207ed68c4896748b8a9ec8cc9d2a865f8239d1e2f926eeed0fcecfa4ff0f506",
+      "game_index": 10160,
+      "nonterminal_pass_transitions": 14,
+      "offset": 990806,
+      "opening_family": "9750ad6a1267c1b89f080762ab3531358f88a39e248e1fb44e6140e4bd98b42a",
+      "rows": 154,
+      "sha256": "afbd2f499580f1be79b9a68c522f1d8a446cb73f871613b379ad0ec4eca2a98d",
+      "terminal": true
+    },
+    {
+      "game_id": "98313d6f76becd7408d5e45e5aea214b44b33beeba07184f0711fa63fcf14bed",
+      "game_index": 10006,
+      "nonterminal_pass_transitions": 5,
+      "offset": 975951,
+      "opening_family": "707802dc20d95d94852bca8233b2ad0471349b18d806e790b0484ce95e378522",
+      "rows": 121,
+      "sha256": "0ed2131efb0871f397e24711e24fc5148bdd16c503585d8d254eeae0124d5ba5",
+      "terminal": true
+    },
+    {
+      "game_id": "5d88505257b590efab66b2b596f82c1fa47cd21e849d4c1053f5851c9c857151",
+      "game_index": 1199,
+      "nonterminal_pass_transitions": 1,
+      "offset": 116323,
+      "opening_family": "857bc6e3904e2747eff025a11d652218af17e1b6a9c8374e55e13191f793626b",
+      "rows": 67,
+      "sha256": "d5f3d762563f47a7b6f65a736f3a0d9157c29c41a90d3236b426e37155659194",
+      "terminal": true
+    },
+    {
+      "game_id": "da4af774923f31de5fdf6731efdaf02e70b0262820f5d1bc5ca0a09ab8eda3a5",
+      "game_index": 6795,
+      "nonterminal_pass_transitions": 5,
+      "offset": 663547,
+      "opening_family": "73639268a1391861ad9c34e7a0876a23757574d5049b3361a607a6380dd517c5",
+      "rows": 114,
+      "sha256": "d11f5205a7ae535fe493a9dc5bc9068b89f0a17f8748cf9f8b87816a8701a069",
+      "terminal": true
+    },
+    {
+      "game_id": "41523a805096f1461fd85a5d36735b42d657b4a951b79283eedfefa614512d10",
+      "game_index": 4059,
+      "nonterminal_pass_transitions": 1,
+      "offset": 395768,
+      "opening_family": "a2690b4db69af66cbb5f04eecab6da3cdf7f26a70226ba612eaf7678577aa80a",
+      "rows": 58,
+      "sha256": "3f99f922c1c5014e82cb2140035a6ccedc3339e3a4e62a1b52c592c8b40ee453",
+      "terminal": true
+    },
+    {
+      "game_id": "8501e7a065e74e4abd46b2714bec8e82756397c999131c0b85132ce5e4c517cb",
+      "game_index": 4331,
+      "nonterminal_pass_transitions": 2,
+      "offset": 422561,
+      "opening_family": "96d7b17c5e8bbdedbfb18a214207db26cabc055062d13bfdfa8ded3e1c656bc1",
+      "rows": 68,
+      "sha256": "269993e1ef227e79db0e04a3ed8099ca524d9fc64401295166219dc80ef2a486",
+      "terminal": true
+    },
+    {
+      "game_id": "6f9a9bf5802e311bcaf2b49adb3c43070cc02854532549ea3b12652b70092d53",
+      "game_index": 2052,
+      "nonterminal_pass_transitions": 5,
+      "offset": 199586,
+      "opening_family": "9c5b884a5dd5d3174a90c42bdcbd3340618c7bb7171e599b0ad166dbd797851f",
+      "rows": 79,
+      "sha256": "0fecf1457cee805f73e345afcbc395eaba98d4a6b302338e45ea81df36a2809f",
+      "terminal": true
+    },
+    {
+      "game_id": "b6f2f9b541993b68cf292f5b03dc6fb9f75e98716132bdf98adc51ecb1429e68",
+      "game_index": 10137,
+      "nonterminal_pass_transitions": 4,
+      "offset": 988719,
+      "opening_family": "23a025669c361ca8e0df37f8d8493ed67cf63bb79a0c9542e9b602267a90d8c0",
+      "rows": 88,
+      "sha256": "51893ce51821255da5ebb4cdda101df473fa8b10c353df555c821126b9e43379",
+      "terminal": true
+    },
+    {
+      "game_id": "c9b5ed098e4ad5620838d614d256fb799d247ed01244e334e1e735cfcced862e",
+      "game_index": 10020,
+      "nonterminal_pass_transitions": 2,
+      "offset": 977252,
+      "opening_family": "df5a0f93c3587b988c5c11e17c206325c45f8eb9fffebeda0a3b398397a02f55",
+      "rows": 107,
+      "sha256": "6c5e46d7d8d60e9f8961da116cad95386e6480320ccd722523ffd7fce923d816",
+      "terminal": true
+    },
+    {
+      "game_id": "70261160e51d00a78acc493700005b553a6bfd1aa0f1ee21c2b9345d7c06955c",
+      "game_index": 8819,
+      "nonterminal_pass_transitions": 8,
+      "offset": 859793,
+      "opening_family": "a878f387dad02d7e504ccedae3f80c8f89e38e71a0cf952b7de47a5b0a8f7683",
+      "rows": 96,
+      "sha256": "969ffbabe0714fbc73e33884572e2236d5a0b64bf2ba41d97bb016215abcd7b3",
+      "terminal": true
+    },
+    {
+      "game_id": "b79f78ff59f673044b2cb6889db5b4570d93fd8ee5cf9c985f74316f9708e8c3",
+      "game_index": 2958,
+      "nonterminal_pass_transitions": 1,
+      "offset": 287691,
+      "opening_family": "301912794e425b376bfa5bd2273409f0f6426f4b4fa0491546a92cb54ecd867a",
+      "rows": 66,
+      "sha256": "622c03abee9eca86eb801e72f757ae310dfd9a5a07e66f05d2a3d268aee6dd61",
+      "terminal": true
+    },
+    {
+      "game_id": "b64a052619f063d64ac0b38b4e7ae4cba97e722cc1a6defd4d3741f959cee4b8",
+      "game_index": 7045,
+      "nonterminal_pass_transitions": 2,
+      "offset": 687549,
+      "opening_family": "5433746677b321171e4dee48a0df7bd8cd2d3de25eb5497e3325f97589d7272f",
+      "rows": 96,
+      "sha256": "23fbcfa5c25627f74718825673b2c66ee11c9e74f0bd428f5e671b2cbc2e313b",
+      "terminal": true
+    },
+    {
+      "game_id": "eb070a67f0757d87dddefb113c34ec1513da6a85004796d084194148b470cbef",
+      "game_index": 401,
+      "nonterminal_pass_transitions": 4,
+      "offset": 38638,
+      "opening_family": "56374da6e95a9137282784a4b2fc2983d0ecea26ec50f320ab3197105d1f8678",
+      "rows": 109,
+      "sha256": "cd69809bbedc6be272992238f294f8f50590e9e6134454072b8110f2d8b19f23",
+      "terminal": true
+    },
+    {
+      "game_id": "03bf253defed50b4a1f6c68f8aef83d140b871dc73fe1d6189eb460fbbfe1e7a",
+      "game_index": 5833,
+      "nonterminal_pass_transitions": 10,
+      "offset": 569959,
+      "opening_family": "6e703b636cf7427151b44b9258527b5137ead344e344c79a02aa444a5a572b0c",
+      "rows": 96,
+      "sha256": "b3dad1c64b43447d4ef84f63798618b06888d42379d4f6adffb8eb28f134aa9a",
+      "terminal": true
+    },
+    {
+      "game_id": "841770f2901f59ab14e1e6f391febf01d8e15fa0de0c1659d0682c34810b87a4",
+      "game_index": 5457,
+      "nonterminal_pass_transitions": 4,
+      "offset": 532998,
+      "opening_family": "82b6f2ee687577e66aa1bff8750afd8ec98ae3e58358c8a6c5302dd9348c15c7",
+      "rows": 125,
+      "sha256": "01909eb41c26a8375fa4edc57ef91fa07c4e776a9485cfa47f61ba59f4ce0726",
+      "terminal": true
+    },
+    {
+      "game_id": "fde87c9c065bdfa41edf05e6a1f774d1350786b756b569ccc754f8546deb0d1c",
+      "game_index": 8534,
+      "nonterminal_pass_transitions": 6,
+      "offset": 832270,
+      "opening_family": "e72851f768c651eae72bf98263451fcccba3245ad9469073e3cfc961cdfa17bf",
+      "rows": 81,
+      "sha256": "90f8a3a252f8d5eb42113e67c8573a9201d2ba103821e9cf49ee065949e3e899",
+      "terminal": true
+    },
+    {
+      "game_id": "daca3a54945360ce28a873140a305891f62fc712bb36b2a3242d635a125e63d1",
+      "game_index": 1284,
+      "nonterminal_pass_transitions": 8,
+      "offset": 124508,
+      "opening_family": "4b44a1965761be048aaf820ef7a50a59ee760dcd6dca2bb2047e6076e0828e01",
+      "rows": 137,
+      "sha256": "613fb1d22189b8d0c749fc9b3129371c1532402c8d5a3d75d5f00b3d7648ddd7",
+      "terminal": true
+    }
+  ],
+  "scope": "Training-only replay/schema audit. Stored and cached pre-action observations, legality, game offsets and ply order match full-prefix replay on this fixed sample. Absolute black/white planes derive exactly from current own/opponent planes and turn. Passes preserve absolute imagery while occupied relative imagery flips. No teacher policy/value array is indexed, no final-test example is selected, and no neural inference/update, new dataset, scientific feature change or TPU use occurs. This does not qualify a sequence sampler or demonstrate a memory benefit.",
+  "seed": 918457,
+  "selection_rule": "One uniformly sampled game per sampled training opening family; no target-based selection.",
+  "source_sha256": "72964001d952239915ffb8c67aed666ca10b02a3271a1f385cbdb59eaa84c6ee",
+  "status": "passed",
+  "training_game_length_quantiles": [
+    32.0,
+    67.0,
+    95.0,
+    135.0,
+    203.0
+  ],
+  "training_games": 9049,
+  "training_positions": 887338
+}

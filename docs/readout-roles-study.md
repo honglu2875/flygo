@@ -73,8 +73,8 @@ Full state/loss/all-gradient/optimizer parity, checkpoint continuation and actua
 decoder arithmetic must be qualified before training a new head. Count its
 work in the complete prediction budget. Compare fixed-horizon validation and
 later controlled play; anatomical resemblance alone is not the acceptance
-criterion. TPU remains paused. The selective-value result is reported below;
-side-aware learning comparisons are running under the same registered screen.
+criterion. TPU remains paused. All twelve endpoints and the four declared
+contrasts are complete; fresh-seed confirmation is registered below.
 
 ## What the existing learned projections use
 
@@ -167,7 +167,7 @@ Rust visits only enabled decoder coefficients; the arithmetic ledger counts
 those products. The JAX reference applies a binary mask to a dense matrix, so
 its enabled coefficient count is not a claim that the compiler skips that work.
 All CNS neurons and connections remain present. Both scientific waves were
-registered before launch; the first contrast is complete. Subsequent persistent-state
+registered before launch; all four contrasts are complete. Subsequent persistent-state
 and optimization experiments retain their own contracts.
 
 ## Numerical qualification
@@ -250,9 +250,11 @@ and final checkpoints have verified recovery copies; an owner-side audit checks
 the same mask, unchanged disabled coefficients and zero disabled moments at
 both endpoints.
 
-The [second launch audit](results/readout-roles-wave2-launch-v1.json) verifies
-the same gates on all six live soma-side/shuffled-side learners at updates
-230–250. Its first queue attempt stopped before creating a learner: the
+The [second launch audit](results/readout-roles-wave2-launch-v1.json) verified
+the same gates on all six soma-side/shuffled-side learners at updates
+230–250. These learners have since completed all 1,000 updates, full validation,
+motor probes, arithmetic counts and endpoint audits. Both initial and final
+checkpoints have verified worker replicas. Its first queue attempt stopped before creating a learner: the
 housekeeping affinity hid the host's CPU inventory from the planner. The
 retained recovery restores inventory visibility before the planner pins itself.
 The scientific source, settings and worker lanes did not change.
@@ -274,8 +276,9 @@ The [paired first-wave report](results/readout-roles-wave1-v1.json) includes
 every endpoint at 32,000 labeled exposures. Full validation has 70,425 positions
 from 254 opening families. The [analysis rules](../configs/readout-roles-analysis-v1.json)
 were frozen after training finished and before inspecting its new validation
-metrics. Training contracts were registered before launch. The remaining three
-contrasts await the second wave; they will be reported regardless of outcome.
+metrics. Training contracts were registered before launch. All four contrasts
+now appear in the [complete report](results/readout-roles-v1.json), including
+the full decoder interventions and second-wave results.
 
 | Value-group minus dense | Seed 4 | Seed 5 | Seed 6 | Mean |
 |---|---:|---:|---:|---:|
@@ -321,9 +324,120 @@ these endpoints. These are model-response findings, not established biological
 value roles or a reason to fit permanent motor groups from one seed.
 
 The numerical reconstruction, disabled-state endpoint audit and paired-summary
-helpers pass nine focused tests. Full-run audits and all six actual diagnostic
-checks also pass. Their source, metrics, responses, counts and small reports have
+helpers pass ten focused tests, including checks that bind decoder interventions
+to their exact checkpoint and probe selection. Full-run audits and all twelve
+actual diagnostic checks pass. Their source, metrics, responses, counts and reports have
 verified copies; checkpoint payloads remain on worker owners and their replicas.
+
+## Complete screen: a promising side restriction
+
+The [closed twelve-endpoint report](results/readout-roles-v1.json) uses the
+declared analysis rules, all 70,425 validation positions and the same 254 opening
+families. Every arm receives 32,000 labeled exposures per seed. Lower policy KL
+and value MSE are better; higher teacher top-move agreement is better.
+
+| Head, mean across seeds 4/5/6 | Policy KL | Value MSE | Teacher top-1 agreement |
+|---|---:|---:|---:|
+| Dense | 1.69163 | .64922 | 19.179% |
+| Five-cell value | 1.65696 | .68652 | 19.733% |
+| Soma-side policy | 1.67762 | .58547 | 18.979% |
+| Shuffled-side policy | 1.69732 | .57676 | 18.609% |
+
+| Candidate minus reference, mean | Policy KL | Value MSE | Top-1, percentage points |
+|---|---:|---:|---:|
+| Five-cell value − dense | −.03468 | +.03730 | +.554 |
+| Soma-side − dense | **−.01401** | **−.06375** | −.200 |
+| Soma-side − shuffled-side | **−.01970** | +.00872 | +.370 |
+| Shuffled-side − dense | +.00568 | −.07246 | −.569 |
+
+Soma-side improves both losses against dense in **each paired seed**. The
+policy differences are −.00963/−.02395/−.00846; value differences are
+−.05728/−.06017/−.07378. It also improves policy KL against the frozen shuffled
+partition in each seed, by −.01124/−.01691/−.03095. This is a promising
+within-fly attachment result. Teacher top-move agreement nevertheless falls
+against dense in all three seeds. Shuffled-side shares the value improvement,
+so an anatomical explanation for the value gain is not established.
+
+For soma-side minus dense, conditional opening-family 95% intervals are
+[−.01593, −.00958] KL and [−.07566, −.03190] MSE; paired-seed sample SDs are
+.00863 and .00881. Against shuffled-side they are [−.02374, −.01125] KL and
+[−.04960, +.03491] MSE, with seed SDs .01015 and .00945. Family intervals
+condition on the three fitted weights, do not measure training-seed uncertainty
+and are not corrected for multiple contrasts. The current-source-novel slice
+has soma-side minus dense differences −.01705 KL / −.06089 MSE, and soma-side
+minus shuffled-side differences −.01347 KL / +.01140 MSE.
+
+| Complete warm B1 prediction, MFLOPs | Seed 4 | Seed 5 | Seed 6 |
+|---|---:|---:|---:|
+| Soma-side | 187.56 | 176.51 | 181.20 |
+| Shuffled-side | 191.26 | 176.23 | 183.23 |
+
+Soma-side and dense have essentially the same mean counted prediction work:
+soma-side is only .018M FLOPs lower at B1 (about .01%), with substantial paired
+seed variation. The mean B32 difference is −.151M. These are complete unpruned
+warm reset-state counts, including rendering and both heads. They are not
+latency measurements or a comparison with the earlier CNN budget.
+
+All twelve endpoint audits verify unchanged disabled coefficients and zero
+disabled optimizer moments. Reconstructing the retained decoder responses gives
+exact policy logits and value error at most 1.2e-7. Soma-side has 461/317/371
+varying motor coordinates, versus dense's 274/277/253, but its standardized
+participation ranks are only 3.68/3.59/2.58. Raw variance remains concentrated;
+more varying cells alone does not establish richer or useful representations.
+
+Keep dense as the reference and soma-side as a provisional candidate. No mask
+membership, loss, optimizer or horizon was changed after inspecting these
+endpoints. No physiological Go role, playing-strength gain or CNN advantage
+is established.
+
+## Fresh-seed confirmation
+
+[Wave 1](../configs/readout-confirmation-wave1-v1.json) registers dense and
+soma-side seeds 7/8/9; [wave 2](../configs/readout-confirmation-wave2-v1.json)
+registers their shuffled-side controls. The
+[analysis contract](../configs/readout-confirmation-analysis-v1.json) freezes
+all three contrasts before new scientific training. The confirmation asks
+whether both losses improve versus dense in every fresh seed and whether
+policy KL improves versus the same frozen shuffled partition in every seed.
+Report teacher agreement, arithmetic and any contrary result. Confirmation
+will be reported separately from discovery; reusing the validation families
+makes this a training-seed confirmation, not an untouched-data test.
+
+Keep B's current-board input, K8, B32, the qualified `2ba439e309df1e902b58`
+source, rate .03, warmup 100, epsilon 1e-6, bias multiplier .01, original enabled
+initialization and 1,000-update endpoints. All nine actual numerical and exact
+recovery gates must pass before training. Worker allocations retain disjoint
+24-core lanes and checkpoint replicas. The five-cell value restriction is not
+carried forward after its mixed loss tradeoff. No new shuffled partition is
+selected, so this does not test robustness across arbitrary partitions.
+
+Persistent-state engineering remains a separate phase. A successful attachment
+confirmation would select a provisional decoder for that study; it would not
+silently combine new memory rules with this readout comparison.
+
+The [fresh-seed gate report](results/readout-confirmation-gates-v1.json) retains
+**seven passing numerical cases and two failures**. All seven qualified cases
+pass exact recovery and preserve their paired initial arrays and samplers.
+Soma-side seed 7 differs in one policy weight after the second update by
+7.70e-6; seed 8 differs in one logit before the third update by 6.10e-6. These
+exceed the existing elementwise tolerances. No scientific confirmation learner
+has started, and no failed seed has been replaced.
+
+A separate independent FP64-head oracle keeps FP32 recurrence and Adam and
+uses the same examples, settings and tolerances. It clears soma-side seeds 7/9,
+but seed 8 still differs by 4.88e-6 at the same logit. This is a diagnostic,
+not an accepted substitute for the registered gate. The learner source remains
+unchanged while identical-parameter cross-evaluation investigates the remaining
+error. Numerical artifacts and failures have verified owner/root archives.
+
+The [completed cross-evaluation](results/readout-confirmation-drift-v1.json)
+finds maximum logit differences below 4.8e-7 at identical weights with the
+original reference, and below 2.4e-7 with the FP64-head oracle. At the failing
+coordinate, swapping only the policy-weight array reduces the original
+6.10e-6 difference to 1.61e-7 (FP64 oracle: 4.88e-6 → 1.46e-7). This locates
+most of the discrepancy in policy-weight drift across optimizer updates;
+it does not yet identify which gradient or rounding boundary should change.
+The original failed gate remains in force.
 
 The contribution audit also motivates a later conditioning experiment. For an
 invertible diagonal scale S, `policy = W S (r - mean) + bias` has the same affine

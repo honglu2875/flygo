@@ -1,0 +1,740 @@
+{
+  "created": 1789448463.330289,
+  "plan": {
+    "arm": "soma-side",
+    "batch_size": 32,
+    "clip": 1,
+    "cpus": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "created": 1789448120.3829231,
+    "epsilon": 1e-06,
+    "probe_sha256": "5e32eaed275f5e9049511c22d660b6fcdc6a552ad3f20d30e4850d89548e0082",
+    "rate": 0.03,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "reference_cases": [
+      {
+        "host": 1,
+        "reference": "standard"
+      },
+      {
+        "host": 2,
+        "reference": "fp64-head"
+      }
+    ],
+    "reference_sha256": "db8c214de986ab7daa85a92bd0eb62d8e9e3a5bde1cf5377270686a68df79610",
+    "scope": "Locate the remaining third-forward mismatch by swapping entire parameter sets and individual parameter families in the independent reference. No tolerances changed; failed records retained. No scientific training or TPU use.",
+    "seed": 8,
+    "source": "/dev/shm/flygo/environments/2ba439e309df1e902b58",
+    "steps": 8,
+    "updates": 3
+  },
+  "plan_sha256": "30cc794f871d2ae241daca77c6abec96efaa5f0e3509031023ef6ad6f04d4484",
+  "records": [
+    {
+      "failures": [
+        {
+          "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n2/forward/logits\nMismatched elements: 1 / 2624 (0.0381%)\nMismatch at index:\n [4, 76]: 0.0014162930892780423 (ACTUAL), 0.0014101900160312653 (DESIRED)\nMax absolute difference among violations: 6.1030732e-06\nMax relative difference among violations: 0.00432784\n ACTUAL: array([[-1.063446, -1.37085 ,  0.460598, ..., -1.3991  , -1.552005,\n         1.599985],\n       [-1.455005, -1.698765,  0.588728, ..., -1.723268, -1.899548,...\n DESIRED: array([[-1.063446, -1.370851,  0.460598, ..., -1.3991  , -1.552005,\n         1.599987],\n       [-1.455005, -1.698765,  0.588729, ..., -1.723267, -1.899548,...",
+          "stage": "2/forward/logits"
+        }
+      ],
+      "logit_comparison": {
+        "optimizer_drift_in_jax": {
+          "actual": -0.7413570284843445,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.735324859619141e-06,
+          "reference": -0.7413637638092041,
+          "selected": [
+            {
+              "actual": 0.0014162808656692505,
+              "difference": 6.0908496379852295e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101900160312653
+            }
+          ]
+        },
+        "same_jax_parameters": {
+          "actual": 2.3933088779449463,
+          "index": [
+            1,
+            38
+          ],
+          "max_absolute": 4.76837158203125e-07,
+          "reference": 2.393308401107788,
+          "selected": [
+            {
+              "actual": 0.0014101992128416896,
+              "difference": 9.19681042432785e-09,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101900160312653
+            }
+          ]
+        },
+        "same_rust_parameters": {
+          "actual": 2.298858880996704,
+          "index": [
+            1,
+            28
+          ],
+          "max_absolute": 4.76837158203125e-07,
+          "reference": 2.2988593578338623,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 1.2223608791828156e-08,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014162808656692505
+            }
+          ]
+        }
+      },
+      "owner": 1,
+      "parameter_drift": {
+        "bias": {
+          "actual": 0.019830606877803802,
+          "index": [
+            1242
+          ],
+          "max_absolute": 1.4901161193847656e-08,
+          "reference": 0.01983059197664261,
+          "selected": []
+        },
+        "edge": {
+          "actual": -9.105672836303711,
+          "index": [
+            8222
+          ],
+          "max_absolute": 9.5367431640625e-07,
+          "reference": -9.105673789978027,
+          "selected": []
+        },
+        "input_gain": {
+          "actual": 0.22368820011615753,
+          "index": [
+            129
+          ],
+          "max_absolute": 2.9802322387695312e-08,
+          "reference": 0.22368817031383514,
+          "selected": []
+        },
+        "leak": {
+          "actual": -0.018421992659568787,
+          "index": [
+            3268
+          ],
+          "max_absolute": 3.505498170852661e-06,
+          "reference": -0.01842549815773964,
+          "selected": []
+        },
+        "policy_bias": {
+          "actual": 0.05693454295396805,
+          "index": [
+            76
+          ],
+          "max_absolute": 1.341104507446289e-07,
+          "reference": 0.0569344088435173,
+          "selected": []
+        },
+        "policy_weight": {
+          "actual": -0.028982246294617653,
+          "index": [
+            162290
+          ],
+          "max_absolute": 4.479661583900452e-06,
+          "reference": -0.028977766633033752,
+          "selected": []
+        },
+        "readout_gain": {
+          "actual": 0.9806912541389465,
+          "index": [
+            154142
+          ],
+          "max_absolute": 7.152557373046875e-07,
+          "reference": 0.9806919693946838,
+          "selected": []
+        },
+        "value_bias": {
+          "actual": 0.04806079715490341,
+          "index": [
+            0
+          ],
+          "max_absolute": 7.450580596923828e-09,
+          "reference": 0.04806080460548401,
+          "selected": []
+        },
+        "value_weight": {
+          "actual": 0.025008462369441986,
+          "index": [
+            1320
+          ],
+          "max_absolute": 5.960464477539063e-08,
+          "reference": 0.02500852197408676,
+          "selected": []
+        }
+      },
+      "reference": "standard",
+      "result_path": "runs/readout-confirmation-drift-probe-v1/owner-1/standard/result.json",
+      "result_sha256": "d635a7dbbb70a537d29a2359b7de0ef9f1b7d8fe2f404bd0a1d8da541a74e0f8",
+      "substitutions": {
+        "bias": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.9141387939453125e-06,
+          "reference": -0.7413637638092041,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.117974407970905e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101751148700714
+            }
+          ]
+        },
+        "edge": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.9141387939453125e-06,
+          "reference": -0.7413637638092041,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.121699698269367e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.001410171389579773
+            }
+          ]
+        },
+        "input_gain": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.854534149169922e-06,
+          "reference": -0.7413637042045593,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.095622666180134e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101974666118622
+            }
+          ]
+        },
+        "leak": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.854534149169922e-06,
+          "reference": -0.7413637042045593,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.144051440060139e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101490378379822
+            }
+          ]
+        },
+        "policy_bias": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.794929504394531e-06,
+          "reference": -0.7413636445999146,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 5.968962796032429e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014103241264820099
+            }
+          ]
+        },
+        "policy_weight": {
+          "actual": 2.571427583694458,
+          "index": [
+            9,
+            58
+          ],
+          "max_absolute": 7.152557373046875e-07,
+          "reference": 2.5714282989501953,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 1.6123522073030472e-07,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.001416131854057312
+            }
+          ]
+        },
+        "readout_gain": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.9141387939453125e-06,
+          "reference": -0.7413637638092041,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.1067985370755196e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101862907409668
+            }
+          ]
+        },
+        "value_bias": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.9141387939453125e-06,
+          "reference": -0.7413637638092041,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.103073246777058e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101900160312653
+            }
+          ]
+        },
+        "value_weight": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 6.9141387939453125e-06,
+          "reference": -0.7413637638092041,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 6.103073246777058e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014101900160312653
+            }
+          ]
+        }
+      }
+    },
+    {
+      "failures": [
+        {
+          "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n2/forward/logits\nMismatched elements: 1 / 2624 (0.0381%)\nMismatch at index:\n [4, 76]: 0.0014162930892780423 (ACTUAL), 0.0014114121440798044 (DESIRED)\nMax absolute difference among violations: 4.880945e-06\nMax relative difference among violations: 0.0034582\n ACTUAL: array([[-1.063446, -1.37085 ,  0.460598, ..., -1.3991  , -1.552005,\n         1.599985],\n       [-1.455005, -1.698765,  0.588728, ..., -1.723268, -1.899548,...\n DESIRED: array([[-1.063447, -1.370851,  0.460598, ..., -1.3991  , -1.552005,\n         1.599987],\n       [-1.455005, -1.698766,  0.588729, ..., -1.723268, -1.899548,...",
+          "stage": "2/forward/logits"
+        }
+      ],
+      "logit_comparison": {
+        "optimizer_drift_in_jax": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.364418029785156e-06,
+          "reference": -0.7413622140884399,
+          "selected": [
+            {
+              "actual": 0.0014162607258185744,
+              "difference": 4.848581738770008e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014114121440798044
+            }
+          ]
+        },
+        "same_jax_parameters": {
+          "actual": -2.0159459114074707,
+          "index": [
+            1,
+            33
+          ],
+          "max_absolute": 2.384185791015625e-07,
+          "reference": -2.0159456729888916,
+          "selected": [
+            {
+              "actual": 0.001411439967341721,
+              "difference": 2.782326191663742e-08,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014114121440798044
+            }
+          ]
+        },
+        "same_rust_parameters": {
+          "actual": 2.298858880996704,
+          "index": [
+            1,
+            28
+          ],
+          "max_absolute": 2.384185791015625e-07,
+          "reference": 2.298859119415283,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 3.236345946788788e-08,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014162607258185744
+            }
+          ]
+        }
+      },
+      "owner": 2,
+      "parameter_drift": {
+        "bias": {
+          "actual": 0.019830606877803802,
+          "index": [
+            1242
+          ],
+          "max_absolute": 1.1175870895385742e-08,
+          "reference": 0.019830595701932907,
+          "selected": []
+        },
+        "edge": {
+          "actual": -9.105672836303711,
+          "index": [
+            8222
+          ],
+          "max_absolute": 9.5367431640625e-07,
+          "reference": -9.105673789978027,
+          "selected": []
+        },
+        "input_gain": {
+          "actual": 0.22762693464756012,
+          "index": [
+            3573
+          ],
+          "max_absolute": 4.470348358154297e-08,
+          "reference": 0.2276269793510437,
+          "selected": []
+        },
+        "leak": {
+          "actual": -0.015556922182440758,
+          "index": [
+            3109
+          ],
+          "max_absolute": 1.6177073121070862e-06,
+          "reference": -0.015558539889752865,
+          "selected": []
+        },
+        "policy_bias": {
+          "actual": 0.05693454295396805,
+          "index": [
+            76
+          ],
+          "max_absolute": 1.043081283569336e-07,
+          "reference": 0.05693443864583969,
+          "selected": []
+        },
+        "policy_weight": {
+          "actual": -0.028982246294617653,
+          "index": [
+            162290
+          ],
+          "max_absolute": 4.952773451805115e-06,
+          "reference": -0.028977293521165848,
+          "selected": []
+        },
+        "readout_gain": {
+          "actual": 0.9806912541389465,
+          "index": [
+            154142
+          ],
+          "max_absolute": 5.960464477539062e-07,
+          "reference": 0.9806918501853943,
+          "selected": []
+        },
+        "value_bias": {
+          "actual": 0.04806079715490341,
+          "index": [
+            0
+          ],
+          "max_absolute": 3.725290298461914e-09,
+          "reference": 0.04806080088019371,
+          "selected": []
+        },
+        "value_weight": {
+          "actual": 0.025008462369441986,
+          "index": [
+            1320
+          ],
+          "max_absolute": 4.0978193283081055e-08,
+          "reference": 0.02500850334763527,
+          "selected": []
+        }
+      },
+      "reference": "fp64-head",
+      "result_path": "runs/readout-confirmation-drift-probe-v1/owner-2/fp64-head/result.json",
+      "result_sha256": "fe256c8416e0327907f728175c557bd7ba4fe522fad06551d4ff31b75fa76d46",
+      "substitutions": {
+        "bias": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.364418029785156e-06,
+          "reference": -0.7413622140884399,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.883389919996262e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.001411409699358046
+            }
+          ]
+        },
+        "edge": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.304813385009766e-06,
+          "reference": -0.7413621544837952,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.8746587708592415e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.001411418430507183
+            }
+          ]
+        },
+        "input_gain": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.304813385009766e-06,
+          "reference": -0.7413621544837952,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.877685569226742e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014114154037088156
+            }
+          ]
+        },
+        "leak": {
+          "actual": -0.7332160472869873,
+          "index": [
+            6,
+            76
+          ],
+          "max_absolute": 5.364418029785156e-06,
+          "reference": -0.7332214117050171,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.881294444203377e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.001411411794833839
+            }
+          ]
+        },
+        "policy_bias": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.245208740234375e-06,
+          "reference": -0.7413620948791504,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.776637069880962e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014115164522081614
+            }
+          ]
+        },
+        "policy_weight": {
+          "actual": -2.7857398986816406,
+          "index": [
+            0,
+            40
+          ],
+          "max_absolute": 2.384185791015625e-07,
+          "reference": -2.7857401371002197,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 1.4563556760549545e-07,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014161474537104368
+            }
+          ]
+        },
+        "readout_gain": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.304813385009766e-06,
+          "reference": -0.7413621544837952,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.879198968410492e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014114138903096318
+            }
+          ]
+        },
+        "value_bias": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.364418029785156e-06,
+          "reference": -0.7413622140884399,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.880945198237896e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014114121440798044
+            }
+          ]
+        },
+        "value_weight": {
+          "actual": -0.7413568496704102,
+          "index": [
+            1,
+            76
+          ],
+          "max_absolute": 5.364418029785156e-06,
+          "reference": -0.7413622140884399,
+          "selected": [
+            {
+              "actual": 0.0014162930892780423,
+              "difference": 4.880945198237896e-06,
+              "index": [
+                4,
+                76
+              ],
+              "reference": 0.0014114121440798044
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scope": "Diagnosis only. Identical-parameter forward errors are small; substituting only policy weights removes most of the failing logit discrepancy. This localizes optimizer-amplified drift but does not establish which derivative or rounding boundary should change. Original qualification remains failed; no scientific training, relaxed tolerances or TPU use.",
+  "status": "complete"
+}

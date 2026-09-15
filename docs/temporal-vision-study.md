@@ -1,6 +1,6 @@
 # Current-board vision and memory across moves
 
-Design revision, 2026-09-14. The user proposes
+Design revision, 2026-09-15. The user proposes
 giving both eyes the current board and letting recurrent state carry history.
 This follows the [Doomfly source review](doomfly-review.md). Existing runs,
 including the negative spherical embedding pilot, keep their original contracts.
@@ -53,16 +53,18 @@ the earlier contrastive objective remains a separate representation experiment.
 | A | Four-board spherical montage, L: 0/2, R: 1/3 | Reset | Matched supervised reference |
 | B | Current board copied into the same four patch locations | Reset | Does removing older imagery help with geometry held fixed? |
 | C | One current-board image per eye | Reset | Does allocating more retinal area to one board help? |
-| D | Same spatial map as C, with a paired color-stable reset control | Carry from the preceding ply | Does learned memory improve this exact interface? |
+| D | Retained B spatial map, with a paired absolute-color reset control | Carry from the preceding ply | Does learned memory improve this exact interface? |
 
 A/B use identical sample positions and all nonvisual context, ports, neuronal
 equations, K and optimization. They intentionally differ in historical
 information; describe the result as a feature ablation. B/C isolate the spatial
-allocation change while holding the information fixed. If C fails the sampling
-or numerical gate, retain the failure and use B as the explicitly named input
-for both reset and persistent comparisons. Do not select maps using test labels.
-Keep the anatomical motor candidates/readout fixed in this sequence; output
-selection and pooling receive their own later attachment comparison.
+allocation change while holding the information fixed. C passed its engineering
+gates but did not improve both losses consistently across paired seeds. This
+revision explicitly retains B for both D arms, following the completed input
+comparison and the common input used by the output study. It replaces the older
+proposal to use C unless a gate failed. No test labels informed this choice.
+Finish the registered output comparisons before freezing D's shared decoder;
+do not vary the decoder inside the carry/reset comparison.
 
 Both eyes view the same two-dimensional board. This supplies bilateral visual
 input, without inventing stereo depth or a temporal offset between eyes. Use
@@ -89,11 +91,13 @@ captures through that route remain a later alternative, not additions to D.
 For D, prefer absolute black/white stone encoding plus side to move, applied to
 its reset control too. Otherwise the existing own/opponent encoding reverses
 the apparent identity of every stone each ply while the hidden state persists.
+Use black = 0, empty = .5, white = 1 for the proposed retinal luminance, with
+the existing gain; freeze this polarity before its adapter qualification.
 Qualify that perspective change separately before the carry/reset comparison;
 do not attribute its effect to memory. Teacher value targets remain explicitly
 in the current player's frame, with unit checks for any conversion.
 The primary D comparison is against a newly trained reset control with that
-same absolute-color encoding, rather than the earlier current-player C arm.
+same absolute-color encoding, rather than an earlier current-player arm.
 
 Advance the state once for every observed ply, including opponent moves and
 passes. Predict from the board before the action label is applied. Reset at
@@ -121,6 +125,49 @@ and Rust/JAX states, losses, all gradients and free-running optimizer updates.
 For small graphs, check the initial-state gradient independently. Preserve
 existing numerical tolerances. CPU qualification precedes an actual TPU gate
 at the intended sequence/batch shapes.
+
+## Engineering steps and current evidence
+
+The Rust core now accepts explicit node-major `[N,B]` initial states and returns
+complete final states, with either a tape or streaming prediction. This path
+always evaluates its first sparse message; it cannot reuse the reset-state
+message or a readout-pruned state. Parameter transforms remain reusable while
+weights are unchanged. The existing reset entry points retain their cache.
+The backward primitive returns the initial-state gradient that was previously
+computed and discarded, allowing gradients to cross declared chunk boundaries.
+
+[Ten core tests pass](results/recurrent-state-core-v1.json), including four new tests for hard and smooth rates:
+explicit reset equivalence, chunked versus uninterrupted prediction, independent
+finite differences of initial-state gradients, and composed chunk gradients.
+Malformed/nonfinite states and cotangents are rejected. This is a core-only
+engineering gate. It has not updated the native binaries used by the attachment
+studies or enabled a persistent Go learner.
+
+A [fixed training-only replay audit](results/trajectory-data-audit-v1.json) checks 128 games from distinct opening
+families, totaling 13,085 positions. Stored observations, cached feature/color
+planes, game offsets, ply order and legal masks agree with causal full-prefix
+replay. All 854 observed nonterminal pass transitions keep the absolute board
+unchanged while the relative own/opponent image changes sign. Absolute colors
+can be recovered exactly using the existing turn channel. No teacher policy or
+value array was indexed. All 9,049 training games have 32–203 recorded plies;
+the median is 95. This supports using the existing ordered replays, but does
+not qualify a trajectory sampler or establish a memory advantage.
+
+Complete the remaining gates in order:
+
+1. Expose complete state and its cotangent through model readouts, Python and
+   the independent JAX reference. Preserve reset predictions and gradients;
+   then qualify actual-graph nondefault states and continued optimizer updates
+   on CPU. Keep live attachment sources frozen.
+2. Implement deterministic contiguous replay windows, one D4 transform per
+   window, exact causal-prefix reconstruction and portable sampler recovery.
+   Test pass/episode boundaries and account for all observed and labeled plies.
+3. Qualify the absolute-color adapter separately, with the retained B map,
+   identical context and decoder. Its reset control must share the same color
+   frame before any difference is attributed to persistent state.
+4. Register the paired memory study's window/batch sizes, prefix cost, truncation,
+   fixed exposure horizon and diagnostics. Check stability and all numerical
+   gates before scientific training. A core unit-test pass is insufficient.
 
 ## Evidence and fair cost accounting
 

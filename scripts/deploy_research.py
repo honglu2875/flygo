@@ -184,7 +184,9 @@ def main():
         if job.get('ports'):
             path=root/job['ports'];files.update((path,path.with_suffix('.json')))
     for directory in (environment, graph_path, release):
-        files.update(path for path in directory.rglob('*') if path.is_file())
+        # Interpreter caches are host-local byproducts, outside snapshot identity.
+        files.update(path for path in directory.rglob('*')
+                     if path.is_file() and '__pycache__' not in path.parts)
     if plan.get('feature_cache',False):
         # Retain the maps and their reader leases through bundle replication.
         cached_data=load_release(root,release/'manifest.json',cache=True)

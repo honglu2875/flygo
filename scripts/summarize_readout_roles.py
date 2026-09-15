@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Close the four-arm readout study from aligned, owner-verified CPU evidence."""
+"""Close a registered readout study from aligned, owner-verified CPU evidence."""
 import argparse
 import json
 from pathlib import Path
@@ -30,6 +30,22 @@ def complete(path):
     if report.get('status') != 'complete':
         raise ValueError('Incomplete evidence: ' + str(path))
     return report
+
+
+def contribution_record(record, endpoint, selection, leading_counts):
+    """Bind a decoder intervention to the exact endpoint and fixed training probes."""
+    for key in ('run_id', 'seed', 'checkpoint_sha256', 'head_mask', 'input_contract', 'numerical_runtime'):
+        if record.get(key) != endpoint[key]:
+            raise ValueError('Decoder intervention endpoint differs: ' + key)
+    if (record.get('status') != 'complete' or record['selection'] != selection
+            or record['positions'] != len(selection['position_indices'])
+            or [len(group['cells']) for group in record['groups']] != leading_counts):
+        raise ValueError('Decoder intervention selection or subset rule differs')
+    errors = record['reconstruction_errors']
+    if (set(errors) != {view + '/' + part for view in ('current', 'neutral') for part in ('logits', 'value')}
+            or any(not np.isfinite(value) or value < 0 for value in errors.values())):
+        raise ValueError('Decoder reconstruction evidence is incomplete')
+    return record
 
 
 def aligned_metrics(path, indices, family_names, expected_families=None):
@@ -136,6 +152,8 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--root', type=Path, default=Path('/dev/shm/flygo'))
     p.add_argument('--plan', type=Path, required=True)
+    p.add_argument('--contribution-runs', type=Path, nargs='+', required=True,
+                   help='Completed owner-side decoder audit directories covering every registered endpoint')
     p.add_argument('--output', type=Path, required=True)
     args = p.parse_args(); root = args.root; analysis = read(args.plan); pin([56, 57, 58, 59])
     args.output.resolve().relative_to(root.resolve())
@@ -156,10 +174,24 @@ def main():
         jobs.extend((dict(job, release=plan['release']), wave, plan) for job in plan['jobs'])
     if sorted((job['seed'], job['arm']) for job, _, _ in jobs) != sorted(
             (seed, arm) for seed in analysis['seeds'] for arm in analysis['arms']):
-        raise ValueError('The complete four-arm paired study is required')
+        raise ValueError('Every registered arm and paired seed is required')
     base_contract = {k: v for k, v in plans[0].items() if k not in ('jobs', 'name', 'wave')}
     if any({k: v for k, v in plan.items() if k not in ('jobs', 'name', 'wave')} != base_contract for plan in plans):
         raise ValueError('The two waves changed a shared scientific contract')
+    contributions = {}; contribution_manifests = []
+    for directory in args.contribution_runs:
+        directory.resolve().relative_to(root.resolve())
+        report = complete(directory / 'result.json')
+        if report['analysis_plan_sha256'] != sha256(args.plan):
+            raise ValueError('Decoder intervention analysis contract differs')
+        contribution_manifests.append(dict(path=str(directory.relative_to(root)), sha256=sha256(directory / 'result.json')))
+        for receipt in report['contributions']:
+            path = root / receipt['path']; path.resolve().relative_to(root.resolve())
+            if receipt['run_id'] in contributions or sha256(path) != receipt['sha256']:
+                raise ValueError('Duplicate or changed decoder intervention evidence')
+            contributions[receipt['run_id']] = (complete(path), receipt['sha256'])
+    if set(contributions) != {job['run_id'] for job, _, _ in jobs}:
+        raise ValueError('Decoder interventions must cover every registered endpoint')
     with StorageBudget(root).reserve(files=16 << 20, heap=3 * GIB, purpose='paired readout role analysis'):
         manifest = read(root / 'releases' / plans[0]['release'] / 'manifest.json'); dataset = manifest['dataset_id']
         family_names = np.asarray([r['opening_family'] for r in manifest['records']])
@@ -211,7 +243,10 @@ def main():
             np.testing.assert_allclose(metrics.mean(axis=0), [row['slices']['natural'][key]['mean'] for key in METRICS], rtol=0, atol=1e-12)
             matrices[seed, arm] = metrics
             diagnostic, motors, counted_indices = diagnostics(root, base, endpoint, job, wave, analysis, annotation, selection, motors, counted_indices)
+            contribution, contribution_sha = contributions[run]
+            contribution_record(contribution, endpoint, selection, analysis['diagnostics']['leading_cell_counts'])
             records.append(dict(endpoint, arm=arm, **diagnostic, endpoint_record_sha256=sha256(endpoint_path),
+                decoder_intervention=contribution, decoder_intervention_sha256=contribution_sha,
                 metrics_sha256=sha256(metrics_path), validation_record_sha256=sha256(base / 'validation/result.json')))
         paired = paired_results(matrices, families, novel, analysis['seeds'], analysis['arms'], analysis['contrasts'])
         costs = {(r['seed'], r['arm']): r['counted_inference']['records'] for r in records}
@@ -225,13 +260,14 @@ def main():
         helpers = ('compare_checkpoints.py', 'summarize_attachment_confirmation.py', 'summarize_attachments.py')
         atomic_json(args.output, dict(status='complete', created=time.time(), plan=analysis, records=records,
             statistics=paired, cost_contrasts=cost_contrasts, dataset_id=dataset, probe_selection=selection,
+            contribution_manifests=contribution_manifests,
             labeled_training_exposures=len(records) * analysis['labeled_exposures_per_endpoint'],
             novelty=novelty, source_sha256=sha256(Path(__file__)), plan_sha256=sha256(args.plan),
             helper_sha256={name: sha256(Path(__file__).with_name(name)) for name in helpers},
             annotation_sha256=sha256(graph / 'annotations.feather'),
             uncertainty=analysis['uncertainty'], limitations=[
                 'Three fresh paired head/sampler seeds; initial core strengths are shared. Short, fixed 32k-exposure screen.',
-                'Opening-family intervals condition on fitted weights. All four contrasts are reported; intervals are not multiplicity-corrected.',
+                'Opening-family intervals condition on fitted weights. All declared contrasts are reported; intervals are not multiplicity-corrected.',
                 'Current-source novelty precedes retinal rendering; rendered collision absence is not certified.',
                 'Motor variance and decoder influence do not establish biological function or predictive usefulness.',
                 'Complete unpruned prediction arithmetic includes the renderer and masked heads; excludes backward, optimizer, memory, nonlinear functions and search. Trace timing is not production latency.',

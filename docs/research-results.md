@@ -18,13 +18,16 @@ loss worsens. Motor-response concentration persists with seed-dependent cell
 identity. These runs have different features and arithmetic and do not inherit
 the CNN comparison below. [Paired evidence](results/attachment-confirmation-v1.json).
 
-The subsequent [selective-value screen](readout-roles-study.md) retains current
-spherical inputs and dense policy. Across three paired 32k-exposure seeds,
-restricting value to five candidate neurons changes policy KL by −.03468 and
-value MSE by +.03730 on average, with inconsistent seed ordering. Complete warm
-B1 work increases by 6.20M FLOPs. Dense remains the baseline; the registered
-side/shuffled-side comparisons are running. This short screen also has a
-different prediction budget and does not inherit the CNN comparison below.
+The complete [readout screen](readout-roles-study.md) retains current spherical
+inputs and compares four external heads across three paired 32k-exposure seeds.
+Soma-side minus dense mean policy KL is **−.01401**, value MSE **−.06375**, with
+both improving in every seed at essentially the same mean counted prediction
+FLOPs. Teacher top-move agreement falls .200 percentage points. Soma-side policy
+KL also improves over the frozen shuffled split in every seed; value gains are
+shared by that generic split. The five-cell value restriction has a mixed
+tradeoff: KL −.03468 / MSE +.03730. Dense remains the reference pending registered
+fresh-seed confirmation. This short screen has a different prediction budget
+and does not inherit the CNN comparison below.
 
 ## Matched neural control, three seeds
 

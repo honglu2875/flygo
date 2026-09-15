@@ -1,0 +1,30 @@
+{
+  "base_commit": "bbd266a3f99bc0ae5f6d07460ea5e019a2350569",
+  "created": 1789445649.899449,
+  "new_tests": 4,
+  "result": {
+    "command": [
+      "/home/cubic27/go/.gozero/rustup/toolchains/1.98.1-x86_64-unknown-linux-gnu/bin/cargo",
+      "test",
+      "--release",
+      "--locked",
+      "--offline",
+      "-p",
+      "fly-core",
+      "-j",
+      "4"
+    ],
+    "exit_code": 0,
+    "seconds": 6.751246690750122,
+    "source_sha256": {
+      "recurrent.rs": "6ef4b54e7e0f8f8a4c0c9ae3d11fe660b4e73f24ab03f092a7ddab5c017c040b",
+      "state_tests.rs": "52a2cfd661ad2d337e6d3f1dff368f4bc92a787589aeef3634058f169012d31a"
+    },
+    "status": "passed",
+    "test_log_sha256": "d6c7d0f5d08d3e4cb225b59a1f320f395111a82843a5f19137347fbd95b8d4e2"
+  },
+  "result_sha256": "126d45e712f586dfe35440a7fad3ccb6bf5d5bc18d87d09907cecfa0fb591302",
+  "rust_core_tests": 10,
+  "scope": "Rust recurrent core only. Complete explicit initial/final state and initial-state cotangent; hard/smooth tiny-graph chunk, reset, finite-difference and malformed-input checks. Existing native learner binaries remain unchanged. Model readouts, Python/JAX state APIs, actual-CNS continuation and trajectory learning still require qualification.",
+  "status": "passed"
+}

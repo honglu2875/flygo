@@ -83,15 +83,31 @@ relaxed. The [readout protocol](docs/readout-roles-study.md) records the bounded
 2.3%/3.9% CPU latency cost and the comparison contracts. This engineering result
 does not establish improved learnability.
 
-The [first readout contrast](docs/readout-roles-study.md) now has all six
-endpoints and full validation: selective-value minus dense mean policy KL is
-−.03468, value MSE +.03730, with inconsistent ordering across paired seeds.
-Retain dense as the default. Complete warm B1 work rises by 6.20M FLOPs on
-average despite the smaller head. The fixed group is not revised after seeing
-new dominant cell identities. Soma-side/shuffled-side training is running;
-all four contrasts retain the [declared analysis rules](configs/readout-roles-analysis-v1.json).
-Rules were frozen before inspecting new metrics, after first-wave training
-finished. Opening-family intervals remain separate from fitted-seed variation.
+The [complete readout screen](docs/readout-roles-study.md) covers all twelve
+endpoints. Soma-side minus dense mean policy KL is −.01401 and value MSE
+−.06375, improving both losses in every paired seed at essentially equal mean
+counted prediction FLOPs. Teacher top-move agreement falls .200 percentage
+points. Soma-side policy KL also beats the frozen shuffled split in all three
+seeds; the value gain is shared by the generic split. Selective-value remains
+a mixed tradeoff (KL −.03468 / MSE +.03730), and its group is not revised after
+new motor identities emerge. All four contrasts retain the
+[declared rules](configs/readout-roles-analysis-v1.json), frozen before new
+metrics were inspected, after first-wave training finished. Family intervals
+remain separate from fitted-seed variation; no CNN advantage is established.
+
+Keep dense as the reference and register soma-side as a provisional candidate.
+[Fresh seeds 7/8/9](configs/readout-confirmation-analysis-v1.json) repeat dense,
+soma-side and the same shuffled-side control under unchanged inputs, equations,
+optimizer and 32k-exposure horizon. All actual numerical/recovery gates precede
+training. Confirmation is separate from discovery, and uses the same validation
+families rather than untouched data. Persistent-state work remains separate:
+only its Rust core primitive and a training-only trajectory audit have passed,
+with model/Python/JAX integration and scientific memory training pending.
+The [new numerical cohort](docs/results/readout-confirmation-gates-v1.json)
+passes seven of nine cases and their recovery checks. Two soma-side cases fail;
+no confirmation training is admitted. An FP64-head reference diagnostic clears
+one failure but not the other. Preserve the failures and diagnose the remaining
+drift before qualifying any replacement; do not drop seeds or relax tolerances.
 
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,

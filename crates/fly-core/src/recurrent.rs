@@ -48,7 +48,7 @@ pub fn prepare(
         .iter()
         .map(|&x| 0.01 + 0.98 * sigmoid(x))
         .collect();
-    // Every prediction starts at the same state. Compute its message once at
+    // Reset predictions start at the same state. Compute their message once at
     // B=1, retaining the canonical edge summation order, then broadcast it.
     // Training rebuilds this cache after each parameter update.
     let initial_message = executor.multiply(graph, &weights, &vec![rate.value(0.01); graph.neurons()], 1);
@@ -107,11 +107,41 @@ pub fn forward_prepared(
     steps: usize,
     prepared: &Prepared,
 ) -> Result<Tape, String> {
+    forward_start_prepared(graph, executor, params, drive, batch, steps, prepared, None)
+}
+
+/// Full tape from an explicit node-major [N,B] state. The reset-message cache
+/// is never valid for this path; transformed weights and leaks are reusable.
+#[allow(clippy::too_many_arguments)]
+pub fn forward_from_state_prepared(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    prepared: &Prepared,
+    initial_state: &[f32],
+) -> Result<Tape, String> {
+    forward_start_prepared(graph, executor, params, drive, batch, steps, prepared, Some(initial_state))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn forward_start_prepared(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    prepared: &Prepared,
+    initial_state: Option<&[f32]>,
+) -> Result<Tape, String> {
     validate_input(graph, drive, batch, steps, prepared)?;
-    let mut states: Vec<Vec<f32>> = vec![vec![0.01; drive.len()]];
+    let mut states = vec![starting_state(drive.len(), initial_state)?];
     for step in 0..steps {
         states.push(next_state(graph, executor, params, drive, batch,
-            states.last().unwrap(), step == 0, prepared, None)?);
+            states.last().unwrap(), step == 0 && initial_state.is_none(), prepared, None)?);
     }
     Ok(Tape {
         states,
@@ -146,12 +176,52 @@ pub fn predict_prepared(
     steps: usize,
     prepared: &Prepared,
 ) -> Result<Vec<f32>, String> {
+    predict_start_prepared(graph, executor, params, drive, batch, steps, prepared, None)
+}
+
+/// Streaming prediction from an explicit state, with O(NB) state memory.
+/// Returns a complete state suitable for a subsequent call, not a pruned state.
+#[allow(clippy::too_many_arguments)]
+pub fn predict_from_state_prepared(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    prepared: &Prepared,
+    initial_state: &[f32],
+) -> Result<Vec<f32>, String> {
+    predict_start_prepared(graph, executor, params, drive, batch, steps, prepared, Some(initial_state))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn predict_start_prepared(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    drive: &[f32],
+    batch: usize,
+    steps: usize,
+    prepared: &Prepared,
+    initial_state: Option<&[f32]>,
+) -> Result<Vec<f32>, String> {
     validate_input(graph, drive, batch, steps, prepared)?;
-    let mut state = vec![0.01; drive.len()];
+    let mut state = starting_state(drive.len(), initial_state)?;
     for step in 0..steps {
-        state = next_state(graph, executor, params, drive, batch, &state, step == 0, prepared, None)?;
+        state = next_state(graph, executor, params, drive, batch, &state,
+            step == 0 && initial_state.is_none(), prepared, None)?;
     }
     Ok(state)
+}
+
+fn starting_state(length: usize, initial_state: Option<&[f32]>) -> Result<Vec<f32>, String> {
+    match initial_state {
+        Some(state) if state.len() != length || state.iter().any(|x| !x.is_finite()) =>
+            Err("Initial state must be finite node-major [N,B]".into()),
+        Some(state) => Ok(state.to_vec()),
+        None => Ok(vec![0.01; length]),
+    }
 }
 
 /// Only Model constructs these graph/port-specific dependency masks. This state
@@ -252,8 +322,22 @@ pub fn backward(
     tape: &Tape,
     last_gradient: &[f32],
 ) -> Result<(CoreGrad, Vec<f32>), String> {
+    let (grad, drive_grad, _) = backward_with_state(graph, executor, params, tape, last_gradient)?;
+    Ok((grad, drive_grad))
+}
+
+/// Return parameter, sensory-drive and initial-state cotangents. The final
+/// cotangent may include a later chunk's initial-state gradient; no detach is
+/// implicit here. Parameters must be unchanged since the tape was produced.
+pub fn backward_with_state(
+    graph: &Graph,
+    executor: &Executor,
+    params: &CoreParams,
+    tape: &Tape,
+    last_gradient: &[f32],
+) -> Result<(CoreGrad, Vec<f32>, Vec<f32>), String> {
     let batch = tape.batch;
-    if last_gradient.len() != graph.neurons() * batch {
+    if last_gradient.len() != graph.neurons() * batch || last_gradient.iter().any(|x| !x.is_finite()) {
         return Err("Invalid recurrent cotangent".into());
     }
     let mut grad = CoreGrad::zeros(graph);
@@ -302,5 +386,9 @@ pub fn backward(
             *g *= graph.sign[graph.src[edge]] * sigmoid(params.edge[edge]);
         })
     });
-    Ok((grad, drive_grad))
+    Ok((grad, drive_grad, state_grad))
 }
+
+#[cfg(test)]
+#[path = "state_tests.rs"]
+mod state_tests;

@@ -1,0 +1,162 @@
+{
+  "created": 1789448243.210661,
+  "io_passed": 7,
+  "numerical_passed": 7,
+  "owner_archive_sha256": "e0a1fadb5b5c9048824d691e091cfece4032e983f49be0503e007016f1b45da9",
+  "paired_initial_arrays": 31,
+  "precision_oracle": {
+    "purpose": "Independent FP64-head diagnostic; not accepted as a replacement qualification",
+    "records": [
+      {
+        "evidence": "runs/readout-confirmation-gate-archive-v1/owner-1/runs/readout-confirmation-precision-probe-v1/seed-7/result.json",
+        "failure": null,
+        "passed": true,
+        "seed": 7,
+        "sha256": "b6840f04e333063ceaab9cec37f7e53c58c397e4896705b1790c71fa3530d1fe"
+      },
+      {
+        "evidence": "runs/readout-confirmation-gate-archive-v1/owner-2/runs/readout-confirmation-precision-probe-v1/seed-8/status.json",
+        "failure": {
+          "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n2/forward/logits\nMismatched elements: 1 / 2624 (0.0381%)\nMismatch at index:\n [4, 76]: 0.0014162930892780423 (ACTUAL), 0.0014114121440798044 (DESIRED)\nMax absolute difference among violations: 4.880945e-06\nMax relative difference among violations: 0.0034582\n ACTUAL: array([[-1.063446, -1.37085 ,  0.460598, ..., -1.3991  , -1.552005,\n         1.599985],\n       [-1.455005, -1.698765,  0.588728, ..., -1.723268, -1.899548,...\n DESIRED: array([[-1.063447, -1.370851,  0.460598, ..., -1.3991  , -1.552005,\n         1.599987],\n       [-1.455005, -1.698766,  0.588729, ..., -1.723268, -1.899548,...",
+          "port": "current",
+          "stage": "2/forward/logits",
+          "state": "failed"
+        },
+        "passed": false,
+        "seed": 8,
+        "sha256": "d72ad157525876fe81c41749ade9d1e831476383ffade690339f0cf4ab97a14f"
+      },
+      {
+        "evidence": "runs/readout-confirmation-gate-archive-v1/owner-3/runs/readout-confirmation-precision-probe-v1/seed-9/result.json",
+        "failure": null,
+        "passed": true,
+        "seed": 9,
+        "sha256": "f65577568a245a4657a49ff1b54085b2c67fb2726217916ac723cf2794b9e343"
+      }
+    ]
+  },
+  "records": [
+    {
+      "arm": "dense",
+      "initial_sha256": "7ea9aa154363eff8525d7ff21ed3018abed441564a9636922d4015d526075766",
+      "io_passed": true,
+      "io_sha256": "2bf1dc0ed3460ec63dc60172392bc867b25d4ac5dd686014f96791dc92e6f2ad",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-1/runs/readout-confirmation-qualification-v1/seed-7/dense/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "3bd2a0d3156921f40d50f81462ed960fb60da703354bb74a356f7c767960230b",
+      "seed": 7
+    },
+    {
+      "arm": "dense",
+      "initial_sha256": "d7078557164117843f4967be12326481153d73b064f87129f42f14b4159aef11",
+      "io_passed": true,
+      "io_sha256": "9560fb6f713f2acd02157afe1159dadd6e760a5ba0259ffc406e9d06621c97f8",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-2/runs/readout-confirmation-qualification-v1/seed-8/dense/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "35c40c2e9c4e102b2ea6a22bb5f330e786cf734a8c20d46b07816d3d8617511d",
+      "seed": 8
+    },
+    {
+      "arm": "dense",
+      "initial_sha256": "56ab887f55043c625562009bd7b3a312891f03708c40649a1c6fa3f03bf3cee9",
+      "io_passed": true,
+      "io_sha256": "82672ee3db7981f1d678eb96989ed04ad15fabd437c3f4a6a57c037a8eed9fc9",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-3/runs/readout-confirmation-qualification-v1/seed-9/dense/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "afaac18f349cbb7e1587a39a67ec6c39abc1ca219b1d3bf5e6a440da35f06d67",
+      "seed": 9
+    },
+    {
+      "arm": "soma-side",
+      "failure": {
+        "error": "\nNot equal to tolerance rtol=0.003, atol=5e-06\n1/param/policy_weight\nMismatched elements: 1 / 174578 (0.000573%)\nMismatch at index:\n [114128]: -0.0003324095159769058 (ACTUAL), -0.0003247074782848358 (DESIRED)\nMax absolute difference among violations: 7.702038e-06\nMax relative difference among violations: 0.02371993\n ACTUAL: array([-0.002359, -0.062382, -0.001853, ...,  0.030189,  0.03259 ,\n        0.054321], shape=(174578,), dtype=float32)\n DESIRED: array([-0.002359, -0.062382, -0.001853, ...,  0.030189,  0.03259 ,\n        0.054321], shape=(174578,), dtype=float32)",
+        "port": "current",
+        "stage": "1/param/policy_weight",
+        "state": "failed"
+      },
+      "failure_sha256": "83fc51530110962b5db51c6f1280cc4957f80edbba0c053dad8a815107282300",
+      "io_passed": false,
+      "io_status": "deferred_unqualified",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-1/runs/readout-confirmation-qualification-v1/seed-7/soma-side/result.json",
+      "numerical_passed": false,
+      "seed": 7
+    },
+    {
+      "arm": "soma-side",
+      "failure": {
+        "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n2/forward/logits\nMismatched elements: 1 / 2624 (0.0381%)\nMismatch at index:\n [4, 76]: 0.0014162930892780423 (ACTUAL), 0.0014101900160312653 (DESIRED)\nMax absolute difference among violations: 6.1030732e-06\nMax relative difference among violations: 0.00432784\n ACTUAL: array([[-1.063446, -1.37085 ,  0.460598, ..., -1.3991  , -1.552005,\n         1.599985],\n       [-1.455005, -1.698765,  0.588728, ..., -1.723268, -1.899548,...\n DESIRED: array([[-1.063446, -1.370851,  0.460598, ..., -1.3991  , -1.552005,\n         1.599987],\n       [-1.455005, -1.698765,  0.588729, ..., -1.723267, -1.899548,...",
+        "port": "current",
+        "stage": "2/forward/logits",
+        "state": "failed"
+      },
+      "failure_sha256": "8f58289a9f8df96fb6e2f156f4ef586449202e9a0ef3a1d312ed8cc2358ada3a",
+      "io_passed": false,
+      "io_status": "deferred_unqualified",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-2/runs/readout-confirmation-qualification-v1/seed-8/soma-side/result.json",
+      "numerical_passed": false,
+      "seed": 8
+    },
+    {
+      "arm": "soma-side",
+      "initial_sha256": "56ab887f55043c625562009bd7b3a312891f03708c40649a1c6fa3f03bf3cee9",
+      "io_passed": true,
+      "io_sha256": "091ba31dc44b9386fa1bf61b7f798b82677aa251c6e192b4c2179fb401357feb",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-3/runs/readout-confirmation-qualification-v1/seed-9/soma-side/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "8111f62329860a52c1372c90aba63aa5da70256381b319c2dde2593a169c4696",
+      "seed": 9
+    },
+    {
+      "arm": "shuffled-side",
+      "initial_sha256": "7ea9aa154363eff8525d7ff21ed3018abed441564a9636922d4015d526075766",
+      "io_passed": true,
+      "io_sha256": "01bf61ce13ed428d14ca691628a7a4d89fddabe8e8ea4204d37a5341501d29ba",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-1/runs/readout-confirmation-qualification-v1/seed-7/shuffled-side/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "eab81aa297379fd8e59cb6d15565f3986bd3e488ef1b56e55e7e29686ec97b5b",
+      "seed": 7
+    },
+    {
+      "arm": "shuffled-side",
+      "initial_sha256": "d7078557164117843f4967be12326481153d73b064f87129f42f14b4159aef11",
+      "io_passed": true,
+      "io_sha256": "4730ff9b379de5791dcd98a8fccb3d78ed602576eee2e754878b34bac503571c",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-2/runs/readout-confirmation-qualification-v1/seed-8/shuffled-side/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "32ae275858882008a24e8a56b9da7e16d60e554a963375103944bd8a2ab2d086",
+      "seed": 8
+    },
+    {
+      "arm": "shuffled-side",
+      "initial_sha256": "56ab887f55043c625562009bd7b3a312891f03708c40649a1c6fa3f03bf3cee9",
+      "io_passed": true,
+      "io_sha256": "024988fccb20675061783faf16352bb0bc15624d89643dac4eef71f267b6b416",
+      "numerical": "runs/readout-confirmation-gate-archive-v1/owner-3/runs/readout-confirmation-qualification-v1/seed-9/shuffled-side/result.json",
+      "numerical_passed": true,
+      "numerical_sha256": "926bbd0224c1f9747614e6af19a81f463afb9d9bb9e3e3acd8dfaf597ca6e86d",
+      "seed": 9
+    }
+  ],
+  "registered_cases": 9,
+  "registered_seeds": [
+    7,
+    8,
+    9
+  ],
+  "registration_sha256": "08f3e7b37cef3345e04cec9fa423e473fa2aeb5eb075bf61a2f12733c8faf256",
+  "runtime_sha256": {
+    "attachments.py": "7094faa352ae40baf95e4dfb615ed7312910c87e7af5b6ffef28cc2236b4e116",
+    "fly.py": "3cd1d14dde312e0d6d93cb59f853bed174b590d84d606861a7d66d96cb1f6a45",
+    "jax/model.py": "d2c5f266230260dd4a1687008975d4a51bea266926ccd37fd172876fdf66a4d8",
+    "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+    "native": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1",
+    "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+    "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+    "train.py": "f93627f0f7487cb6a9ff3b5583bb74dd03b90f3cdf5005022a9fedf05da07949",
+    "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+  },
+  "scientific_training_launched": false,
+  "scope": "Fresh confirmation is not admitted: two actual soma-side seeds fail unchanged numerical tolerances. Qualified dense and shuffled controls pass exact recovery and pair their initial arrays/samplers. Retain failures, freeze scientific settings, and diagnose before a new numerical cohort. No confirmation metrics, final-test labels or TPU use.",
+  "source_sha256": "532f3e83ac49a2c5f150e6d54fcefb8095afe5e0af992f3def2f1f838f404b5c",
+  "status": "failed"
+}

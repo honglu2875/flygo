@@ -7,10 +7,24 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from summarize_readout_roles import aligned_metrics, paired_results
+from summarize_readout_roles import aligned_metrics, paired_results, contribution_record
 
 
 class ReadoutSummary(unittest.TestCase):
+    def test_decoder_diagnostic_cannot_substitute_another_seed_mask_or_probe(self):
+        endpoint = dict(run_id='paired-4', seed=4, checkpoint_sha256='checkpoint', head_mask={'mask': 'side'},
+                        input_contract={'mode': 'current'}, numerical_runtime='runtime')
+        selection = dict(position_indices=[4, 7])
+        record = dict(endpoint, status='complete', selection=selection, positions=2,
+                      groups=[dict(cells=[{'node': 2}]), dict(cells=[{'node': 2}, {'node': 3}])],
+                      reconstruction_errors={view+'/'+part: 0. for view in ('current', 'neutral') for part in ('logits', 'value')})
+        self.assertEqual(contribution_record(record, endpoint, selection, [1, 2]), record)
+        for key, wrong in [('seed', 5), ('checkpoint_sha256', 'other'), ('head_mask', {'mask': 'dense'}),
+                           ('selection', dict(position_indices=[4, 8])), ('reconstruction_errors', {})]:
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                contribution_record(dict(record, **{key: wrong}), endpoint, selection, [1, 2])
+        with self.assertRaises(ValueError): contribution_record(record, endpoint, selection, [1, 8])
+
     def test_pair_direction_and_seed_uncertainty_are_separate(self):
         families = np.array(['a', 'a', 'b', 'b'])
         novel = np.array([True, False, False, True])

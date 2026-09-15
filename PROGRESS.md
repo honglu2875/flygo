@@ -1,9 +1,9 @@
 # Progress
 
-Updated **2026-09-15 03:38 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 05:02 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
-No fly advantage has been established.
+No advantage over the matched CNN has been established.
 
 [Interfaces](README.md) · [Study contracts](RESEARCH.md) ·
 [Results](docs/research-results.md) · [Qualification history](docs/qualification-history.md) ·
@@ -14,7 +14,7 @@ No fly advantage has been established.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production stopped | Preserve stop markers; freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Visual/retinal comparisons and value-head contrast complete | Finish side/shuffled-side heads; keep persistent state separate |
+| M6: controlled studies | Visual/retinal and all four readout contrasts complete | Confirm the soma-side candidate on fresh seeds; keep persistent state separate |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -36,7 +36,9 @@ No fly advantage has been established.
 | Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | All endpoints, full validation, paired family analysis and signal/cost probes complete |
 | Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | All six endpoints, full validations, motor/cost probes and paired analysis complete |
 | Larger retinal allocation | One current 9×9 board per eye; paired seeds 1/2/3, K8, 32k exposures | All final checkpoints, replicas, full validations, diagnostics and paired analysis complete |
-| External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | First contrast complete with policy/value tradeoff; all six side-mask learners live after a retained launcher recovery |
+| External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | All 12 endpoints, audits, probes, counts and four contrasts complete; soma-side is promising |
+| Readout confirmation | Dense / soma-side / same shuffled-side; fresh seeds 7/8/9, 32k exposures | Registered; 7/9 numerical cases pass, two soma-side failures retained; no science launched |
+| Persistent state | Separate Rust core primitive and training trajectory audit | Ten core tests pass; model/Python/JAX integration and scientific training remain pending |
 
 All studies retain their declared immutable sources, failed attempts and fixed
 final horizons. V0 has 10,256 games / 1,000,201 positions: train 887,338,
@@ -44,13 +46,30 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Findings and engineering
 
-- [Selective value result](docs/readout-roles-study.md): value-group minus dense
-  mean KL is **−.03468**, MSE **+.03730**, top-1 agreement **+.554 pp** at 32k
-  exposures. Seed ordering varies; retain dense as the baseline. Smaller heads
-  still cost **6.20M more warm B1 FLOPs** on average as recurrent activity changes.
-  All six endpoint mask/moment audits pass; retained-response policy logits
-  reconstruct exactly, value within 1.2e-7. Nine focused analysis tests pass.
-  Full twelve-endpoint analysis remains pending; no CNN benefit is established.
+- [Complete readout screen](docs/readout-roles-study.md): soma-side minus dense
+  mean KL is **−.01401**, MSE **−.06375**, with both losses improving in each of
+  three paired seeds. Teacher top-1 falls **.200 pp**. Mean counted B1 FLOPs are
+  essentially equal. Soma-side also improves policy KL against the frozen
+  shuffled split in all three seeds; the value gain is shared by the generic
+  split. The five-cell value arm retains its mixed tradeoff (KL −.03468,
+  MSE +.03730). Keep dense as reference and confirm soma-side before promoting
+  it. All 12 endpoint and decoder audits pass; policy logits reconstruct exactly,
+  value within 1.2e-7. Ten focused analysis tests pass. No CNN benefit is established.
+- [Fresh-seed engineering](docs/results/readout-confirmation-gates-v1.json):
+  seven numerical cases and their exact recovery checks pass. Soma-side seeds
+  7/8 miss the unchanged three-update parity gate. An independent FP64-head
+  diagnostic clears seed 7 but leaves a smaller seed-8 mismatch; it is not an
+  accepted replacement qualification. Confirmation training remains gated.
+  [Identical-weight diagnostics](docs/results/readout-confirmation-drift-v1.json)
+  localize most of seed 8's mismatch to policy-weight drift across updates;
+  both forward implementations agree within 4.8e-7 at the same weights.
+- [State core and trajectory audit](docs/temporal-vision-study.md): explicit
+  Rust initial/final states and their gradients pass ten core tests, including
+  finite differences and split-trajectory composition. The new core is not in
+  the installed training binary. Replay checks pass for 128 training families /
+  13,085 positions. All 854 occupied nonterminal passes reverse the current-player
+  image while preserving absolute stone colors. Qualify an absolute-color reset
+  control separately before attributing any future gain to persistent memory.
 - [External head qualification](docs/readout-roles-study.md): all **12/12 CPU
   numerical and 12/12 recovery gates pass**, with identical initial arrays and
   samplers across four arms per seed. Coverage is **50 Rust / 110 Python core
@@ -95,8 +114,8 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   concentration alone does not diagnose poor features. Dedicated value groups
   and soma-side policy blocks are optional separate factors. Motor soma labels
   are 1,065 left / 1,054 right / 10 midline; all motor `rootSide` fields are
-  missing. The first selective-value contrast is complete; side comparisons
-  are running. Anatomical labels remain proxies for functional roles.
+  missing. All four comparisons are complete; fresh-seed confirmation is
+  registered. Anatomical labels remain proxies for functional roles.
 - Small CNN KL is **.8929–.9194**, versus fly **1.5037–1.5054**. Common-opening
   prior panels give **89/96 wins versus 0/96**, against the declared early
   KataGo checkpoint. These panels are not Elo. The large CNN also leads.
@@ -203,18 +222,29 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Runtime and next work
 
-The [first readout wave](configs/readout-roles-wave1-v1.json) has six completed
-learners, full validations, motor probes and counts. Both checkpoint endpoints
-have verified recovery copies. The first declared contrast is reported; all
-remaining contrasts retain the same [analysis rules](configs/readout-roles-analysis-v1.json).
-The [second wave](configs/readout-roles-wave2-v1.json) has six live learners on
-workers 1–3, two disjoint 24-core lanes per host. Its
-[launch audit](docs/results/readout-roles-wave2-launch-v1.json) verifies initial
-arrays/samplers/contracts and all 150 thread affinities at updates 230–250.
-The initial queue failed before launching because its three-core affinity hid
-the CPU inventory. The separate recovery corrects that handoff and preserves
-the failed source/logs, scientific settings and worker lanes. Endpoint analysis
-workers are scheduled. Root holds no new training checkpoint payload. TPU remains paused.
+Both original readout waves have completed all learners, full validations,
+motor probes, counts and owner audits. All initial and final checkpoints have
+verified worker recovery copies. The [full report](docs/results/readout-roles-v1.json)
+contains all four declared contrasts and decoder interventions. The earlier
+second-wave inventory-affinity failure and recovery remain retained.
+
+The [fresh confirmation](configs/readout-confirmation-analysis-v1.json) is
+registered before any new scientific update: dense / soma-side / shuffled-side,
+seeds 7/8/9, same inputs, source, optimizer and fixed 32k-exposure horizon.
+Actual numerical checks finish **7/9**, with exact recovery passing for all
+seven qualified cases. Soma-side seeds 7/8 fail the unchanged gates; no
+scientific confirmation learner has started. Source and owner failure records
+have verified replicas. A bounded FP64-head oracle passes 2/3 soma-side cases
+but does not clear seed 8. Completed cross-evaluation at identical weights
+localizes most of its failing logit discrepancy to policy-weight drift. The
+next numerical task is to audit the gradient/Adam rounding that creates this
+drift; no replacement gate is accepted yet.
+The first transfer failed before launching due to host-local Python bytecode;
+the retained recovery excludes caches while verifying every source artifact.
+No cache or experiment data was overwritten. Training will use the existing
+24-core lanes in two waves. Root holds no new training checkpoint payload.
+TPU remains paused. Explicit-state core engineering has its own evidence and
+has not changed the scientific learner.
 
 At **23:09 UTC**, all 32 generation workers were healthy and had published
 **202,496 games**. Stop markers subsequently appeared on all four hosts at
