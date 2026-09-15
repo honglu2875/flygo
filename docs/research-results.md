@@ -18,6 +18,14 @@ loss worsens. Motor-response concentration persists with seed-dependent cell
 identity. These runs have different features and arithmetic and do not inherit
 the CNN comparison below. [Paired evidence](results/attachment-confirmation-v1.json).
 
+The subsequent [selective-value screen](readout-roles-study.md) retains current
+spherical inputs and dense policy. Across three paired 32k-exposure seeds,
+restricting value to five candidate neurons changes policy KL by −.03468 and
+value MSE by +.03730 on average, with inconsistent seed ordering. Complete warm
+B1 work increases by 6.20M FLOPs. Dense remains the baseline; the registered
+side/shuffled-side comparisons are running. This short screen also has a
+different prediction budget and does not inherit the CNN comparison below.
+
 ## Matched neural control, three seeds
 
 Both families receive 1,048,576 labeled-position exposures: 512 Adam updates at

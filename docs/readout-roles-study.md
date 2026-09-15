@@ -73,8 +73,8 @@ Full state/loss/all-gradient/optimizer parity, checkpoint continuation and actua
 decoder arithmetic must be qualified before training a new head. Count its
 work in the complete prediction budget. Compare fixed-horizon validation and
 later controlled play; anatomical resemblance alone is not the acceptance
-criterion. TPU remains paused. Selective and side-aware learning results are
-pending under the registered screen below.
+criterion. TPU remains paused. The selective-value result is reported below;
+side-aware learning comparisons are running under the same registered screen.
 
 ## What the existing learned projections use
 
@@ -117,7 +117,7 @@ source checkpoints, diagnostic code and report identities remain linked. This
 supports testing deliberate value routing while retaining the dense policy
 decoder as its paired control. It does not justify discarding the dense baseline.
 
-## Next implementation gate
+## Qualified implementation
 
 Use binary masks on the external policy and value matrices. A disabled
 coefficient contributes neither to the forward result nor to any gradient,
@@ -166,8 +166,8 @@ player restores the mask directly from its checkpoint.
 Rust visits only enabled decoder coefficients; the arithmetic ledger counts
 those products. The JAX reference applies a binary mask to a dense matrix, so
 its enabled coefficient count is not a claim that the compiler skips that work.
-All CNS neurons and connections remain present. Both scientific waves are
-registered; there is no masked-head endpoint yet. Subsequent persistent-state
+All CNS neurons and connections remain present. Both scientific waves were
+registered before launch; the first contrast is complete. Subsequent persistent-state
 and optimization experiments retain their own contracts.
 
 ## Numerical qualification
@@ -242,12 +242,20 @@ applied to the enabled coefficients. Both waves were registered before launch.
 Full final-horizon validation, motor probes and prediction arithmetic precede
 the paired analysis. Final test labels remain closed.
 
-The [actual launch audit](results/readout-roles-launch-v1.json) finds all six
-first-wave learners live at updates 230–250, with qualified initial states and
-contracts, all 150 threads correctly pinned, and six verified initial checkpoint
-replicas. The second wave waits for the first wave's endpoint analysis locks to
-release. No endpoint selection or comparison has been made from these partial
-runs.
+The [first launch audit](results/readout-roles-launch-v1.json) matched actual
+initial arrays, samplers and contracts, all 150 thread affinities, and six
+verified initial checkpoint replicas. All six first-wave endpoints and their
+validation, motor probes and arithmetic counts are now complete. Both initial
+and final checkpoints have verified recovery copies; an owner-side audit checks
+the same mask, unchanged disabled coefficients and zero disabled moments at
+both endpoints.
+
+The [second launch audit](results/readout-roles-wave2-launch-v1.json) verifies
+the same gates on all six live soma-side/shuffled-side learners at updates
+230–250. Its first queue attempt stopped before creating a learner: the
+housekeeping affinity hid the host's CPU inventory from the planner. The
+retained recovery restores inventory visibility before the planner pins itself.
+The scientific source, settings and worker lanes did not change.
 
 | External head | Enabled policy coefficients | Enabled value coefficients | Decoder FLOPs per prediction |
 |---|---:|---:|---:|
@@ -259,6 +267,63 @@ runs.
 These counts describe just the external decoder. Recurrent activity can change
 as training diverges, so the complete prediction budget must be recounted at
 each endpoint. The screen cannot inherit an earlier CNN FLOP comparison.
+
+## First completed contrast: selective value versus dense
+
+The [paired first-wave report](results/readout-roles-wave1-v1.json) includes
+every endpoint at 32,000 labeled exposures. Full validation has 70,425 positions
+from 254 opening families. The [analysis rules](../configs/readout-roles-analysis-v1.json)
+were frozen after training finished and before inspecting its new validation
+metrics. Training contracts were registered before launch. The remaining three
+contrasts await the second wave; they will be reported regardless of outcome.
+
+| Value-group minus dense | Seed 4 | Seed 5 | Seed 6 | Mean |
+|---|---:|---:|---:|---:|
+| Policy KL | −.06047 | +.00665 | −.05020 | **−.03468** |
+| Value MSE | +.15469 | −.00126 | −.04154 | **+.03730** |
+| Teacher top-1 agreement, percentage points | +1.127 | +.643 | −.108 | **+.554** |
+
+Mean policy KL is 1.69163 for dense and 1.65696 for the value group; value MSE
+is .64922 and .68652. This is a policy/value tradeoff with inconsistent seed
+ordering. Retain dense as the default. Restricting the value decoder also
+changes gradients through the shared circuit, so it can affect policy even
+though policy retains all its learned coefficients.
+
+Conditional opening-family 95% intervals for the mean differences are
+[−.04079, −.02167] KL and [+.02368, +.05977] MSE. Their paired-seed sample
+standard deviations are .03615 and .10364. The family intervals condition on
+the three fitted models; they do not resolve uncertainty across training seeds.
+The 62,984-position current-source-novel slice has mean differences −.03059 KL
+and +.02016 MSE. All four arms use current input, so this slice uses the existing
+current-source novelty mask, not the earlier current/neutral intersection.
+It precedes retinal rendering and does not certify absence of rendering collisions.
+
+| Complete warm B1 prediction, MFLOPs | Seed 4 | Seed 5 | Seed 6 |
+|---|---:|---:|---:|
+| Dense | 177.81 | 181.09 | 186.42 |
+| Value group | 181.00 | 194.95 | 187.98 |
+
+Despite saving 4,248 decoder FLOPs, the selective value models require an
+average **6.20M more complete warm B1 FLOPs**, and 6.00M more at B32. Their
+trained recurrent activity changes how much work the unpruned runtime can skip.
+These counts include rendering and both heads; they exclude optimization,
+memory work, nonlinear functions and search. No CNN or playing-strength
+advantage is established by this short screen.
+
+All six retained-response reconstructions reproduce every policy logit exactly;
+value errors are at most 1.2e-7. They respect both binary masks and the qualified
+FP64 head accumulation. The first-wave diagnostics have 227–348 varying motor
+coordinates and standardized participation ranks 3.67–5.92. Raw variance remains
+concentrated. In the new dense seeds, the leading identities are **DNa14 body
+13410, DNpe018 body 165031 and DNpe015 body 35519**; two lie outside the
+five-cell candidate group. No candidate membership is changed after observing
+these endpoints. These are model-response findings, not established biological
+value roles or a reason to fit permanent motor groups from one seed.
+
+The numerical reconstruction, disabled-state endpoint audit and paired-summary
+helpers pass nine focused tests. Full-run audits and all six actual diagnostic
+checks also pass. Their source, metrics, responses, counts and small reports have
+verified copies; checkpoint payloads remain on worker owners and their replicas.
 
 The contribution audit also motivates a later conditioning experiment. For an
 invertible diagonal scale S, `policy = W S (r - mean) + bias` has the same affine

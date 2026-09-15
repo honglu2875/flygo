@@ -6,10 +6,26 @@ from pathlib import Path
 import time
 
 import numpy as np
+from flygo import _native
 from flygo.data.corpus import atomic_json
 from flygo.qualify import sha256
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
+
+
+def head_state(initial,final,expected):
+    """Check the effective head and frozen coefficients over a complete training run."""
+    from flygo.readout import HeadMask,check_restore
+    before,after=HeadMask.from_checkpoint(initial),HeadMask.from_checkpoint(final)
+    contract=None if after is None else after.contract
+    if contract!=expected or (None if before is None else before.contract)!=contract:
+        raise ValueError('Checkpoint head mask differs from the registered trial')
+    if after is None:return None
+    check_restore(after,initial);check_restore(after,final)
+    for name,enabled in after.parameter_masks().items():
+        if not np.array_equal(initial['param/'+name][enabled==0],final['param/'+name][enabled==0]):
+            raise ValueError('Disabled head coefficients changed during training')
+    return contract
 
 
 def main():
@@ -30,6 +46,10 @@ def main():
     status=json.loads((run/'status.json').read_text())
     if status.get('state')!='complete' or status.get('step')!=plan['updates']:
         raise ValueError('The declared learner endpoint is not complete')
+    try:command=Path('/proc',str(status.get('pid')),'cmdline').read_bytes().decode().split('\0')
+    except FileNotFoundError:command=[]
+    if 'flygo.train' in command and args.run_id in command:
+        raise ValueError('Wait for the owning learner to exit before closing its endpoint')
     with StorageBudget(args.root).reserve(files=1<<20,heap=2*GIB,purpose='attachment endpoint '+args.run_id):
         config=json.loads((run/'config.json').read_text())
         manifest=json.loads((args.root/'releases'/plan['release']/'manifest.json').read_text())
@@ -37,6 +57,15 @@ def main():
             passes=job['passes'],groups=job['groups'],input_mode=job['mode'],
             input_map=str(args.root/plan['input_map']),rate=plan['rate'],epsilon=plan['epsilon'],
             warmup_steps=plan['warmup_steps'],rate_scales=plan['rate_scales'],clip=plan['clip'])
+        expected_head=None
+        if job.get('head_mask'):
+            from flygo.readout import load_head_mask
+            path=args.root/job['head_mask']
+            if sha256(path)!=job['head_mask_sha256']:raise ValueError('Registered head mask changed')
+            expected['head_mask']=str(path)
+            expected_head=load_head_mask(path,graph_id=config['graph_id'],
+                attachment_sha256=plan['input_map_sha256']).contract
+            if config.get('head_mask')!=expected_head:raise ValueError('Learner head mask differs')
         if (config['dataset_id']!=manifest['dataset_id'] or config['cpus']!=job['cpus']
                 or any(config['arguments'].get(key)!=value for key,value in expected.items())):
             raise ValueError('Learner differs from its declared attachment/optimizer contract')
@@ -50,6 +79,14 @@ def main():
         changes={}
         with np.load(paths[0],allow_pickle=False) as initial,np.load(paths[1],allow_pickle=False) as final:
             metadata=json.loads(final['metadata'].tobytes())
+            initial_metadata=json.loads(initial['metadata'].tobytes())
+            head=head_state(initial,final,expected_head)
+            numerical_runtime=metadata.get('numerical_runtime','rust-fp32-f64-norm-v1')
+            if numerical_runtime!=initial_metadata.get('numerical_runtime','rust-fp32-f64-norm-v1'):
+                raise ValueError('Numerical runtime changed during training')
+            if head is not None:
+                from flygo.fly import RustFly
+                if numerical_runtime!=RustFly.numerical_runtime:raise ValueError('Use the qualified numerical source for this masked endpoint')
             if (metadata['dataset_id']!=manifest['dataset_id'] or metadata['input_contract']!=config['input_contract']
                     or int(initial['optimizer_step'])!=0 or int(final['optimizer_step'])!=plan['updates']):
                 raise ValueError('Checkpoint contract or optimizer horizon differs')
@@ -78,6 +115,8 @@ def main():
             checkpoint_sha256=receipts[-1]['sha256'],checkpoint_receipts=receipts,
             dataset_id=manifest['dataset_id'],graph_id=metadata['graph_id'],input_contract=metadata['input_contract'],
             model_config=metadata['model_config'],training_contract=metadata['training_contract'],
+            head_mask=head,numerical_runtime=numerical_runtime,
+            native_sha256=sha256(Path(_native.__file__)),
             learning_curve=endpoints,parameter_changes=changes,
             labeled_training_exposures=plan['updates']*plan['batch_size'],
             diagnostic_forward_positions=sum(row['diagnostic_forward_positions'] for row in diagnostics),

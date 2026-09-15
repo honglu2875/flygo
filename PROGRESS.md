@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 02:46 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 03:38 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -14,7 +14,7 @@ No fly advantage has been established.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production stopped | Preserve stop markers; freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Visual/retinal comparisons complete; output masks qualified | Run the registered paired head screen; keep persistent state separate |
+| M6: controlled studies | Visual/retinal comparisons and value-head contrast complete | Finish side/shuffled-side heads; keep persistent state separate |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -36,7 +36,7 @@ No fly advantage has been established.
 | Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | All endpoints, full validation, paired family analysis and signal/cost probes complete |
 | Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | All six endpoints, full validations, motor/cost probes and paired analysis complete |
 | Larger retinal allocation | One current 9×9 board per eye; paired seeds 1/2/3, K8, 32k exposures | All final checkpoints, replicas, full validations, diagnostics and paired analysis complete |
-| External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | All gates pass; six dense/value learners at updates 230–250; side-mask wave queued after their analyses |
+| External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | First contrast complete with policy/value tradeoff; all six side-mask learners live after a retained launcher recovery |
 
 All studies retain their declared immutable sources, failed attempts and fixed
 final horizons. V0 has 10,256 games / 1,000,201 positions: train 887,338,
@@ -44,6 +44,13 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Findings and engineering
 
+- [Selective value result](docs/readout-roles-study.md): value-group minus dense
+  mean KL is **−.03468**, MSE **+.03730**, top-1 agreement **+.554 pp** at 32k
+  exposures. Seed ordering varies; retain dense as the baseline. Smaller heads
+  still cost **6.20M more warm B1 FLOPs** on average as recurrent activity changes.
+  All six endpoint mask/moment audits pass; retained-response policy logits
+  reconstruct exactly, value within 1.2e-7. Nine focused analysis tests pass.
+  Full twelve-endpoint analysis remains pending; no CNN benefit is established.
 - [External head qualification](docs/readout-roles-study.md): all **12/12 CPU
   numerical and 12/12 recovery gates pass**, with identical initial arrays and
   samplers across four arms per seed. Coverage is **50 Rust / 110 Python core
@@ -88,8 +95,8 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   concentration alone does not diagnose poor features. Dedicated value groups
   and soma-side policy blocks are optional separate factors. Motor soma labels
   are 1,065 left / 1,054 right / 10 midline; all motor `rootSide` fields are
-  missing. The prepared head masks have no scientific endpoint yet; anatomical
-  labels remain proxies rather than biological functional-role assignments.
+  missing. The first selective-value contrast is complete; side comparisons
+  are running. Anatomical labels remain proxies for functional roles.
 - Small CNN KL is **.8929–.9194**, versus fly **1.5037–1.5054**. Common-opening
   prior panels give **89/96 wins versus 0/96**, against the declared early
   KataGo checkpoint. These panels are not Elo. The large CNN also leads.
@@ -196,17 +203,18 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Runtime and next work
 
-The [first readout wave](configs/readout-roles-wave1-v1.json) has six live
-learners on workers 1–3, two disjoint 24-core lanes per host. The
-[launch audit](docs/results/readout-roles-launch-v1.json) matches every actual
-initial parameter/moment/port array, sampler, mask and training contract to its
-qualification, verifies all 150 live thread affinities, and confirms six
-initial checkpoints have second-worker copies. At the audit they are at
-230–250 of 1,000 updates. Full final validation, motor probes and counts wait
-for each learner and replica. The frozen
-[second wave](configs/readout-roles-wave2-v1.json) waits for all first-wave
-analysis locks to release, with a six-hour queue bound and its own stop file.
-Root holds no new training checkpoint payload. TPU remains paused.
+The [first readout wave](configs/readout-roles-wave1-v1.json) has six completed
+learners, full validations, motor probes and counts. Both checkpoint endpoints
+have verified recovery copies. The first declared contrast is reported; all
+remaining contrasts retain the same [analysis rules](configs/readout-roles-analysis-v1.json).
+The [second wave](configs/readout-roles-wave2-v1.json) has six live learners on
+workers 1–3, two disjoint 24-core lanes per host. Its
+[launch audit](docs/results/readout-roles-wave2-launch-v1.json) verifies initial
+arrays/samplers/contracts and all 150 thread affinities at updates 230–250.
+The initial queue failed before launching because its three-core affinity hid
+the CPU inventory. The separate recovery corrects that handoff and preserves
+the failed source/logs, scientific settings and worker lanes. Endpoint analysis
+workers are scheduled. Root holds no new training checkpoint payload. TPU remains paused.
 
 At **23:09 UTC**, all 32 generation workers were healthy and had published
 **202,496 games**. Stop markers subsequently appeared on all four hosts at

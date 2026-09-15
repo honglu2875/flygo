@@ -83,6 +83,16 @@ relaxed. The [readout protocol](docs/readout-roles-study.md) records the bounded
 2.3%/3.9% CPU latency cost and the comparison contracts. This engineering result
 does not establish improved learnability.
 
+The [first readout contrast](docs/readout-roles-study.md) now has all six
+endpoints and full validation: selective-value minus dense mean policy KL is
+−.03468, value MSE +.03730, with inconsistent ordering across paired seeds.
+Retain dense as the default. Complete warm B1 work rises by 6.20M FLOPs on
+average despite the smaller head. The fixed group is not revised after seeing
+new dominant cell identities. Soma-side/shuffled-side training is running;
+all four contrasts retain the [declared analysis rules](configs/readout-roles-analysis-v1.json).
+Rules were frozen before inspecting new metrics, after first-wave training
+finished. Opening-family intervals remain separate from fitted-seed variation.
+
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,
 and motor/descending readouts inferred from robust response correlations.

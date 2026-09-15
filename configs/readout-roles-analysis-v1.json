@@ -1,0 +1,32 @@
+{
+  "name": "readout-roles-analysis-v1",
+  "scope": "Analysis rules declared before inspecting new validation metrics or fitting output groups. The first wave has reached its endpoint and is running full validation when these rules are frozen. This does not alter either registered training wave. No final-test access or TPU use.",
+  "wave_plans": [
+    {"path": "runs/readout-roles-wave1-v1/plan.json", "sha256": "3b43deaae75c014111879c5e97a7ab8cdd4380379551f75a8010dacc6d6bca62", "followup": "runs/readout-roles-wave1-followup-v1", "endpoints": "runs/readout-roles-wave1-endpoints-v1"},
+    {"path": "runs/readout-roles-wave2-v1/plan.json", "sha256": "497fadd427fafdf0ff4ad353570af1c8cda493257b0116b29180ddbeff810ce3", "followup": "runs/readout-roles-wave2-followup-v1", "endpoints": "runs/readout-roles-wave2-endpoints-v1"}
+  ],
+  "seeds": [4, 5, 6],
+  "arms": ["dense", "value-group", "soma-side", "shuffled-side"],
+  "endpoint_update": 1000,
+  "labeled_exposures_per_endpoint": 32000,
+  "numerical_runtime": "rust-fp32-circuit-f64-head-reductions-v3",
+  "native_sha256": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1",
+  "contrasts": [
+    {"candidate": "value-group", "reference": "dense", "question": "Does the declared five-cell value route improve learning with dense policy retained?"},
+    {"candidate": "soma-side", "reference": "dense", "question": "Does restricting policy by soma side improve learning?"},
+    {"candidate": "soma-side", "reference": "shuffled-side", "question": "Does anatomical assignment add value beyond the same per-action fan-in constraint?"},
+    {"candidate": "shuffled-side", "reference": "dense", "question": "What is the effect of the generic block constraint?"}
+  ],
+  "metrics": ["policy_kl", "value_mse", "teacher_top1_agreement"],
+  "slices": ["natural", "current_reduced_source_novel"],
+  "novelty": "Reuse masks.current from runs/attachment-input-novelty-v1/masks.npz, after checking its source receipt. All four arms share the current-board input; the older current-and-neutral intersection is not their novelty definition. This is source-feature novelty before retinal rendering.",
+  "novelty_masks": "runs/attachment-input-novelty-v1/masks.npz",
+  "novelty_masks_sha256": "edb7b2f31d2825431db7dfc3c68a52cd40bdc2e1a82998eb3c7821f958a13baa",
+  "validation_positions": 70425,
+  "current_source_novel_positions": 62984,
+  "bootstrap": {"unit": "opening_family", "resamples": 1000, "seed": 709, "interval": [0.025, 0.975]},
+  "uncertainty": "Report every paired-seed difference and its sample SD. Family intervals condition on the three fitted weights and do not estimate training-seed uncertainty. Do not treat repeated positions or fitted seeds as independent games.",
+  "diagnostics": {"positions": 256, "selection_seed": 972091, "motor_std_floor": 0.000001, "leading_cell_counts": [1, 8]},
+  "arithmetic": "Use the registered 64-position sample, seed 917271, B1/B32, warm reset-state cache, complete unpruned recurrent work plus visual encoding and masked heads. Report absolute work and paired differences; no existing CNN budget is inherited.",
+  "interpretation": "Report joint policy/value tradeoffs and all four contrasts. Keep dense as the default unless the new results support a change across paired seeds; no endpoint or cell selection by a single favorable validation metric. Motor variance and decoder influence are descriptive, not proof of usefulness or physiological function. Additional followups require their own declared contracts."
+}
