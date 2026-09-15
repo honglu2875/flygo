@@ -57,9 +57,12 @@ substantial seed variation. Motor responses remain concentrated, with dominant
 cell identity changing across seeds. Do not infer permanent action groups from
 one fitted endpoint. [Larger retinal allocation](docs/retinal-allocation-study.md)
 passes geometry, all three CPU numerical gates, paired initialization and
-fresh-process recovery. Three 32k-exposure trials now run with the original
-learner and unchanged dense heads. Full validation and signal/cost diagnostics
-are queued. TPU remains paused and is not required for this phase.
+fresh-process recovery. All three 32k-exposure trials, full validations and
+signal/cost diagnostics are complete. C minus B mean policy KL is +.00996;
+value MSE is −.04957, driven by seed 1 while seeds 2/3 worsen. Conditional
+family intervals do not measure seed uncertainty. Retain the B current-board
+montage for the next head study, documenting this validation-informed choice;
+use new paired seeds and a fresh dense control. TPU remains paused.
 
 Keep [dense jointly learned policy/value projections](docs/readout-roles-study.md)
 as the output baseline: a Go action may combine many motor signals. Raw variance

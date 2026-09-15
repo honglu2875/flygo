@@ -7,9 +7,11 @@ including the negative spherical embedding pilot, keep their original contracts.
 The first [supervised attachment screen](attachment-study.md) completes A/B and
 a neutral visual control at 32,000 exposures each, including full validation.
 Visual drive becomes measurable but concentrates heavily in one descending
-neuron. The [C map](retinal-allocation-study.md) now passes geometry, numerical
-and recovery gates; three paired CPU trials are running. D remains planned;
-no persistent model is being trained yet. Dense jointly learned policy/value
+neuron. The [C comparison](retinal-allocation-study.md) is complete across three
+paired seeds: mean policy KL worsens by .00996 and value MSE improves by .04957,
+with the value gain driven by seed 1 and losses in seeds 2/3. The next output
+study retains B as its common input. D remains planned; no persistent model is
+being trained and its launch contract has not been registered. Dense jointly learned policy/value
 heads remain fixed within the input comparison; their structural alternatives
 have a [separate design](readout-roles-study.md).
 

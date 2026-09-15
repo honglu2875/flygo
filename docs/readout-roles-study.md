@@ -144,9 +144,13 @@ The three proposed alternatives remain separate:
 Use a newly trained dense control and new paired head/sampler seeds 4/5/6 for
 the screen. Seeds 1/2/3 informed candidate discovery. Record those earlier
 exposures as development cost. Keep all enabled initial coefficients at their
-original values, with no fan-in gain correction. Use one frozen current-only
-input map for every arm, chosen and documented after closing the retinal study;
-do not change inputs inside a head comparison. Initial core strengths remain
+original values, with no fan-in gain correction. Use the B current-board
+montage for every arm (attachment SHA-256
+`9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087`).
+The [completed retinal study](retinal-allocation-study.md) found no consistent
+C improvement across seeds and both losses; this validation-informed input
+choice is recorded before new head training. Do not change inputs inside a
+head comparison. Initial core strengths remain
 identical across seeds. Fix K8, B32, 1,000 updates, the same losses and the
 qualified epsilon/rate schedule unless a separate numerical gate prevents it.
 

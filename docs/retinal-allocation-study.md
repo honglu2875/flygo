@@ -123,8 +123,66 @@ visual-player package has identical numerical code. Failed operational gate
 attempts and their diagnoses are retained in the evidence.
 
 The [launch plan](../configs/retinal-allocation-v1.json) binds map, reference and
-qualification identities. Three CPU runs use 24 pinned cores each on workers
-1–3 and replicate checkpoints to another worker through root's pipes. Final
-full validation, motor probes and arithmetic counts follow training and verified
-checkpoint replication. No C validation result or playing-strength benefit is
-available yet; TPU remains paused.
+qualification identities. Three CPU runs used 24 pinned cores each on workers
+1–3 and replicated checkpoints to another worker through root's pipes. Training,
+full validation, motor probes and arithmetic counts are complete. TPU remains
+paused.
+
+## Completed paired results — 2026-09-15
+
+[Results and provenance](results/retinal-allocation-v1.json). Each endpoint
+completed exactly 1,000 updates / 32,000 exposures. The original learner,
+initial core strengths, paired head/sampler seeds and dense learned heads were
+preserved. The analysis reproduces the adopted B results exactly and aligns all
+70,425 validation positions across 254 opening families. Final test labels
+remain closed.
+
+| Seed | B policy KL | C policy KL | B value MSE | C value MSE | B top-1 agreement | C top-1 agreement |
+|---|---:|---:|---:|---:|---:|---:|
+| 1 | 1.65923 | 1.69224 | .84937 | .61774 | 20.44% | 16.69% |
+| 2 | 1.68454 | 1.67101 | .59784 | .65141 | 18.99% | 20.03% |
+| 3 | 1.68794 | 1.69834 | .64212 | .67146 | 18.24% | 17.94% |
+
+Lower KL/MSE and higher teacher top-1 agreement are better. Pooled C minus B
+is **+.00996 policy KL**, **−.04957 value MSE** and **−1.007 percentage points
+top-1 agreement**. Conditional opening-family 95% intervals are respectively
+[+.00727, +.01628], [−.05821, −.02840] and [−1.661, −.735] percentage points.
+These intervals hold the three fitted pairs fixed; they do **not** quantify
+training-seed uncertainty. Per-seed KL changes are +.03301, −.01353, +.01040;
+value changes are −.23163, +.05357, +.02934. The pooled value improvement comes
+from seed 1, while seeds 2 and 3 worsen. The report retains seed variation
+separately. On 61,541 common reduced-source-novel positions, pooled changes
+have the same signs: KL +.01474, MSE −.04925, top-1 −1.115 percentage points.
+
+The 256-position visual perturbation probe after training C gives:
+
+| Seed | Varying motors | Standardized participation rank | Leading motor | Share of raw visual variance |
+|---|---:|---:|---|---:|
+| 1 | 496 | 6.55 | DNg30, body 10123 | 99.991% |
+| 2 | 305 | 5.53 | DNg30, body 10237 | 99.987% |
+| 3 | 272 | 4.94 | DNpe018, body 69173 | 97.003% |
+
+The larger map does not remove raw variance concentration. This statistic
+alone does not establish that a learned policy or value decoder lacks useful
+features; the [separate contribution diagnostic](readout-roles-study.md)
+measures how the B heads actually use their motor signals.
+
+Actual complete unpruned prediction arithmetic, including retinal encoding
+and both heads, is **174.5–186.5M FLOPs per position at warm B1** and
+**180.7–191.9M at warm B32**, across the three C endpoints. Optional dependency
+pruning was disabled. Production occupancy changed between measurements, so
+this comparison does not establish a CPU latency improvement. These models
+cannot inherit the old roughly 8.4M-FLOP CNN comparison.
+
+**Decision for the next output study:** retain the B current-board montage
+as the common input to every new head arm. C has mixed results and no consistent
+improvement across seeds and both losses. This choice follows validation and is
+recorded as a development decision, not a preregistered preference. Use new
+paired seeds 4/5/6 and a fresh dense control; keep candidate-discovery costs
+visible. This does not change any completed run or register persistent training.
+
+All final checkpoints have verified second-worker copies. The 78-file result,
+source and diagnostic bundle also has verified copies on w0/w1; those copies
+remain volatile. The public JSON omits only per-batch arithmetic traces and
+identifies the retained full report by SHA-256. No new playing-strength or
+equi-FLOP advantage is established.

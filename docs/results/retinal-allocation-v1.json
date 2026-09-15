@@ -1,0 +1,3126 @@
+{
+  "contrast_direction": "larger retina minus paired current-board montage",
+  "contrasts": [
+    {
+      "common_reduced_source_novel": {
+        "families": 254,
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.03002829812749167,
+            0.03910455268127411
+          ],
+          "mean": 0.032731836669662444
+        },
+        "positions": 61541,
+        "teacher_top1_agreement": {
+          "family_bootstrap_95": [
+            -0.04351340273551477,
+            -0.020140133675899615
+          ],
+          "mean": -0.027022635316293203
+        },
+        "value_mse": {
+          "family_bootstrap_95": [
+            -0.23761892715516267,
+            -0.15540674200624424
+          ],
+          "mean": -0.21166059664322276
+        }
+      },
+      "natural": {
+        "families": 254,
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.029516016247567188,
+            0.041857217557364566
+          ],
+          "mean": 0.03301014925602267
+        },
+        "positions": 70425,
+        "teacher_top1_agreement": {
+          "family_bootstrap_95": [
+            -0.04870090641956028,
+            -0.033249560251478356
+          ],
+          "mean": -0.037557685481008164
+        },
+        "value_mse": {
+          "family_bootstrap_95": [
+            -0.25880203841264465,
+            -0.17297100767498352
+          ],
+          "mean": -0.23163061704118187
+        }
+      },
+      "seed": 1
+    },
+    {
+      "common_reduced_source_novel": {
+        "families": 254,
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.011333932414737876,
+            -0.00691771596811732
+          ],
+          "mean": -0.008940125680699807
+        },
+        "positions": 61541,
+        "teacher_top1_agreement": {
+          "family_bootstrap_95": [
+            -0.0013604042124986404,
+            0.006350490402187221
+          ],
+          "mean": 0.0009587104531938057
+        },
+        "value_mse": {
+          "family_bootstrap_95": [
+            0.023475957677508225,
+            0.06765443476646467
+          ],
+          "mean": 0.0478920102427234
+        }
+      },
+      "natural": {
+        "families": 254,
+        "policy_kl": {
+          "family_bootstrap_95": [
+            -0.01720368906785746,
+            -0.011861639679424616
+          ],
+          "mean": -0.013527192202213588
+        },
+        "positions": 70425,
+        "teacher_top1_agreement": {
+          "family_bootstrap_95": [
+            0.008343465723730131,
+            0.015163986240410415
+          ],
+          "mean": 0.010337238196663117
+        },
+        "value_mse": {
+          "family_bootstrap_95": [
+            0.0310573836514457,
+            0.07119462215214711
+          ],
+          "mean": 0.05356915494006471
+        }
+      },
+      "seed": 2
+    },
+    {
+      "common_reduced_source_novel": {
+        "families": 254,
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.016915267806029238,
+            0.028310837891913798
+          ],
+          "mean": 0.020423001092084534
+        },
+        "positions": 61541,
+        "teacher_top1_agreement": {
+          "family_bootstrap_95": [
+            -0.017499839851010446,
+            -0.0028084850953016822
+          ],
+          "mean": -0.007377195690677759
+        },
+        "value_mse": {
+          "family_bootstrap_95": [
+            -0.010375039847471944,
+            0.030036221738738364
+          ],
+          "mean": 0.01603171179128544
+        }
+      },
+      "natural": {
+        "families": 254,
+        "policy_kl": {
+          "family_bootstrap_95": [
+            0.004636872644654098,
+            0.02309672140561772
+          ],
+          "mean": 0.010404817771059697
+        },
+        "positions": 70425,
+        "teacher_top1_agreement": {
+          "family_bootstrap_95": [
+            -0.01435834325126621,
+            0.0023152466549073033
+          ],
+          "mean": -0.002981895633652822
+        },
+        "value_mse": {
+          "family_bootstrap_95": [
+            0.0015195114148831323,
+            0.04095094372660762
+          ],
+          "mean": 0.029344864906517637
+        }
+      },
+      "seed": 3
+    }
+  ],
+  "created": 1789432760.0027347,
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "full_report_bytes": 876315,
+  "full_report_path": "/dev/shm/flygo/runs/retinal-allocation-analysis-v1/result.json",
+  "full_report_sha256": "deda313ea4be4f3b89d4506c6685542367f3278125bdd797cdfad4a5341c2e58",
+  "helper_sha256": {
+    "compare_checkpoints.py": "2fc4bbed212a2e44bc2ce4805557397173f69b6e332e359dc8353616e991dacb",
+    "summarize_attachment_confirmation.py": "cf32a8b5ccd330d6f9ab69043645ca21f590e8f663be8892b4df04e9a049c197",
+    "summarize_attachments.py": "ee798a0dae500d0edaeaecbd373cef0563cd9eb2d37753dfd70e58ac1035b04f"
+  },
+  "limitations": [
+    "Three paired head/sampler seeds; initial core strengths are not independently randomized.",
+    "Conditional opening-family intervals hold the fitted weights fixed; they are not training-seed confidence intervals.",
+    "Same 9x9 board and information, different angular allocation/aspect ratio/drive; no gain correction.",
+    "Reduced-source novelty precedes rendering and does not certify absence of FP32 image collisions.",
+    "Raw response variance and decoder influence alone do not prove predictive usefulness.",
+    "No final-test evaluation, new matched CNN result, playing-strength claim, head constraint, memory, optimizer change or TPU use."
+  ],
+  "novelty": {
+    "created": 1789419787.3561852,
+    "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+    "masks_sha256": "edb7b2f31d2825431db7dfc3c68a52cd40bdc2e1a82998eb3c7821f958a13baa",
+    "records": {
+      "current": {
+        "train_distinct_sources": 725186,
+        "validation_novel_sources": 62984,
+        "validation_positions": 70425,
+        "validation_source_overlap": 7441
+      },
+      "neutral": {
+        "train_distinct_sources": 716781,
+        "validation_novel_sources": 61541,
+        "validation_positions": 70425,
+        "validation_source_overlap": 8884
+      }
+    },
+    "scope": "Exact D4-canonical reduced source inputs before rendering. Neutral keys describe actual constant-vision inputs; current keys do not certify absence of FP32 retinal collisions. No labels or final-test examples inspected.",
+    "seconds": 17.958540439605713,
+    "source_sha256": "ed1f0cd0970c39a2fb336cf07eb8612136294696481d21816bc594404a2297bc",
+    "status": "complete"
+  },
+  "plan": {
+    "batch_size": 32,
+    "checkpoint_every": 1000,
+    "clip": 1.0,
+    "diagnostic_batch_size": 32,
+    "diagnostics_every": 250,
+    "environment": "environments/861175bf88bf1ba6b4f5",
+    "epsilon": 1e-06,
+    "eval_batch_size": 32,
+    "eval_every": 250,
+    "eval_positions": 2048,
+    "groups": 2129,
+    "inference_environment": "environments/794c0cbd895d678a9e6d",
+    "input_map": "ports/retinal-allocation-v1/attachment.npz",
+    "input_map_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+    "io_qualifications": {
+      "1": "runs/retinal-allocation-preflight-v4/seed-1-result.json",
+      "2": "runs/retinal-allocation-preflight-v4/seed-2-result.json",
+      "3": "runs/retinal-allocation-preflight-v4/seed-3-result.json"
+    },
+    "jobs": [
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 1,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 2,
+        "run_id": "retinal-large-seed1-v1",
+        "seed": 1
+      },
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 2,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 3,
+        "run_id": "retinal-large-seed2-v1",
+        "seed": 2
+      },
+      {
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "groups": 2129,
+        "host": 3,
+        "mode": "current",
+        "passes": 8,
+        "replica_host": 1,
+        "run_id": "retinal-large-seed3-v1",
+        "seed": 3
+      }
+    ],
+    "matches": null,
+    "name": "retinal-allocation-v1",
+    "passes": 8,
+    "qualifications": {
+      "1": "runs/retinal-allocation-qualification-v1/seed-1/result.json",
+      "2": "runs/retinal-allocation-qualification-v1/seed-2/result.json",
+      "3": "runs/retinal-allocation-qualification-v1/seed-3/result.json"
+    },
+    "rate": 0.03,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "reference_analysis": "runs/attachment-confirmation-analysis-v1/result.json",
+    "reference_analysis_sha256": "882aa1faf065b3098d6145210d4d2b530abb36ae694679110c504b0c8dabaef1",
+    "references": [
+      {
+        "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782",
+        "run_id": "attachment-current-seed1-v1",
+        "seed": 1
+      },
+      {
+        "checkpoint_sha256": "ceebcec433559642382ed09e6d001c176ac551e059299863d59ba4219c965957",
+        "run_id": "attachment-current-seed2-v1",
+        "seed": 2
+      },
+      {
+        "checkpoint_sha256": "60ae42255518b59f94d4d0a00865ae459cb7503d49303d65365e7bcc9428b54c",
+        "run_id": "attachment-current-seed3-v1",
+        "seed": 3
+      }
+    ],
+    "release": "v0-1m",
+    "replica_environment": "environments/b3263e4048fa5bc7b686",
+    "scope": "One larger current board per eye versus the adopted paired current-board montage endpoints. Same original immutable learner, ports, information, initialization, K8 and 32k exposure/optimizer contract. Only retinal sampling changes. Dense learned policy/value heads remain the baseline. No head-mask, physiology, memory, optimizer, final-test or TPU intervention.",
+    "updates": 1000,
+    "warmup_steps": 100
+  },
+  "plan_sha256": "7a940694a2c5a8bf484c506ce5368746a988b36a111087a54d7df3b43b5e56a1",
+  "pooled": {
+    "common_reduced_source_novel": {
+      "families": 254,
+      "policy_kl": {
+        "family_bootstrap_95": [
+          0.013078799796160468,
+          0.01861441577665849
+        ],
+        "mean": 0.014738237360349056
+      },
+      "positions": 61541,
+      "teacher_top1_agreement": {
+        "family_bootstrap_95": [
+          -0.018627893551361772,
+          -0.007857144474120116
+        ],
+        "mean": -0.011147040184592385
+      },
+      "value_mse": {
+        "family_bootstrap_95": [
+          -0.058694162578316056,
+          -0.027229637195005978
+        ],
+        "mean": -0.04924562486973798
+      }
+    },
+    "natural": {
+      "families": 254,
+      "policy_kl": {
+        "family_bootstrap_95": [
+          0.007267690427297253,
+          0.016283586330818032
+        ],
+        "mean": 0.009962591608289594
+      },
+      "positions": 70425,
+      "teacher_top1_agreement": {
+        "family_bootstrap_95": [
+          -0.016612787247399573,
+          -0.0073514691448089515
+        ],
+        "mean": -0.010067447639332622
+      },
+      "value_mse": {
+        "family_bootstrap_95": [
+          -0.058214398940456415,
+          -0.028396115175230104
+        ],
+        "mean": -0.0495721990648665
+      }
+    }
+  },
+  "publication_transform": "Only per-batch inference pass traces are omitted; every metric, paired interval, seed variation and aggregate arithmetic statistic is retained.",
+  "records": [
+    {
+      "comparisons": [
+        {
+          "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782",
+          "common_reduced_source_novel": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.2062666111652134,
+                1.775226881902376
+              ],
+              "mean": 1.5812928342012442
+            },
+            "positions": 61541,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.1556371919919541,
+                0.29855554684201613
+              ],
+              "mean": 0.2036041013308201
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.7565164388865364,
+                0.9094641986644546
+              ],
+              "mean": 0.8664795515700775
+            }
+          },
+          "kind": "reference",
+          "metrics_sha256": "6166d077c0604f75d64e516fd129f17fd578dcbf13d9b516a20bc9d4a198196b",
+          "natural": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.2942864016115654,
+                1.8380576771791017
+              ],
+              "mean": 1.6592269301415379
+            },
+            "positions": 70425,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.16490670991561715,
+                0.28673212901453576
+              ],
+              "mean": 0.20441604543840966
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.7641166100263904,
+                0.8806516370660467
+              ],
+              "mean": 0.8493727882270645
+            }
+          },
+          "validation_record_sha256": "ac87bc01aa0e9ba344fbea446f45db9863fe3180d79077006e783790a194eabc"
+        },
+        {
+          "checkpoint_sha256": "38aa5c2538c5731aca6306ba4c29a5d919176ca7f502db7f81ddde9bae3e6887",
+          "common_reduced_source_novel": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.239233198218283,
+                1.8070437786047213
+              ],
+              "mean": 1.6140246708709067
+            },
+            "positions": 61541,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.13510955137855252,
+                0.2564102013937002
+              ],
+              "mean": 0.1765814660145269
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.5760589639146658,
+                0.6901376586745113
+              ],
+              "mean": 0.6548189549268547
+            }
+          },
+          "kind": "large",
+          "metrics_sha256": "f4bac3ec9eb7905e0ef31df8567557d3f5c836f1ea22121314dcd39e3f8a0ecd",
+          "natural": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.332212626125521,
+                1.8683098749382132
+              ],
+              "mean": 1.6922370793975605
+            },
+            "positions": 70425,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.1309358131976504,
+                0.2395433609660543
+              ],
+              "mean": 0.1668583599574015
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.5702258222023923,
+                0.6594738319706513
+              ],
+              "mean": 0.6177421711858827
+            }
+          },
+          "validation_record_sha256": "b4394af5c3c806e1e631a509faea4d4f2c094fe75d6bc6d6c294e9bc1bcba4a4"
+        }
+      ],
+      "count_record_sha256": "86e74cb3b066e7e7555dd04bc61f78788534eced96811eecfbbac8418efdd0bd",
+      "counted_inference": {
+        "large": {
+          "case": "retinal-large-seed1-v1",
+          "checkpoint": "/dev/shm/flygo/runs/retinal-large-seed1-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "38aa5c2538c5731aca6306ba4c29a5d919176ca7f502db7f81ddde9bae3e6887",
+          "records": [
+            {
+              "batch_size": 1,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 180630048.0,
+                "mean": 179897963.75,
+                "minimum": 178706690.0,
+                "p50": 179966503.0,
+                "p90": 180445348.2
+              },
+              "first_call_seconds": 0.12813921499764547,
+              "nominal": {
+                "arithmetic_flops": 252656780.0,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31735.0,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 6387.0,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 64,
+              "seconds_per_position": {
+                "maximum": 0.09862163799698465,
+                "mean": 0.09133087281406915,
+                "minimum": 0.08793647002312355,
+                "p50": 0.09022176900180057,
+                "p90": 0.09597792398708407
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 211170594.0,
+                "mean": 210438509.75,
+                "minimum": 209247236.0,
+                "p50": 210507049.0,
+                "p90": 210985894.2
+              }
+            },
+            {
+              "batch_size": 32,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 186299626.5625,
+                "mean": 186260605.5625,
+                "minimum": 186221584.5625,
+                "p50": 186260605.5625,
+                "p90": 186291822.3625
+              },
+              "first_call_seconds": 0.4364874089951627,
+              "nominal": {
+                "arithmetic_flops": 252654716.5625,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31734.03125,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 4324.53125,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 2,
+              "seconds_per_position": {
+                "maximum": 0.014515146437588555,
+                "mean": 0.014497715656489163,
+                "minimum": 0.01448028487538977,
+                "p50": 0.014497715656489163,
+                "p90": 0.014511660281368677
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 216840172.5625,
+                "mean": 216801151.5625,
+                "minimum": 216762130.5625,
+                "p50": 216801151.5625,
+                "p90": 216832368.3625
+              }
+            }
+          ]
+        },
+        "reference": {
+          "case": "current",
+          "checkpoint": "/dev/shm/flygo/runs/attachment-current-seed1-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782",
+          "records": [
+            {
+              "batch_size": 1,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 182387308.0,
+                "mean": 181597610.46875,
+                "minimum": 180075994.0,
+                "p50": 181735271.0,
+                "p90": 182219351.8
+              },
+              "first_call_seconds": 0.12733507799566723,
+              "nominal": {
+                "arithmetic_flops": 252656780.0,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31735.0,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 6387.0,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 64,
+              "seconds_per_position": {
+                "maximum": 0.09965255099814385,
+                "mean": 0.08938389079776243,
+                "minimum": 0.0869902020203881,
+                "p50": 0.0888874710071832,
+                "p90": 0.09158063700888305
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 212927854.0,
+                "mean": 212138156.46875,
+                "minimum": 210616540.0,
+                "p50": 212275817.0,
+                "p90": 212759897.8
+              }
+            },
+            {
+              "batch_size": 32,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 187918754.5625,
+                "mean": 187857979.5625,
+                "minimum": 187797204.5625,
+                "p50": 187857979.5625,
+                "p90": 187906599.5625
+              },
+              "first_call_seconds": 0.3204183290072251,
+              "nominal": {
+                "arithmetic_flops": 252654716.5625,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31734.03125,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 4324.53125,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 2,
+              "seconds_per_position": {
+                "maximum": 0.01097520237453864,
+                "mean": 0.010398802281088138,
+                "minimum": 0.009822402187637636,
+                "p50": 0.010398802281088138,
+                "p90": 0.01085992235584854
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 218459300.5625,
+                "mean": 218398525.5625,
+                "minimum": 218337750.5625,
+                "p50": 218398525.5625,
+                "p90": 218447145.5625
+              }
+            }
+          ]
+        }
+      },
+      "endpoint": {
+        "checkpoint_receipts": [
+          {
+            "bytes": 189668721,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-1",
+            "path": "/dev/shm/flygo/runs/retinal-large-seed1-v1/checkpoints/step-00000000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-2",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "fd669c7fe9274b6cc0e30ff83b8c3737fcd0bd478cb81babf095b7c673d257da",
+            "step": 0
+          },
+          {
+            "bytes": 189668841,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-1",
+            "path": "/dev/shm/flygo/runs/retinal-large-seed1-v1/checkpoints/step-00001000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-2",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "38aa5c2538c5731aca6306ba4c29a5d919176ca7f502db7f81ddde9bae3e6887",
+            "step": 1000
+          }
+        ],
+        "checkpoint_sha256": "38aa5c2538c5731aca6306ba4c29a5d919176ca7f502db7f81ddde9bae3e6887",
+        "created": 1789431861.2191346,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "diagnostic_backward_positions": 128,
+        "diagnostic_forward_positions": 256,
+        "final_activity": {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.382065773010254,
+            "mean": 0.010794120500859471,
+            "step_ratio_quantiles": [
+              0.962585985660553,
+              0.9998254776000977,
+              1.0,
+              1.0001546144485474,
+              1.0458182096481323
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 2.4846808797922133,
+              "parameters": 11752,
+              "post_update_gradient_norm": 20.55151037191718,
+              "relative_update": 0.0008894484027606691,
+              "update_max": 0.00016129948198795319,
+              "update_norm": 0.002210048179209298
+            },
+            "edge": {
+              "nonzero_gradients": 15139060,
+              "parameter_norm": 20403.683681501378,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.3865384938514091,
+              "relative_update": 3.723057080491373e-05,
+              "update_max": 0.04565000534057617,
+              "update_norm": 0.7596408503608979
+            },
+            "input_gain": {
+              "nonzero_gradients": 2094,
+              "parameter_norm": 30.836618315166877,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.2468467042558856,
+              "relative_update": 0.003771359941615029,
+              "update_max": 0.019497722387313843,
+              "update_norm": 0.1164653320952771
+            },
+            "leak": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 40.362068468099125,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.008103562187314494,
+              "relative_update": 0.0026629774649552444,
+              "update_max": 0.016552984714508057,
+              "update_norm": 0.10746951903400362
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.426321628839067,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.10695945811435754,
+              "relative_update": 0.010726898458614879,
+              "update_max": 0.0048828125,
+              "update_norm": 0.015307688195644587
+            },
+            "policy_weight": {
+              "nonzero_gradients": 73146,
+              "parameter_norm": 70.84823788129135,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06691105648003151,
+              "relative_update": 0.0034777842485543163,
+              "update_max": 0.03158041834831238,
+              "update_norm": 0.2463246466413181
+            },
+            "readout_gain": {
+              "nonzero_gradients": 958,
+              "parameter_norm": 404.8878646526212,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.11036353825896224,
+              "relative_update": 0.00014996076503101524,
+              "update_max": 0.02047353982925415,
+              "update_norm": 0.06071728579094032
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.6500861644744873,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.24772806465625763,
+              "relative_update": 0.0005459746784311777,
+              "update_max": 0.00035512447357177734,
+              "update_norm": 0.00035512447357177734
+            },
+            "value_weight": {
+              "nonzero_gradients": 958,
+              "parameter_norm": 5.778517263185781,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.15222551385040986,
+              "relative_update": 0.0036329563791252057,
+              "update_max": 0.007656097412109375,
+              "update_norm": 0.020991857320023007
+            }
+          },
+          "kind": "diagnostics",
+          "rate_softness": 0.0,
+          "seconds": 2.403333730006125,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9563201753854725,
+              "max": 2.954960823059082,
+              "min": -1.4754924774169922,
+              "positive_voltage_fraction": 0.9563201753854725,
+              "rate_max": 2.954960823059082,
+              "rate_mean": 0.02044811223971504,
+              "rms": 0.060180909032576425
+            },
+            {
+              "active_fraction": 0.867659215610276,
+              "max": 3.5737106800079346,
+              "min": -1.6924967765808105,
+              "positive_voltage_fraction": 0.867659215610276,
+              "rate_max": 3.5737106800079346,
+              "rate_mean": 0.022998159644511327,
+              "rms": 0.082111437216619
+            },
+            {
+              "active_fraction": 0.7448091411198993,
+              "max": 3.720534086227417,
+              "min": -1.7669627666473389,
+              "positive_voltage_fraction": 0.7448091411198993,
+              "rate_max": 3.720534086227417,
+              "rate_mean": 0.02399056654608524,
+              "rms": 0.09378687171305557
+            },
+            {
+              "active_fraction": 0.6723237212485313,
+              "max": 3.752539873123169,
+              "min": -1.8208502531051636,
+              "positive_voltage_fraction": 0.6723237212485313,
+              "rate_max": 3.752539873123169,
+              "rate_mean": 0.024781546452169706,
+              "rms": 0.10093701932098975
+            },
+            {
+              "active_fraction": 0.6351601013190247,
+              "max": 5.69484281539917,
+              "min": -2.107616901397705,
+              "positive_voltage_fraction": 0.6351601013190247,
+              "rate_max": 5.69484281539917,
+              "rate_mean": 0.025481578038977853,
+              "rms": 0.10615915305094858
+            },
+            {
+              "active_fraction": 0.6193592843473311,
+              "max": 9.538592338562012,
+              "min": -3.639179229736328,
+              "positive_voltage_fraction": 0.6193592843473311,
+              "rate_max": 9.538592338562012,
+              "rate_mean": 0.02611602815582728,
+              "rms": 0.11138386888146687
+            },
+            {
+              "active_fraction": 0.6120750869054397,
+              "max": 14.359338760375977,
+              "min": -5.76889181137085,
+              "positive_voltage_fraction": 0.6120750869054397,
+              "rate_max": 14.359338760375977,
+              "rate_mean": 0.02670293134658888,
+              "rms": 0.11844921475107946
+            },
+            {
+              "active_fraction": 0.6085322519107085,
+              "max": 25.065961837768555,
+              "min": -9.100263595581055,
+              "positive_voltage_fraction": 0.6085322519107085,
+              "rate_max": 25.065961837768555,
+              "rate_mean": 0.027285134430750247,
+              "rms": 0.13172293264591958
+            }
+          ],
+          "step": 1000,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 32.161233525324924,
+          "value_saturated_fraction": 0.03125
+        },
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "input_contract": {
+          "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+          "mode": "current",
+          "version": "spherical-context-h4-ablation-v1"
+        },
+        "labeled_training_exposures": 32000,
+        "learning_curve": [
+          {
+            "input_perturbations": {
+              "history": {
+                "policy_cross_entropy": 3.6754448569174283,
+                "policy_kl": 2.047568042334132,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.03173828125,
+                "value_mse": 0.8868779437028136
+              },
+              "neutral": {
+                "policy_cross_entropy": 3.675444783510219,
+                "policy_kl": 2.0475679689269226,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.03173828125,
+                "value_mse": 0.8868780165520507
+              }
+            },
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.6754448569174283,
+              "policy_kl": 2.047568042334132,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.03173828125,
+              "value_mse": 0.8868779437028136
+            },
+            "novel": {
+              "policy_cross_entropy": 3.5956429268090906,
+              "policy_kl": 1.8960960635426236,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.0244140625,
+              "value_mse": 0.9070704930773275
+            },
+            "step": 0,
+            "train": {
+              "policy_cross_entropy": 3.598775897362363,
+              "policy_kl": 1.7533721126743023,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.02587890625,
+              "value_mse": 0.9157725905921329
+            },
+            "unix": 1789430127.4525146
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3988199214344643,
+              "policy_kl": 1.7709431068511678,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1748046875,
+              "value_mse": 0.865511361399263
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3934799888696325,
+              "policy_kl": 1.6939331256031656,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.197265625,
+              "value_mse": 0.8959669800816847
+            },
+            "step": 250,
+            "train": {
+              "policy_cross_entropy": 3.362935157351561,
+              "policy_kl": 1.5175313726635002,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.22900390625,
+              "value_mse": 0.9293275603419424
+            },
+            "unix": 1789430539.3163931
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.370781895632683,
+              "policy_kl": 1.7429050810493867,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.15673828125,
+              "value_mse": 0.700648336098781
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3714185385122755,
+              "policy_kl": 1.6718716752458085,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.17236328125,
+              "value_mse": 0.7325232504873069
+            },
+            "step": 500,
+            "train": {
+              "policy_cross_entropy": 3.327882082244598,
+              "policy_kl": 1.4824782975565374,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.21484375,
+              "value_mse": 0.6567108159122448
+            },
+            "unix": 1789430899.5697026
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.33537766293733,
+              "policy_kl": 1.7075008483540337,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1767578125,
+              "value_mse": 0.7470226892146195
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3489246212085497,
+              "policy_kl": 1.6493777579420827,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1904296875,
+              "value_mse": 0.7323641866642961
+            },
+            "step": 750,
+            "train": {
+              "policy_cross_entropy": 3.3123278152432016,
+              "policy_kl": 1.466924030555141,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.2353515625,
+              "value_mse": 0.6822069672974795
+            },
+            "unix": 1789431248.1575754
+          },
+          {
+            "input_perturbations": {
+              "history": {
+                "policy_cross_entropy": 3.337885249137659,
+                "policy_kl": 1.7100084345543625,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.16015625,
+                "value_mse": 0.6498384286502916
+              },
+              "neutral": {
+                "policy_cross_entropy": 3.3506367956878718,
+                "policy_kl": 1.7227599811045753,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.138671875,
+                "value_mse": 0.8853933716342652
+              }
+            },
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.337885249137659,
+              "policy_kl": 1.7100084345543625,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.16015625,
+              "value_mse": 0.6498384286502916
+            },
+            "novel": {
+              "policy_cross_entropy": 3.370109101386403,
+              "policy_kl": 1.670562238119936,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1630859375,
+              "value_mse": 0.6663584127944291
+            },
+            "step": 1000,
+            "train": {
+              "policy_cross_entropy": 3.3386500361347538,
+              "policy_kl": 1.493246251446693,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1953125,
+              "value_mse": 0.5811836519819689
+            },
+            "unix": 1789431592.0851665
+          }
+        ],
+        "metrics_log_sha256": "288ad6038427a06d1fb66f3cece673794ca4d7694fbd198d15e6a4367fb4aaab",
+        "mode": "current",
+        "model_config": {
+          "actions": 82,
+          "features": 3574,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 1,
+          "steps": 8,
+          "threads": 24
+        },
+        "parameter_changes": {
+          "bias": {
+            "changed": 11745,
+            "delta_l2": 1.3370574717688597,
+            "delta_max": 0.09780420735478401,
+            "scalars": 11752
+          },
+          "context_input_gain": {
+            "changed": 84,
+            "quantiles": [
+              -1.7279376983642578,
+              -0.7434001445770263,
+              -0.13738295435905457,
+              0.6896180331707001,
+              2.69242525100708
+            ]
+          },
+          "edge": {
+            "changed": 15115068,
+            "delta_l2": 277.83156158777587,
+            "delta_max": 8.457102298736572,
+            "scalars": 15270273
+          },
+          "input_gain": {
+            "changed": 3574,
+            "delta_l2": 26.726950765602414,
+            "delta_max": 3.7868812531232834,
+            "scalars": 3574
+          },
+          "leak": {
+            "changed": 11745,
+            "delta_l2": 40.362068468099125,
+            "delta_max": 3.789747714996338,
+            "scalars": 11752
+          },
+          "policy_bias": {
+            "changed": 82,
+            "delta_l2": 1.426321628839067,
+            "delta_max": 0.43292438983917236,
+            "scalars": 82
+          },
+          "policy_weight": {
+            "changed": 174525,
+            "delta_l2": 70.37925336861944,
+            "delta_max": 5.964723911136389,
+            "scalars": 174578
+          },
+          "readout_gain": {
+            "changed": 2129,
+            "delta_l2": 24.468449156300963,
+            "delta_max": 2.693690776824951,
+            "scalars": 165122
+          },
+          "value_bias": {
+            "changed": 1,
+            "delta_l2": 0.6500861644744873,
+            "delta_max": 0.6500861644744873,
+            "scalars": 1
+          },
+          "value_weight": {
+            "changed": 2129,
+            "delta_l2": 5.708180072937422,
+            "delta_max": 3.056522414088249,
+            "scalars": 2129
+          },
+          "visual_input_gain": {
+            "changed": 3490,
+            "quantiles": [
+              -0.6331464052200317,
+              -0.1091676041483879,
+              0.20005358755588531,
+              0.813095551729202,
+              3.9868812561035156
+            ]
+          }
+        },
+        "plan_sha256": "7a940694a2c5a8bf484c506ce5368746a988b36a111087a54d7df3b43b5e56a1",
+        "run_id": "retinal-large-seed1-v1",
+        "scope": "Owner-side endpoint accounting and fixed-slice diagnostics. Full validation is separate. No new inference, learning, grouping, checkpoint transfer, test examples or TPU use.",
+        "seed": 1,
+        "source_sha256": "14e90db3c293af13f8eed60d0ea8fb699bfbf4b25d9ff3b9d9553308b04b460d",
+        "status": "complete",
+        "training_contract": {
+          "batch_size": 32,
+          "clip": 1.0,
+          "epsilon": 1e-06,
+          "rate": 0.03,
+          "rate_scales": {
+            "bias": 0.01
+          },
+          "schedule": {
+            "decay_until": 0,
+            "final_ratio": 0.1,
+            "peak": 0.03,
+            "version": "absolute-update-rate-v1",
+            "warmup_steps": 100
+          }
+        },
+        "validation_forward_positions": 38912
+      },
+      "endpoint_sha256": "d68306440611734c814f04beefaf102461e12fb379bf872d22bebc26a332e6fa",
+      "run_id": "retinal-large-seed1-v1",
+      "seed": 1,
+      "signal_record_sha256": "7581809a0e113c9b7186201eaa70677d7169598ae9b831ae65fc2e0f7da4f913",
+      "visual_concentration": {
+        "standardized_participation_rank": 6.550001984309737,
+        "std_floor": 1e-06,
+        "top_cells": [
+          {
+            "bodyId": 10123,
+            "node": 109,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNg30",
+            "visual_variance_fraction": 0.9999066035578354
+          },
+          {
+            "bodyId": 11931,
+            "node": 1804,
+            "subclass": "xl",
+            "superclass": "descending_neuron",
+            "type": "DNd04",
+            "visual_variance_fraction": 2.9719661013575688e-05
+          },
+          {
+            "bodyId": 12657,
+            "node": 2485,
+            "subclass": "am",
+            "superclass": "cb_motor",
+            "type": "GNG668",
+            "visual_variance_fraction": 2.1557953767500522e-05
+          },
+          {
+            "bodyId": 13366,
+            "node": 3149,
+            "subclass": "xl",
+            "superclass": "descending_neuron",
+            "type": "DNde001",
+            "visual_variance_fraction": 1.141381186484657e-05
+          },
+          {
+            "bodyId": 10967,
+            "node": 894,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNg70",
+            "visual_variance_fraction": 4.002190479628691e-06
+          }
+        ],
+        "varying_cells": 496
+      }
+    },
+    {
+      "comparisons": [
+        {
+          "checkpoint_sha256": "ceebcec433559642382ed09e6d001c176ac551e059299863d59ba4219c965957",
+          "common_reduced_source_novel": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.2083554119710278,
+                1.7854960428111712
+              ],
+              "mean": 1.5898428844779031
+            },
+            "positions": 61541,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.15693892611245905,
+                0.29014772232309005
+              ],
+              "mean": 0.20186542305129915
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.587486234761364,
+                0.6925540956387211
+              ],
+              "mean": 0.633869043995803
+            }
+          },
+          "kind": "reference",
+          "metrics_sha256": "1a32a2d3bb99dacb67361490a38136fc133676ff44d144889a35737451ef8a04",
+          "natural": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.3107895185124014,
+                1.8664928555965585
+              ],
+              "mean": 1.6845408347280584
+            },
+            "positions": 70425,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.15159402284579865,
+                0.2705380992187138
+              ],
+              "mean": 0.18994675186368476
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.5659732497982174,
+                0.6729808262642786
+              ],
+              "mean": 0.5978413852433926
+            }
+          },
+          "validation_record_sha256": "c8fb049d03fb0db54bd4685922cf1216d16eda09fc1116884bc6b1dd6306cfe4"
+        },
+        {
+          "checkpoint_sha256": "ccdf2e948833a7ebb75c3565ead1fb2857fa67b6770dc8482feb0f25fc494d6d",
+          "common_reduced_source_novel": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.2005891434412908,
+                1.776514996634015
+              ],
+              "mean": 1.580902758797203
+            },
+            "positions": 61541,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.15594983888828884,
+                0.2942805720718213
+              ],
+              "mean": 0.20282413350449294
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.6375150725824126,
+                0.7342755702599949
+              ],
+              "mean": 0.6817610542385263
+            }
+          },
+          "kind": "large",
+          "metrics_sha256": "c4d02274f642215b57e0149e97e825f75c81cadc29dccd4642f99c8552891196",
+          "natural": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.2948236639202715,
+                1.8540383362673658
+              ],
+              "mean": 1.6710136425258448
+            },
+            "positions": 70425,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.1602760087026874,
+                0.2824335190726523
+              ],
+              "mean": 0.2002839900603479
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.6226527078596621,
+                0.7207792716073698
+              ],
+              "mean": 0.6514105401834572
+            }
+          },
+          "validation_record_sha256": "03deccbce2ac951b12cf8e127695e95292e31ae381ceb570ac8862899888abae"
+        }
+      ],
+      "count_record_sha256": "d321698d013eac7a6bc928143a947ce1cfc42724b94f4d88f98c6388b6be2c67",
+      "counted_inference": {
+        "large": {
+          "case": "retinal-large-seed2-v1",
+          "checkpoint": "/dev/shm/flygo/runs/retinal-large-seed2-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "ccdf2e948833a7ebb75c3565ead1fb2857fa67b6770dc8482feb0f25fc494d6d",
+          "records": [
+            {
+              "batch_size": 1,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 175532074.0,
+                "mean": 174542336.46875,
+                "minimum": 173164896.0,
+                "p50": 174648737.0,
+                "p90": 175399226.0
+              },
+              "first_call_seconds": 0.12752395801362582,
+              "nominal": {
+                "arithmetic_flops": 252656780.0,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31735.0,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 6387.0,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 64,
+              "seconds_per_position": {
+                "maximum": 0.09679345198674127,
+                "mean": 0.09042121623406274,
+                "minimum": 0.08785549298045225,
+                "p50": 0.08950899698538706,
+                "p90": 0.0941158540052129
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 206072620.0,
+                "mean": 205082882.46875,
+                "minimum": 203705442.0,
+                "p50": 205189283.0,
+                "p90": 205939772.0
+              }
+            },
+            {
+              "batch_size": 32,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 180796442.5625,
+                "mean": 180727686.5625,
+                "minimum": 180658930.5625,
+                "p50": 180727686.5625,
+                "p90": 180782691.3625
+              },
+              "first_call_seconds": 0.4100371450185776,
+              "nominal": {
+                "arithmetic_flops": 252654716.5625,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31734.03125,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 4324.53125,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 2,
+              "seconds_per_position": {
+                "maximum": 0.014788508437959536,
+                "mean": 0.01441619548450035,
+                "minimum": 0.014043882531041163,
+                "p50": 0.01441619548450035,
+                "p90": 0.014714045847267699
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 211336988.5625,
+                "mean": 211268232.5625,
+                "minimum": 211199476.5625,
+                "p50": 211268232.5625,
+                "p90": 211323237.3625
+              }
+            }
+          ]
+        },
+        "reference": {
+          "case": "attachment-current-seed2-v1",
+          "checkpoint": "/dev/shm/flygo/runs/attachment-current-seed2-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "ceebcec433559642382ed09e6d001c176ac551e059299863d59ba4219c965957",
+          "records": [
+            {
+              "batch_size": 1,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 175858378.0,
+                "mean": 174753398.4375,
+                "minimum": 173451964.0,
+                "p50": 174815087.0,
+                "p90": 175662749.6
+              },
+              "first_call_seconds": 0.12797502099419944,
+              "nominal": {
+                "arithmetic_flops": 252656780.0,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31735.0,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 6387.0,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 64,
+              "seconds_per_position": {
+                "maximum": 0.09928365299128927,
+                "mean": 0.09028638018480706,
+                "minimum": 0.08745583301060833,
+                "p50": 0.08959672749915626,
+                "p90": 0.09323256100469735
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 206398924.0,
+                "mean": 205293944.4375,
+                "minimum": 203992510.0,
+                "p50": 205355633.0,
+                "p90": 206203295.6
+              }
+            },
+            {
+              "batch_size": 32,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 180826292.5625,
+                "mean": 180761863.5625,
+                "minimum": 180697434.5625,
+                "p50": 180761863.5625,
+                "p90": 180813406.7625
+              },
+              "first_call_seconds": 0.40867149899713695,
+              "nominal": {
+                "arithmetic_flops": 252654716.5625,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31734.03125,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 4324.53125,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 2,
+              "seconds_per_position": {
+                "maximum": 0.014513750187688856,
+                "mean": 0.014304134546819114,
+                "minimum": 0.014094518905949371,
+                "p50": 0.014304134546819114,
+                "p90": 0.014471827059514908
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 211366838.5625,
+                "mean": 211302409.5625,
+                "minimum": 211237980.5625,
+                "p50": 211302409.5625,
+                "p90": 211353952.7625
+              }
+            }
+          ]
+        }
+      },
+      "endpoint": {
+        "checkpoint_receipts": [
+          {
+            "bytes": 189668721,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-2",
+            "path": "/dev/shm/flygo/runs/retinal-large-seed2-v1/checkpoints/step-00000000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-3",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "4dcccf54e7e8bc1a9548c74f45aaf83d04e4adcfe870276656a5c750236cc679",
+            "step": 0
+          },
+          {
+            "bytes": 189668841,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-2",
+            "path": "/dev/shm/flygo/runs/retinal-large-seed2-v1/checkpoints/step-00001000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-3",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "ccdf2e948833a7ebb75c3565ead1fb2857fa67b6770dc8482feb0f25fc494d6d",
+            "step": 1000
+          }
+        ],
+        "checkpoint_sha256": "ccdf2e948833a7ebb75c3565ead1fb2857fa67b6770dc8482feb0f25fc494d6d",
+        "created": 1789431859.158766,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "diagnostic_backward_positions": 128,
+        "diagnostic_forward_positions": 256,
+        "final_activity": {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.781275987625122,
+            "mean": 0.010797266001717954,
+            "step_ratio_quantiles": [
+              0.9453544020652771,
+              0.9998199343681335,
+              1.0,
+              1.0001643896102905,
+              1.053802728652954
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11728,
+              "parameter_norm": 2.534162143473838,
+              "parameters": 11752,
+              "post_update_gradient_norm": 8.618987961615208,
+              "relative_update": 0.0008552294652289435,
+              "update_max": 0.00020723231136798859,
+              "update_norm": 0.002167346701776105
+            },
+            "edge": {
+              "nonzero_gradients": 15158571,
+              "parameter_norm": 20403.533096275616,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.16707372064127804,
+              "relative_update": 5.1120397173285856e-05,
+              "update_max": 0.07016220688819885,
+              "update_norm": 1.0430365814052336
+            },
+            "input_gain": {
+              "nonzero_gradients": 1879,
+              "parameter_norm": 33.948500403019366,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.12859176763998253,
+              "relative_update": 0.006000580378022931,
+              "update_max": 0.059747904539108276,
+              "update_norm": 0.20335403621601367
+            },
+            "leak": {
+              "nonzero_gradients": 11728,
+              "parameter_norm": 41.14461305362202,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.012842849284567514,
+              "relative_update": 0.0032390284494918454,
+              "update_max": 0.03133440017700195,
+              "update_norm": 0.13322089932004025
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.7739017190515904,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.08992923787481338,
+              "relative_update": 0.01271796705169021,
+              "update_max": 0.007377222180366516,
+              "update_norm": 0.022585598857356053
+            },
+            "policy_weight": {
+              "nonzero_gradients": 59598,
+              "parameter_norm": 73.31886909478627,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06214314808271161,
+              "relative_update": 0.00526857230594035,
+              "update_max": 0.05054563283920288,
+              "update_norm": 0.386237779980849
+            },
+            "readout_gain": {
+              "nonzero_gradients": 798,
+              "parameter_norm": 404.8487715614305,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.055459241392742935,
+              "relative_update": 0.00017086543635453356,
+              "update_max": 0.021758735179901123,
+              "update_norm": 0.06917460158233309
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.46561169624328613,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.1358034610748291,
+              "relative_update": 0.001294996580814234,
+              "update_max": 0.0006021857261657715,
+              "update_norm": 0.0006021857261657715
+            },
+            "value_weight": {
+              "nonzero_gradients": 798,
+              "parameter_norm": 5.650599178302817,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.1303616342769544,
+              "relative_update": 0.0032825691315950963,
+              "update_max": 0.005343727767467499,
+              "update_norm": 0.018526855789255062
+            }
+          },
+          "kind": "diagnostics",
+          "rate_softness": 0.0,
+          "seconds": 2.439251197996782,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.957724061602936,
+              "max": 3.0345678329467773,
+              "min": -1.8903636932373047,
+              "positive_voltage_fraction": 0.957724061602936,
+              "rate_max": 3.0345678329467773,
+              "rate_mean": 0.020123018427095435,
+              "rms": 0.05721133581970865
+            },
+            {
+              "active_fraction": 0.8316254420973583,
+              "max": 3.3191728591918945,
+              "min": -2.2350611686706543,
+              "positive_voltage_fraction": 0.8316254420973583,
+              "rate_max": 3.3191728591918945,
+              "rate_mean": 0.021862870555039878,
+              "rms": 0.0762822796387536
+            },
+            {
+              "active_fraction": 0.6841729145722557,
+              "max": 3.35091233253479,
+              "min": -2.330759286880493,
+              "positive_voltage_fraction": 0.6841729145722557,
+              "rate_max": 3.35091233253479,
+              "rate_mean": 0.02269859765384165,
+              "rms": 0.08682811269727618
+            },
+            {
+              "active_fraction": 0.6225251253618537,
+              "max": 3.353860855102539,
+              "min": -2.3984375,
+              "positive_voltage_fraction": 0.6225251253618537,
+              "rate_max": 3.353860855102539,
+              "rate_mean": 0.023488060903691998,
+              "rms": 0.0933251672380947
+            },
+            {
+              "active_fraction": 0.5931349244800814,
+              "max": 4.215506553649902,
+              "min": -2.426842451095581,
+              "positive_voltage_fraction": 0.5931349244800814,
+              "rate_max": 4.215506553649902,
+              "rate_mean": 0.0241752697263662,
+              "rms": 0.09775826319107711
+            },
+            {
+              "active_fraction": 0.579059536282264,
+              "max": 6.677835941314697,
+              "min": -2.437645435333252,
+              "positive_voltage_fraction": 0.579059536282264,
+              "rate_max": 6.677835941314697,
+              "rate_mean": 0.02476975513921914,
+              "rms": 0.10112153028584026
+            },
+            {
+              "active_fraction": 0.5725272450067223,
+              "max": 10.553016662597656,
+              "min": -2.4416842460632324,
+              "positive_voltage_fraction": 0.5725272450067223,
+              "rate_max": 10.553016662597656,
+              "rate_mean": 0.025289838860133838,
+              "rms": 0.10414051456000768
+            },
+            {
+              "active_fraction": 0.5687860718135681,
+              "max": 16.722000122070312,
+              "min": -3.7538537979125977,
+              "positive_voltage_fraction": 0.5687860718135681,
+              "rate_max": 16.722000122070312,
+              "rate_mean": 0.025754737940202256,
+              "rms": 0.10768545865749317
+            }
+          ],
+          "step": 1000,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 3.2921115106589673,
+          "value_saturated_fraction": 0.09375
+        },
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "input_contract": {
+          "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+          "mode": "current",
+          "version": "spherical-context-h4-ablation-v1"
+        },
+        "labeled_training_exposures": 32000,
+        "learning_curve": [
+          {
+            "input_perturbations": {
+              "history": {
+                "policy_cross_entropy": 3.678265830959635,
+                "policy_kl": 2.0503890163763385,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.02294921875,
+                "value_mse": 0.8868097763303089
+              },
+              "neutral": {
+                "policy_cross_entropy": 3.6782659456204962,
+                "policy_kl": 2.0503891310371998,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.02294921875,
+                "value_mse": 0.8868093094352982
+              }
+            },
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.678265830959635,
+              "policy_kl": 2.0503890163763385,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.02294921875,
+              "value_mse": 0.8868097763303089
+            },
+            "novel": {
+              "policy_cross_entropy": 3.596126322077236,
+              "policy_kl": 1.896579458810769,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.0166015625,
+              "value_mse": 0.9068868786176552
+            },
+            "step": 0,
+            "train": {
+              "policy_cross_entropy": 3.6009375246944444,
+              "policy_kl": 1.7555337400063837,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.0185546875,
+              "value_mse": 0.9153134268190666
+            },
+            "unix": 1789430129.442642
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3879216202585365,
+              "policy_kl": 1.76004480567524,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.173828125,
+              "value_mse": 0.8921020814770033
+            },
+            "novel": {
+              "policy_cross_entropy": 3.4055862947141455,
+              "policy_kl": 1.7060394314476786,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.193359375,
+              "value_mse": 0.9185058965046551
+            },
+            "step": 250,
+            "train": {
+              "policy_cross_entropy": 3.359385265295283,
+              "policy_kl": 1.5139814806072225,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.22705078125,
+              "value_mse": 0.9190598882591949
+            },
+            "unix": 1789430544.9942653
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.367130953069607,
+              "policy_kl": 1.7392541384863107,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.17919921875,
+              "value_mse": 0.6748524419227891
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3716707819976026,
+              "policy_kl": 1.6721239187311356,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1923828125,
+              "value_mse": 0.6898823533803706
+            },
+            "step": 500,
+            "train": {
+              "policy_cross_entropy": 3.3393301533143736,
+              "policy_kl": 1.493926368626313,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.2255859375,
+              "value_mse": 0.6703048761973042
+            },
+            "unix": 1789430915.9878917
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3276882933619936,
+              "policy_kl": 1.699811478778697,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.17822265625,
+              "value_mse": 0.6491223246957312
+            },
+            "novel": {
+              "policy_cross_entropy": 3.340976761484604,
+              "policy_kl": 1.6414298982181372,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1943359375,
+              "value_mse": 0.6587821956413734
+            },
+            "step": 750,
+            "train": {
+              "policy_cross_entropy": 3.302630386759332,
+              "policy_kl": 1.4572266020712712,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.21875,
+              "value_mse": 0.6165466431899693
+            },
+            "unix": 1789431268.6663945
+          },
+          {
+            "input_perturbations": {
+              "history": {
+                "policy_cross_entropy": 3.3245339346019227,
+                "policy_kl": 1.6966571200186262,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.181640625,
+                "value_mse": 0.7083854752604254
+              },
+              "neutral": {
+                "policy_cross_entropy": 3.333110831512607,
+                "policy_kl": 1.7052340169293103,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.17578125,
+                "value_mse": 0.9318145229883852
+              }
+            },
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3245339346019227,
+              "policy_kl": 1.6966571200186262,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.181640625,
+              "value_mse": 0.7083854752604254
+            },
+            "novel": {
+              "policy_cross_entropy": 3.328747770071225,
+              "policy_kl": 1.629200906804758,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.19677734375,
+              "value_mse": 0.6890432720210561
+            },
+            "step": 1000,
+            "train": {
+              "policy_cross_entropy": 3.2937063767400514,
+              "policy_kl": 1.4483025920519907,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.232421875,
+              "value_mse": 0.6299917143808482
+            },
+            "unix": 1789431616.6097195
+          }
+        ],
+        "metrics_log_sha256": "c016ba807f3c349eb6ccd89786a2a54d810f26df6cf584230e6dc1cf45feaaa8",
+        "mode": "current",
+        "model_config": {
+          "actions": 82,
+          "features": 3574,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 2,
+          "steps": 8,
+          "threads": 24
+        },
+        "parameter_changes": {
+          "bias": {
+            "changed": 11745,
+            "delta_l2": 1.4056770532960519,
+            "delta_max": 0.05108535662293434,
+            "scalars": 11752
+          },
+          "context_input_gain": {
+            "changed": 84,
+            "quantiles": [
+              -2.3166260719299316,
+              -0.5479891002178192,
+              -0.0730633158236742,
+              0.6196215569972993,
+              2.1733310222625732
+            ]
+          },
+          "edge": {
+            "changed": 15137918,
+            "delta_l2": 287.4466319741983,
+            "delta_max": 8.564652681350708,
+            "scalars": 15270273
+          },
+          "input_gain": {
+            "changed": 3574,
+            "delta_l2": 29.701668092274932,
+            "delta_max": 3.321597382426262,
+            "scalars": 3574
+          },
+          "leak": {
+            "changed": 11745,
+            "delta_l2": 41.14461305362202,
+            "delta_max": 3.453747510910034,
+            "scalars": 11752
+          },
+          "policy_bias": {
+            "changed": 82,
+            "delta_l2": 1.7739017190515904,
+            "delta_max": 0.6288721561431885,
+            "scalars": 82
+          },
+          "policy_weight": {
+            "changed": 174525,
+            "delta_l2": 72.83928262698292,
+            "delta_max": 5.708064176142216,
+            "scalars": 174578
+          },
+          "readout_gain": {
+            "changed": 2129,
+            "delta_l2": 25.42683047664547,
+            "delta_max": 3.614650249481201,
+            "scalars": 165122
+          },
+          "value_bias": {
+            "changed": 1,
+            "delta_l2": 0.46561169624328613,
+            "delta_max": 0.46561169624328613,
+            "scalars": 1
+          },
+          "value_weight": {
+            "changed": 2129,
+            "delta_l2": 5.660938107763302,
+            "delta_max": 3.563223562669009,
+            "scalars": 2129
+          },
+          "visual_input_gain": {
+            "changed": 3490,
+            "quantiles": [
+              -0.6610837578773499,
+              -0.11129903942346572,
+              0.20028673112392426,
+              0.9547707140445709,
+              3.521597385406494
+            ]
+          }
+        },
+        "plan_sha256": "7a940694a2c5a8bf484c506ce5368746a988b36a111087a54d7df3b43b5e56a1",
+        "run_id": "retinal-large-seed2-v1",
+        "scope": "Owner-side endpoint accounting and fixed-slice diagnostics. Full validation is separate. No new inference, learning, grouping, checkpoint transfer, test examples or TPU use.",
+        "seed": 2,
+        "source_sha256": "14e90db3c293af13f8eed60d0ea8fb699bfbf4b25d9ff3b9d9553308b04b460d",
+        "status": "complete",
+        "training_contract": {
+          "batch_size": 32,
+          "clip": 1.0,
+          "epsilon": 1e-06,
+          "rate": 0.03,
+          "rate_scales": {
+            "bias": 0.01
+          },
+          "schedule": {
+            "decay_until": 0,
+            "final_ratio": 0.1,
+            "peak": 0.03,
+            "version": "absolute-update-rate-v1",
+            "warmup_steps": 100
+          }
+        },
+        "validation_forward_positions": 38912
+      },
+      "endpoint_sha256": "ebeb9d4a94ebdd867e2801daf92b277e6adfec1870c97994f86588003125069f",
+      "run_id": "retinal-large-seed2-v1",
+      "seed": 2,
+      "signal_record_sha256": "b4a3caccb4a81e40aad9c999c47fb6aef1b34c476a7d224d7ed8b0a30d5dbd1a",
+      "visual_concentration": {
+        "standardized_participation_rank": 5.525675987062938,
+        "std_floor": 1e-06,
+        "top_cells": [
+          {
+            "bodyId": 10237,
+            "node": 216,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNg30",
+            "visual_variance_fraction": 0.9998737787043676
+          },
+          {
+            "bodyId": 16536,
+            "node": 5993,
+            "subclass": "xl",
+            "superclass": "descending_neuron",
+            "type": "DNge075",
+            "visual_variance_fraction": 4.797091293034784e-05
+          },
+          {
+            "bodyId": 14421,
+            "node": 4098,
+            "subclass": "xl",
+            "superclass": "descending_neuron",
+            "type": "DNge131",
+            "visual_variance_fraction": 3.0703308121447675e-05
+          },
+          {
+            "bodyId": 12874,
+            "node": 2688,
+            "subclass": "xl",
+            "superclass": "descending_neuron",
+            "type": "DNde001",
+            "visual_variance_fraction": 8.629464704074442e-06
+          },
+          {
+            "bodyId": 10705,
+            "node": 656,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNc02",
+            "visual_variance_fraction": 5.78712642870773e-06
+          }
+        ],
+        "varying_cells": 305
+      }
+    },
+    {
+      "comparisons": [
+        {
+          "checkpoint_sha256": "60ae42255518b59f94d4d0a00865ae459cb7503d49303d65365e7bcc9428b54c",
+          "common_reduced_source_novel": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.209548692771023,
+                1.7846968770545915
+              ],
+              "mean": 1.589213087162226
+            },
+            "positions": 61541,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.15145329103051328,
+                0.28509707366239806
+              ],
+              "mean": 0.19658439089387564
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.6066376071420567,
+                0.7095778856523275
+              ],
+              "mean": 0.6802569591545454
+            }
+          },
+          "kind": "reference",
+          "metrics_sha256": "415568754c080322060dbb483b3d0ac26c1e45d6cb04064bb6c159f68c89b1f2",
+          "natural": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.3118735147058287,
+                1.8723070596358968
+              ],
+              "mean": 1.687935765269458
+            },
+            "positions": 70425,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.14242472310705517,
+                0.26526815848278035
+              ],
+              "mean": 0.18237841675541355
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.6003883515640464,
+                0.6766982584042656
+              ],
+              "mean": 0.6421181037049484
+            }
+          },
+          "validation_record_sha256": "34a88c11a02e7e573d487c5b5b60299563e674f865453ea60f0383958e7ae680"
+        },
+        {
+          "checkpoint_sha256": "59a6c618b995e3ea3b3b31d4954093ea18b1f078e0da6b4922a0ca82897b608a",
+          "common_reduced_source_novel": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.2340972897140334,
+                1.802268100292024
+              ],
+              "mean": 1.609636088254311
+            },
+            "positions": 61541,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.14840644761646,
+                0.27011668305304715
+              ],
+              "mean": 0.18920719520319787
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.6213196616808248,
+                0.7252660872337287
+              ],
+              "mean": 0.6962886709458308
+            }
+          },
+          "kind": "large",
+          "metrics_sha256": "77a9773ee1a6b7500b865cd5f627f4c3c8a85d4b1e3cdddbbde1c6e4d133a6df",
+          "natural": {
+            "families": 254,
+            "policy_kl": {
+              "family_bootstrap_95": [
+                1.3298830935019126,
+                1.8780474872711557
+              ],
+              "mean": 1.6983405830405176
+            },
+            "positions": 70425,
+            "teacher_top1_agreement": {
+              "family_bootstrap_95": [
+                0.14431243839484087,
+                0.25264872278740236
+              ],
+              "mean": 0.17939652112176074
+            },
+            "value_mse": {
+              "family_bootstrap_95": [
+                0.6228194147085002,
+                0.6981796777465181
+              ],
+              "mean": 0.6714629686114661
+            }
+          },
+          "validation_record_sha256": "88b40284f0b06b717b899a534eeb40222307552fbff2d126ef7e017d726e8288"
+        }
+      ],
+      "count_record_sha256": "43d74232e257f3f286fe162b57a6dbab4afcf3a32d8284077dc5bc025ddf1fd2",
+      "counted_inference": {
+        "large": {
+          "case": "retinal-large-seed3-v1",
+          "checkpoint": "/dev/shm/flygo/runs/retinal-large-seed3-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "59a6c618b995e3ea3b3b31d4954093ea18b1f078e0da6b4922a0ca82897b608a",
+          "records": [
+            {
+              "batch_size": 1,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 187401612.0,
+                "mean": 186451065.65625,
+                "minimum": 185128586.0,
+                "p50": 186554920.0,
+                "p90": 187254100.2
+              },
+              "first_call_seconds": 0.12646237001172267,
+              "nominal": {
+                "arithmetic_flops": 252656780.0,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31735.0,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 6387.0,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 64,
+              "seconds_per_position": {
+                "maximum": 0.09401958298985846,
+                "mean": 0.08621115485675546,
+                "minimum": 0.08370231298613362,
+                "p50": 0.08520066800701898,
+                "p90": 0.089664178295061
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 217942158.0,
+                "mean": 216991611.65625,
+                "minimum": 215669132.0,
+                "p50": 217095466.0,
+                "p90": 217794646.2
+              }
+            },
+            {
+              "batch_size": 32,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 191940062.5625,
+                "mean": 191889022.5625,
+                "minimum": 191837982.5625,
+                "p50": 191889022.5625,
+                "p90": 191929854.5625
+              },
+              "first_call_seconds": 0.4190360590000637,
+              "nominal": {
+                "arithmetic_flops": 252654716.5625,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31734.03125,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 4324.53125,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 2,
+              "seconds_per_position": {
+                "maximum": 0.014333423593598127,
+                "mean": 0.014230242031317175,
+                "minimum": 0.014127060469036223,
+                "p50": 0.014230242031317175,
+                "p90": 0.014312787281141937
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 222480608.5625,
+                "mean": 222429568.5625,
+                "minimum": 222378528.5625,
+                "p50": 222429568.5625,
+                "p90": 222470400.5625
+              }
+            }
+          ]
+        },
+        "reference": {
+          "case": "attachment-current-seed3-v1",
+          "checkpoint": "/dev/shm/flygo/runs/attachment-current-seed3-v1/checkpoints/step-00001000.npz",
+          "checkpoint_sha256": "60ae42255518b59f94d4d0a00865ae459cb7503d49303d65365e7bcc9428b54c",
+          "records": [
+            {
+              "batch_size": 1,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 184637796.0,
+                "mean": 183563935.9375,
+                "minimum": 182265810.0,
+                "p50": 183605538.0,
+                "p90": 184404920.8
+              },
+              "first_call_seconds": 0.12988581499666907,
+              "nominal": {
+                "arithmetic_flops": 252656780.0,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31735.0,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 6387.0,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 64,
+              "seconds_per_position": {
+                "maximum": 0.0921230289968662,
+                "mean": 0.08589736375006396,
+                "minimum": 0.08373083002516069,
+                "p50": 0.08505244000116363,
+                "p90": 0.08942531499196775
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 215178342.0,
+                "mean": 214104481.9375,
+                "minimum": 212806356.0,
+                "p50": 214146084.0,
+                "p90": 214945466.8
+              }
+            },
+            {
+              "batch_size": 32,
+              "cached_zero_skipped_flops_per_position": {
+                "maximum": 189149526.5625,
+                "mean": 189113107.5625,
+                "minimum": 189076688.5625,
+                "p50": 189113107.5625,
+                "p90": 189142242.7625
+              },
+              "first_call_seconds": 0.40680901301675476,
+              "nominal": {
+                "arithmetic_flops": 252654716.5625,
+                "convention": "2 operations per multiply-add; exact nonzero edges; no loss, masks, Go features or search",
+                "parts": {
+                  "external_visual_encoding": 31734.03125,
+                  "heads": 353414,
+                  "input_gain": 15020,
+                  "rate_dynamics": 7925856,
+                  "readout_conditioning": 0,
+                  "readout_pool": 4324.53125,
+                  "smooth_rate_arithmetic": 0,
+                  "sparse_aggregation": 244324368
+                },
+                "rate_softness": 0.0,
+                "readout_mean_scale": 1.0,
+                "readout_neurons": 2129,
+                "relu_comparisons": 1323105,
+                "softplus_evaluations": 0,
+                "tanh_evaluations": 1,
+                "weight_transforms": "Cached across predictions at fixed parameters; report cold transforms separately"
+              },
+              "retained_full_trace_batches": 2,
+              "seconds_per_position": {
+                "maximum": 0.01423720084312663,
+                "mean": 0.014227022733848571,
+                "minimum": 0.014216844624570513,
+                "p50": 0.014227022733848571,
+                "p90": 0.014235165221271018
+              },
+              "zero_skipped_flops_per_position": {
+                "maximum": 219690072.5625,
+                "mean": 219653653.5625,
+                "minimum": 219617234.5625,
+                "p50": 219653653.5625,
+                "p90": 219682788.7625
+              }
+            }
+          ]
+        }
+      },
+      "endpoint": {
+        "checkpoint_receipts": [
+          {
+            "bytes": 189668721,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-3",
+            "path": "/dev/shm/flygo/runs/retinal-large-seed3-v1/checkpoints/step-00000000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-1",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "c4ea097840ea842e9ff25f9cb10246ab9e734192ed4fa371aa8da5b61470a3d7",
+            "step": 0
+          },
+          {
+            "bytes": 189668842,
+            "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+            "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+            "origin_host": "cubic27@t1v-n-a09f5679-w-3",
+            "path": "/dev/shm/flygo/runs/retinal-large-seed3-v1/checkpoints/step-00001000.npz",
+            "peer": "cubic27@t1v-n-a09f5679-w-1",
+            "replica_method": "SHA-256 verified worker copy streamed through root; no root payload file",
+            "replica_status": "verified",
+            "sha256": "59a6c618b995e3ea3b3b31d4954093ea18b1f078e0da6b4922a0ca82897b608a",
+            "step": 1000
+          }
+        ],
+        "checkpoint_sha256": "59a6c618b995e3ea3b3b31d4954093ea18b1f078e0da6b4922a0ca82897b608a",
+        "created": 1789431857.5399194,
+        "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+        "diagnostic_backward_positions": 128,
+        "diagnostic_forward_positions": 256,
+        "final_activity": {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 4.362076282501221,
+            "mean": 0.010809431797576187,
+            "step_ratio_quantiles": [
+              0.9662330150604248,
+              0.9997904896736145,
+              1.0,
+              1.0002025365829468,
+              1.0352240800857544
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 2.4807093580403943,
+              "parameters": 11752,
+              "post_update_gradient_norm": 36.434416722647526,
+              "relative_update": 0.0010494065191875533,
+              "update_max": 0.0002881791442632675,
+              "update_norm": 0.0026031791949631617
+            },
+            "edge": {
+              "nonzero_gradients": 15194053,
+              "parameter_norm": 20402.554108742097,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.49934912788375496,
+              "relative_update": 5.297841239888214e-05,
+              "update_max": 0.04464295506477356,
+              "update_norm": 1.0808947708339547
+            },
+            "input_gain": {
+              "nonzero_gradients": 2524,
+              "parameter_norm": 29.917685878502837,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.25928509851418796,
+              "relative_update": 0.005135766216492636,
+              "update_max": 0.03437387943267822,
+              "update_norm": 0.15341254999851697
+            },
+            "leak": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 36.65860406347587,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.025354978574678045,
+              "relative_update": 0.004048860107153457,
+              "update_max": 0.026698440313339233,
+              "update_norm": 0.14830265299591594
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.3720634734029074,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.10014899887030337,
+              "relative_update": 0.021812060384510158,
+              "update_max": 0.012374311685562134,
+              "update_norm": 0.02987868209286385
+            },
+            "policy_weight": {
+              "nonzero_gradients": 74370,
+              "parameter_norm": 58.4362193142391,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06718413530872011,
+              "relative_update": 0.006872250611270703,
+              "update_max": 0.030127456411719322,
+              "update_norm": 0.4012416798957643
+            },
+            "readout_gain": {
+              "nonzero_gradients": 958,
+              "parameter_norm": 404.87416110651225,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.15375975019073193,
+              "relative_update": 0.00020042175071094157,
+              "update_max": 0.02359473705291748,
+              "update_norm": 0.0811454130629789
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.4904775023460388,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.39012256264686584,
+              "relative_update": 0.0010857767263484982,
+              "update_max": 0.0005319714546203613,
+              "update_norm": 0.0005319714546203613
+            },
+            "value_weight": {
+              "nonzero_gradients": 958,
+              "parameter_norm": 4.44530308062576,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.31259150431104343,
+              "relative_update": 0.005269934573107221,
+              "update_max": 0.007082805037498474,
+              "update_norm": 0.02342107584199468
+            }
+          },
+          "kind": "diagnostics",
+          "rate_softness": 0.0,
+          "seconds": 2.489795527973911,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9700096746647933,
+              "max": 2.6564853191375732,
+              "min": -0.45149141550064087,
+              "positive_voltage_fraction": 0.9700096746647933,
+              "rate_max": 2.6564853191375732,
+              "rate_mean": 0.020044455998342384,
+              "rms": 0.048106953908459836
+            },
+            {
+              "active_fraction": 0.8715287030195855,
+              "max": 3.017568588256836,
+              "min": -1.0804966688156128,
+              "positive_voltage_fraction": 0.8715287030195855,
+              "rate_max": 3.017568588256836,
+              "rate_mean": 0.02230199467041893,
+              "rms": 0.06384564127540086
+            },
+            {
+              "active_fraction": 0.7519341759426363,
+              "max": 3.1419029235839844,
+              "min": -1.369863748550415,
+              "positive_voltage_fraction": 0.7519341759426363,
+              "rate_max": 3.1419029235839844,
+              "rate_mean": 0.02373626192933322,
+              "rms": 0.07351045705123282
+            },
+            {
+              "active_fraction": 0.7075618709196836,
+              "max": 3.1613996028900146,
+              "min": -1.4230337142944336,
+              "positive_voltage_fraction": 0.7075618709196836,
+              "rate_max": 3.1613996028900146,
+              "rate_mean": 0.024753145008676005,
+              "rms": 0.07925097923796093
+            },
+            {
+              "active_fraction": 0.6834079498794831,
+              "max": 3.164456844329834,
+              "min": -1.4322869777679443,
+              "positive_voltage_fraction": 0.6834079498794831,
+              "rate_max": 3.164456844329834,
+              "rate_mean": 0.025587095223017567,
+              "rms": 0.08304076108512118
+            },
+            {
+              "active_fraction": 0.6717005078063493,
+              "max": 3.1649363040924072,
+              "min": -1.4338455200195312,
+              "positive_voltage_fraction": 0.6717005078063493,
+              "rate_max": 3.1649363040924072,
+              "rate_mean": 0.02626472789652467,
+              "rms": 0.08568211412530138
+            },
+            {
+              "active_fraction": 0.6660768250142319,
+              "max": 3.165011405944824,
+              "min": -1.4397202730178833,
+              "positive_voltage_fraction": 0.6660768250142319,
+              "rate_max": 3.165011405944824,
+              "rate_mean": 0.02683102673414953,
+              "rms": 0.08762189014239291
+            },
+            {
+              "active_fraction": 0.6632323373021161,
+              "max": 3.1650233268737793,
+              "min": -1.4448843002319336,
+              "positive_voltage_fraction": 0.6632323373021161,
+              "rate_max": 3.1650233268737793,
+              "rate_mean": 0.02730751125899423,
+              "rms": 0.08910010938953314
+            }
+          ],
+          "step": 1000,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 24.029067204551477,
+          "value_saturated_fraction": 0.03125
+        },
+        "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+        "input_contract": {
+          "attachment_sha256": "081ef2509a012eaac5fa70f97bb415cd0d6471a277049f74abeca9ab9633d299",
+          "mode": "current",
+          "version": "spherical-context-h4-ablation-v1"
+        },
+        "labeled_training_exposures": 32000,
+        "learning_curve": [
+          {
+            "input_perturbations": {
+              "history": {
+                "policy_cross_entropy": 3.673700170856254,
+                "policy_kl": 2.0458233562729577,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.02587890625,
+                "value_mse": 0.8875232369509902
+              },
+              "neutral": {
+                "policy_cross_entropy": 3.6737004287265087,
+                "policy_kl": 2.0458236141432122,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.02587890625,
+                "value_mse": 0.8875237041512669
+              }
+            },
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.673700170856254,
+              "policy_kl": 2.0458233562729577,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.02587890625,
+              "value_mse": 0.8875232369509902
+            },
+            "novel": {
+              "policy_cross_entropy": 3.5937063716796693,
+              "policy_kl": 1.8941595084132024,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.03271484375,
+              "value_mse": 0.9073222459861725
+            },
+            "step": 0,
+            "train": {
+              "policy_cross_entropy": 3.5972747497659023,
+              "policy_kl": 1.7518709650778417,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.02490234375,
+              "value_mse": 0.9159317421135746
+            },
+            "unix": 1789430131.382714
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3775441411139777,
+              "policy_kl": 1.7496673265306812,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.18115234375,
+              "value_mse": 0.7363646514356788
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3856949881452407,
+              "policy_kl": 1.6861481248787737,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.19580078125,
+              "value_mse": 0.7476160913493086
+            },
+            "step": 250,
+            "train": {
+              "policy_cross_entropy": 3.3523612285795257,
+              "policy_kl": 1.506957443891465,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.2275390625,
+              "value_mse": 0.7611430736090234
+            },
+            "unix": 1789430546.221644
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3743700676893535,
+              "policy_kl": 1.746493253106057,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.15966796875,
+              "value_mse": 0.6603717560046575
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3807424391162746,
+              "policy_kl": 1.6811955758498076,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.18994140625,
+              "value_mse": 0.6495831252288737
+            },
+            "step": 500,
+            "train": {
+              "policy_cross_entropy": 3.3397982356950435,
+              "policy_kl": 1.4943944510069829,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.2255859375,
+              "value_mse": 0.6275546480044535
+            },
+            "unix": 1789430908.8060088
+          },
+          {
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3614195341311834,
+              "policy_kl": 1.733542719547887,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.1611328125,
+              "value_mse": 0.7041791364221406
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3509369025939986,
+              "policy_kl": 1.6513900393275316,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.18701171875,
+              "value_mse": 0.6908978869233652
+            },
+            "step": 750,
+            "train": {
+              "policy_cross_entropy": 3.3150434265546496,
+              "policy_kl": 1.469639641866589,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.22216796875,
+              "value_mse": 0.6631060236506785
+            },
+            "unix": 1789431251.1345086
+          },
+          {
+            "input_perturbations": {
+              "history": {
+                "policy_cross_entropy": 3.3499681085202235,
+                "policy_kl": 1.722091293936927,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.169921875,
+                "value_mse": 0.7027882051366443
+              },
+              "neutral": {
+                "policy_cross_entropy": 3.363112829549496,
+                "policy_kl": 1.7352360149661994,
+                "positions": 2048,
+                "teacher_top1_agreement": 0.1416015625,
+                "value_mse": 1.0533312804626065
+              }
+            },
+            "kind": "validation",
+            "natural": {
+              "policy_cross_entropy": 3.3499681085202235,
+              "policy_kl": 1.722091293936927,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.169921875,
+              "value_mse": 0.7027882051366443
+            },
+            "novel": {
+              "policy_cross_entropy": 3.3620895164998728,
+              "policy_kl": 1.6625426532334058,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.18115234375,
+              "value_mse": 0.7060608725963381
+            },
+            "step": 1000,
+            "train": {
+              "policy_cross_entropy": 3.3311772038647005,
+              "policy_kl": 1.4857734191766399,
+              "positions": 2048,
+              "teacher_top1_agreement": 0.2158203125,
+              "value_mse": 0.6402213343319142
+            },
+            "unix": 1789431599.3851423
+          }
+        ],
+        "metrics_log_sha256": "1d5e3286ee2d80834bafb526319eaa0b5566ed12e3fb081289ba3bfb752bda01",
+        "mode": "current",
+        "model_config": {
+          "actions": 82,
+          "features": 3574,
+          "groups": 2129,
+          "rate_softness": 0.0,
+          "readout_mean_scale": 1.0,
+          "seed": 3,
+          "steps": 8,
+          "threads": 24
+        },
+        "parameter_changes": {
+          "bias": {
+            "changed": 11745,
+            "delta_l2": 1.2462456829543875,
+            "delta_max": 0.05066397413611412,
+            "scalars": 11752
+          },
+          "context_input_gain": {
+            "changed": 84,
+            "quantiles": [
+              -0.579071044921875,
+              -0.26500263810157776,
+              0.09554977342486382,
+              0.5891296982765198,
+              1.970517873764038
+            ]
+          },
+          "edge": {
+            "changed": 15109984,
+            "delta_l2": 269.32045895455576,
+            "delta_max": 6.976134538650513,
+            "scalars": 15270273
+          },
+          "input_gain": {
+            "changed": 3574,
+            "delta_l2": 25.741602020792353,
+            "delta_max": 3.1484680622816086,
+            "scalars": 3574
+          },
+          "leak": {
+            "changed": 11745,
+            "delta_l2": 36.65860406347586,
+            "delta_max": 4.30081033706665,
+            "scalars": 11752
+          },
+          "policy_bias": {
+            "changed": 82,
+            "delta_l2": 1.3720634734029074,
+            "delta_max": 0.5146732926368713,
+            "scalars": 82
+          },
+          "policy_weight": {
+            "changed": 174524,
+            "delta_l2": 57.82135459863578,
+            "delta_max": 4.927623952273279,
+            "scalars": 174578
+          },
+          "readout_gain": {
+            "changed": 2129,
+            "delta_l2": 23.597860772165674,
+            "delta_max": 2.393177032470703,
+            "scalars": 165122
+          },
+          "value_bias": {
+            "changed": 1,
+            "delta_l2": 0.4904775023460388,
+            "delta_max": 0.4904775023460388,
+            "scalars": 1
+          },
+          "value_weight": {
+            "changed": 2129,
+            "delta_l2": 4.376087340770035,
+            "delta_max": 2.4423406776040792,
+            "scalars": 2129
+          },
+          "visual_input_gain": {
+            "changed": 3490,
+            "quantiles": [
+              -0.48283305764198303,
+              -0.06262359619140623,
+              0.19843430072069168,
+              0.7652725040912628,
+              3.348468065261841
+            ]
+          }
+        },
+        "plan_sha256": "7a940694a2c5a8bf484c506ce5368746a988b36a111087a54d7df3b43b5e56a1",
+        "run_id": "retinal-large-seed3-v1",
+        "scope": "Owner-side endpoint accounting and fixed-slice diagnostics. Full validation is separate. No new inference, learning, grouping, checkpoint transfer, test examples or TPU use.",
+        "seed": 3,
+        "source_sha256": "14e90db3c293af13f8eed60d0ea8fb699bfbf4b25d9ff3b9d9553308b04b460d",
+        "status": "complete",
+        "training_contract": {
+          "batch_size": 32,
+          "clip": 1.0,
+          "epsilon": 1e-06,
+          "rate": 0.03,
+          "rate_scales": {
+            "bias": 0.01
+          },
+          "schedule": {
+            "decay_until": 0,
+            "final_ratio": 0.1,
+            "peak": 0.03,
+            "version": "absolute-update-rate-v1",
+            "warmup_steps": 100
+          }
+        },
+        "validation_forward_positions": 38912
+      },
+      "endpoint_sha256": "a968611aff030b41e1d5ddcac3a0abb6d41a454eb039279dfb8154983d67746c",
+      "run_id": "retinal-large-seed3-v1",
+      "seed": 3,
+      "signal_record_sha256": "0f58805dc3a4f862094d18c6184dfd8949db4bdd512f0b2a3d230b74436c417f",
+      "visual_concentration": {
+        "standardized_participation_rank": 4.938813743256283,
+        "std_floor": 1e-06,
+        "top_cells": [
+          {
+            "bodyId": 69173,
+            "node": 51667,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNpe018",
+            "visual_variance_fraction": 0.970026429875793
+          },
+          {
+            "bodyId": 165031,
+            "node": 111516,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNpe018",
+            "visual_variance_fraction": 0.029747605147510802
+          },
+          {
+            "bodyId": 56057,
+            "node": 40771,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNpe011",
+            "visual_variance_fraction": 0.00018403590506589932
+          },
+          {
+            "bodyId": 807837,
+            "node": 148984,
+            "subclass": "ad",
+            "superclass": "vnc_motor",
+            "type": "MNad43",
+            "visual_variance_fraction": 1.2703799274345675e-05
+          },
+          {
+            "bodyId": 11859,
+            "node": 1737,
+            "subclass": "xn",
+            "superclass": "descending_neuron",
+            "type": "DNpe050",
+            "visual_variance_fraction": 8.688403167573544e-06
+          }
+        ],
+        "varying_cells": 272
+      }
+    }
+  ],
+  "reference_analysis_sha256": "882aa1faf065b3098d6145210d4d2b530abb36ae694679110c504b0c8dabaef1",
+  "replication": {
+    "archive_sha256": "93d36fec2ddc886d738b6ed04a035328d1b5d09f53b3eda7604426a9da8ed1ad",
+    "files": 78,
+    "status": "passed",
+    "transferred_files": 53,
+    "verified_existing_files": 25
+  },
+  "seed_variation": {
+    "common_reduced_source_novel": {
+      "policy_kl": {
+        "per_seed": [
+          0.03273183666966244,
+          -0.008940125680699807,
+          0.020423001092084534
+        ],
+        "sample_sd": 0.02140970610603386
+      },
+      "teacher_top1_agreement": {
+        "per_seed": [
+          -0.027022635316293203,
+          0.0009587104531938057,
+          -0.007377195690677759
+        ],
+        "sample_sd": 0.01436654876437347
+      },
+      "value_mse": {
+        "per_seed": [
+          -0.21166059664322343,
+          0.04789201024272346,
+          0.016031711791285447
+        ],
+        "sample_sd": 0.14155471361452499
+      }
+    },
+    "natural": {
+      "policy_kl": {
+        "per_seed": [
+          0.033010149256022664,
+          -0.013527192202213588,
+          0.010404817771059697
+        ],
+        "sample_sd": 0.023271822242454446
+      },
+      "teacher_top1_agreement": {
+        "per_seed": [
+          -0.037557685481008164,
+          0.010337238196663117,
+          -0.002981895633652822
+        ],
+        "sample_sd": 0.02472113900979047
+      },
+      "value_mse": {
+        "per_seed": [
+          -0.23163061704118187,
+          0.053569154940064784,
+          0.029344864906517634
+        ],
+        "sample_sd": 0.15813176380454505
+      }
+    }
+  },
+  "source_sha256": "4777349f0cfe246afbd44b0b2920b6efb2442c35f7f4aaca7464b64b5f562758",
+  "status": "complete"
+}
