@@ -38,6 +38,13 @@ pub struct Model {
     readout_nodes: Vec<Vec<usize>>,
     readout_mean_scale: f32,
     readout_plan: Mutex<Option<Arc<ReadoutPlan>>>,
+    head_mask: Option<HeadMask>,
+}
+struct HeadMask {
+    policy: Vec<Vec<usize>>,
+    value: Vec<usize>,
+    policy_enabled: Vec<u8>,
+    value_enabled: Vec<u8>,
 }
 /// Prediction has no backward tape and cannot accidentally enter backward.
 pub struct Prediction {
@@ -134,7 +141,56 @@ impl Model {
             readout_nodes,
             readout_mean_scale: 1.0,
             readout_plan: Mutex::new(None),
+            head_mask: None,
         })
+    }
+    /// Constrain external decoder coefficients; recurrent connectivity is unchanged.
+    pub fn with_head_mask(mut self, policy: Vec<u8>, value: Vec<u8>) -> Result<Self, String> {
+        let p = &self.ports;
+        if policy.len() != p.actions * p.groups || value.len() != p.groups
+            || policy.iter().chain(&value).any(|&x| x > 1)
+            || policy.chunks(p.groups).any(|row| !row.contains(&1)) || !value.contains(&1)
+        {
+            return Err("Invalid binary head mask".into());
+        }
+        let selected = |row: &[u8]| row.iter().enumerate()
+            .filter_map(|(i, &enabled)| (enabled == 1).then_some(i)).collect();
+        // An explicit all-enabled artifact executes the original dense path.
+        self.head_mask = if policy.iter().chain(&value).all(|&x| x == 1) { None } else {
+            Some(HeadMask {
+                policy: policy.chunks(p.groups).map(selected).collect(), value: selected(&value),
+                policy_enabled: policy, value_enabled: value,
+            })
+        };
+        Ok(self)
+    }
+    #[inline]
+    fn policy_groups(&self, action: usize, mut visit: impl FnMut(usize)) {
+        if let Some(mask) = &self.head_mask {
+            for &group in &mask.policy[action] { visit(group); }
+        } else {
+            for group in 0..self.ports.groups { visit(group); }
+        }
+    }
+    #[inline]
+    fn value_groups(&self, mut visit: impl FnMut(usize)) {
+        if let Some(mask) = &self.head_mask {
+            for &group in &mask.value { visit(group); }
+        } else {
+            for group in 0..self.ports.groups { visit(group); }
+        }
+    }
+    /// Derivatives and moments on disabled coefficients must never enter Adam.
+    pub fn validate_head_zeros(&self, arrays: &Params) -> Result<(), String> {
+        if let Some(mask) = &self.head_mask {
+            for (array, enabled) in [(&arrays.policy_weight, &mask.policy_enabled),
+                                     (&arrays.value_weight, &mask.value_enabled)] {
+                if array.len() != enabled.len() || array.iter().zip(enabled).any(|(&v, &e)| e == 0 && v != 0.0) {
+                    return Err("Disabled head coefficients need zero gradients and moments".into());
+                }
+            }
+        }
+        Ok(())
     }
     /// Fixed, invertible conditioning of pooled features before the heads.
     pub fn with_readout_mean_scale(mut self, scale: f32) -> Result<Self, String> {
@@ -336,19 +392,20 @@ impl Model {
         let mut scores = vec![0.0; batch];
         for b in 0..batch {
             for action in 0..p.actions {
-                let mut value = params.policy_bias[action];
-                for group in 0..p.groups {
+                let mut value = f64::from(params.policy_bias[action]);
+                self.policy_groups(action, |group| {
                     value +=
-                        params.policy_weight[action * p.groups + group] * pooled[group * batch + b];
-                }
-                logits[b * p.actions + action] = value;
+                        f64::from(params.policy_weight[action * p.groups + group])
+                            * f64::from(pooled[group * batch + b]);
+                });
+                logits[b * p.actions + action] = value as f32;
             }
-            let mut value = params.value_bias[0];
-            for group in 0..p.groups {
-                value += params.value_weight[group] * pooled[group * batch + b];
-            }
-            scores[b] = value;
-            values[b] = value.tanh();
+            let mut value = f64::from(params.value_bias[0]);
+            self.value_groups(|group| {
+                value += f64::from(params.value_weight[group]) * f64::from(pooled[group * batch + b]);
+            });
+            scores[b] = value as f32;
+            values[b] = scores[b].tanh();
         }
         Prediction { logits, values, scores, pooled }
     }
@@ -387,25 +444,37 @@ impl Model {
             return Err("Invalid model cotangent shapes".into());
         }
         let mut grad = Grad::zeros(self);
-        let mut dpool = vec![0.0; p.groups * batch];
+        // Small task-head reductions can cancel almost completely. Accumulate
+        // them in FP64 and round once at the boundary to the FP32 circuit.
+        let mut policy_weight = vec![0.0_f64; p.actions * p.groups];
+        let mut policy_bias = vec![0.0_f64; p.actions];
+        let mut value_weight = vec![0.0_f64; p.groups];
+        let mut value_bias = 0.0_f64;
+        let mut dpool = vec![0.0_f64; p.groups * batch];
         for b in 0..batch {
             for action in 0..p.actions {
-                let g = dlogits[b * p.actions + action];
-                grad.policy_bias[action] += g;
-                for group in 0..p.groups {
-                    grad.policy_weight[action * p.groups + group] +=
-                        g * output.pooled[group * batch + b];
-                    dpool[group * batch + b] += g * params.policy_weight[action * p.groups + group];
-                }
+                let g = f64::from(dlogits[b * p.actions + action]);
+                policy_bias[action] += g;
+                self.policy_groups(action, |group| {
+                    policy_weight[action * p.groups + group] +=
+                        g * f64::from(output.pooled[group * batch + b]);
+                    dpool[group * batch + b] += g * f64::from(params.policy_weight[action * p.groups + group]);
+                });
             }
             let g = dvalues[b] * (1.0 - output.values[b] * output.values[b])
                 + dscores.map_or(0.0, |g| g[b]);
-            grad.value_bias[0] += g;
-            for group in 0..p.groups {
-                grad.value_weight[group] += g * output.pooled[group * batch + b];
-                dpool[group * batch + b] += g * params.value_weight[group];
-            }
+            let g = f64::from(g);
+            value_bias += g;
+            self.value_groups(|group| {
+                value_weight[group] += g * f64::from(output.pooled[group * batch + b]);
+                dpool[group * batch + b] += g * f64::from(params.value_weight[group]);
+            });
         }
+        grad.policy_weight = policy_weight.into_iter().map(|x| x as f32).collect();
+        grad.policy_bias = policy_bias.into_iter().map(|x| x as f32).collect();
+        grad.value_weight = value_weight.into_iter().map(|x| x as f32).collect();
+        grad.value_bias[0] = value_bias as f32;
+        let mut dpool: Vec<f32> = dpool.into_iter().map(|x| x as f32).collect();
         if let Some(extra) = dembedding {
             for (g, &value) in dpool.iter_mut().zip(extra) { *g += value; }
         }
@@ -473,7 +542,7 @@ impl Model {
         let mut value_loss = 0.0_f64;
         for b in 0..batch {
             let offset = b * actions;
-            let sum: f32 = policy[offset..offset + actions].iter().sum();
+            let sum: f64 = policy[offset..offset + actions].iter().map(|&x| f64::from(x)).sum();
             if (sum - 1.0).abs() > 1e-4
                 || !(0..actions).any(|a| legal[offset + a] != 0)
                 || (0..actions).any(|a| legal[offset + a] == 0 && policy[offset + a] != 0.0)
@@ -484,15 +553,20 @@ impl Model {
                 .filter(|&a| legal[offset + a] != 0)
                 .map(|a| output.logits[offset + a])
                 .fold(f32::NEG_INFINITY, f32::max);
-            let denominator: f32 = (0..actions)
+            let denominator: f64 = (0..actions)
                 .filter(|&a| legal[offset + a] != 0)
-                .map(|a| (output.logits[offset + a] - max).exp())
+                .map(|a| (f64::from(output.logits[offset + a]) - f64::from(max)).exp())
                 .sum();
             for a in 0..actions {
                 if legal[offset + a] != 0 {
-                    let logp = output.logits[offset + a] - max - denominator.ln();
-                    policy_loss -= f64::from(policy[offset + a] * logp) / batch as f64;
-                    dlogits[offset + a] = (logp.exp() - policy[offset + a]) / batch as f32;
+                    let shifted = f64::from(output.logits[offset + a]) - f64::from(max);
+                    let logp = shifted - denominator.ln();
+                    policy_loss -= f64::from(policy[offset + a]) * logp / batch as f64;
+                    // d[-sum(q * log_softmax(logits))]/dlogit = sum(q) * p - q.
+                    // Accepted FP32 targets need not sum to exactly one. Reuse
+                    // the probability normalization directly, without exp(logp).
+                    let probability = shifted.exp() / denominator;
+                    dlogits[offset + a] = ((sum * probability - f64::from(policy[offset + a])) / batch as f64) as f32;
                 }
             }
             let delta = output.values[b] - value[b];

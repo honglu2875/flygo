@@ -71,7 +71,7 @@ def main():
                 nominal=fly_cost(len(degree),len(graph['src']),int(np.count_nonzero(model.ports['input_index']>=0)),
                     passes=model.config.steps,groups=model.config.groups,batch_size=batch,
                     readout_neurons=int(np.count_nonzero(model.ports['output_group']>=0)),
-                    readout_mean_scale=model.config.readout_mean_scale)
+                    readout_mean_scale=model.config.readout_mean_scale,head_mask=getattr(model,'head_mask',None))
                 if hasattr(model,'adapter'):
                     # The NumPy renderer evaluates all four weights per sensor,
                     # including zero weights: 4 products + 3 additions, one
@@ -99,8 +99,10 @@ def main():
                     seconds_per_position=distribution([d['seconds']/batch for d in details]),batches=details))
             for key,value in model.checkpoint_arrays().items():
                 if value.tobytes()!=before[key].tobytes():raise AssertionError('Counting mutated '+key)
+            mask=getattr(model,'head_mask',None)
             results.append(dict(case=case['name'],checkpoint=str(checkpoint) if checkpoint else None,
-                checkpoint_sha256=sha256(checkpoint) if checkpoint else None,records=records))
+                checkpoint_sha256=sha256(checkpoint) if checkpoint else None,records=records,
+                **({} if mask is None else {'head_mask':mask.contract})))
             atomic_json(args.output/'result.json',dict(status='complete' if len(results)==len(plan['cases']) else 'running',
                 dataset_id=manifest['dataset_id'],graph_id=graph['manifest']['graph_id'],plan=plan,
                 plan_sha256=sha256(args.plan),indices_sha256=sha256(args.output/'indices.npy'),

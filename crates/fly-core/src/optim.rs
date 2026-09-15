@@ -2,6 +2,15 @@
 use crate::{Grad, Model, Params};
 use rayon::prelude::*;
 
+// Indexed chunks retain a fixed summation tree across thread counts and work
+// stealing. A parallel floating sum over individual elements did not: identical
+// models could report different last bits in the norm during exact recovery.
+fn squared_norm(array: &[f32]) -> f64 {
+    array.par_chunks(16_384)
+        .map(|chunk| chunk.iter().map(|&x| f64::from(x) * f64::from(x)).sum::<f64>())
+        .collect::<Vec<_>>().into_iter().sum()
+}
+
 pub struct Adam {
     pub first: Params,
     pub second: Params,
@@ -66,15 +75,13 @@ impl Adam {
         }
         model.validate(params)?;
         model.validate(grad)?;
+        model.validate_head_zeros(grad)?;
+        model.validate_head_zeros(&self.first)?;
+        model.validate_head_zeros(&self.second)?;
         let norm = model.executor.pool.install(|| {
             grad.arrays()
                 .iter()
-                .map(|array| {
-                    array
-                        .par_iter()
-                        .map(|&x| f64::from(x) * f64::from(x))
-                        .sum::<f64>()
-                })
+                .map(|array| squared_norm(array))
                 .sum::<f64>()
                 .sqrt()
         });
@@ -111,5 +118,28 @@ impl Adam {
             });
         }
         Ok(norm)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::squared_norm;
+    use crate::Executor;
+
+    #[test]
+    fn norm_is_reproducible_across_worker_counts() {
+        let values: Vec<f32> = (0..200_003).map(|i| {
+            ((i % 113) as f32 - 56.0) / 127.0 * if i % 23 == 0 { 1e4 } else { 1e-4 }
+        }).collect();
+        let reference: f64 = values.iter().map(|&x| f64::from(x) * f64::from(x)).sum();
+        let mut bits = None;
+        for threads in [1, 2, 7] {
+            let executor = Executor::new(threads).unwrap();
+            for _ in 0..4 {
+                let actual = executor.pool.install(|| squared_norm(&values));
+                assert!((actual - reference).abs() <= 1e-12 * reference);
+                assert_eq!(*bits.get_or_insert(actual.to_bits()), actual.to_bits());
+            }
+        }
     }
 }

@@ -55,12 +55,15 @@ def save_checkpoint(model,sampler,path:Path,metadata:dict,*,root:Path,peer:str|N
         return receipt
 
 
-def load_checkpoint(path:Path,model,sampler=None,*,dataset_id=None):
+def load_checkpoint(path:Path,model,sampler=None,*,dataset_id=None,numerical_runtime=None):
     receipt=json.loads(path.with_suffix('.json').read_text())
     if sha256(path)!=receipt['sha256']:
         raise ValueError('Checkpoint hash mismatch')
     with np.load(path,allow_pickle=False) as arrays:
         info=json.loads(arrays['metadata'].tobytes())
+        if (numerical_runtime is not None
+                and info.get('numerical_runtime','rust-fp32-f64-norm-v1') != numerical_runtime):
+            raise ValueError('Checkpoint numerical runtime differs; training continuation requires its original runtime')
         # Early schema-1 checkpoints predate explicit names and contain this same
         # first model/optimizer. Future variants must use distinct version names.
         if info.get('schema_version')!=1 or info.get('model_version',MODEL_VERSION)!=getattr(model,'model_version',MODEL_VERSION) \

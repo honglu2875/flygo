@@ -1,0 +1,28 @@
+{
+  "name": "readout-mask-preparation-v1",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_map_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+  "groups": 2129,
+  "actions": 82,
+  "size": 9,
+  "expected_soma_sides": {"L": 1065, "R": 1054, "M": 10},
+  "value_types": ["DNg30", "DNpe018"],
+  "expected_value_body_ids": [10123, 10237, 69173, 113166, 165031],
+  "shuffle_seed": 918431,
+  "arms": ["dense", "value-group", "soma-side", "shuffled-side"],
+  "development_evidence": [
+    {
+      "path": "runs/readout-contributions-v1/result.json",
+      "sha256": "25d15089526fded529776a89835e1e9d8038b2e0cf7a26d63edbf39c7908df97",
+      "role": "Candidate discovery from three earlier B checkpoints, each trained for 32000 exposures; no new updates in the diagnostic"
+    },
+    {
+      "path": "runs/retinal-allocation-analysis-v1/result.json",
+      "sha256": "deda313ea4be4f3b89d4506c6685542367f3278125bdd797cdfad4a5341c2e58",
+      "role": "Validation-informed decision to retain B for all head arms; three additional C trials, each 32000 exposures"
+    }
+  ],
+  "scope": "Immutable mask preparation only. Numerical, recovery and actual-arithmetic gates precede any scientific training. No physiology, recurrence, optimizer or TPU change. Earlier project development costs remain in their published studies."
+}

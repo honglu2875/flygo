@@ -24,6 +24,7 @@ def main():
     p.add_argument('--root',type=Path,default=Path('/dev/shm/flygo'))
     p.add_argument('--ports',type=Path,nargs='+',help='Omit for the original seeded random adapters')
     p.add_argument('--input-map',type=Path,help='Visual/context attachment; replaces --ports')
+    p.add_argument('--head-mask',type=Path,help='Immutable external head mask; requires --input-map')
     p.add_argument('--seed',type=int,help='Learner seed for a fixed visual/context attachment')
     p.add_argument('--input-modes',nargs='+',choices=('history','current','neutral'),default=['history','current','neutral'])
     p.add_argument('--passes',type=int,default=4)
@@ -37,6 +38,7 @@ def main():
     p.add_argument('--cpus',default='117,118,119')
     args=p.parse_args();cpus=list(map(int,args.cpus.split(',')));pin(cpus)
     if args.input_map and args.ports:p.error('An input map replaces --ports')
+    if args.head_mask and not args.input_map:p.error('Head masks require --input-map')
     if args.seed is not None and (not args.input_map or args.seed<0):
         p.error('A nonnegative learner seed requires --input-map')
     if not 1<=args.passes<=1024:p.error('Passes must be in 1..1024')
@@ -54,12 +56,16 @@ def main():
         root=args.root;graph=load_graph(Path(json.loads((root/'runs/m4/graph.json').read_text())['path']))
         manifest,arrays,indexes=load_release(root,root/'releases/v0-1m/manifest.json',cache=True)
         jgraph={key:jnp.asarray(graph[key]) for key in ('src','dst','type_id','sign')}
-        adapter=None;runtime=None
+        adapter=None;runtime=None;head_mask=None
         if args.input_map:
             from flygo.attachments import load_attachment,input_contract,runtime_hashes
             adapter,visual_ports,visual_receipt=load_attachment(args.input_map,
                 graph_id=graph['manifest']['graph_id'],dataset_id=manifest['dataset_id'])
             runtime=runtime_hashes()
+            if args.head_mask:
+                from flygo.readout import load_head_mask
+                head_mask=load_head_mask(args.head_mask,graph_id=graph['manifest']['graph_id'],
+                    attachment_sha256=visual_receipt['sha256'])
         variants=args.input_modes if adapter else args.ports or [None]
         for path in variants:
             visual_contract=input_contract(visual_receipt,path) if adapter else None
@@ -70,10 +76,11 @@ def main():
             ports,params=initialize(graph,cfg)
             if adapter:ports=visual_ports
             elif path:ports,_=load_ports(path,graph_id=graph['manifest']['graph_id'],features=cfg.features,groups=cfg.groups,seed=cfg.seed)
-            rust=RustFly(graph,cfg,ports=ports,params=params)
+            rust=RustFly(graph,cfg,ports=ports,params=params,head_mask=head_mask)
             sampler=Sampler(arrays,indexes,cfg.seed);jports=jax.tree.map(jnp.asarray,ports)
             jp=jax.tree.map(jnp.asarray,params);first=jax.tree.map(jnp.zeros_like,jp);second=jax.tree.map(jnp.zeros_like,jp)
-            kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,rate_softness=cfg.rate_softness,readout_mean_scale=cfg.readout_mean_scale)
+            kwargs=dict(steps=cfg.steps,groups=cfg.groups,actions=cfg.actions,rate_softness=cfg.rate_softness,readout_mean_scale=cfg.readout_mean_scale,
+                head_mask=None if head_mask is None else head_mask.parameter_masks())
             infer=jax.jit(lambda p,g,a,x:forward(p,g,a,x,**kwargs))
             derivative=jax.jit(jax.value_and_grad(lambda p,g,a,*batch:loss(p,g,a,*batch,**kwargs),has_aux=True))
             rates={k:np.float32(args.rate)*np.float32(args.rate_scales.get(k,1)) for k in params}
@@ -105,7 +112,8 @@ def main():
                     for key,value in group.items():check(saved[prefix+key],value,f'{step}/'+prefix+key)
                 atomic_json(args.output/'status.json',dict(state='qualifying',port=str(path),completed_updates=step+1))
             records.append(dict(ports=str(args.input_map or path) if path else None,ports_sha256=receipt['sha256'],input_contract=visual_contract,model=asdict(cfg),readout_neurons=int((ports['output_group']>=0).sum()),
-                                updates=3,batch_size=args.batch_size,optimizer=dict(rate=args.rate,rate_scales=args.rate_scales,epsilon=args.epsilon,clip=1),errors=errors))
+                                updates=3,batch_size=args.batch_size,optimizer=dict(rate=args.rate,rate_scales=args.rate_scales,epsilon=args.epsilon,clip=1),errors=errors,
+                                **({} if head_mask is None else {'head_mask':head_mask.contract})))
             atomic_json(args.output/'result.json',dict(status='complete' if len(records)==len(variants) else 'running',
                 graph_id=graph['manifest']['graph_id'],dataset_id=manifest['dataset_id'],records=records,cpus=cpus,
                 script_sha256=sha256(Path(__file__)),runtime_sha256=runtime,seconds=time.time()-begin,

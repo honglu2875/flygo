@@ -62,7 +62,8 @@ fn export<'py>(py: Python<'py>, params: &Params) -> Arrays<'py> {
 impl FlyModel {
     #[new]
     #[pyo3(signature = (indptr, src, type_id, sign, input_index, output_group, output_scale,
-                       features, groups, actions, threads, params, rate_softness=0.0, readout_mean_scale=1.0))]
+                       features, groups, actions, threads, params, rate_softness=0.0, readout_mean_scale=1.0,
+                       policy_mask=None, value_mask=None))]
     #[allow(clippy::too_many_arguments)]
     fn new(
         py: Python<'_>,
@@ -80,6 +81,8 @@ impl FlyModel {
         params: Vec<PyReadonlyArray1<'_, f32>>,
         rate_softness: f32,
         readout_mean_scale: f32,
+        policy_mask: Option<PyReadonlyArray1<'_, u8>>,
+        value_mask: Option<PyReadonlyArray1<'_, u8>>,
     ) -> PyResult<Self> {
         let (indptr, src, type_id, sign) = (
             indptr.as_slice()?.to_vec(),
@@ -96,11 +99,18 @@ impl FlyModel {
             actions,
         };
         let params = parse_params(params)?;
+        let policy_mask = policy_mask.map(|a| a.as_slice().map(|v| v.to_vec())).transpose()?;
+        let value_mask = value_mask.map(|a| a.as_slice().map(|v| v.to_vec())).transpose()?;
         let state = py
             .detach(|| {
                 let graph = Graph::new(&indptr, &src, &type_id, &sign)?;
-                let model = Model::with_rate(graph, ports, threads, Rate::new(rate_softness)?)?
+                let mut model = Model::with_rate(graph, ports, threads, Rate::new(rate_softness)?)?
                     .with_readout_mean_scale(readout_mean_scale)?;
+                model = match (policy_mask, value_mask) {
+                    (Some(policy), Some(value)) => model.with_head_mask(policy, value)?,
+                    (None, None) => model,
+                    _ => return Err("Both head mask arrays must be provided".into()),
+                };
                 model.validate(&params)?;
                 let adam = Adam::new(&model);
                 Ok::<_, String>(State {
@@ -459,6 +469,8 @@ impl FlyModel {
             if second.arrays().iter().any(|a| a.iter().any(|&x| x < 0.0)) {
                 return Err("Negative second moment".into());
             }
+            state.model.validate_head_zeros(&first)?;
+            state.model.validate_head_zeros(&second)?;
             state.params = params;
             state.prepared = None;
             state.revision += 1;

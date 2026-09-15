@@ -24,7 +24,9 @@ def _softplus_jvp(primals, tangents):
 
 
 def log_softmax(x):
-    shifted = x - jnp.max(x, axis=-1, keepdims=True)
+    # The common shift cancels analytically. Differentiating its maximum can
+    # reintroduce the rounded sum of cotangents into the winning logit.
+    shifted = x - jax.lax.stop_gradient(jnp.max(x, axis=-1, keepdims=True))
     total = jax.lax.exp(shifted, accuracy=HIGHEST).sum(axis=-1, keepdims=True)
     return shifted - jax.lax.log(total, accuracy=HIGHEST)
 

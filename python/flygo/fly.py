@@ -10,6 +10,7 @@ import numpy as np
 
 from . import _native
 from .optimizer import DEFAULT_EPSILON,validate_epsilon
+from .readout import check_restore
 
 PARAMETERS = ('edge', 'leak', 'bias', 'input_gain', 'readout_gain', 'policy_weight',
               'policy_bias', 'value_weight', 'value_bias')
@@ -99,19 +100,24 @@ def packed(params):
 
 
 class RustFly:
+    numerical_runtime = 'rust-fp32-circuit-f64-head-reductions-v3'
+
     @property
     def model_version(self):
-        return self.config.model_version
+        return self.config.model_version + ('+masked-readout-v1' if self.head_mask is not None else '')
 
-    def __init__(self, graph: dict, config: FlyConfig = FlyConfig(), *, ports=None, params=None):
+    def __init__(self, graph: dict, config: FlyConfig = FlyConfig(), *, ports=None, params=None, head_mask=None):
         self.graph, self.config = graph, config
+        self.head_mask = head_mask
+        if head_mask is not None: head_mask.validate_shape(actions=config.actions, groups=config.groups)
         initial_ports, initial_params = initialize(graph, config)
         self.ports = initial_ports if ports is None else ports
         params = initial_params if params is None else params
+        mask_args = {} if head_mask is None else dict(policy_mask=head_mask.policy.ravel(), value_mask=head_mask.value)
         self.native = _native.FlyModel(graph['indptr'],graph['src'],graph['type_id'],graph['sign'],
             self.ports['input_index'],self.ports['output_group'],self.ports['output_scale'],
             config.features,config.groups,config.actions,config.threads,packed(params),
-            config.rate_softness,config.readout_mean_scale)
+            config.rate_softness,config.readout_mean_scale,**mask_args)
 
     def _input(self, features):
         array = np.asarray(features,dtype=np.float32)
@@ -191,8 +197,10 @@ class RustFly:
     def checkpoint_arrays(self):
         params,first,second,step = self.native.checkpoint()
         return {**{prefix+name:array for prefix,group in [('param/',params),('first/',first),('second/',second)]
-                   for name,array in zip(PARAMETERS,group)},'optimizer_step':np.asarray(step,dtype=np.uint64)}
+                   for name,array in zip(PARAMETERS,group)},'optimizer_step':np.asarray(step,dtype=np.uint64),
+                **({} if self.head_mask is None else self.head_mask.checkpoint_arrays())}
 
     def restore_arrays(self, arrays):
+        check_restore(self.head_mask, arrays)
         self.native.restore(*[[np.ascontiguousarray(arrays[prefix+name],dtype=np.float32) for name in PARAMETERS]
                               for prefix in ('param/','first/','second/')],int(arrays['optimizer_step']))

@@ -73,7 +73,8 @@ Full state/loss/all-gradient/optimizer parity, checkpoint continuation and actua
 decoder arithmetic must be qualified before training a new head. Count its
 work in the complete prediction budget. Compare fixed-horizon validation and
 later controlled play; anatomical resemblance alone is not the acceptance
-criterion. TPU remains paused. No selective or side-aware head has been trained.
+criterion. TPU remains paused. Selective and side-aware learning results are
+pending under the registered screen below.
 
 ## What the existing learned projections use
 
@@ -154,10 +155,110 @@ head comparison. Initial core strengths remain
 identical across seeds. Fix K8, B32, 1,000 updates, the same losses and the
 qualified epsilon/rate schedule unless a separate numerical gate prevents it.
 
-Implementation, immutable mask preparation, actual CPU/JAX derivative/update
-and recovery gates, and a mask-aware arithmetic ledger precede a launch plan.
-No masked-head model is implemented or trained yet. Subsequent persistent-state
-and optimization experiments retain their own comparison contracts.
+The binary masks are implemented in Rust and the independent JAX reference.
+They are prepared from the checked annotation table under the
+[frozen preparation contract](../configs/readout-mask-preparation-v1.json).
+Each checkpoint contains its mask and provenance. Restoration rejects different
+masks and nonzero moments on disabled coefficients before mutating the model.
+The all-enabled artifact uses Rust's original dense execution path. The Go
+player restores the mask directly from its checkpoint.
+
+Rust visits only enabled decoder coefficients; the arithmetic ledger counts
+those products. The JAX reference applies a binary mask to a dense matrix, so
+its enabled coefficient count is not a claim that the compiler skips that work.
+All CNS neurons and connections remain present. Both scientific waves are
+registered; there is no masked-head endpoint yet. Subsequent persistent-state
+and optimization experiments retain their own contracts.
+
+## Numerical qualification
+
+[All twelve full-CNS cases pass](results/readout-mask-engineering-v1.json),
+covering four arms and seeds 4/5/6 at B32/K8. States, losses, every gradient
+and three free-running Adam updates satisfy the unchanged tolerances. All
+twelve fresh-process recovery checks pass too, including complete B1/B32
+Go-player predictions, the next sampler batch/update and counted arithmetic.
+Within each seed, all four arms have the same 31 initial parameter, moment and
+port arrays and the same sampler. All-enabled masks match unmasked controls
+exactly through four updates. Unit coverage is 50 Rust tests, 110 Python core
+tests and three deployment-evidence tests; the direct Rust/Python Go test was
+run separately after configuring its executable.
+
+The first implementation passes 49 Rust and 108 Python tests, including
+independent masked gradients, zero disabled moments, portable Go inference and
+fresh recovery. Its full-CNS B32/K8 checks pass 11 of 12 seed/arm combinations.
+Seed 5's shuffled-side arm misses the existing forward-logit tolerance after
+one Adam update. Cross-evaluation with identical parameters locates the main
+disagreement in optimizer-amplified parameter drift, rather than the final
+head sum at those failing cells. This failed run is retained.
+
+A separate all-enabled/control check finds identical parameter and moment
+arrays but a last-bit difference in the reported FP64 norm. Two shared
+numerical corrections follow:
+
+- The accepted FP32 teacher targets need not sum to exactly one. For target
+  mass `s = sum(q)`, cross-entropy has derivative `s * softmax(logits) - q`.
+  Rust previously assumed `s = 1`. A regression using accepted target mass
+  .99992 reproduces the error before the correction.
+- Global gradient norms now reduce fixed indexed chunks and combine their
+  FP64 sums in a fixed order, independent of Rayon work stealing. A regression
+  verifies identical norm bits at one, two and seven worker threads.
+
+That intermediate candidate passes 50 Rust and 109 Python tests, but only
+nine of the twelve actual full-CNS gates. A double-precision head oracle finds
+small rounding errors in nearly cancelling head gradients that Adam amplifies.
+The final candidate accumulates task-head products, head derivatives and policy
+normalization in FP64, rounding outputs and gradients back to FP32. The
+recurrent circuit, stored parameters and Adam moments stay FP32. JAX's
+log-softmax uses a stopped-gradient common shift, also used by its installed
+standard implementation. Its independent reference remains FP32/highest.
+A cancellation regression fails under the earlier decoder (zero instead of
+about .015) and passes with the corrected accumulation.
+
+The qualified source is `2ba439e309df1e902b58`, numerical runtime
+`rust-fp32-circuit-f64-head-reductions-v3`. Rates, epsilon, masks and comparison
+tolerances stay fixed through these engineering corrections. Training
+continuation now rejects a checkpoint from a different numerical runtime;
+inference can still load its weights. Old frozen scientific runs retain their
+original sources and results. Every new arm uses the same corrected runtime
+and a fresh dense control.
+
+The [fixed-weight CPU benchmark](results/readout-head-precision-v1.json) uses
+four fresh processes per source/batch size, in balanced ABBA/BAAB order, with
+ten warm predictions per process. Median latency changes **71.93 → 73.57 ms**
+at B1 and **302.15 → 313.95 ms** at B32: about **2.3% / 3.9%** overhead.
+Peak RSS is similar. These are step-3 engineering weights and include the
+renderer; they are not trained-endpoint or general hardware performance claims.
+The 379-file metadata/source/failure bundle has verified copies on w0/w1;
+the engineering checkpoint payloads remain on their worker owners.
+
+## Registered learning screen
+
+[Wave 1](../configs/readout-roles-wave1-v1.json) compares dense and five-cell
+value heads; [wave 2](../configs/readout-roles-wave2-v1.json) compares soma-side
+and shuffled-side policies. Each arm has new paired seeds 4/5/6, K8, B32,
+1,000 updates / 32,000 labeled exposures, rate .03, 100-update warmup,
+epsilon 1e-6, clipping 1 and bias-rate multiplier .01. No gain correction is
+applied to the enabled coefficients. Both waves were registered before launch.
+Full final-horizon validation, motor probes and prediction arithmetic precede
+the paired analysis. Final test labels remain closed.
+
+The [actual launch audit](results/readout-roles-launch-v1.json) finds all six
+first-wave learners live at updates 230–250, with qualified initial states and
+contracts, all 150 threads correctly pinned, and six verified initial checkpoint
+replicas. The second wave waits for the first wave's endpoint analysis locks to
+release. No endpoint selection or comparison has been made from these partial
+runs.
+
+| External head | Enabled policy coefficients | Enabled value coefficients | Decoder FLOPs per prediction |
+|---|---:|---:|---:|
+| Dense control | 174,578 | 2,129 | 353,414 |
+| Five-cell value | 174,578 | 5 | 349,166 |
+| Soma-side policy | 98,294 | 2,129 | 200,846 |
+| Shuffled-side policy | 98,294 | 2,129 | 200,846 |
+
+These counts describe just the external decoder. Recurrent activity can change
+as training diverges, so the complete prediction budget must be recounted at
+each endpoint. The screen cannot inherit an earlier CNN FLOP comparison.
 
 The contribution audit also motivates a later conditioning experiment. For an
 invertible diagonal scale S, `policy = W S (r - mean) + bias` has the same affine

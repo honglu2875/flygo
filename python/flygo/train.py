@@ -48,6 +48,7 @@ def main(argv=None):
     parser.add_argument('--graph',type=Path)
     parser.add_argument('--ports',type=Path,help='Qualified sensory/readout artifact; defaults to seeded random ports')
     parser.add_argument('--input-map',type=Path,help='Qualified spherical visual/context attachment')
+    parser.add_argument('--head-mask',type=Path,help='Qualified immutable external policy/value mask')
     parser.add_argument('--input-mode',choices=('history','current','neutral'),default='history')
     parser.add_argument('--qualification',type=Path,help='Full-circuit numerical gate required for an input map')
     parser.add_argument('--release',default='pilot-v1')
@@ -86,10 +87,12 @@ def main(argv=None):
         parser.error('Step, batch, thread and interval counts must be positive')
     if not np.isfinite(args.rate) or args.rate<=0 or not np.isfinite(args.clip) or args.clip<=0 or args.diagnostics_every<0:
         parser.error('Finite positive learning rate/clip and a nonnegative diagnostic interval are required')
-    if args.model=='cnn' and (args.ports or args.input_map or args.diagnostics_every or args.rate_softness or args.readout_mean_scale!=1):
+    if args.model=='cnn' and (args.ports or args.input_map or args.head_mask or args.diagnostics_every or args.rate_softness or args.readout_mean_scale!=1):
         parser.error('Fly ports, firing rates and activity diagnostics apply only to the fly model')
     if args.input_map and (args.ports or not args.qualification):
         parser.error('An input map replaces --ports and requires --qualification')
+    if args.head_mask and not args.input_map:
+        parser.error('Head-mask training requires a qualified visual/context input map')
     if args.input_map and args.backend!='cpu':
         parser.error('Visual/context training requires a separate actual TPU qualification before TPU use')
     if not args.input_map and args.input_mode!='history':
@@ -139,7 +142,7 @@ def run_training(args,cpus,run):
         manifest,arrays,indexes=load_release(root,root/'releases'/args.release/'manifest.json',cache=True)
         sampler=Sampler(arrays,indexes,args.seed)
         graph=load_graph(graph_path) if args.model=='fly' else None
-        ports=None;port_contract=None;visual_contract=None;transform=None
+        ports=None;port_contract=None;visual_contract=None;transform=None;head_mask=None
         if args.ports:
             from .ports import load_ports
             ports,port_contract=load_ports(args.ports,graph_id=graph['manifest']['graph_id'],
@@ -153,22 +156,28 @@ def run_training(args,cpus,run):
                 raise ValueError('Readout group count differs from the visual/context attachment')
             config=replace(config,features=adapter.features)
             visual_contract=input_contract(port_contract,args.input_mode)
+            if args.head_mask:
+                from .readout import load_head_mask
+                head_mask=load_head_mask(args.head_mask,graph_id=graph['manifest']['graph_id'],
+                    attachment_sha256=port_contract['sha256'])
+                head_mask.validate_shape(actions=config.actions,groups=config.groups)
             require_qualification(args.qualification,visual_contract,config,batch_size=args.batch_size,
-                rate=args.rate,epsilon=args.epsilon,clip=args.clip,rate_scales=args.rate_scales)
+                rate=args.rate,epsilon=args.epsilon,clip=args.clip,rate_scales=args.rate_scales,head_mask=head_mask)
             transform=lambda features:adapter.encode(features,args.input_mode)
         if args.model=='cnn':model=JaxCNN(config)
         elif args.backend=='tpu':
             from .jax.learner import JaxFly
             model=JaxFly(graph,config,ports=ports)
         else:
-            model=RustFly(graph,config,ports=ports)
+            model=RustFly(graph,config,ports=ports,head_mask=head_mask)
         diagnostic_size=min(args.batch_size,args.diagnostic_batch_size)
         if args.diagnostics_every and hasattr(model,'mesh') and diagnostic_size%model.mesh.size:
             raise ValueError('Diagnostic batch must divide evenly across the data mesh')
         any_host=getattr(model,'collective_any',bool)
         step=0
         if args.resume:
-            previous=load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'])
+            previous=load_checkpoint(args.resume,model,sampler,dataset_id=manifest['dataset_id'],
+                numerical_runtime=getattr(model,'numerical_runtime','rust-fp32-f64-norm-v1'))
             if previous.get('input_contract')!=visual_contract:
                 raise ValueError('Checkpoint external input encoding differs')
             schedule.check_resume(previous.get('training_contract',{}))
@@ -176,7 +185,8 @@ def run_training(args,cpus,run):
             step=int(model.checkpoint_arrays()['optimizer_step'])
         atomic_json(run/'config.json',dict(model=asdict(config),arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                     dataset_id=manifest['dataset_id'],graph_id=model.graph['manifest']['graph_id'],cpus=cpus,port_contract=port_contract,input_contract=visual_contract,
-                    split_counts={k:len(v) for k,v in indexes.items()}))
+                    split_counts={k:len(v) for k,v in indexes.items()},
+                    **({} if head_mask is None else {'head_mask':head_mask.contract})))
         # Common fixed random slices, independent of model/sampler seed. Avoid
         # repeatedly reporting only the first few complete games in file order.
         evaluation={key:np.random.default_rng(912099).choice(indexes[key],

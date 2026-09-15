@@ -6,7 +6,7 @@ import jax.numpy as jnp
 from .numerics import softplus, sigmoid, log_softmax, firing_rate, condition_readout, HIGHEST
 
 
-def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0,return_embedding=False):
+def forward(params, graph, ports, features, *, steps, groups, actions, rate_softness=0.0,readout_mean_scale=1.0,return_embedding=False,head_mask=None):
     # Reference uses edge messages. Production Rust avoids this E*B allocation.
     # Keep full-graph JAX parity batches small until a TPU kernel is qualified.
     n = graph['type_id'].shape[0]
@@ -35,9 +35,13 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
     pooled = jax.ops.segment_sum(contributions,jnp.maximum(readout,0),num_segments=groups)
     if readout_mean_scale!=1:
         pooled=condition_readout(pooled,readout_mean_scale)
-    logits = jnp.matmul(pooled.T,params['policy_weight'].reshape(actions,groups).T,
+    policy_weight, value_weight = params['policy_weight'], params['value_weight']
+    if head_mask is not None:
+        policy_weight = jnp.where(head_mask['policy_weight'], policy_weight, 0)
+        value_weight = jnp.where(head_mask['value_weight'], value_weight, 0)
+    logits = jnp.matmul(pooled.T,policy_weight.reshape(actions,groups).T,
                         precision=jax.lax.Precision.HIGHEST) + params['policy_bias']
-    score = jnp.matmul(pooled.T,params['value_weight'],precision=jax.lax.Precision.HIGHEST)+params['value_bias'][0]
+    score = jnp.matmul(pooled.T,value_weight,precision=jax.lax.Precision.HIGHEST)+params['value_bias'][0]
     value = jax.lax.tanh(score,accuracy=HIGHEST)
     initial = jnp.full((1,n,x.shape[1]),0.01,dtype=jnp.float32)
     result = dict(logits=logits,value=value,states=jnp.concatenate([initial,states],axis=0))
@@ -45,9 +49,9 @@ def forward(params, graph, ports, features, *, steps, groups, actions, rate_soft
     return result
 
 
-def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions,rate_softness=0.0,readout_mean_scale=1.0):
+def loss(params,graph,ports,features,legal,policy,value,*,steps,groups,actions,rate_softness=0.0,readout_mean_scale=1.0,head_mask=None):
     result=forward(params,graph,ports,features,steps=steps,groups=groups,actions=actions,
-                   rate_softness=rate_softness,readout_mean_scale=readout_mean_scale)
+                   rate_softness=rate_softness,readout_mean_scale=readout_mean_scale,head_mask=head_mask)
     return teacher_loss(result,legal,policy,value)
 
 

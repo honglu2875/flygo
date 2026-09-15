@@ -19,6 +19,45 @@ from flygo.replication import replicate_bundle
 from flygo.runtime import cpu_profile,pin
 
 
+def head_io_files(plan,root):
+    """Bind expensive masked trials to their actual recovery and pairing evidence."""
+    from flygo.attachments import runtime_hashes
+    from flygo.qualify import sha256
+    from flygo.schedule import Schedule
+    files=set();initial_by_seed={}
+    for job in plan['jobs']:
+        if not job.get('head_mask'):continue
+        if not job.get('io_qualification'):
+            raise ValueError('Masked trials need an actual IO qualification')
+        path=root/job['io_qualification'];report=json.loads(path.read_text())
+        qualification=root/job['qualification']
+        native=json.loads(qualification.read_text())
+        record=next((r for r in native['records'] if r['model']['seed']==job['seed']
+            and r.get('input_contract')==report.get('input_contract')
+            and r.get('head_mask')==report.get('head_mask')),None)
+        schedule=Schedule(job.get('rate',plan['rate']),job.get('warmup_steps',plan.get('warmup_steps',0)),
+            job.get('decay_until',plan.get('decay_until',0)),job.get('final_rate_ratio',plan.get('final_rate_ratio',.1)))
+        training=dict(batch_size=plan['batch_size'],rate=job.get('rate',plan['rate']),
+            clip=job.get('clip',plan.get('clip',1.0)),epsilon=job.get('epsilon',plan['epsilon']),
+            rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),schedule=schedule.contract())
+        if (record is None or native.get('status')!='complete' or report.get('status')!='passed' or report['seed']!=job['seed']
+                or report['runtime_sha256']!=runtime_hashes() or report['qualification_sha256']!=sha256(qualification)
+                or report['head_mask']!=record['head_mask'] or report['input_contract']!=record['input_contract']
+                or report['model']!=record['model'] or report['training_contract']!=training
+                or report['fresh_process']['status']!='passed'
+                or report['fresh_process']['runtime_sha256']!=runtime_hashes()):
+            raise ValueError('Head recovery qualification differs from the trial contract')
+        for name,key in [('initial.json','initial_sha256'),('expected.json','expected_sha256')]:
+            evidence=path.with_name(name)
+            if sha256(evidence)!=report[key]:raise ValueError('Head recovery evidence changed')
+            files.add(evidence)
+        initial=json.loads(path.with_name('initial.json').read_text())
+        if initial!=initial_by_seed.setdefault(job['seed'],initial):
+            raise ValueError('Paired head trials have different initial arrays or samplers')
+        files.add(path)
+    return files
+
+
 def attachment_files(plan,root,environment):
     """Validate the exact learner seed and numerical contract before deployment."""
     if not plan.get('input_map'):
@@ -46,17 +85,26 @@ def attachment_files(plan,root,environment):
     for job in plan['jobs']:
         if job.get('ports') or job.get('model','fly')!='fly' or job.get('backend','cpu')!='cpu':
             raise ValueError('Attachment deployment supports only separately qualified CPU fly trials')
-        qualification=root/plan['qualifications'][str(job['seed'])]
+        qualification=root/(job.get('qualification') or plan['qualifications'][str(job['seed'])])
         report=json.loads(qualification.read_text())
         contract=input_contract(receipt,job['mode'])
         config=FlyConfig(steps=job['passes'],groups=job.get('groups',plan['groups']),
             features=adapter.features,threads=len(job['cpus']),seed=job['seed'],
             rate_softness=job.get('rate_softness',plan.get('rate_softness',0.0)),
             readout_mean_scale=job.get('readout_mean_scale',plan.get('readout_mean_scale',1.0)))
+        head_mask=None
+        if job.get('head_mask'):
+            from flygo.readout import load_head_mask
+            mask_path=root/job['head_mask']
+            if sha256(mask_path)!=job['head_mask_sha256']:
+                raise ValueError('Head mask differs from the registered output attachment')
+            head_mask=load_head_mask(mask_path,graph_id=graph_manifest['graph_id'],attachment_sha256=receipt['sha256'])
+            files.update((mask_path,mask_path.with_suffix('.json')))
         require_qualification(qualification,contract,config,batch_size=plan['batch_size'],
             rate=job.get('rate',plan['rate']),epsilon=job.get('epsilon',plan['epsilon']),
-            clip=job.get('clip',plan.get('clip',1.0)),rate_scales=job.get('rate_scales',plan.get('rate_scales',{})))
-        records=[r for r in report['records'] if r['input_contract']==contract]
+            clip=job.get('clip',plan.get('clip',1.0)),rate_scales=job.get('rate_scales',plan.get('rate_scales',{})),head_mask=head_mask)
+        records=[r for r in report['records'] if r['input_contract']==contract
+                 and r.get('head_mask')==(None if head_mask is None else head_mask.contract)]
         if (report['dataset_id']!=manifest['dataset_id'] or report['graph_id']!=graph_manifest['graph_id']
                 or len(records)!=1 or records[0]['model']['seed']!=job['seed']):
             raise ValueError('Attachment qualification does not cover this actual seed and corpus')
@@ -115,6 +163,14 @@ def main():
     graph_path = Path(json.loads(graph_record.read_text())['path'])
     files = {graph_record, *(root / record['path'] for record in manifest['records'])}
     files.update(attachment_files(plan,root,environment))
+    files.update(head_io_files(plan,root))
+    if plan.get('engineering_qualification'):
+        from flygo.qualify import sha256
+        evidence=root/plan['engineering_qualification']
+        if (sha256(evidence)!=plan['engineering_qualification_sha256']
+                or json.loads(evidence.read_text()).get('status')!='passed'):
+            raise ValueError('Registered engineering qualification changed or did not pass')
+        files.add(evidence)
     if plan.get('io_qualifications'):
         from flygo.qualify import sha256
         for job in plan['jobs']:
@@ -181,7 +237,8 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
                         expected[key]=job.get(key,plan.get(key,default))
                     if plan.get('input_map'):
                         expected.update(input_map=str(root/plan['input_map']),input_mode=job['mode'],
-                            qualification=str(root/plan['qualifications'][str(job['seed'])]))
+                            qualification=str(root/(job.get('qualification') or plan['qualifications'][str(job['seed'])])))
+                    expected['head_mask']=str(root/job['head_mask']) if job.get('head_mask') else None
                     valid=(config.get('dataset_id')==manifest['dataset_id'] and config.get('cpus')==job['cpus']
                            and all(arguments.get(key,dict(clip=1.0,backend='cpu',diagnostics_every=0,rate_scales={},
                                     warmup_steps=0,decay_until=0,final_rate_ratio=.1,diagnostic_batch_size=32,rate_softness=0.0,readout_mean_scale=1.0,epsilon=1e-8).get(key))==value
@@ -216,7 +273,8 @@ print(json.dumps(dict(exists=p.exists(),status=status,config=config,live=live,co
             if job.get('ports'):command+=['--ports',str(root/job['ports'])]
             if plan.get('input_map'):
                 command+=['--input-map',str(root/plan['input_map']),'--input-mode',job['mode'],
-                          '--qualification',str(root/plan['qualifications'][str(job['seed'])])]
+                          '--qualification',str(root/(job.get('qualification') or plan['qualifications'][str(job['seed'])]))]
+            if job.get('head_mask'):command+=['--head-mask',str(root/job['head_mask'])]
             if host:
                 command = SSH + [f'cubic27@t1v-n-a09f5679-w-{host}', shlex.join(command)]
             else:

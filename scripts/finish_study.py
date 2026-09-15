@@ -103,7 +103,8 @@ def worker(args):
             if job.get('ports'):expected['ports']=str(root/job['ports'])
             if plan.get('input_map'):
                 expected.update(input_map=str(root/plan['input_map']),input_mode=job['mode'],
-                    qualification=str(root/plan['qualifications'][str(job['seed'])]))
+                    qualification=str(root/(job.get('qualification') or plan['qualifications'][str(job['seed'])])))
+            if job.get('head_mask'):expected['head_mask']=str(root/job['head_mask'])
             for key in ('warmup_steps','decay_until','final_rate_ratio','rate_softness','readout_mean_scale','epsilon'):
                 if key in job or key in plan:expected[key]=job.get(key,plan.get(key))
             defaults=dict(rate_scales={},model='fly',backend='cpu',epsilon=1e-8)

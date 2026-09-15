@@ -15,6 +15,7 @@ from .go import Game,GameConfig,GumbelConfig
 from .gtp import action_to_vertex,vertex_to_action
 from .runtime import cpu_profile,pin
 from .storage import StorageBudget,GIB
+from .readout import HeadMask
 
 
 class VisualPlayer:
@@ -25,6 +26,9 @@ class VisualPlayer:
 
     @property
     def config(self):return self.core.config
+
+    @property
+    def head_mask(self):return self.core.head_mask
 
     @config.setter
     def config(self,value):self.core.config=value
@@ -42,6 +46,7 @@ def load_player(checkpoint:Path,graph_path:Path,*,threads=16):
         metadata=json.loads(data['metadata'].tobytes())
         ports={key:data['port/'+key].copy() for key in ('input_index','output_group','output_scale')
                if 'port/'+key in data}
+        head_mask=HeadMask.from_checkpoint(data)
     if metadata.get('model_version',MODEL_VERSION)=='residual-cnn-v1':
         os.environ['JAX_PLATFORMS']='cpu'
         from .jax.cnn import CNNConfig,JaxCNN
@@ -49,7 +54,7 @@ def load_player(checkpoint:Path,graph_path:Path,*,threads=16):
         model=JaxCNN(config)
     else:
         config=FlyConfig(**{**metadata['model_config'],'threads':threads})
-        model=RustFly(load_graph(graph_path),config,ports=ports)
+        model=RustFly(load_graph(graph_path),config,ports=ports,head_mask=head_mask)
     visual=metadata.get('input_contract')
     if config.actions!=82 or (not visual and config.features!=972):
         raise ValueError('This GTP profile requires a trained 9x9 Go model')

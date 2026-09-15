@@ -15,6 +15,7 @@ from .model import forward,loss,adam
 from .sparse import build_layout
 from ..fly import FlyConfig,initialize
 from ..optimizer import DEFAULT_EPSILON,validate_epsilon
+from ..readout import check_restore
 
 
 class JaxLearner:
@@ -166,9 +167,11 @@ class JaxFly(JaxLearner):
 
     @property
     def model_version(self):
-        return self.config.model_version
+        return self.config.model_version + ('+masked-readout-v1' if self.head_mask is not None else '')
 
-    def __init__(self,graph,config=FlyConfig(),*,ports=None,params=None,mesh=None):
+    def __init__(self,graph,config=FlyConfig(),*,ports=None,params=None,mesh=None,head_mask=None):
+        self.head_mask = head_mask
+        if head_mask is not None: head_mask.validate_shape(actions=config.actions,groups=config.groups)
         initial_ports,initial_params=initialize(graph,config)
         compute_graph={k:graph[k] for k in ('src','dst','type_id','sign')}
         compute_graph['layout']=build_layout(graph['src'],graph['dst'],len(graph['type_id']))
@@ -176,4 +179,12 @@ class JaxFly(JaxLearner):
             params=initial_params if params is None else params,compute_graph=compute_graph,
             forward_function=forward,loss_function=loss,
             kwargs=dict(steps=config.steps,groups=config.groups,actions=config.actions,
-                        rate_softness=config.rate_softness,readout_mean_scale=config.readout_mean_scale),mesh=mesh)
+                        rate_softness=config.rate_softness,readout_mean_scale=config.readout_mean_scale,
+                        head_mask=None if head_mask is None else head_mask.parameter_masks()),mesh=mesh)
+
+    def checkpoint_arrays(self):
+        return {**super().checkpoint_arrays(), **({} if self.head_mask is None else self.head_mask.checkpoint_arrays())}
+
+    def restore_arrays(self,arrays):
+        check_restore(self.head_mask,arrays)
+        super().restore_arrays(arrays)

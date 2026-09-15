@@ -72,6 +72,17 @@ attachment factors. They must outperform the dense decoder; biological labels
 do not make those constraints mandatory. Count all decoder work and any
 candidate-discovery pretraining in the comparison.
 
+The external binary masks pass all twelve CPU numerical and fresh-recovery
+cases for paired seeds 4/5/6. Their common source corrects cross-entropy's
+derivative for accepted targets whose mass differs slightly from one, uses a
+deterministic norm and accumulates task-head reductions in FP64 around an FP32
+circuit. Failed earlier gates remain recorded. Both fixed 32k-exposure study
+waves are registered before training; each alternative shares the numerical
+revision of its fresh dense control. Rates, epsilon and tolerances were not
+relaxed. The [readout protocol](docs/readout-roles-study.md) records the bounded
+2.3%/3.9% CPU latency cost and the comparison contracts. This engineering result
+does not establish improved learnability.
+
 The first optimizer/spatial/control batch is complete. The user's next
 proposal prioritizes coherent retinal input, bilateral historical context,
 and motor/descending readouts inferred from robust response correlations.

@@ -1,14 +1,18 @@
 """Explicit nominal inference arithmetic, separate from backend padding and time."""
 
 
-def fly_cost(neurons,edges,sensory,*,passes=4,groups=656,actions=82,batch_size=1,readout_neurons=None,rate_softness=0.0,readout_mean_scale=1.0):
+def fly_cost(neurons,edges,sensory,*,passes=4,groups=656,actions=82,batch_size=1,readout_neurons=None,rate_softness=0.0,readout_mean_scale=1.0,head_mask=None):
     readout=neurons-sensory if readout_neurons is None else readout_neurons
     if not 0<=readout<=neurons-sensory:raise ValueError('Readout count must fit the nonsensory population')
+    heads=groups*(actions+1)
+    if head_mask is not None:
+        head_mask.validate_shape(actions=actions,groups=groups)
+        heads=int(head_mask.policy.sum())+int(head_mask.value.sum())
     parts=dict(sparse_aggregation=2*passes*edges,rate_dynamics=6*passes*neurons,
                smooth_rate_arithmetic=3*(passes*neurons+readout) if rate_softness else 0,
                input_gain=sensory,readout_pool=2*readout+readout/batch_size,
                readout_conditioning=3*groups+4 if readout_mean_scale!=1 else 0,
-               heads=2*groups*(actions+1))
+               heads=2*heads)
     return dict(arithmetic_flops=sum(parts.values()),parts=parts,readout_neurons=readout,
                 rate_softness=rate_softness,readout_mean_scale=readout_mean_scale,
                 softplus_evaluations=passes*neurons+readout if rate_softness else 0,

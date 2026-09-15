@@ -1,0 +1,771 @@
+{
+  "archives": {
+    "v1": {
+      "path": "runs/readout-mask-archive-v1",
+      "receipt_sha256": "5c381c71119d08ce935852732dc6fe14254d27019f6d78c17df719660100c971"
+    },
+    "v2": {
+      "path": "runs/readout-mask-archive-v2",
+      "receipt_sha256": "a33e65b01d420fbb9e93c19783917180f297062385ee20b3307d342047b978f4"
+    },
+    "v3": {
+      "path": "runs/readout-mask-archive-v3",
+      "receipt_sha256": "827cb2f449137f9ff04fece966672215ffba18f6dfcddffe05ce5b7d7bb731ad"
+    }
+  },
+  "created": 1789439207.252508,
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "deployment_helper_sha256": "80c14353ad67c5590f4dee90e1f9e16a4b6b7c45360d1bac8f816f9227bdb3c2",
+  "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+  "initial_pairing": {
+    "all_four_arms_identical": true,
+    "arrays_per_seed": 31,
+    "seeds": [
+      4,
+      5,
+      6
+    ]
+  },
+  "limitations": [
+    "Engineering checks only; no scientific masked-head endpoint or advantage over dense/CNN is established.",
+    "Arithmetic samples use a step-3 engineering checkpoint, not a trained endpoint distribution or CNN matching budget.",
+    "Rust skips disabled head coefficients; masked dense JAX matmul has no claimed executed-work reduction.",
+    "The five-cell value group is response-motivated; soma side is a proxy. Neither is a proven biological Go role.",
+    "Checkpoint payloads remain on owner workers; the archives contain metadata, not payload replicas.",
+    "TPU use remains paused. The new precision and mask variants require separate actual TPU qualification."
+  ],
+  "plan_sha256": "f2c8a5842074661bed2a86b87a78156c12412970d5354bcbe9b24e14f0474918",
+  "precision": {
+    "circuit": "FP32 states and parameters",
+    "decoder": "FP64 products and accumulators, FP32 head outputs and gradients",
+    "optimizer": "FP32 Adam, fixed-order FP64 global norm",
+    "policy_loss": "FP64 normalization and reduction with actual teacher mass",
+    "reference": "Independent CPU JAX FP32/highest reference; stable log-softmax shift"
+  },
+  "preparation_sha256": "86cfcddca400212eb61215fe296b89dd00087b837383a82c6f6af18c2c8e3220",
+  "previous_numerical_cohorts": [
+    {
+      "cases": [
+        {
+          "arm": "dense",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "value-group",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "soma-side",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "shuffled-side",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "dense",
+          "failure": null,
+          "passed": true,
+          "seed": 5
+        },
+        {
+          "arm": "value-group",
+          "failure": null,
+          "passed": true,
+          "seed": 5
+        },
+        {
+          "arm": "soma-side",
+          "failure": null,
+          "passed": true,
+          "seed": 5
+        },
+        {
+          "arm": "shuffled-side",
+          "failure": {
+            "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n1/forward/logits\nMismatched elements: 2 / 2624 (0.0762%)\nMismatch at indices:\n [22, 70]: 0.002257016720250249 (ACTUAL), 0.0022614561021327972 (DESIRED)\n [29, 70]: 0.004232744686305523 (ACTUAL), 0.004237022250890732 (DESIRED)\nMax absolute difference among violations: 4.439382e-06\nMax relative difference among violations: 0.00196306\n ACTUAL: array([[-0.933676, -0.919662, -0.862179, ..., -0.938066, -0.912411,\n         1.791461],\n       [-0.820064, -0.810323, -0.763686, ..., -0.821654, -0.80362 ,...\n DESIRED: array([[-0.933676, -0.919662, -0.862179, ..., -0.938066, -0.912412,\n         1.791461],\n       [-0.820064, -0.810322, -0.763685, ..., -0.821655, -0.80362 ,...",
+            "port": "current",
+            "stage": "1/forward/logits",
+            "state": "failed"
+          },
+          "passed": false,
+          "seed": 5
+        },
+        {
+          "arm": "dense",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        },
+        {
+          "arm": "value-group",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        },
+        {
+          "arm": "soma-side",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        },
+        {
+          "arm": "shuffled-side",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        }
+      ],
+      "passed": 11,
+      "version": "v1"
+    },
+    {
+      "cases": [
+        {
+          "arm": "dense",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "value-group",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "soma-side",
+          "failure": null,
+          "passed": true,
+          "seed": 4
+        },
+        {
+          "arm": "shuffled-side",
+          "failure": {
+            "error": "\nNot equal to tolerance rtol=0.003, atol=5e-06\n1/param/policy_weight\nMismatched elements: 1 / 174578 (0.000573%)\nMismatch at index:\n [128787]: -0.0005104383453726768 (ACTUAL), -0.0005172505043447018 (DESIRED)\nMax absolute difference among violations: 6.812159e-06\nMax relative difference among violations: 0.01316994\n ACTUAL: array([-0.074666, -0.043072, -0.062664, ...,  0.041379,  0.055563,\n        0.0151  ], shape=(174578,), dtype=float32)\n DESIRED: array([-0.074666, -0.043072, -0.062664, ...,  0.041379,  0.055563,\n        0.0151  ], shape=(174578,), dtype=float32)",
+            "port": "current",
+            "stage": "1/param/policy_weight",
+            "state": "failed"
+          },
+          "passed": false,
+          "seed": 4
+        },
+        {
+          "arm": "dense",
+          "failure": null,
+          "passed": true,
+          "seed": 5
+        },
+        {
+          "arm": "value-group",
+          "failure": null,
+          "passed": true,
+          "seed": 5
+        },
+        {
+          "arm": "soma-side",
+          "failure": null,
+          "passed": true,
+          "seed": 5
+        },
+        {
+          "arm": "shuffled-side",
+          "failure": {
+            "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n1/forward/logits\nMismatched elements: 1 / 2624 (0.0381%)\nMismatch at index:\n [22, 70]: 0.002257148502394557 (ACTUAL), 0.0022614561021327972 (DESIRED)\nMax absolute difference among violations: 4.3075997e-06\nMax relative difference among violations: 0.00190479\n ACTUAL: array([[-0.933676, -0.919662, -0.862179, ..., -0.938066, -0.912411,\n         1.791461],\n       [-0.820064, -0.810323, -0.763686, ..., -0.821654, -0.80362 ,...\n DESIRED: array([[-0.933676, -0.919662, -0.862179, ..., -0.938066, -0.912412,\n         1.791461],\n       [-0.820064, -0.810322, -0.763685, ..., -0.821655, -0.80362 ,...",
+            "port": "current",
+            "stage": "1/forward/logits",
+            "state": "failed"
+          },
+          "passed": false,
+          "seed": 5
+        },
+        {
+          "arm": "dense",
+          "failure": {
+            "error": "\nNot equal to tolerance rtol=0.0003, atol=3e-06\n1/forward/logits\nMismatched elements: 1 / 2624 (0.0381%)\nMismatch at index:\n [22, 60]: -0.0002478524693287909 (ACTUAL), -0.00024416111409664154 (DESIRED)\nMax absolute difference among violations: 3.6913552e-06\nMax relative difference among violations: 0.01511852\n ACTUAL: array([[-2.211197, -2.190521, -2.180571, ..., -2.1112  , -2.240474,\n         2.241127],\n       [-2.519105, -2.509264, -2.489644, ..., -2.404061, -2.551318,...\n DESIRED: array([[-2.211197, -2.19052 , -2.180569, ..., -2.111201, -2.240473,\n         2.241126],\n       [-2.519108, -2.509265, -2.489644, ..., -2.404062, -2.551318,...",
+            "port": "current",
+            "stage": "1/forward/logits",
+            "state": "failed"
+          },
+          "passed": false,
+          "seed": 6
+        },
+        {
+          "arm": "value-group",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        },
+        {
+          "arm": "soma-side",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        },
+        {
+          "arm": "shuffled-side",
+          "failure": null,
+          "passed": true,
+          "seed": 6
+        }
+      ],
+      "passed": 9,
+      "version": "v2"
+    }
+  ],
+  "records": [
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 353414,
+          "warm_flops_per_position": 222116234.0
+        },
+        "32": {
+          "decoder_flops": 353414,
+          "warm_flops_per_position": 222114170.5625
+        }
+      },
+      "arm": "dense",
+      "engineering_updates": 9,
+      "forward_max_absolute": {
+        "logits": 9.5367431640625e-07,
+        "states": 9.834766387939453e-07,
+        "value": 3.5762786865234375e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 174578,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "dense",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "7c080d332da7df0b255ca1e4a7fc4753c3d8218324dbb3e50eca233de80c44aa",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/dense.npz",
+      "head_mask_sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "initial_sha256": "5d60c4345c607275fa532d77e798485a7d5c2658a970bcc8c5937402a1782403",
+      "io": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-io-v3/seed-4/dense/result.json",
+      "io_sha256": "fe9cc7774f3c1c631801d5130c581eff3b5ec3b2306390733e8f61aacb96fdcb",
+      "numerical": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-qualification-v3/seed-4/dense/result.json",
+      "numerical_sha256": "5936c63d70e48088de6bed156abba0d2a6dce8d2a0d4251fad4249382a76e5e5",
+      "owner": 1,
+      "seed": 4
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 349166,
+          "warm_flops_per_position": 222111986.0
+        },
+        "32": {
+          "decoder_flops": 349166,
+          "warm_flops_per_position": 222109922.5625
+        }
+      },
+      "arm": "value-group",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 9.5367431640625e-07,
+        "states": 9.275972843170166e-07,
+        "value": 1.4901161193847656e-08
+      },
+      "head_mask": {
+        "policy_coefficients": 174578,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "value-group",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "0c6e73b286f8685ee81304d136ed2e8cc1bdc9475d6bb1672500c857bca1b836",
+        "value_coefficients": 5,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/value-group.npz",
+      "head_mask_sha256": "d5c19f87d077b24f426b7cd24c972b2107ac204cb7ce83a08b4e17d353f5061c",
+      "initial_sha256": "5d60c4345c607275fa532d77e798485a7d5c2658a970bcc8c5937402a1782403",
+      "io": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-io-v3/seed-4/value-group/result.json",
+      "io_sha256": "da06c4d9275d13100197f29de2b4384460ba403d42e52e0ca87b16cdcd923105",
+      "numerical": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-qualification-v3/seed-4/value-group/result.json",
+      "numerical_sha256": "a3ba28d224e18d21558efa95169a446537a0f33fb8a4c5b9af183a3e123dfcd9",
+      "owner": 1,
+      "seed": 4
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221963666.0
+        },
+        "32": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221961602.5625
+        }
+      },
+      "arm": "soma-side",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 9.834766387939453e-07,
+        "states": 9.331852197647095e-07,
+        "value": 3.5762786865234375e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 98294,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "soma-side",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "4af8dfa5c87bb61137b4d007b7ddd1358b429bbfe8e718bf11547a7d0cf92956",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/soma-side.npz",
+      "head_mask_sha256": "a504ae3b92ec66a82b0b4f63886ccfa9390ab4d6b2d6accc15acf86b532b0442",
+      "initial_sha256": "5d60c4345c607275fa532d77e798485a7d5c2658a970bcc8c5937402a1782403",
+      "io": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-io-v3/seed-4/soma-side/result.json",
+      "io_sha256": "f9884589449ef2f15f4216c7aff0f9645f205217598c56dd8ab61d41e21a7787",
+      "numerical": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-qualification-v3/seed-4/soma-side/result.json",
+      "numerical_sha256": "393db323da8fc996a1be81725de9566e24979ec61abfd448a43c7e9acbfb2fc2",
+      "owner": 1,
+      "seed": 4
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221963666.0
+        },
+        "32": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221961602.5625
+        }
+      },
+      "arm": "shuffled-side",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 1.1920928955078125e-06,
+        "states": 9.294599294662476e-07,
+        "value": 1.7881393432617188e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 98294,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "shuffled-side",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "0d4dbc7687df9f2e988d6f92a846b21e93d1114a668e5fb4072cd1709ce35ad3",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/shuffled-side.npz",
+      "head_mask_sha256": "051d665d1eecae0726308c5655aad326e078340b85ce11f37c60563141854093",
+      "initial_sha256": "5d60c4345c607275fa532d77e798485a7d5c2658a970bcc8c5937402a1782403",
+      "io": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-io-v3/seed-4/shuffled-side/result.json",
+      "io_sha256": "5b1961b6ac27802754a574e304e6094afe6e72d525e70c2677ba2e9430692f50",
+      "numerical": "runs/readout-mask-archive-v3/owner-1/runs/readout-mask-qualification-v3/seed-4/shuffled-side/result.json",
+      "numerical_sha256": "0dbd280fcfd3721e5ea1153a45e4f201f6af617d6c4b0ee68bc4234ba23329da",
+      "owner": 1,
+      "seed": 4
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 353414,
+          "warm_flops_per_position": 222116234.0
+        },
+        "32": {
+          "decoder_flops": 353414,
+          "warm_flops_per_position": 222114170.5625
+        }
+      },
+      "arm": "dense",
+      "engineering_updates": 9,
+      "forward_max_absolute": {
+        "logits": 2.384185791015625e-06,
+        "states": 9.55536961555481e-07,
+        "value": 1.7881393432617188e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 174578,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "dense",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "7c080d332da7df0b255ca1e4a7fc4753c3d8218324dbb3e50eca233de80c44aa",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/dense.npz",
+      "head_mask_sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "initial_sha256": "74fcb7a7e39c4929e8b964570b536b1c99cdba90b792a3a2b8cbf2a243a8c4cd",
+      "io": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-io-v3/seed-5/dense/result.json",
+      "io_sha256": "bac725031f708e7bdad778cfeb5f0a70baffbdfd35984a5315c9547551274e3f",
+      "numerical": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-qualification-v3/seed-5/dense/result.json",
+      "numerical_sha256": "b8ee7c900bd6f9faf0bf9cd348129d4fabc2d109b4c04513d98f3c0f2dc33436",
+      "owner": 2,
+      "seed": 5
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 349166,
+          "warm_flops_per_position": 222111986.0
+        },
+        "32": {
+          "decoder_flops": 349166,
+          "warm_flops_per_position": 222109922.5625
+        }
+      },
+      "arm": "value-group",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 2.384185791015625e-06,
+        "states": 1.3113021850585938e-06,
+        "value": 7.450580596923828e-09
+      },
+      "head_mask": {
+        "policy_coefficients": 174578,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "value-group",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "0c6e73b286f8685ee81304d136ed2e8cc1bdc9475d6bb1672500c857bca1b836",
+        "value_coefficients": 5,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/value-group.npz",
+      "head_mask_sha256": "d5c19f87d077b24f426b7cd24c972b2107ac204cb7ce83a08b4e17d353f5061c",
+      "initial_sha256": "74fcb7a7e39c4929e8b964570b536b1c99cdba90b792a3a2b8cbf2a243a8c4cd",
+      "io": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-io-v3/seed-5/value-group/result.json",
+      "io_sha256": "b36a5aa98911a1116a656f862c98fc397f2fcf9a4a51fed9dc0faf509cedc36c",
+      "numerical": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-qualification-v3/seed-5/value-group/result.json",
+      "numerical_sha256": "7bae09402ad7527cb81609c4191c659f78758f852281b6f1fbcb4ebb6f86564f",
+      "owner": 2,
+      "seed": 5
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221963666.0
+        },
+        "32": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221961602.5625
+        }
+      },
+      "arm": "soma-side",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 5.960464477539062e-07,
+        "states": 9.816139936447144e-07,
+        "value": 1.7881393432617188e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 98294,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "soma-side",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "4af8dfa5c87bb61137b4d007b7ddd1358b429bbfe8e718bf11547a7d0cf92956",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/soma-side.npz",
+      "head_mask_sha256": "a504ae3b92ec66a82b0b4f63886ccfa9390ab4d6b2d6accc15acf86b532b0442",
+      "initial_sha256": "74fcb7a7e39c4929e8b964570b536b1c99cdba90b792a3a2b8cbf2a243a8c4cd",
+      "io": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-io-v3/seed-5/soma-side/result.json",
+      "io_sha256": "50a3d0d11e6a490a34d8ebc84b8b024236bfad76099b554a9ef10198a008ea34",
+      "numerical": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-qualification-v3/seed-5/soma-side/result.json",
+      "numerical_sha256": "92a7dbbfdfb7d301ffc553cba750aed424e9afa905ea8a2822bfbd6a2856f1e6",
+      "owner": 2,
+      "seed": 5
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221963666.0
+        },
+        "32": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221961602.5625
+        }
+      },
+      "arm": "shuffled-side",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 2.1457672119140625e-06,
+        "states": 9.57399606704712e-07,
+        "value": 1.7881393432617188e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 98294,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "shuffled-side",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "0d4dbc7687df9f2e988d6f92a846b21e93d1114a668e5fb4072cd1709ce35ad3",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/shuffled-side.npz",
+      "head_mask_sha256": "051d665d1eecae0726308c5655aad326e078340b85ce11f37c60563141854093",
+      "initial_sha256": "74fcb7a7e39c4929e8b964570b536b1c99cdba90b792a3a2b8cbf2a243a8c4cd",
+      "io": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-io-v3/seed-5/shuffled-side/result.json",
+      "io_sha256": "f34d11cca9632f09b26e0fd4c0bcafd2e00565bc7924ad46ff236d0c366aa2d6",
+      "numerical": "runs/readout-mask-archive-v3/owner-2/runs/readout-mask-qualification-v3/seed-5/shuffled-side/result.json",
+      "numerical_sha256": "0e15ebbb1d19c2b98c751abb3b7734c23ba4465f0ba6e167cef48db52c261dbf",
+      "owner": 2,
+      "seed": 5
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 353414,
+          "warm_flops_per_position": 222116234.0
+        },
+        "32": {
+          "decoder_flops": 353414,
+          "warm_flops_per_position": 222114170.5625
+        }
+      },
+      "arm": "dense",
+      "engineering_updates": 9,
+      "forward_max_absolute": {
+        "logits": 1.430511474609375e-06,
+        "states": 9.797513484954834e-07,
+        "value": 1.7881393432617188e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 174578,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "dense",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "7c080d332da7df0b255ca1e4a7fc4753c3d8218324dbb3e50eca233de80c44aa",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/dense.npz",
+      "head_mask_sha256": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "initial_sha256": "68682546f0a939d7aae31b130cef47810eaab2f94699706ce1d559db04245174",
+      "io": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-io-v3/seed-6/dense/result.json",
+      "io_sha256": "ecb828530e1b8ec36bf583abc017d3d386bed6149c15c3cbc18c5e079e4ee4d7",
+      "numerical": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-qualification-v3/seed-6/dense/result.json",
+      "numerical_sha256": "b2681b5463ffca8710fffe6cb6a9a803464876c8acd60afcf68db0d50d6fbebd",
+      "owner": 3,
+      "seed": 6
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 349166,
+          "warm_flops_per_position": 222111986.0
+        },
+        "32": {
+          "decoder_flops": 349166,
+          "warm_flops_per_position": 222109922.5625
+        }
+      },
+      "arm": "value-group",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 1.9073486328125e-06,
+        "states": 9.96515154838562e-07,
+        "value": 1.4901161193847656e-08
+      },
+      "head_mask": {
+        "policy_coefficients": 174578,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "value-group",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "0c6e73b286f8685ee81304d136ed2e8cc1bdc9475d6bb1672500c857bca1b836",
+        "value_coefficients": 5,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/value-group.npz",
+      "head_mask_sha256": "d5c19f87d077b24f426b7cd24c972b2107ac204cb7ce83a08b4e17d353f5061c",
+      "initial_sha256": "68682546f0a939d7aae31b130cef47810eaab2f94699706ce1d559db04245174",
+      "io": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-io-v3/seed-6/value-group/result.json",
+      "io_sha256": "9b5f67b92519805ed839fd2832a4c16807c0d36c39d8d3255ed8b2a9f37a4eb7",
+      "numerical": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-qualification-v3/seed-6/value-group/result.json",
+      "numerical_sha256": "0398dacfcba8a0c76a321f4ae1598c069f2dd0e217ea6e56db5f6eaca7923da4",
+      "owner": 3,
+      "seed": 6
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221963666.0
+        },
+        "32": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221961602.5625
+        }
+      },
+      "arm": "soma-side",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 3.5762786865234375e-06,
+        "states": 9.499490261077881e-07,
+        "value": 2.980232238769531e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 98294,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "soma-side",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "4af8dfa5c87bb61137b4d007b7ddd1358b429bbfe8e718bf11547a7d0cf92956",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/soma-side.npz",
+      "head_mask_sha256": "a504ae3b92ec66a82b0b4f63886ccfa9390ab4d6b2d6accc15acf86b532b0442",
+      "initial_sha256": "68682546f0a939d7aae31b130cef47810eaab2f94699706ce1d559db04245174",
+      "io": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-io-v3/seed-6/soma-side/result.json",
+      "io_sha256": "a36d497058da9f5f025a570aebdc0fb7108ecd928702c3137a8deeb942d9492a",
+      "numerical": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-qualification-v3/seed-6/soma-side/result.json",
+      "numerical_sha256": "bae01893edba4df4435491f047b42e5f8c65db47650a0ef5c84c657cbfbae922",
+      "owner": 3,
+      "seed": 6
+    },
+    {
+      "arithmetic": {
+        "1": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221963666.0
+        },
+        "32": {
+          "decoder_flops": 200846,
+          "warm_flops_per_position": 221961602.5625
+        }
+      },
+      "arm": "shuffled-side",
+      "engineering_updates": 5,
+      "forward_max_absolute": {
+        "logits": 3.337860107421875e-06,
+        "states": 9.611248970031738e-07,
+        "value": 1.7881393432617188e-07
+      },
+      "head_mask": {
+        "policy_coefficients": 98294,
+        "provenance": {
+          "annotation_sha256": "6b5be53d4357b3c6bf704d3808e42567fcb6e63f87921443fa459780eef481fc",
+          "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+          "graph_id": "183e28b8d990ed5d3ffca091f0468d25dcca3dd1ccd98183e14615a09cda35b4",
+          "kind": "shuffled-side",
+          "motor_order_sha256": "336802be96f81592f29ded0ad6d5a05c93b931b1c1e5a053b087486e40d5de36",
+          "preparation_plan_sha256": "a9943b8f85d5836798ce14c8c621dd456f158f535f4ba4ec73a8166de60a24b6"
+        },
+        "sha256": "0d4dbc7687df9f2e988d6f92a846b21e93d1114a668e5fb4072cd1709ce35ad3",
+        "value_coefficients": 2129,
+        "version": "binary-readout-v1"
+      },
+      "head_mask_path": "ports/readout-masks-v1/shuffled-side.npz",
+      "head_mask_sha256": "051d665d1eecae0726308c5655aad326e078340b85ce11f37c60563141854093",
+      "initial_sha256": "68682546f0a939d7aae31b130cef47810eaab2f94699706ce1d559db04245174",
+      "io": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-io-v3/seed-6/shuffled-side/result.json",
+      "io_sha256": "2bac96bea5c960cb0cdc3b9554a1c95dab228b13f8d4f935b495852b464d8aaa",
+      "numerical": "runs/readout-mask-archive-v3/owner-3/runs/readout-mask-qualification-v3/seed-6/shuffled-side/result.json",
+      "numerical_sha256": "cebae4a95d5f0527bc92364dbec76441e430424c7eea786d9b72495883f9f37c",
+      "owner": 3,
+      "seed": 6
+    }
+  ],
+  "runtime_sha256": {
+    "attachments.py": "7094faa352ae40baf95e4dfb615ed7312910c87e7af5b6ffef28cc2236b4e116",
+    "fly.py": "3cd1d14dde312e0d6d93cb59f853bed174b590d84d606861a7d66d96cb1f6a45",
+    "jax/model.py": "d2c5f266230260dd4a1687008975d4a51bea266926ccd37fd172876fdf66a4d8",
+    "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+    "native": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1",
+    "optimizer.py": "725f9833bfd7809b325d5890255d2c2f09a908c47c0eb60a7bb26f4c9fbf0525",
+    "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+    "train.py": "f93627f0f7487cb6a9ff3b5583bb74dd03b90f3cdf5005022a9fedf05da07949",
+    "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+  },
+  "source": {
+    "environment": "/dev/shm/flygo/environments/2ba439e309df1e902b58",
+    "native_sha256": "a822ed18a4d1c29c3b653c8ed9326368b2e7c3f2c128908c6d7ff9a3693f34e1"
+  },
+  "source_sha256": "0e20cdd56e78475e888c7780005e205792b4aa885bd632da9d8a88dc334eeb0d",
+  "status": "passed",
+  "training_contract": {
+    "batch_size": 32,
+    "clip": 1,
+    "epsilon": 1e-06,
+    "rate": 0.03,
+    "rate_scales": {
+      "bias": 0.01
+    },
+    "schedule": {
+      "decay_until": 0,
+      "final_ratio": 0.1,
+      "peak": 0.03,
+      "version": "absolute-update-rate-v1",
+      "warmup_steps": 100
+    }
+  },
+  "unit_tests": {
+    "go_parity_log_sha256": "852fc9927ac11ea677d44cba58e0f3f2a4cf069f50a8838f8c1a6988d0cd85a8",
+    "python_core": 110,
+    "python_core_note": "109 pass in discovery; the optional direct Rust/Python Go test passes separately with its executable configured.",
+    "python_log_sha256": "670f55fed61c7d39d79b8205ee9cac6255d7ff0ce154e1988be3d620b8ba8571",
+    "rust": 50,
+    "rust_log_sha256": "1329c83e21777603be17184db8b63f12b22b89334beb853e79fcfaf9c942c3b6"
+  }
+}

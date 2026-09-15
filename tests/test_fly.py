@@ -29,6 +29,37 @@ def fixture():
 
 
 class FlyCore(unittest.TestCase):
+    def test_head_accumulation_retains_a_small_signal_between_cancelling_motors(self):
+        graph=dict(indptr=np.zeros(4,np.int32),src=np.zeros(0,np.int32),dst=np.zeros(0,np.int32),
+            type_id=np.zeros(3,np.int32),sign=np.ones(3,np.float32),strength=np.zeros(0,np.float32),
+            sensory=np.arange(3,dtype=np.int32))
+        cfg=FlyConfig(steps=1,features=3,groups=3,actions=3,threads=1)
+        ports,params=initialize(graph,cfg)
+        ports['input_index'][:]=-1
+        ports['output_group']=np.arange(3,dtype=np.int32);ports['output_scale']=np.ones(3,np.float32)
+        params['policy_weight'][:]=0;params['policy_weight'][:3]=[1e8,1,-1e8]
+        params['policy_bias'][:]=0
+        model=RustFly(graph,cfg,ports=ports,params=params)
+        output=model.infer(np.zeros((1,3),np.float32),trace=True)
+        rates=output['states'][-1][:,0]
+        self.assertEqual(rates[0],rates[2])
+        self.assertGreater(rates[1],0)
+        self.assertAlmostEqual(float(output['logits'][0,0]),float(rates[1]),delta=1e-8)
+
+    def test_cross_entropy_gradient_uses_actual_target_mass(self):
+        graph,config,ports,params,x,legal,policy,value=fixture()
+        # This mass is within the accepted normalization tolerance. Cross-entropy
+        # is still invariant to a common logit shift, so its bias gradients sum to zero.
+        policy=policy*np.float32(.99992)
+        model=RustFly(graph,config,ports=ports,params=params)
+        _,gradient=model.loss_and_grad(x,legal,policy,value)
+        logits=np.where(legal,model.infer(x)['logits'].astype(np.float64),-np.inf)
+        logits-=logits.max(axis=1,keepdims=True)
+        probability=np.exp(logits);probability/=probability.sum(axis=1,keepdims=True)
+        expected=(policy.sum(axis=1,dtype=np.float64)[:,None]*probability-policy).mean(axis=0)
+        np.testing.assert_allclose(gradient['policy_bias'],expected,rtol=0,atol=2e-7)
+        self.assertAlmostEqual(float(gradient['policy_bias'].sum(dtype=np.float64)),0,delta=2e-7)
+
     def test_streamed_prediction_matches_trace_after_update_and_restore(self):
         graph,config,ports,params,x,legal,policy,value=fixture()
         for softness in (0.,.01,.05):
@@ -107,6 +138,11 @@ class FlyCore(unittest.TestCase):
             restored_sampler=Sampler({}, {}, seed=2)
             load_checkpoint(path,other,restored_sampler,dataset_id='fixture-data')
             self.assertEqual(restored_sampler.state(),expected_sampler)
+            for key,array in other.checkpoint_arrays().items():
+                np.testing.assert_array_equal(array,expected[key])
+            load_checkpoint(path,other,numerical_runtime=model.numerical_runtime)
+            with self.assertRaisesRegex(ValueError,'numerical runtime differs'):
+                load_checkpoint(path,other,numerical_runtime='different-runtime')
             for key,array in other.checkpoint_arrays().items():
                 np.testing.assert_array_equal(array,expected[key])
             with self.assertRaisesRegex(ValueError,'dataset differs'):
