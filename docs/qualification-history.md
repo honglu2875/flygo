@@ -636,6 +636,21 @@ completed with identical source and plans.
 The [complete record](results/group-clipping-engineering-v2.json) separates
 3,456 native and 1,152 JAX reference update exposures and includes verified
 second-worker archives for 456 files. The six scientific CPU learners and their
-queued endpoint analyses use the predeclared clipping-only contract. Final
-learning results and isolated optimizer overhead remain pending. TPU remains
-paused and the data-generation stop markers are preserved.
+completed endpoint analyses use the predeclared clipping-only contract.
+Per-group clipping improves mean KL .07761 and value MSE .06130 at the fixed
+32k-exposure horizon, while counted B1 prediction work increases 8.81%.
+The separate synthetic optimizer benchmark measures roughly 0–.6% overhead.
+[Scientific record](results/group-clipping-v1.json).
+
+The endpoint analyzer fingerprints all actual initial numerical arrays and
+sampler state: every paired seed matches. Twelve focused analysis tests pass;
+the four new checks cover confidence/family weighting, the seed-wise decision
+rule, actual clipping factors, and initialization identity. An initial flat
+frozen-test bundle passed eight checks but failed two imports because it lost
+the `scripts` namespace. No owner audit or new inference started in that attempt.
+Recovery preserves the package layout and uses workers' existing NumPy path;
+scientific code, plans and tolerances are unchanged. All six completed logs
+reproduce their applied factors. The 216 scientific evidence files have
+member-verified owner/peer archives, with checkpoint payloads independently
+replicated. [Closure](results/group-clipping-closure-v1.json).
+TPU remains paused and data-generation stop markers are preserved.

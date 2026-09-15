@@ -46,8 +46,12 @@ responses, much sparser positive motor activity after training, and a large
 imbalance between type-bias gradients and edge optimizer scales. The
 [clipping-scope comparison](group-clipping-study.md) now passes 12 full-CNS
 numerical checks, six exact recovery cases and six exact legacy regressions.
-Its six paired CPU trials are running; the diagnostic and engineering checks
-add no validation, match or CNN result.
+All six paired CPU endpoints and full validations are complete. Per-group
+clipping improves mean policy KL **1.70966 → 1.63205** and value MSE
+**.64897 → .58767** at 32k exposures per endpoint, passing the candidate rule
+in all three seeds. Counted B1 prediction FLOPs rise **8.81%**; entropy falls
+only .04047. This is a short-horizon optimizer improvement, with no new
+matched-CNN or playing-strength result. [Full study](group-clipping-study.md).
 
 ## Matched neural control, three seeds
 

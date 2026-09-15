@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Summarize one owned attachment endpoint without moving its checkpoint arrays."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import time
@@ -12,6 +13,18 @@ from flygo.qualify import sha256
 from flygo.optimizer import saved_clipping_mode,check_clipping_restore
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
+
+
+def initial_state(arrays, metadata):
+    """Fingerprint numerical initialization separately from optimizer-mode metadata."""
+    records = {}
+    for key in sorted(arrays):
+        if key in ('metadata', 'optimizer_clip_mode'):
+            continue
+        value = np.asarray(arrays[key])
+        records[key] = dict(shape=list(value.shape), dtype=value.dtype.str,
+                            sha256=hashlib.sha256(value.tobytes()).hexdigest())
+    return dict(arrays=records, sampler=metadata['sampler'])
 
 
 def head_state(initial,final,expected):
@@ -84,6 +97,7 @@ def main():
         with np.load(paths[0],allow_pickle=False) as initial,np.load(paths[1],allow_pickle=False) as final:
             metadata=json.loads(final['metadata'].tobytes())
             initial_metadata=json.loads(initial['metadata'].tobytes())
+            initialization=initial_state(initial,initial_metadata)
             for metadata_part,arrays_part in [(initial_metadata,initial),(metadata,final)]:
                 if saved_clipping_mode(metadata_part)!=clip_mode:
                     raise ValueError('Checkpoint clipping mode differs from the registered trial')
@@ -121,6 +135,7 @@ def main():
             raise ValueError('Registered fixed-slice evaluations are incomplete')
         result=dict(status='complete',created=time.time(),run_id=args.run_id,mode=job['mode'],seed=job['seed'],
             checkpoint_sha256=receipts[-1]['sha256'],checkpoint_receipts=receipts,
+            initialization=initialization,
             dataset_id=manifest['dataset_id'],graph_id=metadata['graph_id'],input_contract=metadata['input_contract'],
             model_config=metadata['model_config'],training_contract=metadata['training_contract'],
             head_mask=head,numerical_runtime=numerical_runtime,

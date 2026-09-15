@@ -1,0 +1,4231 @@
+{
+  "build": {
+    "benchmark_sha256": "4b823828151848b8d5ad17a32d88147e5d8f001913c5c134fffdc2c353c75c24",
+    "binary_sha256": "7ede0a0f0748ff32bee9cf2c81061178122bd58ca1062916fd6ffbaecc028f7d",
+    "compile_command": [
+      "/dev/shm/flygo/runs/group-clipping-build-v1/toolchain/bin/rustc",
+      "--edition=2021",
+      "-O",
+      "-C",
+      "target-cpu=native",
+      "-L",
+      "dependency=/dev/shm/flygo/runs/group-clipping-build-v1/target/release/deps",
+      "--extern",
+      "fly_core=/dev/shm/flygo/runs/group-clipping-build-v1/target/release/libfly_core.rlib",
+      "/dev/shm/flygo/runs/group-clipping-overhead-v1/optimizer.rs",
+      "-o",
+      "/dev/shm/flygo/runs/group-clipping-overhead-v1/optimizer-bench"
+    ],
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "created": 1789469062.2951815,
+    "labeled_update_exposures": 0,
+    "library_sha256": "ebee8d163fa6817a2672048ad40d75665eb564c823d91725a26eca442c381636",
+    "plan_sha256": "1e0fa491f7e91b568d3d33330351b5f6dbdd0c4c5063556ade032d136ce47f45",
+    "raw_sha256": {
+      "compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full.jsonl": "89366714b367e381efe9223e8386c1954fcc0f38813f079e476614ce5e599ac9",
+      "smoke.jsonl": "6d725df295e844b1f1a06de1198ad27ae32d840522bf5c1ce2fa1425d6fa3ace"
+    },
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "status": "complete"
+  },
+  "created": 1789469226.5402877,
+  "labeled_update_exposures": 0,
+  "limitations": [
+    "Synthetic gradients and synthetic graph with exact parameter dimensions. No biological forward computation or Go data.",
+    "Four pinned CPU cores on worker 1; simultaneous validation on separate cores can share memory bandwidth. Paired alternating order controls some drift but does not remove shared-host noise.",
+    "Includes parameter validation, norm reductions and Adam. Excludes recurrence, data sampling, Python overhead, logging and checkpoints. No end-to-end speedup claim."
+  ],
+  "plan": {
+    "benchmark_sha256": "4b823828151848b8d5ad17a32d88147e5d8f001913c5c134fffdc2c353c75c24",
+    "cpus": [
+      56,
+      57,
+      58,
+      59
+    ],
+    "dimensions": {
+      "actions": 82,
+      "edges": 15270273,
+      "features": 3574,
+      "groups": 2129,
+      "neurons": 165122,
+      "types": 11752
+    },
+    "host": 1,
+    "library_source": "runs/group-clipping-build-v1/source-v1/crates/fly-core/src/optim.rs",
+    "library_source_sha256": "5fa0b2b6fe01478c3102ccc40d52679aa5224f71b1062250260d7c3891c5d41a",
+    "modes": [
+      "global",
+      "parameter-group"
+    ],
+    "name": "group-clipping-overhead-v1",
+    "profiles": [
+      "bias_dominated",
+      "below_threshold"
+    ],
+    "repetitions": 48,
+    "sampling": "48 paired updates per profile; alternate AB and BA after four warmups per mode. Report all timings and paired mean/median differences. Synthetic fixed gradients; no Go labels or recurrence.",
+    "scope": "CPU optimizer-only, including validation, deterministic norms and Adam. Same parameter dimensions as the full CNS trial; synthetic graph and gradients. Measures execution overhead only, not learnability or end-to-end speed.",
+    "threads": 4,
+    "warmup_per_mode": 4
+  },
+  "raw_timings": [
+    {
+      "edges": 15270273,
+      "kind": "configuration",
+      "neurons": 165122,
+      "repetitions": 48,
+      "shapes": [
+        15270273,
+        11752,
+        11752,
+        3574,
+        165122,
+        174578,
+        82,
+        2129,
+        1
+      ],
+      "threads": 4,
+      "warmup": 4
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 0,
+      "profile": "bias_dominated",
+      "seconds": 0.073175202
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 0,
+      "profile": "bias_dominated",
+      "seconds": 0.072072211
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 1,
+      "profile": "bias_dominated",
+      "seconds": 0.072113452
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 1,
+      "profile": "bias_dominated",
+      "seconds": 0.072041902
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 2,
+      "profile": "bias_dominated",
+      "seconds": 0.072143311
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 2,
+      "profile": "bias_dominated",
+      "seconds": 0.075621362
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 3,
+      "profile": "bias_dominated",
+      "seconds": 0.074684432
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 3,
+      "profile": "bias_dominated",
+      "seconds": 0.073199232
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 4,
+      "profile": "bias_dominated",
+      "seconds": 0.073073491
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 4,
+      "profile": "bias_dominated",
+      "seconds": 0.072486262
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 5,
+      "profile": "bias_dominated",
+      "seconds": 0.073716291
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 5,
+      "profile": "bias_dominated",
+      "seconds": 0.071624722
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 6,
+      "profile": "bias_dominated",
+      "seconds": 0.072151862
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 6,
+      "profile": "bias_dominated",
+      "seconds": 0.072678302
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 7,
+      "profile": "bias_dominated",
+      "seconds": 0.072371603
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 7,
+      "profile": "bias_dominated",
+      "seconds": 0.073057492
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 8,
+      "profile": "bias_dominated",
+      "seconds": 0.072758071
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 8,
+      "profile": "bias_dominated",
+      "seconds": 0.073548302
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 9,
+      "profile": "bias_dominated",
+      "seconds": 0.072397042
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 9,
+      "profile": "bias_dominated",
+      "seconds": 0.075529711
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 10,
+      "profile": "bias_dominated",
+      "seconds": 0.069827602
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 10,
+      "profile": "bias_dominated",
+      "seconds": 0.071810852
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 11,
+      "profile": "bias_dominated",
+      "seconds": 0.073136732
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 11,
+      "profile": "bias_dominated",
+      "seconds": 0.072146821
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 12,
+      "profile": "bias_dominated",
+      "seconds": 0.072665162
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 12,
+      "profile": "bias_dominated",
+      "seconds": 0.073282731
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 13,
+      "profile": "bias_dominated",
+      "seconds": 0.070288782
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 13,
+      "profile": "bias_dominated",
+      "seconds": 0.072535132
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 14,
+      "profile": "bias_dominated",
+      "seconds": 0.071761892
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 14,
+      "profile": "bias_dominated",
+      "seconds": 0.071304322
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 15,
+      "profile": "bias_dominated",
+      "seconds": 0.073200461
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 15,
+      "profile": "bias_dominated",
+      "seconds": 0.074345831
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 16,
+      "profile": "bias_dominated",
+      "seconds": 0.071329652
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 16,
+      "profile": "bias_dominated",
+      "seconds": 0.074410971
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 17,
+      "profile": "bias_dominated",
+      "seconds": 0.074039081
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 17,
+      "profile": "bias_dominated",
+      "seconds": 0.07643426
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 18,
+      "profile": "bias_dominated",
+      "seconds": 0.072368241
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 18,
+      "profile": "bias_dominated",
+      "seconds": 0.072484172
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 19,
+      "profile": "bias_dominated",
+      "seconds": 0.071674862
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 19,
+      "profile": "bias_dominated",
+      "seconds": 0.071326001
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 20,
+      "profile": "bias_dominated",
+      "seconds": 0.071946272
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 20,
+      "profile": "bias_dominated",
+      "seconds": 0.073437691
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 21,
+      "profile": "bias_dominated",
+      "seconds": 0.072524572
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 21,
+      "profile": "bias_dominated",
+      "seconds": 0.072439932
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 22,
+      "profile": "bias_dominated",
+      "seconds": 0.072542502
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 22,
+      "profile": "bias_dominated",
+      "seconds": 0.071666902
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 23,
+      "profile": "bias_dominated",
+      "seconds": 0.071548961
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 23,
+      "profile": "bias_dominated",
+      "seconds": 0.075371981
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 24,
+      "profile": "bias_dominated",
+      "seconds": 0.076017141
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 24,
+      "profile": "bias_dominated",
+      "seconds": 0.077362021
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 25,
+      "profile": "bias_dominated",
+      "seconds": 0.072501742
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 25,
+      "profile": "bias_dominated",
+      "seconds": 0.074043171
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 26,
+      "profile": "bias_dominated",
+      "seconds": 0.072270372
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 26,
+      "profile": "bias_dominated",
+      "seconds": 0.072864182
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 27,
+      "profile": "bias_dominated",
+      "seconds": 0.075312092
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 27,
+      "profile": "bias_dominated",
+      "seconds": 0.072134641
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 28,
+      "profile": "bias_dominated",
+      "seconds": 0.070593783
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 28,
+      "profile": "bias_dominated",
+      "seconds": 0.073112341
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 29,
+      "profile": "bias_dominated",
+      "seconds": 0.074926461
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 29,
+      "profile": "bias_dominated",
+      "seconds": 0.075068172
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 30,
+      "profile": "bias_dominated",
+      "seconds": 0.073094811
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 30,
+      "profile": "bias_dominated",
+      "seconds": 0.073594232
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 31,
+      "profile": "bias_dominated",
+      "seconds": 0.072886611
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 31,
+      "profile": "bias_dominated",
+      "seconds": 0.074033912
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 32,
+      "profile": "bias_dominated",
+      "seconds": 0.073771661
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 32,
+      "profile": "bias_dominated",
+      "seconds": 0.077626371
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 33,
+      "profile": "bias_dominated",
+      "seconds": 0.074471702
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 33,
+      "profile": "bias_dominated",
+      "seconds": 0.073741762
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 34,
+      "profile": "bias_dominated",
+      "seconds": 0.071246401
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 34,
+      "profile": "bias_dominated",
+      "seconds": 0.072591522
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 35,
+      "profile": "bias_dominated",
+      "seconds": 0.072770992
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 35,
+      "profile": "bias_dominated",
+      "seconds": 0.073967351
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 36,
+      "profile": "bias_dominated",
+      "seconds": 0.072131412
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 36,
+      "profile": "bias_dominated",
+      "seconds": 0.072626062
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 37,
+      "profile": "bias_dominated",
+      "seconds": 0.078838411
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 37,
+      "profile": "bias_dominated",
+      "seconds": 0.073598361
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 38,
+      "profile": "bias_dominated",
+      "seconds": 0.072486842
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 38,
+      "profile": "bias_dominated",
+      "seconds": 0.073336981
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 39,
+      "profile": "bias_dominated",
+      "seconds": 0.072258532
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 39,
+      "profile": "bias_dominated",
+      "seconds": 0.072260722
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 40,
+      "profile": "bias_dominated",
+      "seconds": 0.071717392
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 40,
+      "profile": "bias_dominated",
+      "seconds": 0.073179072
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 41,
+      "profile": "bias_dominated",
+      "seconds": 0.073835841
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 41,
+      "profile": "bias_dominated",
+      "seconds": 0.075887732
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 42,
+      "profile": "bias_dominated",
+      "seconds": 0.072411792
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 42,
+      "profile": "bias_dominated",
+      "seconds": 0.077771611
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 43,
+      "profile": "bias_dominated",
+      "seconds": 0.071480992
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 43,
+      "profile": "bias_dominated",
+      "seconds": 0.072307172
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 44,
+      "profile": "bias_dominated",
+      "seconds": 0.072460292
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 44,
+      "profile": "bias_dominated",
+      "seconds": 0.071915601
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 45,
+      "profile": "bias_dominated",
+      "seconds": 0.073420061
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 45,
+      "profile": "bias_dominated",
+      "seconds": 0.072242002
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 46,
+      "profile": "bias_dominated",
+      "seconds": 0.072356632
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 46,
+      "profile": "bias_dominated",
+      "seconds": 0.072179912
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        0.015298286,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 65.36679833338039,
+      "pair": 47,
+      "profile": "bias_dominated",
+      "seconds": 0.071897032
+    },
+    {
+      "factors": [
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286,
+        0.015298286
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 65.36679833338039,
+      "pair": 47,
+      "profile": "bias_dominated",
+      "seconds": 0.071536942
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 0,
+      "profile": "below_threshold",
+      "seconds": 0.072052141
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 0,
+      "profile": "below_threshold",
+      "seconds": 0.072214372
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 1,
+      "profile": "below_threshold",
+      "seconds": 0.073699301
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 1,
+      "profile": "below_threshold",
+      "seconds": 0.072466391
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 2,
+      "profile": "below_threshold",
+      "seconds": 0.071704562
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 2,
+      "profile": "below_threshold",
+      "seconds": 0.072668022
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 3,
+      "profile": "below_threshold",
+      "seconds": 0.072081472
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 3,
+      "profile": "below_threshold",
+      "seconds": 0.072276441
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 4,
+      "profile": "below_threshold",
+      "seconds": 0.072556642
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 4,
+      "profile": "below_threshold",
+      "seconds": 0.071833071
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 5,
+      "profile": "below_threshold",
+      "seconds": 0.074033082
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 5,
+      "profile": "below_threshold",
+      "seconds": 0.070073512
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 6,
+      "profile": "below_threshold",
+      "seconds": 0.072953432
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 6,
+      "profile": "below_threshold",
+      "seconds": 0.073113461
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 7,
+      "profile": "below_threshold",
+      "seconds": 0.071556302
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 7,
+      "profile": "below_threshold",
+      "seconds": 0.072188852
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 8,
+      "profile": "below_threshold",
+      "seconds": 0.074855661
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 8,
+      "profile": "below_threshold",
+      "seconds": 0.076214581
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 9,
+      "profile": "below_threshold",
+      "seconds": 0.072902062
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 9,
+      "profile": "below_threshold",
+      "seconds": 0.071959832
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 10,
+      "profile": "below_threshold",
+      "seconds": 0.072064721
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 10,
+      "profile": "below_threshold",
+      "seconds": 0.072743992
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 11,
+      "profile": "below_threshold",
+      "seconds": 0.072691302
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 11,
+      "profile": "below_threshold",
+      "seconds": 0.070301311
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 12,
+      "profile": "below_threshold",
+      "seconds": 0.072235231
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 12,
+      "profile": "below_threshold",
+      "seconds": 0.071963772
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 13,
+      "profile": "below_threshold",
+      "seconds": 0.071409772
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 13,
+      "profile": "below_threshold",
+      "seconds": 0.072178502
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 14,
+      "profile": "below_threshold",
+      "seconds": 0.074343491
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 14,
+      "profile": "below_threshold",
+      "seconds": 0.069864002
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 15,
+      "profile": "below_threshold",
+      "seconds": 0.072926732
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 15,
+      "profile": "below_threshold",
+      "seconds": 0.071812621
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 16,
+      "profile": "below_threshold",
+      "seconds": 0.071677682
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 16,
+      "profile": "below_threshold",
+      "seconds": 0.073206402
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 17,
+      "profile": "below_threshold",
+      "seconds": 0.072985281
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 17,
+      "profile": "below_threshold",
+      "seconds": 0.070710742
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 18,
+      "profile": "below_threshold",
+      "seconds": 0.073754382
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 18,
+      "profile": "below_threshold",
+      "seconds": 0.075108411
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 19,
+      "profile": "below_threshold",
+      "seconds": 0.072022272
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 19,
+      "profile": "below_threshold",
+      "seconds": 0.076430411
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 20,
+      "profile": "below_threshold",
+      "seconds": 0.073320332
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 20,
+      "profile": "below_threshold",
+      "seconds": 0.071514532
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 21,
+      "profile": "below_threshold",
+      "seconds": 0.073476421
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 21,
+      "profile": "below_threshold",
+      "seconds": 0.073446671
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 22,
+      "profile": "below_threshold",
+      "seconds": 0.072218012
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 22,
+      "profile": "below_threshold",
+      "seconds": 0.072146492
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 23,
+      "profile": "below_threshold",
+      "seconds": 0.072965821
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 23,
+      "profile": "below_threshold",
+      "seconds": 0.071263602
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 24,
+      "profile": "below_threshold",
+      "seconds": 0.073113482
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 24,
+      "profile": "below_threshold",
+      "seconds": 0.074491211
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 25,
+      "profile": "below_threshold",
+      "seconds": 0.073886382
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 25,
+      "profile": "below_threshold",
+      "seconds": 0.074102401
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 26,
+      "profile": "below_threshold",
+      "seconds": 0.072420762
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 26,
+      "profile": "below_threshold",
+      "seconds": 0.072048562
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 27,
+      "profile": "below_threshold",
+      "seconds": 0.073716481
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 27,
+      "profile": "below_threshold",
+      "seconds": 0.073426421
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 28,
+      "profile": "below_threshold",
+      "seconds": 0.076936162
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 28,
+      "profile": "below_threshold",
+      "seconds": 0.077734571
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 29,
+      "profile": "below_threshold",
+      "seconds": 0.074686581
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 29,
+      "profile": "below_threshold",
+      "seconds": 0.074144142
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 30,
+      "profile": "below_threshold",
+      "seconds": 0.072130922
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 30,
+      "profile": "below_threshold",
+      "seconds": 0.075377911
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 31,
+      "profile": "below_threshold",
+      "seconds": 0.072343751
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 31,
+      "profile": "below_threshold",
+      "seconds": 0.071219603
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 32,
+      "profile": "below_threshold",
+      "seconds": 0.072222651
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 32,
+      "profile": "below_threshold",
+      "seconds": 0.072378292
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 33,
+      "profile": "below_threshold",
+      "seconds": 0.071722302
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 33,
+      "profile": "below_threshold",
+      "seconds": 0.071838741
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 34,
+      "profile": "below_threshold",
+      "seconds": 0.08719887
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 34,
+      "profile": "below_threshold",
+      "seconds": 0.072412882
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 35,
+      "profile": "below_threshold",
+      "seconds": 0.071763571
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 35,
+      "profile": "below_threshold",
+      "seconds": 0.071837463
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 36,
+      "profile": "below_threshold",
+      "seconds": 0.071915883
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 36,
+      "profile": "below_threshold",
+      "seconds": 0.071720401
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 37,
+      "profile": "below_threshold",
+      "seconds": 0.073778012
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 37,
+      "profile": "below_threshold",
+      "seconds": 0.074187521
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 38,
+      "profile": "below_threshold",
+      "seconds": 0.072095521
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 38,
+      "profile": "below_threshold",
+      "seconds": 0.072420962
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 39,
+      "profile": "below_threshold",
+      "seconds": 0.071856662
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 39,
+      "profile": "below_threshold",
+      "seconds": 0.072699612
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 40,
+      "profile": "below_threshold",
+      "seconds": 0.073228671
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 40,
+      "profile": "below_threshold",
+      "seconds": 0.071684102
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 41,
+      "profile": "below_threshold",
+      "seconds": 0.075257072
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 41,
+      "profile": "below_threshold",
+      "seconds": 0.072780391
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 42,
+      "profile": "below_threshold",
+      "seconds": 0.072222962
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 42,
+      "profile": "below_threshold",
+      "seconds": 0.073542041
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 43,
+      "profile": "below_threshold",
+      "seconds": 0.071847102
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 43,
+      "profile": "below_threshold",
+      "seconds": 0.072370862
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 44,
+      "profile": "below_threshold",
+      "seconds": 0.074526461
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 44,
+      "profile": "below_threshold",
+      "seconds": 0.071388682
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 45,
+      "profile": "below_threshold",
+      "seconds": 0.072785242
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 45,
+      "profile": "below_threshold",
+      "seconds": 0.072833841
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 46,
+      "profile": "below_threshold",
+      "seconds": 0.072009342
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 46,
+      "profile": "below_threshold",
+      "seconds": 0.073181491
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "parameter-group",
+      "norm": 0.000238474433558094,
+      "pair": 47,
+      "profile": "below_threshold",
+      "seconds": 0.074069752
+    },
+    {
+      "factors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "kind": "timing",
+      "mode": "global",
+      "norm": 0.000238474433558094,
+      "pair": 47,
+      "profile": "below_threshold",
+      "seconds": 0.070452002
+    }
+  ],
+  "records": [
+    {
+      "paired_difference_seconds": {
+        "mean": 0.0004600829166666656,
+        "median": 0.00042736999999999636,
+        "quantiles": [
+          -0.0038230200000000103,
+          -0.0007209617499999987,
+          0.00042736999999999636,
+          0.0013742607500000018,
+          0.005359819000000002
+        ],
+        "sample_sd": 0.001920404551026539
+      },
+      "profile": "bias_dominated",
+      "ratio_of_mean_times": 1.0063148023652593,
+      "raw_pairs_seconds": [
+        [
+          0.073175202,
+          0.072072211
+        ],
+        [
+          0.072041902,
+          0.072113452
+        ],
+        [
+          0.072143311,
+          0.075621362
+        ],
+        [
+          0.073199232,
+          0.074684432
+        ],
+        [
+          0.073073491,
+          0.072486262
+        ],
+        [
+          0.071624722,
+          0.073716291
+        ],
+        [
+          0.072151862,
+          0.072678302
+        ],
+        [
+          0.073057492,
+          0.072371603
+        ],
+        [
+          0.072758071,
+          0.073548302
+        ],
+        [
+          0.075529711,
+          0.072397042
+        ],
+        [
+          0.069827602,
+          0.071810852
+        ],
+        [
+          0.072146821,
+          0.073136732
+        ],
+        [
+          0.072665162,
+          0.073282731
+        ],
+        [
+          0.072535132,
+          0.070288782
+        ],
+        [
+          0.071761892,
+          0.071304322
+        ],
+        [
+          0.074345831,
+          0.073200461
+        ],
+        [
+          0.071329652,
+          0.074410971
+        ],
+        [
+          0.07643426,
+          0.074039081
+        ],
+        [
+          0.072368241,
+          0.072484172
+        ],
+        [
+          0.071326001,
+          0.071674862
+        ],
+        [
+          0.071946272,
+          0.073437691
+        ],
+        [
+          0.072439932,
+          0.072524572
+        ],
+        [
+          0.072542502,
+          0.071666902
+        ],
+        [
+          0.075371981,
+          0.071548961
+        ],
+        [
+          0.076017141,
+          0.077362021
+        ],
+        [
+          0.074043171,
+          0.072501742
+        ],
+        [
+          0.072270372,
+          0.072864182
+        ],
+        [
+          0.072134641,
+          0.075312092
+        ],
+        [
+          0.070593783,
+          0.073112341
+        ],
+        [
+          0.075068172,
+          0.074926461
+        ],
+        [
+          0.073094811,
+          0.073594232
+        ],
+        [
+          0.074033912,
+          0.072886611
+        ],
+        [
+          0.073771661,
+          0.077626371
+        ],
+        [
+          0.073741762,
+          0.074471702
+        ],
+        [
+          0.071246401,
+          0.072591522
+        ],
+        [
+          0.073967351,
+          0.072770992
+        ],
+        [
+          0.072131412,
+          0.072626062
+        ],
+        [
+          0.073598361,
+          0.078838411
+        ],
+        [
+          0.072486842,
+          0.073336981
+        ],
+        [
+          0.072260722,
+          0.072258532
+        ],
+        [
+          0.071717392,
+          0.073179072
+        ],
+        [
+          0.075887732,
+          0.073835841
+        ],
+        [
+          0.072411792,
+          0.077771611
+        ],
+        [
+          0.072307172,
+          0.071480992
+        ],
+        [
+          0.072460292,
+          0.071915601
+        ],
+        [
+          0.072242002,
+          0.073420061
+        ],
+        [
+          0.072356632,
+          0.072179912
+        ],
+        [
+          0.071536942,
+          0.071897032
+        ]
+      ],
+      "seconds": {
+        "global": {
+          "mean": 0.07285784891666666,
+          "median": 0.072450112,
+          "quantiles": [
+            0.069827602,
+            0.07213383375,
+            0.072450112,
+            0.07363421125,
+            0.07643426
+          ]
+        },
+        "parameter-group": {
+          "mean": 0.07331793183333334,
+          "median": 0.0728753965,
+          "quantiles": [
+            0.070288782,
+            0.072238877,
+            0.0728753965,
+            0.07374617850000001,
+            0.078838411
+          ]
+        }
+      }
+    },
+    {
+      "paired_difference_seconds": {
+        "mean": 1.4064208333333198e-05,
+        "median": 0.00016113000000000238,
+        "quantiles": [
+          -0.014785988,
+          -0.0003815272500000029,
+          0.00016113000000000238,
+          0.0012544522499999926,
+          0.003959569999999996
+        ],
+        "sample_sd": 0.0027459494811144358
+      },
+      "profile": "below_threshold",
+      "ratio_of_mean_times": 1.000192838705264,
+      "raw_pairs_seconds": [
+        [
+          0.072052141,
+          0.072214372
+        ],
+        [
+          0.072466391,
+          0.073699301
+        ],
+        [
+          0.071704562,
+          0.072668022
+        ],
+        [
+          0.072276441,
+          0.072081472
+        ],
+        [
+          0.072556642,
+          0.071833071
+        ],
+        [
+          0.070073512,
+          0.074033082
+        ],
+        [
+          0.072953432,
+          0.073113461
+        ],
+        [
+          0.072188852,
+          0.071556302
+        ],
+        [
+          0.074855661,
+          0.076214581
+        ],
+        [
+          0.071959832,
+          0.072902062
+        ],
+        [
+          0.072064721,
+          0.072743992
+        ],
+        [
+          0.070301311,
+          0.072691302
+        ],
+        [
+          0.072235231,
+          0.071963772
+        ],
+        [
+          0.072178502,
+          0.071409772
+        ],
+        [
+          0.074343491,
+          0.069864002
+        ],
+        [
+          0.071812621,
+          0.072926732
+        ],
+        [
+          0.071677682,
+          0.073206402
+        ],
+        [
+          0.070710742,
+          0.072985281
+        ],
+        [
+          0.073754382,
+          0.075108411
+        ],
+        [
+          0.076430411,
+          0.072022272
+        ],
+        [
+          0.073320332,
+          0.071514532
+        ],
+        [
+          0.073446671,
+          0.073476421
+        ],
+        [
+          0.072218012,
+          0.072146492
+        ],
+        [
+          0.071263602,
+          0.072965821
+        ],
+        [
+          0.073113482,
+          0.074491211
+        ],
+        [
+          0.074102401,
+          0.073886382
+        ],
+        [
+          0.072420762,
+          0.072048562
+        ],
+        [
+          0.073426421,
+          0.073716481
+        ],
+        [
+          0.076936162,
+          0.077734571
+        ],
+        [
+          0.074144142,
+          0.074686581
+        ],
+        [
+          0.072130922,
+          0.075377911
+        ],
+        [
+          0.071219603,
+          0.072343751
+        ],
+        [
+          0.072222651,
+          0.072378292
+        ],
+        [
+          0.071838741,
+          0.071722302
+        ],
+        [
+          0.08719887,
+          0.072412882
+        ],
+        [
+          0.071837463,
+          0.071763571
+        ],
+        [
+          0.071915883,
+          0.071720401
+        ],
+        [
+          0.074187521,
+          0.073778012
+        ],
+        [
+          0.072095521,
+          0.072420962
+        ],
+        [
+          0.072699612,
+          0.071856662
+        ],
+        [
+          0.073228671,
+          0.071684102
+        ],
+        [
+          0.072780391,
+          0.075257072
+        ],
+        [
+          0.072222962,
+          0.073542041
+        ],
+        [
+          0.072370862,
+          0.071847102
+        ],
+        [
+          0.074526461,
+          0.071388682
+        ],
+        [
+          0.072833841,
+          0.072785242
+        ],
+        [
+          0.072009342,
+          0.073181491
+        ],
+        [
+          0.070452002,
+          0.074069752
+        ]
+      ],
+      "seconds": {
+        "global": {
+          "mean": 0.07293249720833334,
+          "median": 0.07225583599999999,
+          "quantiles": [
+            0.070073512,
+            0.07194884475,
+            0.07225583599999999,
+            0.07334685425000001,
+            0.08719887
+          ]
+        },
+        "parameter-group": {
+          "mean": 0.07294656141666667,
+          "median": 0.072717647,
+          "quantiles": [
+            0.069864002,
+            0.07193699449999999,
+            0.072717647,
+            0.073703596,
+            0.077734571
+          ]
+        }
+      }
+    }
+  ],
+  "shapes": [
+    15270273,
+    11752,
+    11752,
+    3574,
+    165122,
+    174578,
+    82,
+    2129,
+    1
+  ],
+  "source_sha256": "2123703a0012bc815906e3a55da0781694e3212078b608a73b6f448daef35208",
+  "status": "complete",
+  "synthetic_optimizer_updates": 240
+}

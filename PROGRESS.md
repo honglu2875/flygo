@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 10:12 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 11:05 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No advantage over the matched CNN has been established.
@@ -18,7 +18,7 @@ the current spherical/readout screens use a shorter 32k-exposure contract.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production stopped | Preserve stop markers; freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Clipping qualification and exact legacy regression pass; six CPU learners running | Finish the six fixed endpoints, full validation and paired clipping analysis; keep dense and hold propagation fixed |
+| M6: controlled studies | Clipping study complete; per-group passes the short-horizon candidate rule | Register a longer-horizon comparison, account for increased prediction FLOPs, and hold propagation fixed |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -45,7 +45,7 @@ the current spherical/readout screens use a shorter 32k-exposure contract.
 | Motor learnability | Four residual decoders × three rates × three frozen cores; 131,072 head exposures per case | All 36 endpoints and replicas complete; raw mixing helps modestly, tested gating/high rates worsen validation |
 | Motor convergence | Bias-only / standardized linear / gated linear × three ridge penalties × three frozen banks | All 27 fits, original-coordinate audits, paired analysis and second-worker copies complete |
 | Signal and gradient flow | Existing dense seeds 4/5/6, initial/trained; 128 training views and 32 gradient views | All 48 recurrence and 75 VJP group checks pass; reports and 105 owner files replicated |
-| Clipping scope | Global / per-parameter-group, fresh paired seeds 10/11/12, unchanged 32k-exposure contract | 12 numerical / six recovery / six exact regression cases pass; all six CPU trials advancing, initial replicas verified, followups queued |
+| Clipping scope | Global / per-parameter-group, fresh paired seeds 10/11/12, unchanged 32k-exposure contract | All six endpoints, full validations and probes complete; KL improves .07761, value MSE .06130; B1 FLOPs rise 8.81% |
 | Research notebook | Public `quintic/go9x9` slice → full Rust model → plots → training → held-out KL | All cells execute on CPU; actual outputs included |
 | Persistent state | Separate Rust core primitive and training trajectory audit | Ten core tests pass; model/Python/JAX integration and scientific training remain pending |
 
@@ -71,7 +71,21 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   type-bias gradients dominate the norm. Eight focused tests pass; the summary
   reproduces byte for byte on another worker. Each audit took 212–227 s on
   four CPU cores; full arrays have verified second-worker copies.
-- [Next optimizer contract](configs/group-clipping-study-v1.json): compare
+- [Clipping scope](docs/group-clipping-study.md): per-group clipping improves
+  policy KL in every paired seed; mean full-validation KL **1.70966 → 1.63205**
+  and value MSE **.64897 → .58767** at 32k exposures per endpoint. The novel
+  slice also improves in both losses. Policy entropy falls only .04047; mean
+  top probability increases .218 percentage points. Motor visual variance is
+  less concentrated, but a leading component still explains 96.95–99.71%.
+  Counted warm B1 prediction FLOPs increase **185.12M → 201.43M** (+8.81%);
+  this is separate from the optimizer-only overhead of roughly 0–.6% in two
+  synthetic timing profiles. All actual initial arrays/samplers match within
+  pairs, 12 analysis checks pass, and 216 owner evidence files have verified
+  peer archives. Retain per-group as a provisional optimizer candidate and
+  confirm it at a separately registered longer horizon. No CNN advantage is
+  established. [Full results](docs/results/group-clipping-v1.json),
+  [closure](docs/results/group-clipping-closure-v1.json).
+- [Optimizer qualification](configs/group-clipping-study-v1.json): compare
   global and per-group clipping with dense heads, unchanged inputs, equations,
   rate, epsilon and horizon. This prioritization follows measured gradient
   scales and the failed readout confirmation. Rust/Python/JAX now expose the
@@ -82,12 +96,12 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   12 numerical and six exact recovery cases on CPU. Source
   `1f19481174f3bc8e5449` is frozen; default global behavior also matches the
   previous binary exactly in all six native seed/rate cases. All six learners
-  have verified CPU affinity and initial replicas; full validation, motor and
-  FLOP probes are queued. The 456 qualification files have verified owner/peer
+  have verified CPU affinity and initial/final replicas; their full validation,
+  motor and FLOP probes are complete. The 456 qualification files have verified owner/peer
   archives. [Implementation and study](docs/group-clipping-study.md),
   [launch](configs/group-clipping-trials-v1.json) and
-  [analysis](configs/group-clipping-analysis-v1.json). Isolated optimizer
-  overhead and scientific conclusions remain pending. The first
+  [analysis](configs/group-clipping-analysis-v1.json). The completed scientific
+  result and separate optimizer timings are summarized above. The first
   signal attempt failed only on an unavailable PyArrow import; its preserved
   recovery uses a lossless annotation export. TPU stays paused.
 - [Research walkthrough](notebooks/flygo_research_walkthrough.ipynb): 512 training

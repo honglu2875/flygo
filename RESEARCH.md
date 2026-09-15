@@ -775,10 +775,21 @@ clipping from the global norm. No TPU work is authorized by this registration.
 The [qualified clipping launch](configs/group-clipping-trials-v1.json) now
 uses one frozen source for both arms. All 12 numerical protocols, six exact
 recovery cases and six native legacy regressions pass. The six 1,000-update
-CPU learners have started; the [paired analysis](configs/group-clipping-analysis-v1.json)
+CPU learners have completed; the [paired analysis](configs/group-clipping-analysis-v1.json)
 was frozen before their first update. It also retains entropy and top
 probability, so confidence cannot substitute for lower validation KL.
 No input/output or propagation change is combined with this comparison.
+
+All six full validations and diagnostic endpoints are now complete. Per-group
+clipping passes the registered candidate condition: mean policy KL improves
+**.07761** and value MSE **.06130**, with both losses improving in each seed.
+The current-source-novel slice improves too. Confidence changes are modest and
+motor variance remains strongly concentrated. Counted B1 prediction work rises
+**8.81%**; this increase is distinct from the **0–.6%** optimizer-only timing
+difference in synthetic full-shape checks. All initial arrays and sampler states
+match within pairs; owner/peer evidence is verified. Preserve this as a
+provisional optimizer candidate and register a longer-horizon comparison before
+changing propagation. [Results and limitations](docs/group-clipping-study.md).
 
 This advances the optimizer line first because of the measured imbalance;
 the separately scoped propagation and persistent-state ideas remain pending.

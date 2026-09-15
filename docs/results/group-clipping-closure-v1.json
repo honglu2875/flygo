@@ -1,0 +1,133 @@
+{
+  "analysis_attempts": [
+    {
+      "path": "runs/group-clipping-analysis-tools-v1/tests.log",
+      "reason": "Flat helper layout lost the scripts namespace for two preexisting test modules; eight other checks passed. No owner audit or scientific inference was started by this attempt.",
+      "status": "failed"
+    },
+    {
+      "change": "Preserve scripts/tests package layout and supply existing worker NumPy dependency path. Identical analysis code, scientific source and trial contracts.",
+      "path": "runs/group-clipping-analysis-tools-v2/tests.log",
+      "status": "passed",
+      "tests": 12
+    }
+  ],
+  "analysis_tests_passed": 12,
+  "archived_owner_files": 216,
+  "archives": [
+    {
+      "bytes": 35706880,
+      "files": 72,
+      "manifest_sha256": "ce52f0b93495eafa572f3767a9ced7abf78c0af0996c3469035f2a44de7ab45a",
+      "owner": 1,
+      "path": "runs/group-clipping-scientific-archive-v1/owner-1/evidence.tar",
+      "peer": 2,
+      "peer_member_verification": {
+        "files": 72,
+        "status": "passed"
+      },
+      "runs": [
+        "clipping-global-seed10-v1",
+        "clipping-parameter-group-seed12-v1"
+      ],
+      "sha256": "a178c7853393cb619f4c97510e003060070ace06804c1184ff9bbd2575f9fdc5",
+      "transfer": {
+        "bytes": 35706880,
+        "sha256": "a178c7853393cb619f4c97510e003060070ace06804c1184ff9bbd2575f9fdc5",
+        "status": "passed"
+      }
+    },
+    {
+      "bytes": 35706880,
+      "files": 72,
+      "manifest_sha256": "50a9e956f2d8e90441f14508f1be58f25cbcd1b36b7b870c9d5035528ac6fd35",
+      "owner": 2,
+      "path": "runs/group-clipping-scientific-archive-v1/owner-2/evidence.tar",
+      "peer": 3,
+      "peer_member_verification": {
+        "files": 72,
+        "status": "passed"
+      },
+      "runs": [
+        "clipping-parameter-group-seed10-v1",
+        "clipping-global-seed11-v1"
+      ],
+      "sha256": "c538f25b56508e022404b93cd87869ff9099559cd124f4d6422cfebdb6b015d0",
+      "transfer": {
+        "bytes": 35706880,
+        "sha256": "c538f25b56508e022404b93cd87869ff9099559cd124f4d6422cfebdb6b015d0",
+        "status": "passed"
+      }
+    },
+    {
+      "bytes": 35706880,
+      "files": 72,
+      "manifest_sha256": "b498c85c7cf5e2708506e0a7c6a9a49899e06711e6593dddcdd6746b2a4ebbe0",
+      "owner": 3,
+      "path": "runs/group-clipping-scientific-archive-v1/owner-3/evidence.tar",
+      "peer": 1,
+      "peer_member_verification": {
+        "files": 72,
+        "status": "passed"
+      },
+      "runs": [
+        "clipping-parameter-group-seed11-v1",
+        "clipping-global-seed12-v1"
+      ],
+      "sha256": "639a6b7415473540c64203f7cac02084b2773f8dae0f65b60a034f564c7dd580",
+      "transfer": {
+        "bytes": 35706880,
+        "sha256": "639a6b7415473540c64203f7cac02084b2773f8dae0f65b60a034f564c7dd580",
+        "status": "passed"
+      }
+    }
+  ],
+  "created": 1789470114.0771153,
+  "decision": {
+    "mean_value_difference": -0.06129720043810037,
+    "mean_value_nonworse": true,
+    "paired_policy_differences": [
+      -0.07608986658970111,
+      -0.08207702738518029,
+      -0.07466327993292626
+    ],
+    "policy_improves_each_seed": true,
+    "provisional_candidate": true,
+    "rule": "Natural validation KL improves in every paired seed, with nonworse mean value MSE; fixed endpoints only."
+  },
+  "endpoint_audits": 6,
+  "full_validation_forward_positions": 422550,
+  "initialization_pairs": 3,
+  "qualification_jax_reference_exposures": 1152,
+  "qualification_native_exposures": 3456,
+  "records": [
+    {
+      "path": "runs/group-clipping-analysis-v1/result.json",
+      "sha256": "4d65c338b0ed62bdd00a2e70a98b80fd0174887a4787e5638d2a31201a92d78f"
+    },
+    {
+      "path": "runs/group-clipping-scientific-archive-v1/result.json",
+      "sha256": "8b2eae13e8f886e1e7509dd98726f122cb9ee4bf82874381c11455e1214e5965"
+    },
+    {
+      "path": "runs/group-clipping-overhead-v1/summary.json",
+      "sha256": "342c56d5a2bbfc838f2c776c241a7f0d55e6cf0146d28787334931884b5329d1"
+    },
+    {
+      "path": "runs/group-clipping-collection-v1/result.json",
+      "sha256": "327601598f071be8466bc2a50ea20c8bcb3f7b81ca201440a99d7890e30a8c82"
+    },
+    {
+      "path": "runs/group-clipping-log-audit-v1/result.json",
+      "sha256": "52b44956d50855741845a713503d6987e9d065545e8fbed31b55601ae6bac0ff"
+    },
+    {
+      "path": "runs/group-clipping-analysis-tools-v2/tests.json",
+      "sha256": "5990cdc141ffd02ab011f35861b09da354ba7666fdf36d4a78013e183324334c"
+    }
+  ],
+  "scientific_update_exposures": 192000,
+  "scope": "All six fixed learning endpoints, owner audits, full validations, confidence metrics, motor probes and inference counts are complete. Raw followups and logs have verified owner/peer archives; initial/final training checkpoint payloads have their own verified replicas. No final-test data, matches or TPU use.",
+  "status": "complete",
+  "synthetic_optimizer_updates": 240
+}
