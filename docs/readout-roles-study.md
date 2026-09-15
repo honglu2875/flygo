@@ -472,9 +472,11 @@ passes eight focused tests and admits all nine actual jobs. The
 [wave 1 launch](../configs/readout-confirmation-wave1-v2.json),
 [wave 2 launch](../configs/readout-confirmation-wave2-v2.json) and
 [analysis contract](../configs/readout-confirmation-analysis-v2.json) bind this
-evidence while preserving the original scientific settings and run IDs. Six
-dense/soma learners have started, with full-validation, signal and arithmetic
-followups. The shuffled controls are queued behind those completed analyses.
+evidence while preserving the original scientific settings and run IDs. All
+nine dense/soma/shuffled endpoints and their full-validation, signal, decoder
+and arithmetic followups are now complete. See the
+[fresh-seed confirmation](readout-confirmation.md): the policy benefit fails
+to replicate, so dense remains the reference.
 
 The first followup deployment stopped before starting any evaluation worker
 because host-specific Python bytecode conflicted during immutable replication.
@@ -490,3 +492,19 @@ three rates on three frozen cores. This larger screen is complete; no recurrent
 equations were changed. It demonstrates that sharp outputs alone do not solve
 the held-out learning problem and motivates separating decoder convergence
 from missing or poorly trained circuit features.
+
+## Confirmation complete
+
+The [complete seeds 7/8/9 report](readout-confirmation.md) evaluates every
+fixed-horizon endpoint. Soma-minus-dense mean KL is **+.01874**, worsening in
+all three seeds; value MSE improves **−.02609**, also in each seed. Soma policy
+is worse than the frozen shuffled control in two of three seeds. The
+registered confirmation therefore fails. Neither mask is promoted, and no
+discovery result or failed numerical attempt is removed.
+
+The renamed queue later failed CPU discovery under housekeeping affinity.
+Direct deployment used the identical frozen helpers and wave plan with
+discovery affinity restored. That failed discovery started no learners.
+All final checkpoints, diagnostics and reports have verified copies.
+The separate [signal/gradient audit](signal-flow-study.md) is complete and
+motivates the next isolated optimizer comparison.

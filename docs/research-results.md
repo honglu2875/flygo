@@ -25,8 +25,10 @@ both improving in every seed at essentially the same mean counted prediction
 FLOPs. Teacher top-move agreement falls .200 percentage points. Soma-side policy
 KL also improves over the frozen shuffled split in every seed; value gains are
 shared by that generic split. The five-cell value restriction has a mixed
-tradeoff: KL −.03468 / MSE +.03730. Dense remains the reference pending registered
-fresh-seed confirmation. This short screen has a different prediction budget
+tradeoff: KL −.03468 / MSE +.03730. The [fresh-seed confirmation](readout-confirmation.md)
+now fails: soma-side worsens KL by **+.01874**, with a worse policy in all three
+fresh seeds despite mean value improvement **−.02609**. Keep dense as reference.
+Both stages are reported separately. This short screen has a different prediction budget
 and does not inherit the CNN comparison below.
 
 The [converged motor-decoder diagnostic](motor-convergence-study.md) completes
@@ -37,6 +39,13 @@ worsens validation to **2.07265**. All numerical optimization-error bounds pass;
 all solver outcomes and 97.42M additional fit exposures are reported. This
 separates optimization and overfitting on a fixed bank; it is not a new
 full-validation or matched-CNN result.
+
+The [signal-flow audit](signal-flow-study.md) independently reproduces the
+existing recurrence and gradients. It finds weak typical visual motor
+responses, much sparser positive motor activity after training, and a large
+imbalance between type-bias gradients and edge optimizer scales. The next
+registered comparison isolates clipping scope; implementation and qualification
+remain pending. This diagnostic adds no validation, match or CNN result.
 
 ## Matched neural control, three seeds
 

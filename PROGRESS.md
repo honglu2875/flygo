@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 07:35 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 08:50 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No advantage over the matched CNN has been established.
@@ -18,7 +18,7 @@ the current spherical/readout screens use a shorter 32k-exposure contract.
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
 | M3: corpus | V0 complete; production stopped | Preserve stop markers; freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | 36 Adam and 27 converged motor fits complete; fresh-seed controls validating | Audit signal/gradient attenuation before changing propagation; soma confirmation is a secondary control |
+| M6: controlled studies | Decoder fits, all nine readout confirmation cases and signal/gradient audits complete | Implement and qualify the registered global-versus-per-group clipping comparison; keep dense and hold propagation fixed |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -40,10 +40,12 @@ the current spherical/readout screens use a shorter 32k-exposure contract.
 | Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | All endpoints, full validation, paired family analysis and signal/cost probes complete |
 | Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | All six endpoints, full validations, motor/cost probes and paired analysis complete |
 | Larger retinal allocation | One current 9×9 board per eye; paired seeds 1/2/3, K8, 32k exposures | All final checkpoints, replicas, full validations, diagnostics and paired analysis complete |
-| External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | All 12 endpoints, audits, probes, counts and four contrasts complete; soma-side is promising |
-| Readout confirmation | Dense / soma-side / same shuffled-side; fresh seeds 7/8/9, 32k exposures | Six dense/soma endpoints and replicas complete; full validation running; shuffled controls queued after those analyses |
+| External readout masks | Dense / five-cell value / soma-side / shuffled-side; fresh seeds 4/5/6 | All 12 discovery endpoints complete; subsequent soma policy confirmation fails |
+| Readout confirmation | Dense / soma-side / same shuffled-side; fresh seeds 7/8/9, 32k exposures | All nine endpoints, replicas, full validations, audits and contrasts complete; retain dense |
 | Motor learnability | Four residual decoders × three rates × three frozen cores; 131,072 head exposures per case | All 36 endpoints and replicas complete; raw mixing helps modestly, tested gating/high rates worsen validation |
 | Motor convergence | Bias-only / standardized linear / gated linear × three ridge penalties × three frozen banks | All 27 fits, original-coordinate audits, paired analysis and second-worker copies complete |
+| Signal and gradient flow | Existing dense seeds 4/5/6, initial/trained; 128 training views and 32 gradient views | All 48 recurrence and 75 VJP group checks pass; reports and 105 owner files replicated |
+| Clipping scope | Global / per-parameter-group, fresh paired seeds 10/11/12, unchanged 32k-exposure contract | Registered; implementation, numerical qualification and training pending |
 | Research notebook | Public `quintic/go9x9` slice → full Rust model → plots → training → held-out KL | All cells execute on CPU; actual outputs included |
 | Persistent state | Separate Rust core primitive and training trajectory audit | Ten core tests pass; model/Python/JAX integration and scientific training remain pending |
 
@@ -53,6 +55,29 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Findings and engineering
 
+- [Fresh-seed readout confirmation](docs/readout-confirmation.md) fails its
+  declared policy conditions. Soma-minus-dense KL is **+.01874**, worsening
+  in all three seeds; value MSE improves **−.02609**, also in all three.
+  Soma policy is worse than shuffled in two seeds. All nine full validations,
+  source/mask/decoder checks and paired contrasts are complete; retain dense.
+  Dense/soma/shuffled means are **1.66656 / 1.68530 / 1.67766** KL. These short
+  K8 studies do not inherit the earlier matched-CNN budget.
+- [Signal and gradient audit](docs/signal-flow-study.md): initial motor visual
+  variation is about **2,322×** smaller than total variation on the fixed
+  probes. Trained motor activity is positive in **16.6–22.7%** of node-position
+  pairs; one motor carries **97.2–99.9%** of summed visual variances. All motors
+  have a two-to-five-hop path from an eye. Native gradients independently
+  reproduce, but most edge Adam denominators are dominated by epsilon, while
+  type-bias gradients dominate the norm. Eight focused tests pass; the summary
+  reproduces byte for byte on another worker. Each audit took 212–227 s on
+  four CPU cores; full arrays have verified second-worker copies.
+- [Next optimizer contract](configs/group-clipping-study-v1.json): compare
+  global and per-group clipping with dense heads, unchanged inputs, equations,
+  rate, epsilon and horizon. This prioritization follows measured gradient
+  scales and the failed readout confirmation. Implementation and qualification
+  precede new training; no propagation change is combined with it. The first
+  signal attempt failed only on an unavailable PyArrow import; its preserved
+  recovery uses a lossless annotation export. TPU stays paused.
 - [Research walkthrough](notebooks/flygo_research_walkthrough.ipynb): 512 training
   and 256 validation positions from 96 downloaded games, with disjoint opening
   families. It explores weights, both spherical eye maps and recurrent signal
@@ -67,17 +92,18 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   validation **2.0042**. Much larger rates yield extremely confident, incorrect
   policies. Raw and standardized linear heads have the same function class;
   this screen does not establish a motor-information limit. The completed
-  convergence followup below separates optimization and overfitting. Next audit
-  circuit signal/gradients before testing a substantial propagation change
-  under the same decoder contract.
+  convergence followup separates optimization and overfitting. The completed
+  circuit signal/gradient audit motivates isolating its optimizer
+  interaction before a separate propagation change.
 - [Complete readout screen](docs/readout-roles-study.md): soma-side minus dense
   mean KL is **−.01401**, MSE **−.06375**, with both losses improving in each of
   three paired seeds. Teacher top-1 falls **.200 pp**. Mean counted B1 FLOPs are
   essentially equal. Soma-side also improves policy KL against the frozen
   shuffled split in all three seeds; the value gain is shared by the generic
   split. The five-cell value arm retains its mixed tradeoff (KL −.03468,
-  MSE +.03730). Keep dense as reference and confirm soma-side before promoting
-  it. All 12 endpoint and decoder audits pass; policy logits reconstruct exactly,
+  MSE +.03730). Dense remains the reference; the fresh-seed confirmation above
+  rejects the provisional soma-side policy benefit.
+  All 12 discovery endpoint and decoder audits pass; policy logits reconstruct exactly,
   value within 1.2e-7. Ten focused analysis tests pass. No CNN benefit is established.
 - [Revised numerical checks](docs/results/readout-confirmation-numerics-v2.json):
   **18/18** numerical and **9/9** exact recovery cases pass. Independent head
@@ -89,8 +115,8 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   constant-peak failures remain failed. The controller now binds both protocols
   and the recovery evidence to the actual jobs; eight focused tests pass. All
   nine cases pass deployment admission, and the six dense/soma learners have
-  completed 1,000 updates with verified initial/final replicas. Full validation
-  is running. The first followup launch stopped before starting workers because
+  completed 1,000 updates with verified initial/final replicas. All nine full
+  validations and final analyses are now complete. The first followup launch stopped before starting workers because
   host-specific Python bytecode conflicted during immutable replication.
   Recovery v2 excludes caches from new bundles and starts six validation waiters;
   learner sources, old artifacts and scientific settings are preserved.
@@ -104,11 +130,12 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   The 153 owner files have verified second-worker copies (about 99.5 MB per
   archive); root stores only small reports. Each nine-fit suite took 648–697 s
   on four pinned CPU cores. [All results](docs/results/motor-convergence-v1.json).
-- The shuffled-side queue is healthy and waits for all six first-wave analyses
-  to finish and release their locks. Its first startup failed because the entry
+- The shuffled-side controls and followups are complete. The queue's first startup failed because the entry
   filename `queue.py` shadowed Python's standard library. Recovery v3 changes
-  only that filename to `worker.py`; the failed attempt and scientific plans
-  are preserved. [Endpoint and launch evidence](docs/results/readout-confirmation-launch-v2.json).
+  that filename to `worker.py`, then failed CPU discovery under housekeeping
+  affinity. Direct deployment from the identical frozen helpers and plan
+  restores discovery affinity before pinning. Neither failure started learners;
+  both attempts and scientific plans are preserved. [Final evidence](docs/results/readout-confirmation-v2.json).
   No TPU is initialized or reserved.
 - [State core and trajectory audit](docs/temporal-vision-study.md): explicit
   Rust initial/final states and their gradients pass ten core tests, including

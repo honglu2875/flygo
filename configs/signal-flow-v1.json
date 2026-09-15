@@ -1,0 +1,33 @@
+{
+  "name": "signal-flow-v1",
+  "environment": "environments/2ba439e309df1e902b58",
+  "dependency_environment": "environments/tpu-ec7b62e32ad49c203cdd",
+  "platform": "cpu",
+  "cpus": [56, 57, 58, 59],
+  "release": "v0-1m",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_mode": "current",
+  "passes": 8,
+  "source_bank": "runs/motor-learnability-v1",
+  "source_plan_sha256": "a3c30c2a1ad2cc70cdb539a06697f719f62d019cabccd5a8c71d4b641a7a7090",
+  "cases": [
+    {"seed": 4, "host": 1, "run_id": "readout-dense-seed4-v1", "bank_sha256": "458354747d210fab889a8a6d580cd9c2672f1dbaec890cf25dc61076c7748bdf"},
+    {"seed": 5, "host": 2, "run_id": "readout-dense-seed5-v1", "bank_sha256": "f379d192765fb718d2962ce84914a622a39213ca57098acdb6bcba3987d3b00f"},
+    {"seed": 6, "host": 3, "run_id": "readout-dense-seed6-v1", "bank_sha256": "ffb98eb0998fdbf15973dcb9cb8348d2d109bea96e143a1c3484c90186a03a96"}
+  ],
+  "checkpoint_steps": [0, 1000],
+  "forward_positions": 128,
+  "gradient_positions": 32,
+  "batch_size": 32,
+  "selection": "First 128 positions in the existing training bank, with its exact fixed D4 views; first 32 for cotangents. Same positions/orientations across seeds. No new sampling search or validation access.",
+  "visual_probe": "Native complete state tapes for actual current-board input and neutral gray eyes, holding the same 84 nonvisual context features fixed. Report absolute response and centered across-position variation; neutral context/image combinations can be out of distribution.",
+  "gradient_cases": ["original-policy", "original-value", "fitted-linear-policy"],
+  "fitted_decoder": "For trained cores only, use the already completed scaled-linear ridge-.01 residual from motor-convergence-v1. Its normalization, centering, coefficients and original-logit residual are unchanged. No fitted decoder is transferred to the initial core.",
+  "adjoint": "FP64 analytical chain rule at native hard-rate state tapes, using independently reconstructed FP32 weights and leaks. Supply matching pooled cotangents through the existing native embedding VJP; compare all edge/type/input/readout-gain gradients before interpreting flow. This is a diagnostic, not a new learner implementation or update qualification.",
+  "native_comparison": {"rtol": 0.003, "atol": 0.000005, "scope": "Same elementwise gradient tolerances as existing CPU qualification; report every discrepancy, norm and relative L2 error. Preserve failures; do not change learner precision or tolerance to pass."},
+  "groups": ["all", "visual_sensors", "context_sensors", "motors", "other", "annotated_superclass"],
+  "reachability": "Directed visual-sensor distance and reverse motor distance, truncated at K-1=7 synaptic hops. A visual-sensitive edge can lie on an allowed path only if d_eye(src)+1+d_motor(dst)<=7. Being on such a path is not proof of functional visual influence.",
+  "metrics": ["node_signal_by_pass", "native_policy_and_value_cotangents_by_pass", "fitted_linear_cotangents_by_pass", "weight_row_L1_L2_effective_fanin", "local_Jacobian_row_sum_bound", "native_gradient_norm_and_support", "changed_parameter_fraction", "Adam_second_moment_epsilon_visibility"],
+  "epsilon": 0.000001,
+  "scope": "Read-only mechanism audit on three existing initial/trained cores and fixed training positions. No topology, input, propagation, parameters, optimizer or sampler changes. No new decoder fits, loss-based selection, final-test examples, playing-strength claims or TPU initialization. Measure signal transfer before registering a propagation intervention."
+}

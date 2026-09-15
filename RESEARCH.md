@@ -95,8 +95,9 @@ new motor identities emerge. All four contrasts retain the
 metrics were inspected, after first-wave training finished. Family intervals
 remain separate from fitted-seed variation; no CNN advantage is established.
 
-Keep dense as the reference and register soma-side as a provisional candidate.
-[Fresh seeds 7/8/9](configs/readout-confirmation-analysis-v1.json) repeat dense,
+Keep dense as the reference. Soma-side was registered as a provisional candidate;
+the [completed fresh-seed confirmation](docs/readout-confirmation.md) now fails
+its policy conditions. [Fresh seeds 7/8/9](configs/readout-confirmation-analysis-v2.json) repeat dense,
 soma-side and the same shuffled-side control under unchanged inputs, equations,
 optimizer and 32k-exposure horizon. All actual numerical/recovery gates precede
 training. Confirmation is separate from discovery, and uses the same validation
@@ -107,9 +108,9 @@ The [original numerical cohort](docs/results/readout-confirmation-gates-v1.json)
 passes seven of nine cases; its two soma-side failures remain recorded. The
 subsequent registered protocol revision passes all 18 numerical and nine
 recovery checks without changing learner source or tolerances. The v2 launch
-contracts bind both constituent protocols; six dense/soma learners now have
-completed endpoints and replicas, and full validation is running. The shuffled
-controls wait for those analyses to finish. Detailed failure history and
+contracts bind both constituent protocols; all nine learners, replicas, full
+validations, decoder audits and paired contrasts are complete. Soma-minus-dense
+KL is +.01874, worsening in each fresh seed; MSE improves −.02609. Detailed failure history and
 operational recoveries are retained below and in the readout study.
 
 The first optimizer/spatial/control batch is complete. The user's next
@@ -743,3 +744,36 @@ reaches training KL .68778 and validation 2.07265; ridge .01 gives validation
 1.54872 versus paired bias-only 1.65879 and original 1.68393. All three seeds
 improve under that middle setting. Preserve the six iteration-limit flags and
 all 97,419,264 solver label exposures. [Complete report and limits](docs/motor-convergence-study.md).
+
+### Signal flow and clipping — 2026-09-15
+
+The [completed mechanism audit](docs/signal-flow-study.md) uses the existing
+dense seeds 4/5/6 at initialization and 1,000 updates, with 128 frozen training
+views and the first 32 for gradients. All 48 recurrence and 75 parameter-group
+VJP comparisons pass. No scientific parameters or moments were changed.
+Forward activity, visual perturbations, intermediate cotangents, weight-row
+statistics and saved Adam second moments are retained on owner and peer.
+
+The initial eye-dependent motor variation is much smaller than total motor
+variation. Training increases its leading response while leaving weak typical
+responses and only 16.6–22.7% of motor node-position pairs positive. Most saved
+edge denominators are epsilon dominated; existing joint-loss diagnostics show
+large type-bias contributions to the gradient norm. Global clipping happens
+before the .01 bias learning-rate multiplier. These observations justify
+testing optimizer scale interactions, not claiming a propagation error or
+adding stronger gates without a control.
+
+[Clipping scope v1](configs/group-clipping-study-v1.json) is registered before
+implementation or training: global versus independent per-parameter-group
+norm clipping at threshold one, fresh paired seeds 10/11/12, 32k exposures,
+unchanged dense readout, input B, K8 hard dynamics, rate, warmup and epsilon.
+Both arms will share one qualified implementation; the legacy global path
+must reproduce its prior behavior, and resume must bind clipping mode.
+Report actual pre-update group norms/factors instead of inferring group
+clipping from the global norm. No TPU work is authorized by this registration.
+
+This advances the optimizer line first because of the measured imbalance;
+the separately scoped propagation and persistent-state ideas remain pending.
+The readout confirmation's failed policy benefit also means soma-side is
+not adopted as an input to this optimizer comparison. No learning gain is
+claimed until the new controlled runs finish.

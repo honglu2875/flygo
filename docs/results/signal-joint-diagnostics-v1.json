@@ -1,0 +1,2347 @@
+{
+  "records": [
+    {
+      "host": 1,
+      "metrics_sha256": "13cabc0124500bd5e661b50d52d9d0c070afea128b02370305b995be088a0e7a",
+      "path": "/dev/shm/flygo/runs/readout-dense-seed4-v1/metrics.jsonl",
+      "records": [
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 1.5546302795410156,
+            "mean": 0.01077647112098024,
+            "step_ratio_quantiles": [
+              0.9467567801475525,
+              0.9992567133903504,
+              1.0,
+              1.0006022453308105,
+              1.07014000415802
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11736,
+              "parameter_norm": 2.4312703003180705,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.9812313482224677,
+              "relative_update": 0.0017073510161256622,
+              "update_max": 0.00035030324943363667,
+              "update_norm": 0.004151885954118597
+            },
+            "edge": {
+              "nonzero_gradients": 15204709,
+              "parameter_norm": 20402.213155520996,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.06009858338523067,
+              "relative_update": 0.00012459504197114398,
+              "update_max": 0.06952142715454102,
+              "update_norm": 2.5420117696626656
+            },
+            "input_gain": {
+              "nonzero_gradients": 3554,
+              "parameter_norm": 12.576771296260608,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.12556258697053596,
+              "relative_update": 0.00694042835499449,
+              "update_max": 0.03997397422790527,
+              "update_norm": 0.08715350907773806
+            },
+            "leak": {
+              "nonzero_gradients": 11736,
+              "parameter_norm": 27.0728440066294,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.008514908360208693,
+              "relative_update": 0.013732760211324638,
+              "update_max": 0.058508098125457764,
+              "update_norm": 0.37121799853867143
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.6256045986961154,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.08985634908180028,
+              "relative_update": 0.03783970442305102,
+              "update_max": 0.017282988876104355,
+              "update_norm": 0.06151928463930424
+            },
+            "policy_weight": {
+              "nonzero_gradients": 96916,
+              "parameter_norm": 48.27483680044999,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.04918888065657613,
+              "relative_update": 0.014747688283635183,
+              "update_max": 0.06687617301940918,
+              "update_norm": 0.7096032828544664
+            },
+            "readout_gain": {
+              "nonzero_gradients": 1244,
+              "parameter_norm": 404.72720833548345,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.04236270748417748,
+              "relative_update": 0.00046903066689908256,
+              "update_max": 0.04803931713104248,
+              "update_norm": 0.1898276912562054
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.04831308126449585,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.024394158273935318,
+              "relative_update": 0.02333427091840788,
+              "update_max": 0.0011542849242687225,
+              "update_norm": 0.0011542849242687225
+            },
+            "value_weight": {
+              "nonzero_gradients": 1244,
+              "parameter_norm": 1.9633508963959259,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.11082640428673743,
+              "relative_update": 0.03318045021414652,
+              "update_max": 0.036237120628356934,
+              "update_norm": 0.0644536313350224
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.955712921591699,
+          "rate_softness": 0.0,
+          "seconds": 2.7476913690043148,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9821804105449304,
+              "max": 0.5770125985145569,
+              "min": -0.5675568580627441,
+              "positive_voltage_fraction": 0.9821804105449304,
+              "rate_max": 0.5770125985145569,
+              "rate_mean": 0.018200011580753215,
+              "rms": 0.03181532568589413
+            },
+            {
+              "active_fraction": 0.9394801646661256,
+              "max": 0.8568394184112549,
+              "min": -0.7616199851036072,
+              "positive_voltage_fraction": 0.9394801646661256,
+              "rate_max": 0.8568394184112549,
+              "rate_mean": 0.02005353199920723,
+              "rms": 0.045637031863407784
+            },
+            {
+              "active_fraction": 0.8090271889875364,
+              "max": 0.9864844083786011,
+              "min": -0.8420063257217407,
+              "positive_voltage_fraction": 0.8090271889875364,
+              "rate_max": 0.9864844083786011,
+              "rate_mean": 0.020421564185428818,
+              "rms": 0.05398922471939909
+            },
+            {
+              "active_fraction": 0.7119521853538596,
+              "max": 1.0847413539886475,
+              "min": -0.8741763234138489,
+              "positive_voltage_fraction": 0.7119521853538596,
+              "rate_max": 1.0847413539886475,
+              "rate_mean": 0.020926129651276115,
+              "rms": 0.05937293484211403
+            },
+            {
+              "active_fraction": 0.6719798467193954,
+              "max": 1.1543166637420654,
+              "min": -0.8917255401611328,
+              "positive_voltage_fraction": 0.6719798467193954,
+              "rate_max": 1.1543166637420654,
+              "rate_mean": 0.021477602142489654,
+              "rms": 0.06300309303053818
+            },
+            {
+              "active_fraction": 0.6531943048170443,
+              "max": 1.1992565393447876,
+              "min": -0.9245599508285522,
+              "positive_voltage_fraction": 0.6531943048170443,
+              "rate_max": 1.1992565393447876,
+              "rate_mean": 0.021991212183846257,
+              "rms": 0.06555313778667379
+            },
+            {
+              "active_fraction": 0.6448546377829726,
+              "max": 1.2282103300094604,
+              "min": -0.9491904973983765,
+              "positive_voltage_fraction": 0.6448546377829726,
+              "rate_max": 1.2282103300094604,
+              "rate_mean": 0.02244696412890156,
+              "rms": 0.06741468861772185
+            },
+            {
+              "active_fraction": 0.6409760661813689,
+              "max": 1.3373925685882568,
+              "min": -0.965837836265564,
+              "positive_voltage_fraction": 0.6409760661813689,
+              "rate_max": 1.3373925685882568,
+              "rate_mean": 0.02284342571586075,
+              "rms": 0.06882159976417578
+            }
+          ],
+          "step": 250,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 1.0722649772640844,
+          "value_saturated_fraction": 0.0
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.381537437438965,
+            "mean": 0.010790983637248704,
+            "step_ratio_quantiles": [
+              0.935534656047821,
+              0.9997634887695312,
+              1.0,
+              1.0002498626708984,
+              1.0461547374725342
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 2.489303499418273,
+              "parameters": 11752,
+              "post_update_gradient_norm": 9.022723444750193,
+              "relative_update": 0.001070818615254828,
+              "update_max": 0.00032037775963544846,
+              "update_norm": 0.0026652484457210853
+            },
+            "edge": {
+              "nonzero_gradients": 15171033,
+              "parameter_norm": 20402.57897521296,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.1619393639790302,
+              "relative_update": 5.1113018759407795e-05,
+              "update_max": 0.06798076629638672,
+              "update_norm": 1.0428376517242013
+            },
+            "input_gain": {
+              "nonzero_gradients": 2249,
+              "parameter_norm": 23.395744612775072,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.1875288605791965,
+              "relative_update": 0.010858348422006342,
+              "update_max": 0.04881131649017334,
+              "update_norm": 0.2540697173486035
+            },
+            "leak": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 34.11026548199661,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.008154467271978147,
+              "relative_update": 0.00430689507471783,
+              "update_max": 0.024877846240997314,
+              "update_norm": 0.14687913316835952
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.8321763255003403,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.1151510774629645,
+              "relative_update": 0.01275833323271376,
+              "update_max": 0.009703658521175385,
+              "update_norm": 0.023326438132736972
+            },
+            "policy_weight": {
+              "nonzero_gradients": 71402,
+              "parameter_norm": 66.01321848628614,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.05975709509868393,
+              "relative_update": 0.007515612980569368,
+              "update_max": 0.05382728576660156,
+              "update_norm": 0.49607802639150017
+            },
+            "readout_gain": {
+              "nonzero_gradients": 1006,
+              "parameter_norm": 404.8597527095372,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.03379434674381302,
+              "relative_update": 0.00016670380770673521,
+              "update_max": 0.019307732582092285,
+              "update_norm": 0.0674918030595903
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.17960520088672638,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.12818685173988342,
+              "relative_update": 0.0035661143699421936,
+              "update_max": 0.0006382167339324951,
+              "update_norm": 0.0006382167339324951
+            },
+            "value_weight": {
+              "nonzero_gradients": 1006,
+              "parameter_norm": 4.3991794585741575,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.11182614468389998,
+              "relative_update": 0.005520516043737307,
+              "update_max": 0.009421110153198242,
+              "update_norm": 0.02421945277427471
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9986706280085457,
+          "rate_softness": 0.0,
+          "seconds": 2.93438445701031,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9611953585833505,
+              "max": 1.7895551919937134,
+              "min": -1.1375395059585571,
+              "positive_voltage_fraction": 0.9611953585833505,
+              "rate_max": 1.7895551919937134,
+              "rate_mean": 0.019316280679959944,
+              "rms": 0.04553748479460556
+            },
+            {
+              "active_fraction": 0.8946320750717651,
+              "max": 2.1604089736938477,
+              "min": -1.4536561965942383,
+              "positive_voltage_fraction": 0.8946320750717651,
+              "rate_max": 2.1604089736938477,
+              "rate_mean": 0.02154456308543405,
+              "rms": 0.06417828806505609
+            },
+            {
+              "active_fraction": 0.7494613830985575,
+              "max": 2.2392804622650146,
+              "min": -1.5411696434020996,
+              "positive_voltage_fraction": 0.7494613830985575,
+              "rate_max": 2.2392804622650146,
+              "rate_mean": 0.022284934910613553,
+              "rms": 0.07448844356669833
+            },
+            {
+              "active_fraction": 0.6567312729375856,
+              "max": 2.2556021213531494,
+              "min": -1.5784090757369995,
+              "positive_voltage_fraction": 0.6567312729375856,
+              "rate_max": 2.2556021213531494,
+              "rate_mean": 0.022999551969295436,
+              "rms": 0.08072535257946
+            },
+            {
+              "active_fraction": 0.6221615684160803,
+              "max": 2.7616159915924072,
+              "min": -1.5965337753295898,
+              "positive_voltage_fraction": 0.6221615684160803,
+              "rate_max": 2.7616159915924072,
+              "rate_mean": 0.023644724913786483,
+              "rms": 0.08480094382604196
+            },
+            {
+              "active_fraction": 0.6072398363028548,
+              "max": 3.843370199203491,
+              "min": -1.6118428707122803,
+              "positive_voltage_fraction": 0.6072398363028548,
+              "rate_max": 3.843370199203491,
+              "rate_mean": 0.024201104377578483,
+              "rms": 0.08767972732143375
+            },
+            {
+              "active_fraction": 0.6004537554050944,
+              "max": 5.167313575744629,
+              "min": -1.6377863883972168,
+              "positive_voltage_fraction": 0.6004537554050944,
+              "rate_max": 5.167313575744629,
+              "rate_mean": 0.024679313964312857,
+              "rms": 0.08991265211865415
+            },
+            {
+              "active_fraction": 0.5972451429851867,
+              "max": 6.808063507080078,
+              "min": -1.653678059577942,
+              "positive_voltage_fraction": 0.5972451429851867,
+              "rate_max": 6.808063507080078,
+              "rate_mean": 0.025090746727462705,
+              "rms": 0.09185794066193634
+            }
+          ],
+          "step": 500,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 14.43030151048734,
+          "value_saturated_fraction": 0.03125
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.338536500930786,
+            "mean": 0.01079333939911987,
+            "step_ratio_quantiles": [
+              0.9784148335456848,
+              0.9998533725738525,
+              1.0,
+              1.000138521194458,
+              1.025486946105957
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11735,
+              "parameter_norm": 2.4974281141849137,
+              "parameters": 11752,
+              "post_update_gradient_norm": 2.3327993927689854,
+              "relative_update": 0.0012567269765818977,
+              "update_max": 0.00015120301395654678,
+              "update_norm": 0.0031386812006911767
+            },
+            "edge": {
+              "nonzero_gradients": 15168859,
+              "parameter_norm": 20402.812829257742,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.10720289372956708,
+              "relative_update": 3.2422864726435675e-05,
+              "update_max": 0.028610706329345703,
+              "update_norm": 0.661517430069923
+            },
+            "input_gain": {
+              "nonzero_gradients": 1962,
+              "parameter_norm": 27.24240278400236,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.13107783388272756,
+              "relative_update": 0.006261096398889878,
+              "update_max": 0.022692322731018066,
+              "update_norm": 0.16998643968427035
+            },
+            "leak": {
+              "nonzero_gradients": 11735,
+              "parameter_norm": 36.73950607229421,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.012414538810789267,
+              "relative_update": 0.0029577990623735713,
+              "update_max": 0.017135024070739746,
+              "update_norm": 0.10868144137406266
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.759412408398674,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.09175161413757155,
+              "relative_update": 0.00480439007577866,
+              "update_max": 0.002705976366996765,
+              "update_norm": 0.008455566354505025
+            },
+            "policy_weight": {
+              "nonzero_gradients": 70952,
+              "parameter_norm": 69.27431947179224,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06847789696702371,
+              "relative_update": 0.002205286245252525,
+              "update_max": 0.01682308316230774,
+              "update_norm": 0.1527481014518915
+            },
+            "readout_gain": {
+              "nonzero_gradients": 913,
+              "parameter_norm": 404.8966646702846,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.06686188522895345,
+              "relative_update": 9.31636790110232e-05,
+              "update_max": 0.012504816055297852,
+              "update_norm": 0.03772159612951744
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.2621692419052124,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.010731962509453297,
+              "relative_update": 0.0025583247440421624,
+              "update_max": 0.0006690025329589844,
+              "update_norm": 0.0006690025329589844
+            },
+            "value_weight": {
+              "nonzero_gradients": 913,
+              "parameter_norm": 5.493788331790289,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.13672503574524517,
+              "relative_update": 0.002395805350474543,
+              "update_max": 0.006106019020080566,
+              "update_norm": 0.01315845804214173
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.988158163499119,
+          "rate_softness": 0.0,
+          "seconds": 2.8300113799923565,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9592685635469531,
+              "max": 2.402820110321045,
+              "min": -1.5954351425170898,
+              "positive_voltage_fraction": 0.9592685635469531,
+              "rate_max": 2.402820110321045,
+              "rate_mean": 0.01994767014055787,
+              "rms": 0.05222229400837084
+            },
+            {
+              "active_fraction": 0.882503921343007,
+              "max": 2.744076728820801,
+              "min": -1.8833118677139282,
+              "positive_voltage_fraction": 0.882503921343007,
+              "rate_max": 2.744076728820801,
+              "rate_mean": 0.022434217838092418,
+              "rms": 0.073246929270532
+            },
+            {
+              "active_fraction": 0.7192757476290258,
+              "max": 2.792879343032837,
+              "min": -1.9421143531799316,
+              "positive_voltage_fraction": 0.7192757476290258,
+              "rate_max": 2.792879343032837,
+              "rate_mean": 0.02343040575947549,
+              "rms": 0.08476878188223316
+            },
+            {
+              "active_fraction": 0.6405865814367558,
+              "max": 2.799360752105713,
+              "min": -1.9768205881118774,
+              "positive_voltage_fraction": 0.6405865814367558,
+              "rate_max": 2.799360752105713,
+              "rate_mean": 0.024336497343718604,
+              "rms": 0.09172012344029623
+            },
+            {
+              "active_fraction": 0.6104183573357881,
+              "max": 3.712380886077881,
+              "min": -1.994033932685852,
+              "positive_voltage_fraction": 0.6104183573357881,
+              "rate_max": 3.712380886077881,
+              "rate_mean": 0.025105065203848236,
+              "rms": 0.09626466151198901
+            },
+            {
+              "active_fraction": 0.5961444416855416,
+              "max": 5.386545181274414,
+              "min": -2.0050711631774902,
+              "positive_voltage_fraction": 0.5961444416855416,
+              "rate_max": 5.386545181274414,
+              "rate_mean": 0.025748367860702472,
+              "rms": 0.09947358853863744
+            },
+            {
+              "active_fraction": 0.5893138860963408,
+              "max": 7.700726509094238,
+              "min": -2.051353693008423,
+              "positive_voltage_fraction": 0.5893138860963408,
+              "rate_max": 7.700726509094238,
+              "rate_mean": 0.026291782743195567,
+              "rms": 0.10194740260028674
+            },
+            {
+              "active_fraction": 0.58576272392534,
+              "max": 10.562213897705078,
+              "min": -2.0791268348693848,
+              "positive_voltage_fraction": 0.58576272392534,
+              "rate_max": 10.562213897705078,
+              "rate_mean": 0.026756290530234098,
+              "rms": 0.1040863071676815
+            }
+          ],
+          "step": 750,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 8.847091818379559,
+          "value_saturated_fraction": 0.125
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.360569715499878,
+            "mean": 0.010798897447869868,
+            "step_ratio_quantiles": [
+              0.9721220135688782,
+              0.9998400211334229,
+              1.0,
+              1.0001393556594849,
+              1.041463017463684
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 2.5131299584238724,
+              "parameters": 11752,
+              "post_update_gradient_norm": 42.02149567010562,
+              "relative_update": 0.0007545283887448905,
+              "update_max": 0.00029325857758522034,
+              "update_norm": 0.0018962155270477613
+            },
+            "edge": {
+              "nonzero_gradients": 15151708,
+              "parameter_norm": 20402.90080876478,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.5282801602915598,
+              "relative_update": 3.980175059185987e-05,
+              "update_max": 0.04173111915588379,
+              "update_norm": 0.8120710321658341
+            },
+            "input_gain": {
+              "nonzero_gradients": 1996,
+              "parameter_norm": 28.676625720764616,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.3187669158100611,
+              "relative_update": 0.004120625140561092,
+              "update_max": 0.02410268783569336,
+              "update_norm": 0.11809132308558047
+            },
+            "leak": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 38.70407187750654,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.019378975868967474,
+              "relative_update": 0.0031024240276258407,
+              "update_max": 0.031368136405944824,
+              "update_norm": 0.119992005520639
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.860965436668643,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.09110305482179452,
+              "relative_update": 0.011754537814136441,
+              "update_max": 0.008222460746765137,
+              "update_norm": 0.0218482198819056
+            },
+            "policy_weight": {
+              "nonzero_gradients": 65549,
+              "parameter_norm": 73.56985204115401,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.07107621304087454,
+              "relative_update": 0.003995621895486583,
+              "update_max": 0.0328122079372406,
+              "update_norm": 0.2938331526524978
+            },
+            "readout_gain": {
+              "nonzero_gradients": 863,
+              "parameter_norm": 404.9138051270627,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.12121918511395073,
+              "relative_update": 0.00015511484130740014,
+              "update_max": 0.018101990222930908,
+              "update_norm": 0.06280809209168922
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.31137406826019287,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.40778154134750366,
+              "relative_update": 0.0003828999688911728,
+              "update_max": 0.00011917948722839355,
+              "update_norm": 0.00011917948722839355
+            },
+            "value_weight": {
+              "nonzero_gradients": 863,
+              "parameter_norm": 6.186618659515707,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.14796569829335,
+              "relative_update": 0.0033618404999591054,
+              "update_max": 0.008627677336335182,
+              "update_norm": 0.020784227348278957
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9996618591535835,
+          "rate_softness": 0.0,
+          "seconds": 2.5084454669849947,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9618371189181333,
+              "max": 2.4685184955596924,
+              "min": -1.6814080476760864,
+              "positive_voltage_fraction": 0.9618371189181333,
+              "rate_max": 2.4685184955596924,
+              "rate_mean": 0.018996947370489622,
+              "rms": 0.05271379853991659
+            },
+            {
+              "active_fraction": 0.8814531831009799,
+              "max": 2.864790916442871,
+              "min": -1.9246582984924316,
+              "positive_voltage_fraction": 0.8814531831009799,
+              "rate_max": 2.864790916442871,
+              "rate_mean": 0.020823601011742975,
+              "rms": 0.07333460513008845
+            },
+            {
+              "active_fraction": 0.7201574820435799,
+              "max": 2.9320130348205566,
+              "min": -1.983780026435852,
+              "positive_voltage_fraction": 0.7201574820435799,
+              "rate_max": 2.9320130348205566,
+              "rate_mean": 0.021359870590159077,
+              "rms": 0.08437625294766957
+            },
+            {
+              "active_fraction": 0.6410360597013117,
+              "max": 2.9432475566864014,
+              "min": -2.0587494373321533,
+              "positive_voltage_fraction": 0.6410360597013117,
+              "rate_max": 2.9432475566864014,
+              "rate_mean": 0.021929313175768864,
+              "rms": 0.0909698753364024
+            },
+            {
+              "active_fraction": 0.6099488181465825,
+              "max": 3.916428327560425,
+              "min": -2.1370301246643066,
+              "positive_voltage_fraction": 0.6099488181465825,
+              "rate_max": 3.916428327560425,
+              "rate_mean": 0.022458167992376838,
+              "rms": 0.09530490648353773
+            },
+            {
+              "active_fraction": 0.5950704252007607,
+              "max": 6.110082149505615,
+              "min": -2.195460319519043,
+              "positive_voltage_fraction": 0.5950704252007607,
+              "rate_max": 6.110082149505615,
+              "rate_mean": 0.0229285138819588,
+              "rms": 0.09848503550692089
+            },
+            {
+              "active_fraction": 0.5875810764162256,
+              "max": 9.444470405578613,
+              "min": -2.220442056655884,
+              "positive_voltage_fraction": 0.5875810764162256,
+              "rate_max": 9.444470405578613,
+              "rate_mean": 0.023349543549920117,
+              "rms": 0.10122206425380241
+            },
+            {
+              "active_fraction": 0.5834858089776045,
+              "max": 14.084449768066406,
+              "min": -2.2228779792785645,
+              "positive_voltage_fraction": 0.5834858089776045,
+              "rate_max": 14.084449768066406,
+              "rate_mean": 0.023732813406779654,
+              "rms": 0.10422347882360573
+            }
+          ],
+          "step": 1000,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 43.90908092996572,
+          "value_saturated_fraction": 0.1875
+        }
+      ],
+      "seed": 4
+    },
+    {
+      "host": 2,
+      "metrics_sha256": "69e633f5aa1e447ca8df9fefd3a11fe0b6169b35d30fd8f0c751551a490a6e16",
+      "path": "/dev/shm/flygo/runs/readout-dense-seed5-v1/metrics.jsonl",
+      "records": [
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 1.838102102279663,
+            "mean": 0.01077876106598484,
+            "step_ratio_quantiles": [
+              0.9431756138801575,
+              0.9994117617607117,
+              1.0,
+              1.0005288124084473,
+              1.0847530364990234
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 2.4137834614612865,
+              "parameters": 11752,
+              "post_update_gradient_norm": 2.6021193334258146,
+              "relative_update": 0.002273805266011009,
+              "update_max": 0.0007301736623048782,
+              "update_norm": 0.005488077064145565
+            },
+            "edge": {
+              "nonzero_gradients": 15205955,
+              "parameter_norm": 20402.463259243646,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.035777129947740655,
+              "relative_update": 0.00010849023043783345,
+              "update_max": 0.08346748352050781,
+              "update_norm": 2.2134680252478844
+            },
+            "input_gain": {
+              "nonzero_gradients": 3266,
+              "parameter_norm": 16.45044587518974,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.08616098970041974,
+              "relative_update": 0.0242441923646001,
+              "update_max": 0.05771791934967041,
+              "update_norm": 0.39756618968456553
+            },
+            "leak": {
+              "nonzero_gradients": 11733,
+              "parameter_norm": 29.053576267462994,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.004001659320784255,
+              "relative_update": 0.010029077532849102,
+              "update_max": 0.07289206981658936,
+              "update_norm": 0.2908348398608504
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.4814860997925046,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.08682778153563532,
+              "relative_update": 0.031678342106806555,
+              "update_max": 0.013711288571357727,
+              "update_norm": 0.0467156224886286
+            },
+            "policy_weight": {
+              "nonzero_gradients": 104819,
+              "parameter_norm": 49.937993719398555,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.039965998464915206,
+              "relative_update": 0.01133317492282768,
+              "update_max": 0.05304670333862305,
+              "update_norm": 0.5646293748075614
+            },
+            "readout_gain": {
+              "nonzero_gradients": 1354,
+              "parameter_norm": 404.77463743523265,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.01815383954359071,
+              "relative_update": 0.00037924501887968146,
+              "update_max": 0.06053805351257324,
+              "update_norm": 0.15350845957526307
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.041133273392915726,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.19825443625450134,
+              "relative_update": 0.09772037909509092,
+              "update_max": 0.0036617331206798553,
+              "update_norm": 0.0036617331206798553
+            },
+            "value_weight": {
+              "nonzero_gradients": 1354,
+              "parameter_norm": 2.2833210166369806,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.04940286310238211,
+              "relative_update": 0.028999584565071564,
+              "update_max": 0.046442508697509766,
+              "update_norm": 0.06548279061477816
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9912265424827731,
+          "rate_softness": 0.0,
+          "seconds": 2.7937995420070365,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9846420374026478,
+              "max": 1.4580705165863037,
+              "min": -0.5936431288719177,
+              "positive_voltage_fraction": 0.9846420374026478,
+              "rate_max": 1.4580705165863037,
+              "rate_mean": 0.018483678001582002,
+              "rms": 0.03291585562250857
+            },
+            {
+              "active_fraction": 0.9343169368709197,
+              "max": 1.7611819505691528,
+              "min": -0.74220871925354,
+              "positive_voltage_fraction": 0.9343169368709197,
+              "rate_max": 1.7611819505691528,
+              "rate_mean": 0.0201539910971444,
+              "rms": 0.045582985752274374
+            },
+            {
+              "active_fraction": 0.8217352169910732,
+              "max": 1.8735837936401367,
+              "min": -0.8013925552368164,
+              "positive_voltage_fraction": 0.8217352169910732,
+              "rate_max": 1.8735837936401367,
+              "rate_mean": 0.020550019938740557,
+              "rms": 0.053240791747650146
+            },
+            {
+              "active_fraction": 0.7381455075641041,
+              "max": 1.8991247415542603,
+              "min": -0.8288744688034058,
+              "positive_voltage_fraction": 0.7381455075641041,
+              "rate_max": 1.8991247415542603,
+              "rate_mean": 0.02098877786424145,
+              "rms": 0.058091359609654274
+            },
+            {
+              "active_fraction": 0.6984530756047044,
+              "max": 1.9049032926559448,
+              "min": -0.8543151617050171,
+              "positive_voltage_fraction": 0.6984530756047044,
+              "rate_max": 1.9049032926559448,
+              "rate_mean": 0.021469422644840416,
+              "rms": 0.06134158664570407
+            },
+            {
+              "active_fraction": 0.6810390574847688,
+              "max": 1.9062252044677734,
+              "min": -0.8723452091217041,
+              "positive_voltage_fraction": 0.6810390574847688,
+              "rate_max": 1.9062252044677734,
+              "rate_mean": 0.02192930777360849,
+              "rms": 0.06362657176485764
+            },
+            {
+              "active_fraction": 0.6733224146388731,
+              "max": 1.9065399169921875,
+              "min": -0.8789395093917847,
+              "positive_voltage_fraction": 0.6733224146388731,
+              "rate_max": 1.9065399169921875,
+              "rate_mean": 0.02234546312063118,
+              "rms": 0.06530194989368018
+            },
+            {
+              "active_fraction": 0.6694481958794104,
+              "max": 1.906630039215088,
+              "min": -0.8812998533248901,
+              "positive_voltage_fraction": 0.6694481958794104,
+              "rate_max": 1.906630039215088,
+              "rate_mean": 0.022711965540235413,
+              "rms": 0.06657567668999431
+            }
+          ],
+          "step": 250,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 1.8758867922127767,
+          "value_saturated_fraction": 0.0
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.04032564163208,
+            "mean": 0.010789622985336289,
+            "step_ratio_quantiles": [
+              0.9608549475669861,
+              0.9997870922088623,
+              1.0,
+              1.0002199411392212,
+              1.0544530153274536
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11731,
+              "parameter_norm": 2.449122997841755,
+              "parameters": 11752,
+              "post_update_gradient_norm": 8.602001492189117,
+              "relative_update": 0.0008368126679312221,
+              "update_max": 0.00015460699796676636,
+              "update_norm": 0.002049308114067564
+            },
+            "edge": {
+              "nonzero_gradients": 15196233,
+              "parameter_norm": 20402.82805882308,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.1461217444119337,
+              "relative_update": 4.882835007825313e-05,
+              "update_max": 0.053202152252197266,
+              "update_norm": 0.9962363628185151
+            },
+            "input_gain": {
+              "nonzero_gradients": 2841,
+              "parameter_norm": 26.49083265791971,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.10444862553522069,
+              "relative_update": 0.0098608171051606,
+              "update_max": 0.0397418737411499,
+              "update_norm": 0.26043076466391263
+            },
+            "leak": {
+              "nonzero_gradients": 11731,
+              "parameter_norm": 32.08136036279876,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.009317342183702363,
+              "relative_update": 0.004029026644825613,
+              "update_max": 0.019823729991912842,
+              "update_norm": 0.12928954641931392
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.3603363089377685,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.09648473968462373,
+              "relative_update": 0.011091002304532607,
+              "update_max": 0.004873096942901611,
+              "update_norm": 0.015105020305752993
+            },
+            "policy_weight": {
+              "nonzero_gradients": 77153,
+              "parameter_norm": 54.87236229138792,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06158840318878981,
+              "relative_update": 0.005357115223565189,
+              "update_max": 0.03577220439910889,
+              "update_norm": 0.29391264624478186
+            },
+            "readout_gain": {
+              "nonzero_gradients": 1015,
+              "parameter_norm": 404.83998349026444,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.057982394416545305,
+              "relative_update": 0.00015083581494958946,
+              "update_max": 0.016316115856170654,
+              "update_norm": 0.06106439710316318
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.43130794167518616,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.16732004284858704,
+              "relative_update": 0.002718620555384844,
+              "update_max": 0.0011693835258483887,
+              "update_norm": 0.0011693835258483887
+            },
+            "value_weight": {
+              "nonzero_gradients": 1015,
+              "parameter_norm": 4.007460142711676,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.11770220117736681,
+              "relative_update": 0.008020673070042976,
+              "update_max": 0.020236730575561523,
+              "update_norm": 0.03206304302815849
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9987762437808196,
+          "rate_softness": 0.0,
+          "seconds": 2.7791571950074285,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9772581030995264,
+              "max": 1.9709316492080688,
+              "min": -1.2081259489059448,
+              "positive_voltage_fraction": 0.9772581030995264,
+              "rate_max": 1.9709316492080688,
+              "rate_mean": 0.0195632681623204,
+              "rms": 0.043129183810363146
+            },
+            {
+              "active_fraction": 0.8900031113358607,
+              "max": 2.2108259201049805,
+              "min": -1.5059378147125244,
+              "positive_voltage_fraction": 0.8900031113358607,
+              "rate_max": 2.2108259201049805,
+              "rate_mean": 0.02143482608474015,
+              "rms": 0.05918489797565711
+            },
+            {
+              "active_fraction": 0.7476063153304829,
+              "max": 2.2876687049865723,
+              "min": -1.6075165271759033,
+              "positive_voltage_fraction": 0.7476063153304829,
+              "rate_max": 2.2876687049865723,
+              "rate_mean": 0.022463419626721434,
+              "rms": 0.06893727363589841
+            },
+            {
+              "active_fraction": 0.6811247895495451,
+              "max": 2.3032596111297607,
+              "min": -1.649813175201416,
+              "positive_voltage_fraction": 0.6811247895495451,
+              "rate_max": 2.3032596111297607,
+              "rate_mean": 0.023404698584941236,
+              "rms": 0.07500434978625423
+            },
+            {
+              "active_fraction": 0.6508025126875886,
+              "max": 2.307515859603882,
+              "min": -1.6679736375808716,
+              "positive_voltage_fraction": 0.6508025126875886,
+              "rate_max": 2.307515859603882,
+              "rate_mean": 0.02420961691310477,
+              "rms": 0.07904127577255182
+            },
+            {
+              "active_fraction": 0.6361756383159118,
+              "max": 2.308922290802002,
+              "min": -1.6910438537597656,
+              "positive_voltage_fraction": 0.6361756383159118,
+              "rate_max": 2.308922290802002,
+              "rate_mean": 0.024878875112610145,
+              "rms": 0.08186332277804961
+            },
+            {
+              "active_fraction": 0.6288142252395199,
+              "max": 2.30944561958313,
+              "min": -1.7054271697998047,
+              "positive_voltage_fraction": 0.6288142252395199,
+              "rate_max": 2.30944561958313,
+              "rate_mean": 0.025435648126549047,
+              "rms": 0.0839189549667035
+            },
+            {
+              "active_fraction": 0.6249301652717385,
+              "max": 2.3096461296081543,
+              "min": -1.7124552726745605,
+              "positive_voltage_fraction": 0.6249301652717385,
+              "rate_max": 2.3096461296081543,
+              "rate_mean": 0.025900980264381136,
+              "rms": 0.08546821196895021
+            }
+          ],
+          "step": 500,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 16.908525292916448,
+          "value_saturated_fraction": 0.0
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 3.640209913253784,
+            "mean": 0.010796722657304464,
+            "step_ratio_quantiles": [
+              0.963532030582428,
+              0.9998789429664612,
+              1.0,
+              1.0001157522201538,
+              1.0289126634597778
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 2.46787559116454,
+              "parameters": 11752,
+              "post_update_gradient_norm": 24.755107295027884,
+              "relative_update": 0.0009473296958886815,
+              "update_max": 0.00035664811730384827,
+              "update_norm": 0.002337910306891352
+            },
+            "edge": {
+              "nonzero_gradients": 15191252,
+              "parameter_norm": 20403.141316615027,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.45394728469845497,
+              "relative_update": 3.515548981513604e-05,
+              "update_max": 0.03729677200317383,
+              "update_norm": 0.7172825060927064
+            },
+            "input_gain": {
+              "nonzero_gradients": 2670,
+              "parameter_norm": 30.465747984633346,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.23004138674323635,
+              "relative_update": 0.0057214598033038895,
+              "update_max": 0.03878280520439148,
+              "update_norm": 0.1746474637522738
+            },
+            "leak": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 34.057364949246455,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.02826830949328106,
+              "relative_update": 0.0026606467261301742,
+              "update_max": 0.01213979721069336,
+              "update_norm": 0.09061515958686872
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.352199229666589,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.08657151629937913,
+              "relative_update": 0.006856435897699218,
+              "update_max": 0.0038765445351600647,
+              "update_norm": 0.00926285960071704
+            },
+            "policy_weight": {
+              "nonzero_gradients": 73601,
+              "parameter_norm": 59.596720632400256,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.07034887558820953,
+              "relative_update": 0.002510062057150305,
+              "update_max": 0.014610882848501205,
+              "update_norm": 0.14955328313856925
+            },
+            "readout_gain": {
+              "nonzero_gradients": 957,
+              "parameter_norm": 404.8440485036396,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.1871973418777218,
+              "relative_update": 9.856035784964201e-05,
+              "update_max": 0.015420198440551758,
+              "update_norm": 0.0399015780644359
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.5169854164123535,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.30167675018310547,
+              "relative_update": 0.0008020240220133821,
+              "update_max": 0.00041496753692626953,
+              "update_norm": 0.00041496753692626953
+            },
+            "value_weight": {
+              "nonzero_gradients": 957,
+              "parameter_norm": 4.969784853694484,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.22304932340800643,
+              "relative_update": 0.0028760059317969842,
+              "update_max": 0.007193565368652344,
+              "update_norm": 0.01430342397918883
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9992694287721658,
+          "rate_softness": 0.0,
+          "seconds": 2.7464922179933637,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9740867737188261,
+              "max": 2.1436564922332764,
+              "min": -1.4090572595596313,
+              "positive_voltage_fraction": 0.9740867737188261,
+              "rate_max": 2.1436564922332764,
+              "rate_mean": 0.02005519810270476,
+              "rms": 0.04745341621490539
+            },
+            {
+              "active_fraction": 0.8741402190501568,
+              "max": 2.414752960205078,
+              "min": -1.7473626136779785,
+              "positive_voltage_fraction": 0.8741402190501568,
+              "rate_max": 2.414752960205078,
+              "rate_mean": 0.021984192518698858,
+              "rms": 0.06445490114247521
+            },
+            {
+              "active_fraction": 0.7295024663582079,
+              "max": 2.4852235317230225,
+              "min": -1.858713150024414,
+              "positive_voltage_fraction": 0.7295024663582079,
+              "rate_max": 2.4852235317230225,
+              "rate_mean": 0.023170454320769016,
+              "rms": 0.07478648718293272
+            },
+            {
+              "active_fraction": 0.6658421500466322,
+              "max": 2.509721517562866,
+              "min": -1.90350341796875,
+              "positive_voltage_fraction": 0.6658421500466322,
+              "rate_max": 2.509721517562866,
+              "rate_mean": 0.024215054942537246,
+              "rms": 0.08118487200884705
+            },
+            {
+              "active_fraction": 0.6377400119305725,
+              "max": 2.519402027130127,
+              "min": -1.9221693277359009,
+              "positive_voltage_fraction": 0.6377400119305725,
+              "rate_max": 2.519402027130127,
+              "rate_mean": 0.025099137056243406,
+              "rms": 0.08547294073403996
+            },
+            {
+              "active_fraction": 0.6246360645462143,
+              "max": 2.5218021869659424,
+              "min": -1.9414970874786377,
+              "positive_voltage_fraction": 0.6246360645462143,
+              "rate_max": 2.5218021869659424,
+              "rate_mean": 0.025829985567137528,
+              "rms": 0.08851202202780652
+            },
+            {
+              "active_fraction": 0.6180589200712201,
+              "max": 2.808006763458252,
+              "min": -1.9557485580444336,
+              "positive_voltage_fraction": 0.6180589200712201,
+              "rate_max": 2.808006763458252,
+              "rate_mean": 0.026436906884917705,
+              "rms": 0.09076404078365884
+            },
+            {
+              "active_fraction": 0.6144795590533061,
+              "max": 3.305487871170044,
+              "min": -1.962572455406189,
+              "positive_voltage_fraction": 0.6144795590533061,
+              "rate_max": 3.305487871170044,
+              "rate_mean": 0.02694475772973302,
+              "rms": 0.09249674377059383
+            }
+          ],
+          "step": 750,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 13.661843236148924,
+          "value_saturated_fraction": 0.125
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 4.329373836517334,
+            "mean": 0.010802675646094436,
+            "step_ratio_quantiles": [
+              0.97452712059021,
+              0.9999038577079773,
+              1.0,
+              1.0000852346420288,
+              1.0257093906402588
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11731,
+              "parameter_norm": 2.4773105506033595,
+              "parameters": 11752,
+              "post_update_gradient_norm": 50.954789799805006,
+              "relative_update": 0.000496347222602913,
+              "update_max": 0.00016699358820915222,
+              "update_norm": 0.0012296036060680002
+            },
+            "edge": {
+              "nonzero_gradients": 15193706,
+              "parameter_norm": 20403.42996641299,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.6693096114539514,
+              "relative_update": 2.508310974629587e-05,
+              "update_max": 0.02607068419456482,
+              "update_norm": 0.5117814748588922
+            },
+            "input_gain": {
+              "nonzero_gradients": 2596,
+              "parameter_norm": 33.35689632269459,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.4763895703360768,
+              "relative_update": 0.003117664078431967,
+              "update_max": 0.020051002502441406,
+              "update_norm": 0.10411013550525465
+            },
+            "leak": {
+              "nonzero_gradients": 11731,
+              "parameter_norm": 36.320590053951065,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.040845704381993475,
+              "relative_update": 0.0018689956455664215,
+              "update_max": 0.010166406631469727,
+              "update_norm": 0.06786742795652316
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.3760806558054168,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.09603815521228357,
+              "relative_update": 0.006218934503895049,
+              "update_max": 0.004846811294555664,
+              "update_norm": 0.008555609202842374
+            },
+            "policy_weight": {
+              "nonzero_gradients": 74292,
+              "parameter_norm": 64.43133682211513,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06459960635843609,
+              "relative_update": 0.002095165708749639,
+              "update_max": 0.020144939422607422,
+              "update_norm": 0.13496834819660286
+            },
+            "readout_gain": {
+              "nonzero_gradients": 981,
+              "parameter_norm": 404.8878227869238,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.20412415848122453,
+              "relative_update": 7.890205352069747e-05,
+              "update_max": 0.007057547569274902,
+              "update_norm": 0.031946459483147255
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.5783259868621826,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.523283064365387,
+              "relative_update": 0.0004006556783232503,
+              "update_max": 0.00023180246353149414,
+              "update_norm": 0.00023180246353149414
+            },
+            "value_weight": {
+              "nonzero_gradients": 981,
+              "parameter_norm": 5.554282095861285,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.33956834063865865,
+              "relative_update": 0.0018955651690603836,
+              "update_max": 0.002512708306312561,
+              "update_norm": 0.01052757267447905
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9995685155850268,
+          "rate_softness": 0.0,
+          "seconds": 2.4916454699996393,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9714430845072128,
+              "max": 2.159215211868286,
+              "min": -1.409182071685791,
+              "positive_voltage_fraction": 0.9714430845072128,
+              "rate_max": 2.159215211868286,
+              "rate_mean": 0.020954193845661502,
+              "rms": 0.05443382588631402
+            },
+            {
+              "active_fraction": 0.8500818712830513,
+              "max": 2.430790424346924,
+              "min": -1.7496676445007324,
+              "positive_voltage_fraction": 0.8500818712830513,
+              "rate_max": 2.430790424346924,
+              "rate_mean": 0.022971443399008994,
+              "rms": 0.07331722016615445
+            },
+            {
+              "active_fraction": 0.712590539116532,
+              "max": 2.5184338092803955,
+              "min": -1.8613698482513428,
+              "positive_voltage_fraction": 0.712590539116532,
+              "rate_max": 2.5184338092803955,
+              "rate_mean": 0.024496705441966304,
+              "rms": 0.0850321260969224
+            },
+            {
+              "active_fraction": 0.6595063044294521,
+              "max": 2.53786563873291,
+              "min": -1.905301570892334,
+              "positive_voltage_fraction": 0.6595063044294521,
+              "rate_max": 2.53786563873291,
+              "rate_mean": 0.025702969238085595,
+              "rms": 0.092177126750584
+            },
+            {
+              "active_fraction": 0.6333447768922372,
+              "max": 3.284606456756592,
+              "min": -1.9328193664550781,
+              "positive_voltage_fraction": 0.6333447768922372,
+              "rate_max": 3.284606456756592,
+              "rate_mean": 0.026689695760521645,
+              "rms": 0.09695957168725113
+            },
+            {
+              "active_fraction": 0.6204336793401243,
+              "max": 3.8852298259735107,
+              "min": -1.9581530094146729,
+              "positive_voltage_fraction": 0.6204336793401243,
+              "rate_max": 3.8852298259735107,
+              "rate_mean": 0.027493361758686455,
+              "rms": 0.10034069589748937
+            },
+            {
+              "active_fraction": 0.6140790975763375,
+              "max": 4.359039306640625,
+              "min": -1.9752728939056396,
+              "positive_voltage_fraction": 0.6140790975763375,
+              "rate_max": 4.359039306640625,
+              "rate_mean": 0.028158146082759038,
+              "rms": 0.10283909259498258
+            },
+            {
+              "active_fraction": 0.6106202913603275,
+              "max": 4.750336170196533,
+              "min": -2.0469119548797607,
+              "positive_voltage_fraction": 0.6106202913603275,
+              "rate_max": 4.750336170196533,
+              "rate_mean": 0.0287135696757741,
+              "rms": 0.10474836259211363
+            }
+          ],
+          "step": 1000,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 62.42777462801508,
+          "value_saturated_fraction": 0.0625
+        }
+      ],
+      "seed": 5
+    },
+    {
+      "host": 3,
+      "metrics_sha256": "c316b77495dbc14ecdc3a1ab5ee19a3353c980c12c8ddb78cec3d91ca86219ad",
+      "path": "/dev/shm/flygo/runs/readout-dense-seed6-v1/metrics.jsonl",
+      "records": [
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 1.8186581134796143,
+            "mean": 0.010776321880847947,
+            "step_ratio_quantiles": [
+              0.9530183672904968,
+              0.9988089203834534,
+              1.0,
+              1.000929832458496,
+              1.058609962463379
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11742,
+              "parameter_norm": 2.4093510030355847,
+              "parameters": 11752,
+              "post_update_gradient_norm": 1.0945877986521773,
+              "relative_update": 0.0028193064341335786,
+              "update_max": 0.00035037286579608917,
+              "update_norm": 0.006797329244342854
+            },
+            "edge": {
+              "nonzero_gradients": 15212798,
+              "parameter_norm": 20402.72756153579,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.0796719140276179,
+              "relative_update": 0.00013797713407914932,
+              "update_max": 0.06093037128448486,
+              "update_norm": 2.8151042376736424
+            },
+            "input_gain": {
+              "nonzero_gradients": 3559,
+              "parameter_norm": 13.228281025478921,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.08801304486944206,
+              "relative_update": 0.006169008892572213,
+              "update_max": 0.022199124097824097,
+              "update_norm": 0.08147387310339421
+            },
+            "leak": {
+              "nonzero_gradients": 11742,
+              "parameter_norm": 30.92050232807806,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.006985477301474955,
+              "relative_update": 0.012065229777107757,
+              "update_max": 0.04342472553253174,
+              "update_norm": 0.3727543231820039
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.3786635889769152,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.10078890304930722,
+              "relative_update": 0.03088734630786127,
+              "update_max": 0.02253417670726776,
+              "update_norm": 0.04278369170586116
+            },
+            "policy_weight": {
+              "nonzero_gradients": 120860,
+              "parameter_norm": 50.039449051340696,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.05576881189230838,
+              "relative_update": 0.012432743793232406,
+              "update_max": 0.04871761053800583,
+              "update_norm": 0.6204344599124948
+            },
+            "readout_gain": {
+              "nonzero_gradients": 1534,
+              "parameter_norm": 404.915973490227,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.047687145753283686,
+              "relative_update": 0.0004300710409700211,
+              "update_max": 0.04101419448852539,
+              "update_norm": 0.1741408464573765
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.09057024866342545,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.15447303652763367,
+              "relative_update": 0.04542743590914513,
+              "update_max": 0.003935590386390686,
+              "update_norm": 0.003935590386390686
+            },
+            "value_weight": {
+              "nonzero_gradients": 1534,
+              "parameter_norm": 3.037775590595935,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.11247835013682256,
+              "relative_update": 0.01904016478207361,
+              "update_max": 0.021656572818756104,
+              "update_norm": 0.057673267093620695
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9476409645334898,
+          "rate_softness": 0.0,
+          "seconds": 2.820483713003341,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9827107002701033,
+              "max": 0.6487511396408081,
+              "min": -0.6610802412033081,
+              "positive_voltage_fraction": 0.9827107002701033,
+              "rate_max": 0.6487511396408081,
+              "rate_mean": 0.01831285679948116,
+              "rms": 0.03377976601456797
+            },
+            {
+              "active_fraction": 0.9444666292196073,
+              "max": 0.8765885829925537,
+              "min": -0.8403117060661316,
+              "positive_voltage_fraction": 0.9444666292196073,
+              "rate_max": 0.8765885829925537,
+              "rate_mean": 0.020173145129132476,
+              "rms": 0.04827084840170673
+            },
+            {
+              "active_fraction": 0.8064518204721357,
+              "max": 1.0346996784210205,
+              "min": -0.9025461673736572,
+              "positive_voltage_fraction": 0.8064518204721357,
+              "rate_max": 1.0346996784210205,
+              "rate_mean": 0.020538029966874052,
+              "rms": 0.05683000597895568
+            },
+            {
+              "active_fraction": 0.7210267256937295,
+              "max": 1.6760013103485107,
+              "min": -0.9352686405181885,
+              "positive_voltage_fraction": 0.7210267256937295,
+              "rate_max": 1.6760013103485107,
+              "rate_mean": 0.020986255332828843,
+              "rms": 0.06227896794624674
+            },
+            {
+              "active_fraction": 0.6820038744080135,
+              "max": 2.436105966567993,
+              "min": -0.9507303833961487,
+              "positive_voltage_fraction": 0.6820038744080135,
+              "rate_max": 2.436105966567993,
+              "rate_mean": 0.021485545085465112,
+              "rms": 0.06596821538815664
+            },
+            {
+              "active_fraction": 0.6627520106345611,
+              "max": 3.371161699295044,
+              "min": -0.9601523876190186,
+              "positive_voltage_fraction": 0.6627520106345611,
+              "rate_max": 3.371161699295044,
+              "rate_mean": 0.021967787042131818,
+              "rms": 0.06863717335005264
+            },
+            {
+              "active_fraction": 0.6535767871634307,
+              "max": 4.501934051513672,
+              "min": -0.96980881690979,
+              "positive_voltage_fraction": 0.6535767871634307,
+              "rate_max": 4.501934051513672,
+              "rate_mean": 0.022408893877414772,
+              "rms": 0.07073003758255121
+            },
+            {
+              "active_fraction": 0.6491575168663171,
+              "max": 5.880507469177246,
+              "min": -0.9877322912216187,
+              "positive_voltage_fraction": 0.6491575168663171,
+              "rate_max": 5.880507469177246,
+              "rate_mean": 0.022802662853740954,
+              "rms": 0.07254502163737438
+            }
+          ],
+          "step": 250,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 1.1130350830003861,
+          "value_saturated_fraction": 0.0
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 5.09100866317749,
+            "mean": 0.010786037198194156,
+            "step_ratio_quantiles": [
+              0.960563600063324,
+              0.9997345209121704,
+              1.0,
+              1.0003222227096558,
+              1.0667834281921387
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 2.471110520993694,
+              "parameters": 11752,
+              "post_update_gradient_norm": 8.60223932254866,
+              "relative_update": 0.0012714195026584298,
+              "update_max": 0.00038181059062480927,
+              "update_norm": 0.003141274959671895
+            },
+            "edge": {
+              "nonzero_gradients": 15195749,
+              "parameter_norm": 20402.834674630525,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.1118533940612597,
+              "relative_update": 5.769026484033548e-05,
+              "update_max": 0.06748533248901367,
+              "update_norm": 1.177044913347229
+            },
+            "input_gain": {
+              "nonzero_gradients": 2539,
+              "parameter_norm": 24.146722417548364,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.08445319757206204,
+              "relative_update": 0.01158463997158123,
+              "update_max": 0.055364370346069336,
+              "update_norm": 0.2782116346115452
+            },
+            "leak": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 35.249424351359465,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.008191495273825936,
+              "relative_update": 0.005172708035525933,
+              "update_max": 0.03882133960723877,
+              "update_norm": 0.18231214755934033
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.2356871463589496,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.11021125929184775,
+              "relative_update": 0.018064208160846824,
+              "update_max": 0.009689278900623322,
+              "update_norm": 0.022357540982106634
+            },
+            "policy_weight": {
+              "nonzero_gradients": 75751,
+              "parameter_norm": 59.305301963727295,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.060088359032961634,
+              "relative_update": 0.006235363104635442,
+              "update_max": 0.030519306659698486,
+              "update_norm": 0.3695771113720831
+            },
+            "readout_gain": {
+              "nonzero_gradients": 1037,
+              "parameter_norm": 404.9987331713759,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.03865539619864015,
+              "relative_update": 0.00020357181475837873,
+              "update_max": 0.0492023229598999,
+              "update_norm": 0.0824462657919075
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.34633293747901917,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.14421935379505157,
+              "relative_update": 0.004173440146717618,
+              "update_max": 0.0014393925666809082,
+              "update_norm": 0.0014393925666809082
+            },
+            "value_weight": {
+              "nonzero_gradients": 1037,
+              "parameter_norm": 4.9750936768438985,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.10193529330837596,
+              "relative_update": 0.005908244972795929,
+              "update_max": 0.009953022003173828,
+              "update_norm": 0.029341326328616153
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9990798557559705,
+          "rate_softness": 0.0,
+          "seconds": 2.742427444027271,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9744734196533472,
+              "max": 2.3393633365631104,
+              "min": -0.7703361511230469,
+              "positive_voltage_fraction": 0.9744734196533472,
+              "rate_max": 2.3393633365631104,
+              "rate_mean": 0.020249209656277068,
+              "rms": 0.04540054842385804
+            },
+            {
+              "active_fraction": 0.9242664136214436,
+              "max": 2.6082582473754883,
+              "min": -0.8998883962631226,
+              "positive_voltage_fraction": 0.9242664136214436,
+              "rate_max": 2.6082582473754883,
+              "rate_mean": 0.022985448553453088,
+              "rms": 0.06195192692003043
+            },
+            {
+              "active_fraction": 0.8165326243625926,
+              "max": 2.697113513946533,
+              "min": -0.9341635704040527,
+              "positive_voltage_fraction": 0.8165326243625926,
+              "rate_max": 2.697113513946533,
+              "rate_mean": 0.02424273965024439,
+              "rms": 0.07152626275231033
+            },
+            {
+              "active_fraction": 0.7562906139097152,
+              "max": 2.7074737548828125,
+              "min": -0.9640074968338013,
+              "positive_voltage_fraction": 0.7562906139097152,
+              "rate_max": 2.7074737548828125,
+              "rate_mean": 0.025184308121516463,
+              "rms": 0.07754017056100965
+            },
+            {
+              "active_fraction": 0.7258926354453071,
+              "max": 2.708207368850708,
+              "min": -0.9778331518173218,
+              "positive_voltage_fraction": 0.7258926354453071,
+              "rate_max": 2.708207368850708,
+              "rate_mean": 0.02597332117305508,
+              "rms": 0.08157008554305084
+            },
+            {
+              "active_fraction": 0.7111353650634077,
+              "max": 3.9011197090148926,
+              "min": -0.9844553470611572,
+              "positive_voltage_fraction": 0.7111353650634077,
+              "rate_max": 3.9011197090148926,
+              "rate_mean": 0.02663439799939206,
+              "rms": 0.08446667943152834
+            },
+            {
+              "active_fraction": 0.7035782633446784,
+              "max": 5.62822151184082,
+              "min": -1.00534188747406,
+              "positive_voltage_fraction": 0.7035782633446784,
+              "rate_max": 5.62822151184082,
+              "rate_mean": 0.02718920596807858,
+              "rms": 0.08675091347137359
+            },
+            {
+              "active_fraction": 0.6994627457274015,
+              "max": 7.901209831237793,
+              "min": -1.022681474685669,
+              "positive_voltage_fraction": 0.6994627457274015,
+              "rate_max": 7.901209831237793,
+              "rate_mean": 0.02765963492135956,
+              "rms": 0.08880132188749655
+            }
+          ],
+          "step": 500,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 16.39434860779562,
+          "value_saturated_fraction": 0.0
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 5.174371719360352,
+            "mean": 0.010791365809485374,
+            "step_ratio_quantiles": [
+              0.9749760031700134,
+              0.9999048709869385,
+              1.0,
+              1.0000863075256348,
+              1.0160737037658691
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 2.4894193876599084,
+              "parameters": 11752,
+              "post_update_gradient_norm": 27.985762421076217,
+              "relative_update": 0.0005528287872685772,
+              "update_max": 0.0001583453267812729,
+              "update_norm": 0.0013762431461878202
+            },
+            "edge": {
+              "nonzero_gradients": 15190917,
+              "parameter_norm": 20402.938538009475,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.3107686829213668,
+              "relative_update": 2.0655831741047514e-05,
+              "update_max": 0.02666926383972168,
+              "update_norm": 0.4214396909201544
+            },
+            "input_gain": {
+              "nonzero_gradients": 2391,
+              "parameter_norm": 26.192561280205673,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.16779087458009326,
+              "relative_update": 0.00404230687264601,
+              "update_max": 0.020765304565429688,
+              "update_norm": 0.10606260400347484
+            },
+            "leak": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 36.357816561960384,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.02301496192426797,
+              "relative_update": 0.0017727699474488683,
+              "update_max": 0.01727360486984253,
+              "update_norm": 0.06445002847551563
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.2711770421510213,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.08542728390023076,
+              "relative_update": 0.004979875303502257,
+              "update_max": 0.002152949571609497,
+              "update_norm": 0.006335006343219695
+            },
+            "policy_weight": {
+              "nonzero_gradients": 63913,
+              "parameter_norm": 64.07982608945996,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.03635124595311161,
+              "relative_update": 0.0013834526956801728,
+              "update_max": 0.007295936346054077,
+              "update_norm": 0.08864060484722498
+            },
+            "readout_gain": {
+              "nonzero_gradients": 888,
+              "parameter_norm": 405.00847652922215,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.04198982080769708,
+              "relative_update": 5.309985536359608e-05,
+              "update_max": 0.0073822736740112305,
+              "update_norm": 0.021505895948604904
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.4737471342086792,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.37910550832748413,
+              "relative_update": 0.0004387770231751988,
+              "update_max": 0.0002079606056213379,
+              "update_norm": 0.0002079606056213379
+            },
+            "value_weight": {
+              "nonzero_gradients": 888,
+              "parameter_norm": 5.5923195888000174,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.08733444173634516,
+              "relative_update": 0.0010285142820411805,
+              "update_max": 0.002009481191635132,
+              "update_norm": 0.00575093447709407
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9996337013223973,
+          "rate_softness": 0.0,
+          "seconds": 2.7993254399916623,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9757645104831579,
+              "max": 2.7292466163635254,
+              "min": -0.7601598501205444,
+              "positive_voltage_fraction": 0.9757645104831579,
+              "rate_max": 2.7292466163635254,
+              "rate_mean": 0.019340742035846955,
+              "rms": 0.04452661153666165
+            },
+            {
+              "active_fraction": 0.9033828018071487,
+              "max": 3.0998716354370117,
+              "min": -0.8930966854095459,
+              "positive_voltage_fraction": 0.9033828018071487,
+              "rate_max": 3.0998716354370117,
+              "rate_mean": 0.02136512013647326,
+              "rms": 0.05909260587538271
+            },
+            {
+              "active_fraction": 0.7986908921888058,
+              "max": 3.173788547515869,
+              "min": -0.9339414238929749,
+              "positive_voltage_fraction": 0.7986908921888058,
+              "rate_max": 3.173788547515869,
+              "rate_mean": 0.02221597965723732,
+              "rms": 0.06725229756593963
+            },
+            {
+              "active_fraction": 0.7409089945615969,
+              "max": 3.2524168491363525,
+              "min": -1.083260416984558,
+              "positive_voltage_fraction": 0.7409089945615969,
+              "rate_max": 3.2524168491363525,
+              "rate_mean": 0.022891139686397086,
+              "rms": 0.07231404413258756
+            },
+            {
+              "active_fraction": 0.7114769685444702,
+              "max": 5.195837020874023,
+              "min": -1.2990355491638184,
+              "positive_voltage_fraction": 0.7114769685444702,
+              "rate_max": 5.195837020874023,
+              "rate_mean": 0.023492507996920535,
+              "rms": 0.07572334504307184
+            },
+            {
+              "active_fraction": 0.6976873538959073,
+              "max": 7.646574974060059,
+              "min": -2.200103282928467,
+              "positive_voltage_fraction": 0.6976873538959073,
+              "rate_max": 7.646574974060059,
+              "rate_mean": 0.024012866175834816,
+              "rms": 0.07822790625682463
+            },
+            {
+              "active_fraction": 0.6910598678552827,
+              "max": 10.635787963867188,
+              "min": -3.350604295730591,
+              "positive_voltage_fraction": 0.6910598678552827,
+              "rate_max": 10.635787963867188,
+              "rate_mean": 0.024457441619990642,
+              "rms": 0.08027806216211053
+            },
+            {
+              "active_fraction": 0.6873599520354647,
+              "max": 14.307281494140625,
+              "min": -4.775542736053467,
+              "positive_voltage_fraction": 0.6873599520354647,
+              "rate_max": 14.307281494140625,
+              "rate_mean": 0.024837809890983224,
+              "rms": 0.0821911182792917
+            }
+          ],
+          "step": 750,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 17.830811974104922,
+          "value_saturated_fraction": 0.0625
+        },
+        {
+          "clip": 1.0,
+          "clipped": true,
+          "diagnostic_backward_positions": 32,
+          "diagnostic_batch_positions": 32,
+          "diagnostic_forward_positions": 64,
+          "edge_strength": {
+            "max": 5.090126037597656,
+            "mean": 0.01079455629658353,
+            "step_ratio_quantiles": [
+              0.9631484150886536,
+              0.9998682737350464,
+              1.0,
+              1.0001451969146729,
+              1.0157721042633057
+            ]
+          },
+          "gradient_scope": "Post-update gradient on a deterministic prefix of the training batch; no extra optimizer step",
+          "groups": {
+            "bias": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 2.4955231107135747,
+              "parameters": 11752,
+              "post_update_gradient_norm": 54.790704745790286,
+              "relative_update": 0.0006443725390544421,
+              "update_max": 0.00015133991837501526,
+              "update_norm": 0.0016078462380220888
+            },
+            "edge": {
+              "nonzero_gradients": 15192728,
+              "parameter_norm": 20403.294297291144,
+              "parameters": 15270273,
+              "post_update_gradient_norm": 0.6680228783378382,
+              "relative_update": 2.6728797165011524e-05,
+              "update_max": 0.040265560150146484,
+              "update_norm": 0.5453555679469565
+            },
+            "input_gain": {
+              "nonzero_gradients": 2240,
+              "parameter_norm": 28.7266984743078,
+              "parameters": 3574,
+              "post_update_gradient_norm": 0.31911321177578666,
+              "relative_update": 0.003122482400854166,
+              "update_max": 0.017338991165161133,
+              "update_norm": 0.08976639127220237
+            },
+            "leak": {
+              "nonzero_gradients": 11732,
+              "parameter_norm": 37.835317407247054,
+              "parameters": 11752,
+              "post_update_gradient_norm": 0.042983544926230216,
+              "relative_update": 0.001948959762234596,
+              "update_max": 0.010580301284790039,
+              "update_norm": 0.07373910702468692
+            },
+            "policy_bias": {
+              "nonzero_gradients": 82,
+              "parameter_norm": 1.3323672054022593,
+              "parameters": 82,
+              "post_update_gradient_norm": 0.10913325689273994,
+              "relative_update": 0.006983824964112637,
+              "update_max": 0.0035141408443450928,
+              "update_norm": 0.009308420399594739
+            },
+            "policy_weight": {
+              "nonzero_gradients": 70763,
+              "parameter_norm": 69.12358230453106,
+              "parameters": 174578,
+              "post_update_gradient_norm": 0.06965834460105193,
+              "relative_update": 0.002213040255385383,
+              "update_max": 0.01916397362947464,
+              "update_norm": 0.15296344548567098
+            },
+            "readout_gain": {
+              "nonzero_gradients": 932,
+              "parameter_norm": 405.01479936777355,
+              "parameters": 165122,
+              "post_update_gradient_norm": 0.12171809423946948,
+              "relative_update": 9.29647719778656e-05,
+              "update_max": 0.01257932186126709,
+              "update_norm": 0.03765220330635906
+            },
+            "value_bias": {
+              "nonzero_gradients": 1,
+              "parameter_norm": 0.5666677951812744,
+              "parameters": 1,
+              "post_update_gradient_norm": 0.5243942737579346,
+              "relative_update": 0.0008652343620685795,
+              "update_max": 0.000490725040435791,
+              "update_norm": 0.000490725040435791
+            },
+            "value_weight": {
+              "nonzero_gradients": 932,
+              "parameter_norm": 6.013718611041608,
+              "parameters": 2129,
+              "post_update_gradient_norm": 0.20419338939616016,
+              "relative_update": 0.0014501816235206841,
+              "update_max": 0.004679352045059204,
+              "update_norm": 0.008722865941497474
+            }
+          },
+          "kind": "diagnostics",
+          "post_update_bias_squared_norm_fraction": 0.9997008919727196,
+          "rate_softness": 0.0,
+          "seconds": 2.5399299430137035,
+          "states": [
+            {
+              "active_fraction": 1.0,
+              "max": 0.009999999776482582,
+              "min": 0.009999999776482582,
+              "positive_voltage_fraction": 1.0,
+              "rate_max": 0.009999999776482582,
+              "rate_mean": 0.009999999776482582,
+              "rms": 0.009999999776482584
+            },
+            {
+              "active_fraction": 0.9740010416540498,
+              "max": 3.416465997695923,
+              "min": -1.6365394592285156,
+              "positive_voltage_fraction": 0.9740010416540498,
+              "rate_max": 3.416465997695923,
+              "rate_mean": 0.02037954937352931,
+              "rms": 0.05125508242880538
+            },
+            {
+              "active_fraction": 0.8880108344133428,
+              "max": 3.773244857788086,
+              "min": -1.9020979404449463,
+              "positive_voltage_fraction": 0.8880108344133428,
+              "rate_max": 3.773244857788086,
+              "rate_mean": 0.022758717892883817,
+              "rms": 0.06880026758822855
+            },
+            {
+              "active_fraction": 0.7894693014861739,
+              "max": 3.851344347000122,
+              "min": -1.9629278182983398,
+              "positive_voltage_fraction": 0.7894693014861739,
+              "rate_max": 3.851344347000122,
+              "rate_mean": 0.02392059696675194,
+              "rms": 0.07889264190898304
+            },
+            {
+              "active_fraction": 0.7315066662831119,
+              "max": 4.076569557189941,
+              "min": -1.9874494075775146,
+              "positive_voltage_fraction": 0.7315066662831119,
+              "rate_max": 4.076569557189941,
+              "rate_mean": 0.024802807203080035,
+              "rms": 0.08516827563362886
+            },
+            {
+              "active_fraction": 0.7035479827036979,
+              "max": 6.991114616394043,
+              "min": -2.0033960342407227,
+              "positive_voltage_fraction": 0.7035479827036979,
+              "rate_max": 6.991114616394043,
+              "rate_mean": 0.02555122994218918,
+              "rms": 0.08951612882842372
+            },
+            {
+              "active_fraction": 0.6907924519446228,
+              "max": 10.925798416137695,
+              "min": -3.019490957260132,
+              "positive_voltage_fraction": 0.6907924519446228,
+              "rate_max": 10.925798416137695,
+              "rate_mean": 0.026187270435195482,
+              "rms": 0.09298822753300523
+            },
+            {
+              "active_fraction": 0.684030784813653,
+              "max": 16.087244033813477,
+              "min": -4.878741264343262,
+              "positive_voltage_fraction": 0.684030784813653,
+              "rate_max": 16.087244033813477,
+              "rate_mean": 0.026733606345059363,
+              "rms": 0.09636805764497675
+            },
+            {
+              "active_fraction": 0.6802067183658144,
+              "max": 22.900869369506836,
+              "min": -7.352971076965332,
+              "positive_voltage_fraction": 0.6802067183658144,
+              "rate_max": 22.900869369506836,
+              "rate_mean": 0.027213057468056773,
+              "rms": 0.1004440752386954
+            }
+          ],
+          "step": 1000,
+          "training_batch_positions": 32,
+          "training_gradient_norm": 45.79160660795132,
+          "value_saturated_fraction": 0.09375
+        }
+      ],
+      "seed": 6
+    }
+  ],
+  "scope": "Existing diagnostics at all four registered intervals. Group gradients are recomputed after each recorded optimizer step on that same training batch. Do not substitute them for its pre-update gradients; training_gradient_norm is the recorded pre-update global norm. No new model inference, labels, sampling or optimization.",
+  "source_sha256": "741cebaf83b1792093d8254bd36c441d3163af48a95ac3c5a3ed293f7ca7bdc7",
+  "status": "complete"
+}

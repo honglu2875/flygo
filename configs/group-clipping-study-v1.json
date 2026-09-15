@@ -1,0 +1,61 @@
+{
+  "name": "group-clipping-study-v1",
+  "status": "scientific_contract_registered_engineering_pending",
+  "factor": "optimizer clipping scope only",
+  "motivation": "Existing signal-flow-v2 and the retained joint-loss diagnostics show dominant type-bias gradient norms and epsilon-dominated edge second moments. Test the interaction directly; do not assume a causal benefit from those observations.",
+  "release": "v0-1m",
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "reference_environment": "environments/2ba439e309df1e902b58",
+  "new_source": "Freeze the qualified Rust/Python implementation and CPU JAX reference before any scientific update. Both arms must use that same frozen source. The default arm must reproduce existing behavior; this registration is not deployment authorization for an unqualified implementation.",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_map_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+  "input_mode": "current",
+  "head_mask": "ports/readout-masks-v1/dense.npz",
+  "head": "Unrestricted jointly learned projections from all 2,129 native motor features to 82 policy logits and value; no fitted residual transfer, normalization or grouping.",
+  "topology": "All existing 165,122 neurons and 15,270,273 edges; learn strengths on fixed signed edges.",
+  "passes": 8,
+  "rate_softness": 0.0,
+  "state": "Reset to the existing initial state per position; no persistent memory.",
+  "seeds": [10, 11, 12],
+  "arms": ["global", "parameter-group"],
+  "groups": ["edge", "leak", "bias", "input_gain", "readout_gain", "policy_weight", "policy_bias", "value_weight", "value_bias"],
+  "global_equation": "c = min(1, clip / sqrt(sum_p ||g_p||_2^2)); use c*g_p for every group's Adam moments.",
+  "parameter_group_equation": "c_p = min(1, clip / ||g_p||_2); use c_p*g_p for group p's Adam moments. Zero-norm groups use c_p=1. No rescaling to equal RMS, no gradient normalization to a target norm, and no per-group epsilon change.",
+  "optimizer": "Existing FP32 Adam with beta1=.9, beta2=.999; existing FP64 deterministic norm reductions; epsilon outside corrected square root; learning-rate multipliers applied after moment normalization.",
+  "clip": 1.0,
+  "rate": 0.03,
+  "rate_scales": {"bias": 0.01},
+  "epsilon": 1e-6,
+  "warmup_steps": 100,
+  "schedule_after_warmup": "constant",
+  "updates": 1000,
+  "batch_size": 32,
+  "labeled_exposures_per_endpoint": 32000,
+  "total_scientific_training_exposures": 192000,
+  "sampling": "Same deterministic V0 training sampler and D4 stream per paired seed; initialize identical parameters and moments between arms. Fresh head/sampler seeds only; initial circuit strengths remain shared.",
+  "checkpoint_steps": [0, 1000],
+  "qualification": [
+    "Default global mode reproduces the existing optimizer and legacy checkpoint behavior.",
+    "Independent updates establish that a large bias gradient cannot scale other groups in parameter-group mode; zero and subthreshold groups remain unchanged by clipping.",
+    "Qualify states, losses, all gradients, parameters and moments using the existing CPU tolerances on each actual arm and seed; use the already declared aligned-peak and actual-warmup protocols and retain every failed attempt.",
+    "Verify exact fresh-process continuation including clipping mode, moments, schedule and sampler; reject a resumed mode mismatch.",
+    "Freeze source, deployment plan, qualification receipts and validation analysis before scientific training. Stop on nonfinite values; preserve failed fixed-horizon cases rather than substituting a favorable seed."
+  ],
+  "diagnostics": {
+    "updates": [250, 500, 750, 1000],
+    "requirements": [
+      "Report the actual pre-update global and group gradient norms and clipping factors without deriving per-group clipping events from the global norm.",
+      "Retain group parameter/update norms, post-update gradients, edge strength changes, firing activity and complete exposure accounting.",
+      "At each final endpoint, use the same declared 256 training probes for current/neutral motor responses, and the existing 64-position inference-arithmetic selection at B1/B32.",
+      "Measure CPU throughput and optimizer overhead; do not count a change in clipping arithmetic as new neural prediction FLOPs."
+    ]
+  },
+  "analysis": {
+    "primary": "Full-validation policy KL on all 70,425 positions; compare parameter-group minus global within each seed and average the paired differences.",
+    "secondary": ["value_mse", "teacher_top1_agreement", "policy_entropy", "mean_top_probability", "current_source_novel_slice", "motor_signal", "prediction_arithmetic", "runtime"],
+    "uncertainty": "Use the existing opening-family bootstrap: 1,000 resamples, seed 709. Report conditional family intervals and the three paired-seed differences/sample SD separately. The same validation families have been reused in earlier studies.",
+    "decision": "A provisional optimizer candidate requires policy KL improvement in each paired seed and no worsening of mean value MSE. Report all losses, tradeoffs and failed cases regardless; no best-checkpoint or best-seed selection. Any later horizon/rate/propagation study needs its own contract."
+  },
+  "resources": "CPU only, paired arms on existing 24-core research lanes with explicit affinity; maintain shared-RAM caps and buffers, owner plus second-worker checkpoint copies. Root receives small reports only. TPU stays paused.",
+  "limits": "This short learning screen is not an equi-FLOP/exposure CNN comparison, untouched-data confirmation, match result or evidence of biological function. Prior candidate discovery and engineering remain development costs. Do not combine clipping with new propagation, input/readout changes or an epsilon/rate sweep."
+}
