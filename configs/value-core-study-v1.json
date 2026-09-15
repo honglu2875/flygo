@@ -1,0 +1,120 @@
+{
+  "analysis": {
+    "decision": "Each candidate is independently provisional only if KL improves in every paired seed and mean value MSE does not worsen. Retain every tradeoff and failure. No best checkpoint, best seed, or between-candidate winner is selected; promotion requires fresh-seed confirmation.",
+    "primary": "Full-validation policy KL on all 70425 positions: reduced minus full and policy-only minus full, paired within each seed.",
+    "secondary": [
+      "value_mse",
+      "teacher_top1_agreement",
+      "policy_entropy",
+      "mean_top_probability",
+      "current_source_novel_slice",
+      "motor_signal",
+      "prediction_arithmetic",
+      "runtime"
+    ],
+    "uncertainty": "Opening-family bootstrap, 1000 resamples, seed 709; conditional family intervals and three paired-seed differences/sample SD separately. Two preregistered contrasts, no multiplicity correction; reused validation families."
+  },
+  "arms": [
+    "full",
+    "reduced",
+    "policy-only"
+  ],
+  "batch_size": 32,
+  "checkpoint_steps": [
+    0,
+    4000
+  ],
+  "clip": 1.0,
+  "clip_mode": "parameter-group",
+  "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+  "diagnostics": {
+    "requirements": [
+      "Report the actual pre-update global and group gradient norms and clipping factors without deriving per-group clipping events from the global norm.",
+      "Retain group parameter/update norms, post-update gradients, edge strength changes, firing activity and complete exposure accounting.",
+      "At each final endpoint, use the same declared 256 training probes for current/neutral motor responses, and the existing 64-position inference-arithmetic selection at B1/B32.",
+      "Measure CPU throughput and optimizer overhead; do not count a change in clipping arithmetic as new neural prediction FLOPs."
+    ],
+    "updates": [
+      500,
+      1000,
+      1500,
+      2000,
+      2500,
+      3000,
+      3500,
+      4000
+    ]
+  },
+  "epsilon": 1e-06,
+  "factor": "supervised value-to-circuit gradient scale only",
+  "groups": [
+    "edge",
+    "leak",
+    "bias",
+    "input_gain",
+    "readout_gain",
+    "policy_weight",
+    "policy_bias",
+    "value_weight",
+    "value_bias"
+  ],
+  "head": "Unrestricted jointly learned projections from all 2,129 native motor features to 82 policy logits and value; no fitted residual transfer, normalization or grouping.",
+  "head_gradients": "Both policy and value heads retain their original unscaled gradients; all original losses remain reported.",
+  "head_mask": "ports/readout-masks-v1/dense.npz",
+  "initialization": "Fresh initialization and sampler for every arm; identical numerical arrays and sampler within each new paired seed. No continuation from the discovery endpoints.",
+  "input_map": "ports/spherical-context-v1/attachment.npz",
+  "input_map_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+  "input_mode": "current",
+  "interpretation": "Compare each candidate minus full at identical fixed exposure within each seed. Report both candidates and all nine endpoints; any candidate requires separate fresh-seed confirmation. No winner is selected between eligible candidates in this report.",
+  "labeled_exposures_per_endpoint": 128000,
+  "limits": "One optimization factor at equal labeled exposures on reused V0 validation families. Count actual learned-activity prediction FLOPs separately. No new matched-CNN or playing-strength claim, final-test labels, TPU use, topology change, or combined attachment/propagation/rate factor.",
+  "motivation": "The policy/value audit found opposing, value-dominated shared gradients in the passing per-group cases. Test this pressure directly with one optimizer coefficient; retain the audit failures and avoid changing sensory attachments or propagation.",
+  "name": "value-core-study-v1",
+  "new_source": "Reuse the fully qualified 9471407cdd0c68b40179 Rust package. All eighteen actual-seed numerical cases and nine recovery cases have passed; no numerical source changes for science.",
+  "numerical_plan_sha256": "1278cc49184fd9f2ea2d22fc97cfd0e6d2537b0f922a5e792eb72c3a7cd69af3",
+  "optimizer": "Existing FP32 Adam with beta1=.9, beta2=.999; existing FP64 deterministic norm reductions; epsilon outside corrected square root; learning-rate multipliers applied after moment normalization.",
+  "passes": 8,
+  "prior_result": "docs/results/clipping-confirmation-v1.json",
+  "prior_result_sha256": "07548ad102809287b07b24ea6688c66a1e011de87ece435b43c7baf21a6f0dc0",
+  "qualification": [
+    "All eighteen actual-seed/scale Rust/JAX protocols and nine exact recovery cases passed unchanged tolerances.",
+    "Coefficient metadata, checkpoint tags and actual trainer arguments must match; do not reuse default evidence for nondefault scales.",
+    "Paired numerical initial arrays and sampler must match despite differing objective tags; verify actual initial and final checkpoint peer copies.",
+    "Freeze the qualified source, all nine endpoints, wave allocation and analysis before science. Stop on nonfinite results and retain failed cases.",
+    "Analysis/control tests cover both registered contrasts, family and seed variation, exact initialization, live-process/lock waits, queued missing statuses, and SSH observation retry."
+  ],
+  "qualification_result": "docs/results/value-core-qualification-v1.json",
+  "qualification_result_sha256": "a79f0ef98d82a589b869634ac5fa73d1f6264ece026e9415850545c0ea8b8333",
+  "rate": 0.03,
+  "rate_scales": {
+    "bias": 0.01
+  },
+  "rate_softness": 0.0,
+  "recovery_plan_sha256": "67e0b7cb132dcd5e8729d94e069104116b4b189048c049be74761b16b2902933",
+  "release": "v0-1m",
+  "research_question": "Does reducing shared value-gradient pressure improve policy learnability while both heads remain fully trained?",
+  "resources": {
+    "artifacts": "Keep the 100 GiB own-file cap, 64 GiB filesystem-free floor and 96 GiB RAM-available floor including reservations. Checkpoint and bulk-analysis payloads stay on workers; root carries bounded controls and relay pipes.",
+    "learners": "Six first-wave learners on disjoint 24-core lanes across workers 1/2/3. Queue the remaining three after the prior same-lane validation, motor probe and prediction count finish; rotate arms across hosts. TPU paused."
+  },
+  "sampling": "Same deterministic V0 training sampler and D4 stream per paired seed; initialize identical parameters and moments between arms. Fresh head/sampler seeds only; initial circuit strengths remain shared.",
+  "schedule_after_warmup": "constant",
+  "seeds": [
+    16,
+    17,
+    18
+  ],
+  "shared_gradient": "g_policy + value_core_scale * g_value for edge, leak, bias, input_gain and readout_gain.",
+  "source": "environments/9471407cdd0c68b40179",
+  "state": "Reset to the existing initial state per position; no persistent memory.",
+  "status": "scientific_contract_registered_numerical_gates_passed",
+  "topology": "All existing 165,122 neurons and 15,270,273 edges; learn strengths on fixed signed edges.",
+  "total_scientific_training_exposures": 1152000,
+  "updates": 4000,
+  "value_core_arms": {
+    "full": 1.0,
+    "policy-only": 0.0,
+    "reduced": 0.1
+  },
+  "warmup_steps": 100
+}

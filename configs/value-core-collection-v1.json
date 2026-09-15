@@ -1,0 +1,23 @@
+{
+  "analysis": "runs/value-core-contract-v1/analysis.json",
+  "analysis_host": 2,
+  "analysis_sha256": "37f98f9b3461e888f77e07b3bd1e3dfb70b813fb27f5b2f8b04ad28dea65d220",
+  "audit_cpus": [
+    56,
+    57,
+    58,
+    59
+  ],
+  "collector_sha256": "d391b03d5ae6891199b5e3bbfd6329e5fac2a245559ddabaedbb7c970938b611",
+  "directory": "runs/value-core-collection-v1",
+  "endpoint_helper_sha256": "c990ebf34f2763eced0d891ccf5e1f8e9e5e77254e6d03a09255734f1ce818ce",
+  "name": "value-core-collection-v1",
+  "prior_goal_turn": {
+    "classification": "progress",
+    "evidence": "Published 4e526f04286988b645031266b4b5fd6c6c61c016: executed current-runtime public notebook. Value routing was already numerically/recovery qualified; this turn registers its scientific comparison."
+  },
+  "pythonpath": "/dev/shm/flygo/runs/value-core-contract-v1/tools/scripts:/dev/shm/flygo/environments/9471407cdd0c68b40179/site-packages:/dev/shm/flygo/environments/tpu-ec7b62e32ad49c203cdd/site-packages:/dev/shm/flygo/environments/analysis-pyarrow-cpu-v1/site-packages",
+  "root": "/dev/shm/flygo",
+  "scope": "Operational collection of the nine registered endpoints, including a queued second wave. Require actual trainer exit, verified checkpoint peers and unlocked completed followups. Relay bulk evidence to worker 2, preserve owner and peer copies. No numerical, statistical or endpoint changes.",
+  "tools": "runs/value-core-contract-v1/tools/scripts"
+}

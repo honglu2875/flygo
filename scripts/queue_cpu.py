@@ -40,7 +40,15 @@ def worker(path):
             waiting=[]
             for job in plan['jobs']:
                 if job['run_id'] in launched:continue
-                states=dependencies(root,job['host'],job.get('wait_for',[]))
+                try:
+                    states=dependencies(root,job['host'],job.get('wait_for',[]))
+                except (subprocess.TimeoutExpired,subprocess.CalledProcessError) as error:
+                    if isinstance(error,subprocess.CalledProcessError) and error.returncode!=255:
+                        raise
+                    waiting.append(dict(run=job['run_id'],ready=False,observation_error=repr(error)))
+                    atomic_json(out/'status.json',dict(state='observation_retry',launched=launched,
+                                waiting=waiting,updated=time.time()))
+                    continue
                 if any(row['state'] in ('failed','stopped') for row in states):
                     raise RuntimeError('Retained failed dependency: '+str(states))
                 ready=all(row['ready'] for row in states)

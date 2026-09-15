@@ -120,12 +120,18 @@ def inspect(root, analysis, plan, host):
     for job in plan['jobs']:
         if job['host'] != host:
             continue
-        run = job['run_id']; status = read(root / 'runs' / run / 'status.json')
+        run = job['run_id']; status_path = root / 'runs' / run / 'status.json'
+        status = read(status_path) if status_path.exists() else {}
         follow = inside(root, analysis['followup']) / run
-        follower = read(follow / 'status.json')
+        follower_path = follow / 'status.json'
+        follower = read(follower_path) if follower_path.exists() else {}
         if status.get('state') in ('failed', 'stopped') or follower.get('state') in ('failed', 'stopped'):
             raise RuntimeError('A registered endpoint failed; preserve the case: ' + run)
         pid = running_train(run)
+        # Later registered waves have no trainer status until their dependency
+        # releases the CPU lane. An absent unqueued learner is not such a wait.
+        if not status and pid is None and not job.get('wait_for'):
+            raise RuntimeError('An unqueued registered trainer is missing: ' + run)
         ready = (status.get('state') == 'complete' and status.get('step') == plan['updates']
                  and pid is None and dependency_complete(follow))
         rows.append(dict(run_id=run, step=status.get('step'), trainer_pid=pid,

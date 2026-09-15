@@ -107,6 +107,9 @@ def worker(args):
             if job.get('head_mask'):expected['head_mask']=str(root/job['head_mask'])
             for key in ('warmup_steps','decay_until','final_rate_ratio','rate_softness','readout_mean_scale','epsilon','clip_mode'):
                 if key in job or key in plan:expected[key]=job.get(key,plan.get(key))
+            if 'value_core_scale' in job or 'value_core_scale' in plan:
+                from flygo.objectives import value_core_scale
+                expected['value_core_scale']=value_core_scale(job.get('value_core_scale',plan.get('value_core_scale')))
             defaults=dict(rate_scales={},model='fly',backend='cpu',epsilon=1e-8,clip_mode='global')
             if any(original['arguments'].get(k,defaults.get(k))!=v for k,v in expected.items()):
                 raise ValueError('Source trial differs from frozen study contract')

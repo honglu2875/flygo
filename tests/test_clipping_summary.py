@@ -75,7 +75,8 @@ class ClippingSummary(unittest.TestCase):
                          'port/input_index': np.array([0, -1], np.int32)})
         metadata = dict(sampler={'seed': 10, 'offset': 0})
         reference = initial_state(arrays, metadata)
-        tagged = dict(arrays, metadata=np.array([2], np.uint8), optimizer_clip_mode=np.array(1, np.uint8))
+        tagged = dict(arrays, metadata=np.array([2], np.uint8), optimizer_clip_mode=np.array(1, np.uint8),
+                      objective_value_core_scale=np.array(.1, np.float32))
         self.assertEqual(reference, initial_state(tagged, metadata))
         self.assertEqual(reference['arrays']['optimizer_step']['shape'], [])
         for key in ('param/edge', 'first/edge', 'port/input_index'):

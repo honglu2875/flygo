@@ -1,0 +1,675 @@
+{
+  "status": "registered_and_training",
+  "created": 1789488305.1183896,
+  "registration": {
+    "analysis_test_result_sha256": "51f0ccae152015f900c944b48318edb70bedbbae079456168e9be1f7f8261d08",
+    "analysis_tests": 20,
+    "contracts": {
+      "analysis.json": "37f98f9b3461e888f77e07b3bd1e3dfb70b813fb27f5b2f8b04ad28dea65d220",
+      "collection.json": "529b86c76ccf21bc02a45ce960fc6229daf95c2eceaf56d41e727f32758ef9fb",
+      "study.json": "d08232ba79c44f9dc3e31ec1ec40da3995397d95ea5642f657af01fd4f7279c1",
+      "trials.json": "c654e666c8017fbf1555121844384f82a650dd7e8efca6be1709e1752b6ec6de",
+      "wave1.json": "3972d4bf7215f0366fa1c116d15edc7169c1b7b8125e339363184228406579e8",
+      "wave2.json": "9b03b4db84acaf425aca73c344a627a5d5f7a1a898ae08356704c8cdf455e0ec"
+    },
+    "created": 1789486869.072883,
+    "parent": "4e526f04286988b645031266b4b5fd6c6c61c016",
+    "previous_goal_turn": "progress: qualified-current public notebook executed and published; optimization source already fully qualified.",
+    "prior_engineering_exposures": 5792,
+    "runtime_sha256": {
+      "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+      "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+      "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+      "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+      "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+      "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+      "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+      "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+      "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+      "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+      "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+      "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+      "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+      "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+    },
+    "scientific_training_exposures": 1152000,
+    "scope": "All nine fixed-horizon endpoints and both contrasts frozen before scientific updates. Execution waves change only scheduling. CPU only; no requalification learning, final-test labels, or TPM/TPU execution.",
+    "source": "environments/9471407cdd0c68b40179",
+    "status": "registered"
+  },
+  "qualification_result": {
+    "path": "runs/value-core-qualification-v1/result.json",
+    "sha256": "a79f0ef98d82a589b869634ac5fa73d1f6264ece026e9415850545c0ea8b8333"
+  },
+  "analysis_control_tests": [
+    {
+      "version": 1,
+      "tests": 19,
+      "created": 1789484947.6918461,
+      "log_sha256": "3f4c0102e263fe056770c5800050019187e93af74354de589c10ccd34b3f79f1",
+      "returncode": 0,
+      "seconds": 0.560232400894165,
+      "source_manifest_sha256": "7e37d9ea987f86af406aa861e6c0b19a9393951cbdc0a48b3b251c50bca81de1",
+      "status": "passed"
+    },
+    {
+      "version": 2,
+      "tests": 20,
+      "created": 1789486534.3741043,
+      "log_sha256": "c1dafcde6b23b00c6fa12ad3083336b0efb5b947a0e71c53ba10416ca200ad03",
+      "returncode": 0,
+      "seconds": 0.5506081581115723,
+      "source_manifest_sha256": "3ccbcddfe6e482f7243cea4422af3d86dd6eb69a0f1025dacf78139dc7f46f01",
+      "status": "passed"
+    }
+  ],
+  "analysis_control_change": "The second bundle adds explicit handling of a registered queued trial before its status file exists; absent unqueued trainers remain terminal. Numerical learner and statistical formulas are unchanged.",
+  "deployment_validation": {
+    "created": 1789486869.054452,
+    "jobs": 9,
+    "plan_sha256": "c654e666c8017fbf1555121844384f82a650dd7e8efca6be1709e1752b6ec6de",
+    "qualification_files": {
+      "ports/readout-masks-v1/dense.json": "0dbed878aa9470a3a8c4029455ba13b518e2637edd2ca8862b3500802d8a3c96",
+      "ports/readout-masks-v1/dense.npz": "cff653644821a3dba6e7b635eef83a0a08c77b53f6462c30218ce5dcdde9993a",
+      "ports/spherical-context-v1/attachment.json": "e5a826b12574514133f562d6a8ac2d8b295a3965b85a4dbbdd4f7faff0e741b1",
+      "ports/spherical-context-v1/attachment.npz": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+      "runs/value-core-numerics-v1/io/seed-16/full/expected.json": "1187b277b7b8fa2dee02db90c7027cc6eaa48668d27364f6b8b2ec3675e10f46",
+      "runs/value-core-numerics-v1/io/seed-16/full/initial.json": "6685d955d1f4a7b9e886c7a88a686ac4c7123b9ddb0d93426ac08d2ff9f01200",
+      "runs/value-core-numerics-v1/io/seed-16/full/result.json": "fb5a4b2e97df853436a45fafebf3b9bd418b8a3e25c6f1d2ca870006ef7c42bd",
+      "runs/value-core-numerics-v1/io/seed-16/policy-only/expected.json": "e599bd15768452934ef0842f085a461f5e7d2944e5c59c786e2b1d6b7b0aaa25",
+      "runs/value-core-numerics-v1/io/seed-16/policy-only/initial.json": "6685d955d1f4a7b9e886c7a88a686ac4c7123b9ddb0d93426ac08d2ff9f01200",
+      "runs/value-core-numerics-v1/io/seed-16/policy-only/result.json": "38dbbdb6664b368d73758ded228e9422581f66643362936613acbd136f5ccbc1",
+      "runs/value-core-numerics-v1/io/seed-16/reduced/expected.json": "4aa3a6b167a316971dc620b74cf75901abce09754b4f24d63848e75e1df1d096",
+      "runs/value-core-numerics-v1/io/seed-16/reduced/initial.json": "6685d955d1f4a7b9e886c7a88a686ac4c7123b9ddb0d93426ac08d2ff9f01200",
+      "runs/value-core-numerics-v1/io/seed-16/reduced/result.json": "68f1a4df3fdeca6d4daafb6e89e3336756cb52d8ca7a31d0f6a62e4eaeebf59c",
+      "runs/value-core-numerics-v1/io/seed-17/full/expected.json": "a34608e18864b8b599be0ca2b418addfcab23eb001b77346b5f03b4c950dc978",
+      "runs/value-core-numerics-v1/io/seed-17/full/initial.json": "dc1943ebcd492357d01f5939e1e7e89b1b0ddf3f861ce3d9d7e4c23b1561be35",
+      "runs/value-core-numerics-v1/io/seed-17/full/result.json": "fe3b70a37d42cf1e86cc7e62e8f3de5979a27865de80b1afe3d745f4264bbc54",
+      "runs/value-core-numerics-v1/io/seed-17/policy-only/expected.json": "3b5cbd46d1af534281839b5d50fe2a673e3194f5cfc11e5647f767abda4f39be",
+      "runs/value-core-numerics-v1/io/seed-17/policy-only/initial.json": "dc1943ebcd492357d01f5939e1e7e89b1b0ddf3f861ce3d9d7e4c23b1561be35",
+      "runs/value-core-numerics-v1/io/seed-17/policy-only/result.json": "899efc2e0a9e5160bd8bd560bfd77b842a5b2c2b4f1445f967579e6c3573cdb7",
+      "runs/value-core-numerics-v1/io/seed-17/reduced/expected.json": "b58731a0176baae25990018b5263ccd867d5680e34f481846008f12ec2728b0d",
+      "runs/value-core-numerics-v1/io/seed-17/reduced/initial.json": "dc1943ebcd492357d01f5939e1e7e89b1b0ddf3f861ce3d9d7e4c23b1561be35",
+      "runs/value-core-numerics-v1/io/seed-17/reduced/result.json": "05286cbadac8b6d7b03f0895fe2f0e035b40fc98d5061dbe24ffb3eb04bdef58",
+      "runs/value-core-numerics-v1/io/seed-18/full/expected.json": "14e8147ce5eb03fc46a6312ac1db73f6e8121dd77aee0ae1e4b10fec238374dd",
+      "runs/value-core-numerics-v1/io/seed-18/full/initial.json": "0bf2406fbb0da0bb3ae8497fa7eb2fb4003a73d7cd24bd23378fb5ce295e8b09",
+      "runs/value-core-numerics-v1/io/seed-18/full/result.json": "37683c99095f467bbf6020d73f0b869968bd55e0e481d9cd35184c5616be9d2d",
+      "runs/value-core-numerics-v1/io/seed-18/policy-only/expected.json": "e0957d8fd4dedc2fbe0ae9cf1b923734bb8c3d0ca08af47f4b4b57d79b97c383",
+      "runs/value-core-numerics-v1/io/seed-18/policy-only/initial.json": "0bf2406fbb0da0bb3ae8497fa7eb2fb4003a73d7cd24bd23378fb5ce295e8b09",
+      "runs/value-core-numerics-v1/io/seed-18/policy-only/result.json": "da1e72d592b806bd4febfcf495f4c2d55e3ea67ee5c5e4cc00356ac30297f60b",
+      "runs/value-core-numerics-v1/io/seed-18/reduced/expected.json": "24f64ca4bfdff613fd8653bea35e420ad863b175661a7ff37f442eb9194372e9",
+      "runs/value-core-numerics-v1/io/seed-18/reduced/initial.json": "0bf2406fbb0da0bb3ae8497fa7eb2fb4003a73d7cd24bd23378fb5ce295e8b09",
+      "runs/value-core-numerics-v1/io/seed-18/reduced/result.json": "816931cbd2b3d8035f3cc6de064cac7d2b0f37d29dee60e459be87d87313f996",
+      "runs/value-core-numerics-v1/numerical-plan.json": "1278cc49184fd9f2ea2d22fc97cfd0e6d2537b0f922a5e792eb72c3a7cd69af3",
+      "runs/value-core-numerics-v1/seed-16/full/aligned-peak/result.json": "1f7aa6bcacce649e5b26bb17b513d644571886af23cfe0f11d2d75366f4e04d7",
+      "runs/value-core-numerics-v1/seed-16/full/free-warmup/result.json": "093f08cfaeb117103439638dfd396ee893d16f07f456dec57af58a220ec8ab9d",
+      "runs/value-core-numerics-v1/seed-16/full/result.json": "9cdc09e050778da703287da3ce2dde5dfdc002964d8c3e78f657f00f2611a965",
+      "runs/value-core-numerics-v1/seed-16/policy-only/aligned-peak/result.json": "22e9246a9cf60a3c75e6f6fdef90529af77df77b1d9be242c06c0473e4aff57e",
+      "runs/value-core-numerics-v1/seed-16/policy-only/free-warmup/result.json": "00f4aacb664c00f34f989f8965ae1a66158c7c1228cc338fdecea3338993ade4",
+      "runs/value-core-numerics-v1/seed-16/policy-only/result.json": "0d15c5e9e9a7d2a1f92bc5861f1ff31164f3c9ee8463f45300c905052eeb9115",
+      "runs/value-core-numerics-v1/seed-16/reduced/aligned-peak/result.json": "e60c5e6c163ec5c28d0798f119695d7cdf9c92606db1fe8ede0b96863683d4be",
+      "runs/value-core-numerics-v1/seed-16/reduced/free-warmup/result.json": "b60f6bafac8931cdbc6cc0a120139f6d2c6be00991188f8e09dc433f77784182",
+      "runs/value-core-numerics-v1/seed-16/reduced/result.json": "1c63aeddefae87b5ecf9d3db28dc1f53ff9a7975ca3a5abcfccd694af14244b4",
+      "runs/value-core-numerics-v1/seed-17/full/aligned-peak/result.json": "e54c61768cf47e0c3d428e104185a2492a9f0ca8b7f6ef660969aaeae89bfa9d",
+      "runs/value-core-numerics-v1/seed-17/full/free-warmup/result.json": "3cdeac7b06d7aea9a531e742e22e72400a563992689ec93209d17702b7a29fbc",
+      "runs/value-core-numerics-v1/seed-17/full/result.json": "abfb30f0a37f13419e19df12a1210cca35b56a493ca6a8b2485c51d8707f6be6",
+      "runs/value-core-numerics-v1/seed-17/policy-only/aligned-peak/result.json": "dc2336e2d77a623c583f8ea24336121fc615822de580f2cb0175e1cfa2acc930",
+      "runs/value-core-numerics-v1/seed-17/policy-only/free-warmup/result.json": "2743ba65b6962e860da0371c34407d83065da41d8ccdfb1bc61e22ad61913a49",
+      "runs/value-core-numerics-v1/seed-17/policy-only/result.json": "1c2a682023541d88c88a6cd9b4a1ad86ceb8b597537df6d254879e1b3445fed1",
+      "runs/value-core-numerics-v1/seed-17/reduced/aligned-peak/result.json": "bf125996a78a22bae35f46ef6e6ffb48eabab05a679cf41d1b3b550f37d56f86",
+      "runs/value-core-numerics-v1/seed-17/reduced/free-warmup/result.json": "f2231a73267f50053e8d15e75fd5c7822a10cf56c1eadf09ff6915d5d8a347a0",
+      "runs/value-core-numerics-v1/seed-17/reduced/result.json": "3d21296c99f19c7e061644bc2e3cb10ad7ac081f3ec731212165b1c123fe1a6d",
+      "runs/value-core-numerics-v1/seed-18/full/aligned-peak/result.json": "b69b8e8ab8919141c694a54125b69817315b4f41ec7f27e7741b062b84f79120",
+      "runs/value-core-numerics-v1/seed-18/full/free-warmup/result.json": "23ef2aa1c1c2d2bd4edc654410cd99d4d171222dcd5d394a9e0f6665ed8803f5",
+      "runs/value-core-numerics-v1/seed-18/full/result.json": "fc2ea06f198231ea5b315a9e687dc75a320e074207161d2b9645e0507116c4c4",
+      "runs/value-core-numerics-v1/seed-18/policy-only/aligned-peak/result.json": "91f91beb678a9b5d93b663e5389652a5b51da88abfb3c4ec9eab282f54a38435",
+      "runs/value-core-numerics-v1/seed-18/policy-only/free-warmup/result.json": "5fa333df2bc6f59ee9b0c530af2f9517bb4e02798beb944b157cbab96aea8bdd",
+      "runs/value-core-numerics-v1/seed-18/policy-only/result.json": "f4fd873da2746f01d97065127c4a7c24a9af71fd12d47bbbd94cfa189a785dbd",
+      "runs/value-core-numerics-v1/seed-18/reduced/aligned-peak/result.json": "50b0b5e6c4b1fa95cd5003a52f589e175703947f08ca8f352e7bd6ffac089d65",
+      "runs/value-core-numerics-v1/seed-18/reduced/free-warmup/result.json": "e3564e3b2d56b890dc5bb0c056815d32dd1d2275a00bf220a69f4c1efe7acaf8",
+      "runs/value-core-numerics-v1/seed-18/reduced/result.json": "e9fb74eb3a63e4c94cfe911a17679fae1b1db03fe73ae2e618c946265a3ee18b"
+    },
+    "runtime_sha256": {
+      "attachments.py": "1b76bad6fe5bf173000acfd77cf02c0be93595e375c71df84a71e5d5ed139410",
+      "checkpoint.py": "6916205fe6d3f90673f3a67af0719419b126c320cc87378a11ddbbefe6d23c5b",
+      "diagnostics.py": "bb82ffd70367668cff1f1f7e56eaf6e2934eb5d08cce7effa3577d6331c918a7",
+      "fly.py": "f2c3349b04c5f5322e3bdbb40b2a4287638f29ce0affa87e0a7f2589a86af804",
+      "jax/learner.py": "6c50af389c6a12c47060bc31aa2b8aeac7ccc373f7586a34a7388c0bf82eaba6",
+      "jax/model.py": "8d1d342300a705bd319c81642ac9f498046cf4febb8e37107a90d924b2019d54",
+      "jax/numerics.py": "608801ed2fb9dd660622030f542087c1ab2cdf4cbe939f257752a3b91ebe1492",
+      "native": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+      "objectives.py": "5ceddfa406f36563576d55fb6710c3e41142149de593f10ffda3a6a312d28758",
+      "optimizer.py": "4323c92738068d8850945901874a0539f71769cd5bda70e54ef13e7f2ef09f8d",
+      "play.py": "7e8be086326f8b04ef5ccfe0df2a77b75bdc12d31df63e5bb2e10022dbbf259d",
+      "readout.py": "e408be1b91389a14eb16dda4e63c841347b3c0a2b91b22353f227862bc6bd409",
+      "train.py": "e6c839066fd3fecdea29524fcee78529a93eab22a8dcb6c1d8fecdd1f349d11d",
+      "vision.py": "a6065ea58fa6c2e044e7ff3f7cca9edea0ae2b8d8d891d2778add350b631017a"
+    },
+    "status": "passed"
+  },
+  "worker2_validation": {
+    "contracts": 6,
+    "source_files": 82,
+    "source_manifest_sha256": "c0f0866a311f27a013ace6aebf3df5e37bba4f82d7fc51d53ad37ca23d9129c4",
+    "status": "passed"
+  },
+  "retained_failed_attempt": {
+    "path": "runs/value-core-launch-v1",
+    "reason": "Controller raw V0 payloads were missing; bundle validation stopped every host before any learner was created.",
+    "scientific_updates": 0
+  },
+  "controller_data_restoration": {
+    "bytes": 241128228,
+    "created": 1789487465.8136244,
+    "dataset_id": "c8862e9e998b05231b053220fcecf797630ac1c1c3be5a5d676a0c028bedf8b3",
+    "manifest_sha256": "ac1a2a7ca55bcd4c44cad2fdcdf0c1508b78f87969b0bb624edb3f1e3c94b0bf",
+    "reason": "First launch stopped before any learner: controller lacked raw payloads while all three workers retained V0. Restore exact recorded bytes; scientific source, sampler, split and endpoints unchanged.",
+    "records": 10256,
+    "seconds": 3.952457904815674,
+    "source_host": 2,
+    "status": "passed"
+  },
+  "launch": {
+    "analysis_sha256": "37f98f9b3461e888f77e07b3bd1e3dfb70b813fb27f5b2f8b04ad28dea65d220",
+    "controllers": {
+      "collector": {
+        "command": [
+          "taskset",
+          "--cpu-list",
+          "116-119",
+          "/dev/shm/flygo/venv/bin/python",
+          "-B",
+          "/dev/shm/flygo/runs/value-core-contract-v1/tools/scripts/collect_clipping.py",
+          "coordinate",
+          "--config",
+          "/dev/shm/flygo/runs/value-core-contract-v1/collection.json"
+        ],
+        "pid": 3560304
+      },
+      "log_budget": {
+        "command": [
+          "taskset",
+          "--cpu-list",
+          "116",
+          "/dev/shm/flygo/venv/bin/python",
+          "-B",
+          "/dev/shm/flygo/runs/value-core-launch-v2/log-budget.py"
+        ],
+        "pid": 3560303
+      }
+    },
+    "created": 1789487586.432207,
+    "first_wave": 6,
+    "followups": 9,
+    "queued": 3,
+    "source": "/dev/shm/flygo/environments/9471407cdd0c68b40179",
+    "status": "launched",
+    "trial_plan_sha256": "c654e666c8017fbf1555121844384f82a650dd7e8efca6be1709e1752b6ec6de"
+  },
+  "actual_process_and_initialization_audit": {
+    "path": "runs/value-core-launch-v2/live-1789487795809947362.json",
+    "sha256": "5113f34198c532740f31150051cc6138feb7b5fed4f472014a3d0036a9188d7c",
+    "created": 1789487794.3874614,
+    "records": [
+      {
+        "arm": "full",
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "initial_sha256": "ac4dcb8c1b00d68f9d313b7e807c8361cd3309a3aa4bccd3783127bbab9262e4",
+        "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "peer": "cubic27@t1v-n-a09f5679-w-2",
+        "pid": 3217102,
+        "replica_status": "verified",
+        "run_id": "value-core-full-seed16-v1",
+        "seed": 16,
+        "state": "training",
+        "step": 70,
+        "threads": 25
+      },
+      {
+        "arm": "policy-only",
+        "cpus": [
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "initial_sha256": "8a560a8020eab2f1481b1453030f0281cc37694a8c7ba5660d0efa2c7823ac54",
+        "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "peer": "cubic27@t1v-n-a09f5679-w-2",
+        "pid": 3217265,
+        "replica_status": "verified",
+        "run_id": "value-core-policy-only-seed17-v1",
+        "seed": 17,
+        "state": "training",
+        "step": 70,
+        "threads": 25
+      },
+      {
+        "arm": "reduced",
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "initial_sha256": "85f0cffd491d50a6ca6b22c7623ddb0573b92fb96080c0bbe49f4c6597137254",
+        "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "peer": "cubic27@t1v-n-a09f5679-w-3",
+        "pid": 10063,
+        "replica_status": "verified",
+        "run_id": "value-core-reduced-seed16-v1",
+        "seed": 16,
+        "state": "training",
+        "step": 70,
+        "threads": 25
+      },
+      {
+        "arm": "full",
+        "cpus": [
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "initial_sha256": "f2b24f19ca129c8b3356519fb1ce9f1a75eaca65fdca912dfc0e369f8b7ba2b6",
+        "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "peer": "cubic27@t1v-n-a09f5679-w-3",
+        "pid": 10158,
+        "replica_status": "verified",
+        "run_id": "value-core-full-seed17-v1",
+        "seed": 17,
+        "state": "training",
+        "step": 70,
+        "threads": 25
+      },
+      {
+        "arm": "policy-only",
+        "cpus": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "initial_sha256": "a2600a0e12020bfef52dbf6caf3387072e86d135d7c1f1cbc4846ed0d82fbc51",
+        "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "peer": "cubic27@t1v-n-a09f5679-w-1",
+        "pid": 3221189,
+        "replica_status": "verified",
+        "run_id": "value-core-policy-only-seed16-v1",
+        "seed": 16,
+        "state": "training",
+        "step": 70,
+        "threads": 25
+      },
+      {
+        "arm": "reduced",
+        "cpus": [
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "initial_sha256": "7bd8a9d6f8f4b51846fe8b731b4841bf0836edbd18a416412dbf47e632a1f666",
+        "native_sha256": "40377f4631c8d27b8a7a1d51717e1109630d1fb8662a0a2dee9feb0c81e34b25",
+        "peer": "cubic27@t1v-n-a09f5679-w-1",
+        "pid": 3221266,
+        "replica_status": "verified",
+        "run_id": "value-core-reduced-seed17-v1",
+        "seed": 17,
+        "state": "training",
+        "step": 70,
+        "threads": 25
+      }
+    ],
+    "exact_paired_initialization_seeds": [
+      16,
+      17
+    ],
+    "all_initial_replicas_verified": true,
+    "controllers": {
+      "collector": {
+        "affinity": [
+          116,
+          117,
+          118,
+          119
+        ],
+        "command": [
+          "/dev/shm/flygo/venv/bin/python",
+          "-B",
+          "/dev/shm/flygo/runs/value-core-contract-v1/tools/scripts/collect_clipping.py",
+          "coordinate",
+          "--config",
+          "/dev/shm/flygo/runs/value-core-contract-v1/collection.json",
+          ""
+        ],
+        "pid": 3560304
+      },
+      "log_budget": {
+        "affinity": [
+          116
+        ],
+        "command": [
+          "/dev/shm/flygo/venv/bin/python",
+          "-B",
+          "/dev/shm/flygo/runs/value-core-launch-v2/log-budget.py",
+          ""
+        ],
+        "pid": 3560303
+      },
+      "queue": {
+        "affinity": [
+          116
+        ],
+        "command": [
+          "/home/cubic27/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+          "-B",
+          "/dev/shm/flygo/runs/value-core-queue-v1/code/queue_cpu.py",
+          "--worker",
+          "/dev/shm/flygo/runs/value-core-queue-v1/config.json",
+          ""
+        ],
+        "pid": 3560220
+      },
+      "replicas": {
+        "affinity": [
+          116
+        ],
+        "command": [
+          "/dev/shm/flygo/venv/bin/python",
+          "-B",
+          "/dev/shm/flygo/runs/value-core-wave1-v1/replicate_checkpoints.py",
+          "--root",
+          "/dev/shm/flygo",
+          "--jobs",
+          "/dev/shm/flygo/runs/value-core-wave1-v1/jobs.json",
+          "--output",
+          "/dev/shm/flygo/runs/value-core-wave1-v1/replicas",
+          ""
+        ],
+        "pid": 3559885
+      }
+    },
+    "owner_resource_observations": [
+      {
+        "host": 1,
+        "files_free": 108547993600,
+        "files_used": 88118890496,
+        "memory_available": 288424878080,
+        "reserved_files": 134217728,
+        "reserved_heap": 52613349376
+      },
+      {
+        "host": 2,
+        "files_free": 103230177280,
+        "files_used": 62195195904,
+        "memory_available": 283257905152,
+        "reserved_files": 134217728,
+        "reserved_heap": 52613349376
+      },
+      {
+        "host": 3,
+        "files_free": 120201908224,
+        "files_used": 62289616896,
+        "memory_available": 300692004864,
+        "reserved_files": 134217728,
+        "reserved_heap": 52613349376
+      }
+    ],
+    "root_resources": {
+      "files_free": 77106626560,
+      "files_used": 106059223040,
+      "memory_available": 255764578304,
+      "reserved_files": 36700160,
+      "reserved_heap": 83886080
+    }
+  },
+  "subsequent_actual_handle_audit": {
+    "path": "runs/value-core-launch-v2/heartbeat-1789488045367765129.json",
+    "sha256": "bdac8c56a1806695b9b6e14146dbf69805198b4406221ea5198bdc65f53c98f6",
+    "created": 1789488045.367474,
+    "prior_live_sha256": "5113f34198c532740f31150051cc6138feb7b5fed4f472014a3d0036a9188d7c",
+    "records": [
+      {
+        "follower_live": true,
+        "follower_pid": 3219277,
+        "host": 1,
+        "run_id": "value-core-full-seed16-v1",
+        "seed": 16,
+        "step": 260,
+        "trainer_pid": 3217102
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 3219493,
+        "host": 1,
+        "run_id": "value-core-policy-only-seed17-v1",
+        "seed": 17,
+        "step": 250,
+        "trainer_pid": 3217265
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 3219629,
+        "host": 1,
+        "run_id": "value-core-reduced-seed18-v1",
+        "seed": 18,
+        "step": null,
+        "trainer_pid": null
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 12407,
+        "host": 2,
+        "run_id": "value-core-reduced-seed16-v1",
+        "seed": 16,
+        "step": 260,
+        "trainer_pid": 10063
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 12569,
+        "host": 2,
+        "run_id": "value-core-full-seed17-v1",
+        "seed": 17,
+        "step": 260,
+        "trainer_pid": 10158
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 12796,
+        "host": 2,
+        "run_id": "value-core-policy-only-seed18-v1",
+        "seed": 18,
+        "step": null,
+        "trainer_pid": null
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 3222559,
+        "host": 3,
+        "run_id": "value-core-policy-only-seed16-v1",
+        "seed": 16,
+        "step": 250,
+        "trainer_pid": 3221189
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 3222705,
+        "host": 3,
+        "run_id": "value-core-reduced-seed17-v1",
+        "seed": 17,
+        "step": 250,
+        "trainer_pid": 3221266
+      },
+      {
+        "follower_live": true,
+        "follower_pid": 3222897,
+        "host": 3,
+        "run_id": "value-core-full-seed18-v1",
+        "seed": 18,
+        "step": null,
+        "trainer_pid": null
+      }
+    ],
+    "scope": "All six actual trainer PIDs progressed; all nine followup handles are live; three declared queued trials remain unstarted.",
+    "status": "passed"
+  },
+  "evidence": {
+    "archive": {
+      "bytes": 2641920,
+      "files": 276,
+      "manifest_path": "runs/value-core-launch-evidence-v1/evidence-manifest.json",
+      "manifest_sha256": "b8fa4bcaa39b433c52677b51e6e602daa0e31274240a94059ac9bb983ce90423",
+      "path": "runs/value-core-launch-evidence-v1/evidence.tar",
+      "sha256": "9c4d7e532cde9cfd5ce8cd251d14ab6eb691982e8924860bf1cd53d49165a9bf"
+    },
+    "control_snapshot_transfer": {
+      "archive_sha256": "334f96133d632506b23cd594ee1155877f424ec596491bfbd94e9699e62f60f1",
+      "files": 47,
+      "status": "passed",
+      "transferred_files": 47,
+      "verified_existing_files": 0
+    },
+    "created": 1789488160.902236,
+    "member_verification": {
+      "files": 276,
+      "status": "passed"
+    },
+    "owner": 2,
+    "peer": 3,
+    "status": "passed",
+    "transfer": {
+      "bytes": 2641920,
+      "sha256": "9c4d7e532cde9cfd5ce8cd251d14ab6eb691982e8924860bf1cd53d49165a9bf",
+      "status": "passed"
+    }
+  },
+  "interpretation": "Six learners have demonstrably advanced on their registered CPU lanes; three are queued behind completed same-lane followups. Both candidates and all nine 128000-exposure endpoints remain required. No final learnability, matched-CNN or playing-strength result is claimed.",
+  "resources": "Fixed topology; CPU only. TPU remains paused. Original 100 GiB own-file cap, 64 GiB free-filesystem floor, and 96 GiB available-RAM floor remain unchanged, including reservations."
+}

@@ -4,7 +4,7 @@ The completed [clipping confirmation](clipping-confirmation-study.md) supports
 per-parameter-group clipping as the next optimizer control. The
 [loss-balance audit](loss-balance-study.md) found that value gradients dominate
 and oppose policy gradients at the shared circuit on one fixed training probe.
-The next intervention tests that optimization pressure directly, before changing
+The registered comparison tests that optimization pressure directly, before changing
 visual attachments or recurrence. A learnability benefit is not yet established.
 
 ## One gradient-routing coefficient
@@ -18,7 +18,7 @@ g_{\phi_P}=\nabla_{\phi_P}L_P,\qquad
 g_{\phi_V}=\nabla_{\phi_V}L_V.
 \]
 
-The proposed scales are **1, .1 and 0**: ordinary shared learning, reduced
+The registered scales are **1, .1 and 0**: ordinary shared learning, reduced
 value pressure, and a value head trained on policy-learned features. Shared
 parameters include edge strengths, type leak/bias, input gains and readout
 gains. Both head gradients remain fully trained at common parameters; later
@@ -70,7 +70,7 @@ has **226** member-verified archive entries on second workers; the build and
 runtime package are independently verified on three workers.
 [Build, tests, compatibility and evidence receipt](results/value-core-engineering-v1.json).
 
-## Next scientific decision
+## Scientific comparison
 
 All **18** full-CNS Rust/JAX numerical cases and **nine** fresh-process recovery
 cases pass for seeds **16/17/18**, each with scales **1 / .1 / 0**. The
@@ -85,21 +85,67 @@ have verified peer copies. Worker 2 additionally validates all nine exact
 prospective deployment contracts, including common initial arrays/samplers and
 source, coefficient, schedule and recovery identities.
 [Complete qualification record](results/value-core-qualification-v1.json).
-Scientific trials are **not registered or launched** yet.
+
+The [study](../configs/value-core-study-v1.json),
+[nine trials](../configs/value-core-trials-v1.json) and
+[analysis](../configs/value-core-analysis-v1.json) are now frozen and deployed.
+Each seed uses all three arms, with identical numerical initial arrays and
+sampling streams within the seed:
+
+| Arm | Shared circuit gradient | Both output heads |
+| --- | --- | --- |
+| full | policy + value | Full gradients |
+| reduced | policy + .1 × value | Full gradients |
+| policy-only | policy | Full gradients |
+
+Every endpoint receives **4,000 B32 updates / 128,000 labeled exposures**;
+all nine total **1,152,000** scientific training exposures. The primary metric
+is full-validation KL on **70,425** positions, with two declared contrasts:
+reduced minus full and policy-only minus full. Keep value MSE, teacher top-1,
+entropy/peak probability, the **62,984** source-novel positions, fixed training
+motor probes and actual B1/B32 prediction FLOPs. Family bootstrap intervals
+condition on fitted weights; report seed differences and their SD separately.
+There is no multiplicity correction.
+
+Each candidate is independently provisional only if every paired seed improves
+KL and mean value MSE does not worsen. Report every tradeoff and failed case.
+This report selects no winner between eligible candidates; promotion requires
+a separate fresh-seed confirmation.
+
+Six learners for seeds 16/17 are running on two disjoint 24-core lanes per
+worker. The three seed-18 learners wait for their preceding same-lane validation,
+motor probe and prediction count to finish. Arms rotate across hosts. Actual
+process checks verified all **150** learner threads, the loaded native-library
+hashes, exact within-seed initial pairing, and all six initial checkpoint peers.
+A second observation confirmed optimizer-step growth on the same six PIDs and
+all nine live followup processes. Final scientific results remain pending.
 
 The initial IO draft retained the earlier clipping protocol's digest. It was
 never launched. IO v2 corrects that reference before staging; the launcher
 checks that both plans point to the same numerical protocol. The original
 draft and correction are retained without changing seeds, settings or source.
 
-The subsequent comparison will retain B's current-board spherical input,
-dense 2,129-motor projections, K8 hard recurrence and reset state, with the
-confirmed per-group optimizer settings. Register paired initializations,
-sampling streams, fixed exposure endpoints and analysis before scientific
-updates. Evaluate full validation, source-novel positions, motor responses and
-actual prediction work. A policy gain with worse value is a tradeoff, not an
-unqualified improvement. Matched-CNN and playing-strength claims need their
-own fair comparison. Persistent state and precision changes remain separate.
+The comparison retains B's current-board spherical input, dense 2,129-motor
+projections, K8 hard recurrence and reset state, with the confirmed per-group
+optimizer settings. Matched-CNN and playing-strength claims require their own
+fair comparison. Persistent state and precision changes remain separate.
 
-TPU stays paused. New runtime and checkpoint payloads stay on workers within
-the existing shared-RAM limits; root receives bounded control records.
+The analysis/control bundle passes **20 tests**, including both contrasts,
+family/seed weighting, objective-tag pairing, process/lock waits and transient
+SSH observation retries. It also handles an explicitly queued trial before its
+status file exists; a missing unqueued trainer remains an error. The preceding
+19-test bundle is retained. These changes perform no learner updates.
+
+The first launch stopped at bundle validation because the controller lacked the
+raw V0 game payloads; all three workers retained complete copies. No learner
+started in that attempt. Restoring **241,128,228 bytes / 10,256 games** from
+worker 2 passed every registered checksum, after which the unchanged deployment
+resumed. Dataset, split, sampler, source, seeds and endpoints were preserved.
+Registration, both test bundles, attempts and live audits have **276**
+member-verified archive entries on two workers.
+[Registration, launch and evidence record](results/value-core-registration-v1.json).
+
+TPU stays paused. Scientific checkpoint and bulk-response payloads stay on
+workers. The controller retains the qualified runtime and restored V0 files
+needed by the existing deployment interface, plus bounded control/log storage.
+All original shared-RAM caps and buffers remain in force.

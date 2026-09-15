@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 15:26 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 16:03 UTC**. Fixed fly topology, learnable strengths.
 Compare **prediction FLOPs and labeled-position exposures**; report training,
 tuning, memory and latency costs separately. No advantage over the matched CNN
 has been established. Detailed history stays in the linked study reports.
@@ -20,9 +20,9 @@ CNN gap remain unresolved. Scientific exposure: **768,000**; separate
 qualification exposure: **3,264**. All 306 qualification and 183 scientific
 archive entries have verified owner/peer copies.
 
-The next priority is [value-to-circuit gradient routing](docs/value-core-study.md):
+The active study is [value-to-circuit gradient routing](docs/value-core-study.md):
 keep both task heads fully trained while testing shared gradients
-`g_policy + lambda * g_value`, with proposed scales **1 / .1 / 0**.
+`g_policy + lambda * g_value`, with registered scales **1 / .1 / 0**.
 The [gradient audit](docs/loss-balance-study.md) motivates this optimization-only
 intervention; keep B's current-board spherical input, dense motor projections,
 K8 hard recurrence and reset state fixed.
@@ -35,9 +35,21 @@ checkpoint continuation (**896** engineering update exposures). Seeds
 **16/17/18** pass all **18** Rust/JAX numerical and **nine** exact recovery
 cases at scales **1 / .1 / 0**, adding **4,896** engineering exposures. All 159
 qualification archive entries have verified peer copies, and all nine exact
-deployment contracts pass on worker 2. **Next: register the paired scientific
-comparison and its analysis, then launch fixed-horizon CPU trials.** Scientific
-training for this factor has not started.
+deployment contracts pass on worker 2. The analysis/control bundle passes
+**20 tests**, including queued-wave collection and transient observation retries.
+
+**Six learners are training; three are queued.** Seeds **16/17/18** each receive
+all three coefficients at **4,000 B32 updates / 128,000 exposures**, totaling
+**1,152,000** scientific exposures. Actual audits verified all 150 learner
+threads, native hashes, within-seed initial pairing, checkpoint peers, step
+growth and nine live followups. Seed 18 waits for completed same-lane analyses.
+The first launch created no learner because controller V0 payloads were absent;
+all 10,256 exact files were restored from an intact worker copy before resuming
+the unchanged deployment. Registration, both test bundles and launch evidence
+have **276** member-verified archive entries on two workers.
+**Next: close all nine fixed endpoints and both declared contrasts**, including
+full validation, value tradeoffs, motor responses and actual prediction FLOPs.
+[Registration and launch record](docs/results/value-core-registration-v1.json).
 Persistent state, attachment changes and precision changes remain separate.
 
 ## Milestones
@@ -47,7 +59,7 @@ Persistent state, attachment changes and precision changes remain separate.
 | M0–M2: design, Go engine, expert pilot | Complete | Optional throughput improvements |
 | M3: corpus | V0 complete; generation stopped | Preserve stop markers; separately register later releases |
 | M4–M5: fly execution and learning | Rust/Python/JAX paths qualified | Qualify each new numerical model independently |
-| M6: controlled studies | Clipping confirmation complete; value routing qualified | Register paired value-routing trials and analysis, then train |
+| M6: controlled studies | Clipping confirmation complete; value routing training | Close all nine paired endpoints and both registered contrasts |
 | M7: four-host TPU | Default path qualified; use paused | Nondefault spherical/epsilon/smooth paths need separate TPU gates |
 | M8: online refinement | Pending a useful prior | Prior/PUCT/Gumbel interfaces and panels work |
 | Biological groups and interfaces | Mapping, readout and signal studies complete | Improve learnability through separately controlled changes |

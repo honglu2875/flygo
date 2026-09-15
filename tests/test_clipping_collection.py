@@ -94,5 +94,18 @@ class ClippingCollection(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'registered endpoint failed'):
             inspect(self.root, analysis, plan, 1)
 
+    def test_queued_wave_waits_without_inventing_a_completed_endpoint(self):
+        job = dict(host=1, run_id='queued', wait_for=['followup/earlier'])
+        plan = dict(updates=4000, jobs=[job]); analysis = dict(followup='runs/followup')
+        with patch('finish_study.running_train', return_value=None):
+            observed = inspect(self.root, analysis, plan, 1)
+            self.assertFalse(observed['ready'])
+            self.assertIsNone(observed['records'][0]['trainer_state'])
+            job.pop('wait_for')
+            with self.assertRaisesRegex(RuntimeError, 'unqueued registered trainer is missing'):
+                inspect(self.root, analysis, plan, 1)
+        with patch('finish_study.running_train', return_value=123):
+            self.assertFalse(inspect(self.root, analysis, plan, 1)['ready'])
+
 
 if __name__ == '__main__': unittest.main()

@@ -11,15 +11,16 @@ from flygo import _native
 from flygo.data.corpus import atomic_json
 from flygo.qualify import sha256
 from flygo.optimizer import saved_clipping_mode,check_clipping_restore
+from flygo.objectives import value_core_scale,saved_value_core_scale,check_objective_restore
 from flygo.runtime import pin
 from flygo.storage import GIB,StorageBudget
 
 
 def initial_state(arrays, metadata):
-    """Fingerprint numerical initialization separately from optimizer-mode metadata."""
+    """Fingerprint numerical initialization; callers separately validate fixed training tags."""
     records = {}
     for key in sorted(arrays):
-        if key in ('metadata', 'optimizer_clip_mode'):
+        if key in ('metadata', 'optimizer_clip_mode', 'objective_value_core_scale'):
             continue
         value = np.asarray(arrays[key])
         records[key] = dict(shape=list(value.shape), dtype=value.dtype.str,
@@ -74,6 +75,9 @@ def main():
         clip_mode=job.get('clip_mode',plan.get('clip_mode','global'))
         if config['arguments'].get('clip_mode','global')!=clip_mode:
             raise ValueError('Learner clipping mode differs from its declared optimizer contract')
+        scale=value_core_scale(job.get('value_core_scale',plan.get('value_core_scale',1.0)))
+        if value_core_scale(config['arguments'].get('value_core_scale',1.0))!=scale:
+            raise ValueError('Learner value core scale differs from the registered trial')
         expected_head=None
         if job.get('head_mask'):
             from flygo.readout import load_head_mask
@@ -102,6 +106,9 @@ def main():
                 if saved_clipping_mode(metadata_part)!=clip_mode:
                     raise ValueError('Checkpoint clipping mode differs from the registered trial')
                 check_clipping_restore(clip_mode,arrays_part)
+                if saved_value_core_scale(metadata_part)!=scale:
+                    raise ValueError('Checkpoint value core scale differs from the registered trial')
+                check_objective_restore(scale,arrays_part)
             head=head_state(initial,final,expected_head)
             numerical_runtime=metadata.get('numerical_runtime','rust-fp32-f64-norm-v1')
             if numerical_runtime!=initial_metadata.get('numerical_runtime','rust-fp32-f64-norm-v1'):

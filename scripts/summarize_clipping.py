@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Close the fixed clipping-scope study; keep confidence, seed and family effects separate."""
+"""Close a registered optimizer study; keep confidence, seed and family effects separate."""
 import argparse
 import json
 from pathlib import Path
@@ -20,6 +20,18 @@ from flygo.storage import GIB, StorageBudget
 
 
 CONFIDENCE = ('policy_entropy', 'mean_top_probability')
+VALUE_CORE_FACTOR = 'supervised value-to-circuit gradient scale only'
+
+
+def contrasts(analysis):
+    return analysis['contrasts'] if 'contrasts' in analysis else [analysis['contrast']]
+
+
+def optimizer_contract(analysis, arm):
+    """Return the permitted varying field and the exact arm's optimizer settings."""
+    if analysis.get('factor') == VALUE_CORE_FACTOR:
+        return 'value_core_scale', analysis['clip_mode'], float(np.float32(analysis['value_core_arms'][arm]))
+    return 'clip_mode', arm, 1.0
 
 
 def validate_contract(analysis):
@@ -27,11 +39,20 @@ def validate_contract(analysis):
     seeds = analysis['seeds']; update = analysis['endpoint_update']
     if (len(seeds) < 2 or any(type(seed) is not int or seed < 0 for seed in seeds)
             or len(set(seeds)) != len(seeds) or type(update) is not int or update <= 0 or update % 10
-            or analysis['arms'] != ['global', 'parameter-group']
-            or analysis['contrast'] != dict(candidate='parameter-group', reference='global')
             or tuple(analysis['metrics']) != METRICS or tuple(analysis['confidence_metrics']) != CONFIDENCE
             or tuple(analysis['slices']) != SLICES
             or analysis['bootstrap'] != dict(unit='opening_family', resamples=1000, seed=709, interval=[.025, .975])):
+        raise ValueError('Unsupported clipping analysis contract')
+    if analysis.get('factor') == VALUE_CORE_FACTOR:
+        scales = {k: float(np.float32(v)) for k, v in analysis['value_core_arms'].items()}
+        if (analysis['arms'] != ['full', 'reduced', 'policy-only']
+                or scales != dict(full=1., reduced=float(np.float32(.1)), **{'policy-only': 0.})
+                or analysis['clip_mode'] != 'parameter-group'
+                or contrasts(analysis) != [dict(candidate=a, reference='full') for a in ('reduced', 'policy-only')]):
+            raise ValueError('Unsupported value core analysis contract')
+    elif (analysis.get('factor', 'optimizer clipping scope only') != 'optimizer clipping scope only'
+            or analysis['arms'] != ['global', 'parameter-group']
+            or contrasts(analysis) != [dict(candidate='parameter-group', reference='global')]):
         raise ValueError('Unsupported clipping analysis contract')
 
 
@@ -60,11 +81,18 @@ def paired_confidence(matrices, families, novel, seeds, arms, contrast, *, boots
             result[name] = row
         return dict(**result, seed_variation=variation)
 
-    differences = [matrices[s, contrast['candidate']] - matrices[s, contrast['reference']] for s in seeds]
+    comparisons = [contrast] if isinstance(contrast, dict) else contrast
+    if (not comparisons or any(c['candidate'] not in arms or c['reference'] not in arms
+                              or c['candidate'] == c['reference'] for c in comparisons)):
+        raise ValueError('Invalid confidence contrasts')
+    paired = []; pooled = []
+    for comparison in comparisons:
+        differences = [matrices[s, comparison['candidate']] - matrices[s, comparison['reference']] for s in seeds]
+        paired.extend(dict(seed=s, **comparison, **combine([d])) for s, d in zip(seeds, differences))
+        pooled.append(dict(**comparison, **combine(differences)))
     return dict(records=[dict(seed=s, arm=a, **combine([matrices[s, a]])) for s in seeds for a in arms],
         pooled_records=[dict(arm=a, **combine([matrices[s, a] for s in seeds])) for a in arms],
-        contrasts=[dict(seed=s, **contrast, **combine([d])) for s, d in zip(seeds, differences)],
-        pooled_contrasts=[dict(**contrast, **combine(differences))], seeds=seeds,
+        contrasts=paired, pooled_contrasts=pooled, seeds=seeds,
         contrast_direction='candidate minus reference')
 
 
@@ -103,8 +131,8 @@ def clipping_history(log, mode, updates, clip):
         scope='Group distributions cover logged steps 1,10,20,... only. The all-update counter covers the entire run. Update timing includes forward/backward and is not isolated optimizer overhead.')
 
 
-def decision(statistics):
-    contrast = statistics['pooled_contrasts'][0]
+def decision(statistics, index=0):
+    contrast = statistics['pooled_contrasts'][index]
     variation = contrast['seed_variation']['natural']
     policy = variation['policy_kl']['per_seed']
     value = contrast['natural']['value_mse']['mean']
@@ -113,6 +141,14 @@ def decision(statistics):
                 provisional_candidate=all(delta < 0 for delta in policy) and value <= 0,
                 paired_policy_differences=policy, mean_value_difference=value,
                 rule='Natural validation KL improves in every paired seed, with nonworse mean value MSE; fixed endpoints only.')
+
+
+def study_decision(statistics):
+    if len(statistics['pooled_contrasts']) == 1:
+        return decision(statistics)
+    return dict(contrasts=[dict(candidate=row['candidate'], reference=row['reference'], **decision(statistics, i))
+                for i, row in enumerate(statistics['pooled_contrasts'])],
+                rule='Evaluate both preregistered candidates independently. Report every seed and value tradeoff; any candidate still needs fresh-seed confirmation.')
 
 
 def main():
@@ -160,6 +196,7 @@ def main():
         families = motors = counted_indices = shared = None
         for job in jobs:
             run = job['run_id']; seed = job['seed']; arm = job['arm']
+            varied, clip_mode, scale = optimizer_contract(analysis, arm)
             receipt = next(r for r in collection['records'] if r['run_id'] == run)
             endpoint_path = root / receipt['path']; endpoint = complete(endpoint_path)
             if sha256(endpoint_path) != receipt['sha256'] or endpoint['source_sha256'] != collection['helper_sha256']:
@@ -171,7 +208,8 @@ def main():
                     or endpoint['dataset_id'] != dataset or endpoint['head_mask'] != mask.contract
                     or endpoint['plan_sha256'] != sha256(plan_path) or endpoint['native_sha256'] != analysis['native_sha256']
                     or endpoint['numerical_runtime'] != RustFly.numerical_runtime
-                    or endpoint['training_contract'].get('clip_mode', 'global') != arm
+                    or endpoint['training_contract'].get('clip_mode', 'global') != clip_mode
+                    or endpoint['training_contract'].get('value_core_scale', 1.) != scale
                     or endpoint['labeled_training_exposures'] != analysis['labeled_exposures_per_endpoint']
                     or [r['step'] for r in endpoint['checkpoint_receipts']] != [0, analysis['endpoint_update']]
                     or any(r['replica_status'] != 'verified' for r in endpoint['checkpoint_receipts'])):
@@ -182,7 +220,7 @@ def main():
             initializations[seed] = initialization
             contract = {k: endpoint[k] for k in ('dataset_id', 'graph_id', 'input_contract', 'head_mask')}
             contract['model'] = {k: v for k, v in endpoint['model_config'].items() if k != 'seed'}
-            contract['training'] = {k: v for k, v in endpoint['training_contract'].items() if k != 'clip_mode'}
+            contract['training'] = {k: v for k, v in endpoint['training_contract'].items() if k != varied}
             if shared is not None and contract != shared: raise ValueError('Another scientific factor changed')
             shared = contract
             base = root / analysis['followup'] / run; status = read(base / 'status.json')
@@ -192,7 +230,7 @@ def main():
             if len(validation['records']) != 1: raise ValueError('Expected one final validation')
             row = validation['records'][0]; digest = endpoint['checkpoint_sha256']
             if (row['sha256'] != digest or row['dataset_id'] != dataset or row['optimizer_step'] != analysis['endpoint_update']
-                    or row['model'] != endpoint['model_config'] or row['optimizer_clip_mode'] != arm):
+                    or row['model'] != endpoint['model_config'] or row['optimizer_clip_mode'] != clip_mode):
                 raise ValueError('Validation endpoint differs')
             path = base / 'validation' / f'step-{analysis["endpoint_update"]:08d}-{digest[:12]}-metrics.npz'
             values, families = aligned_metrics(path, indices, family_names, families)
@@ -205,22 +243,25 @@ def main():
                 wave, analysis, annotation, selection, motors, counted_indices)
             log_path = root / 'runs' / run / 'metrics.jsonl'
             if sha256(log_path) != endpoint['metrics_log_sha256']: raise ValueError('Training log changed')
-            history = clipping_history([json.loads(line) for line in log_path.read_text().splitlines()], arm, plan['updates'], plan['clip'])
+            history = clipping_history([json.loads(line) for line in log_path.read_text().splitlines()], clip_mode, plan['updates'], plan['clip'])
             if history['final_pre_update'] != endpoint['final_activity']['clipping']:
                 raise ValueError('Pre-update diagnostic and training factors differ')
             records.append(dict(endpoint, arm=arm, **diagnostic, clipping_history=history,
                 endpoint_record_sha256=sha256(endpoint_path), metrics_sha256=sha256(path),
                 validation_record_sha256=sha256(base / 'validation/result.json')))
-        statistics = paired_results(matrices, families, novel, seeds, arms, [analysis['contrast']])
+        comparisons = contrasts(analysis)
+        statistics = paired_results(matrices, families, novel, seeds, arms, comparisons)
         costs = {(r['seed'], r['arm']): r['counted_inference']['records'] for r in records}
         differences = []
-        for index, batch in enumerate((1, 32)):
-            values = [costs[s, 'parameter-group'][index]['cached_zero_skipped_flops_per_position']['mean']
-                    - costs[s, 'global'][index]['cached_zero_skipped_flops_per_position']['mean'] for s in seeds]
-            differences.append(dict(batch_size=batch, per_seed=values, mean=float(np.mean(values)), sample_sd=float(np.std(values, ddof=1))))
+        for comparison in comparisons:
+            for index, batch in enumerate((1, 32)):
+                values = [costs[s, comparison['candidate']][index]['cached_zero_skipped_flops_per_position']['mean']
+                        - costs[s, comparison['reference']][index]['cached_zero_skipped_flops_per_position']['mean'] for s in seeds]
+                label = comparison if len(comparisons) > 1 else {}
+                differences.append(dict(**label, batch_size=batch, per_seed=values, mean=float(np.mean(values)), sample_sd=float(np.std(values, ddof=1))))
         atomic_json(args.output, dict(status='complete', created=time.time(), plan=analysis, dataset_id=dataset,
-            records=records, statistics=statistics, confidence=paired_confidence(confidence, families, novel, seeds, arms, analysis['contrast']),
-            decision=decision(statistics), cost_contrasts=differences, initialization_pairing='exact array fingerprints and sampler state',
+            records=records, statistics=statistics, confidence=paired_confidence(confidence, families, novel, seeds, arms, comparisons),
+            decision=study_decision(statistics), cost_contrasts=differences, initialization_pairing='exact array fingerprints and sampler state',
             labeled_training_exposures=len(records) * analysis['labeled_exposures_per_endpoint'],
             novelty=novelty, probe_selection=selection, source_sha256=sha256(Path(__file__)), plan_sha256=sha256(args.plan),
             endpoint_collection_sha256=sha256(root / analysis['endpoints'] / 'result.json'),
@@ -230,7 +271,7 @@ def main():
                 'Core initialization is shared; head and training sampler seeds vary. Previous development and qualification exposures are separate.',
                 'Motor variance does not establish biological function. Confidence alone does not measure policy quality.',
                 'No optimizer-only overhead is inferred from training or validation wall times.']))
-        print(json.dumps(dict(status='complete', output=str(args.output), decision=decision(statistics))), flush=True)
+        print(json.dumps(dict(status='complete', output=str(args.output), decision=study_decision(statistics))), flush=True)
 
 
 if __name__ == '__main__': main()
