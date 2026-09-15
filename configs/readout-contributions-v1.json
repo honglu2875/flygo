@@ -1,0 +1,45 @@
+{
+  "cases": [
+    {
+      "checkpoint": "runs/attachment-current-seed1-v1/checkpoints/step-00001000.npz",
+      "checkpoint_sha256": "88209ed0edbab52232b3023be7ca63cac4a66590fd402b04fc4401aea22ac782",
+      "host": 0,
+      "report": "runs/attachment-signal-v1/result.json",
+      "responses": "runs/attachment-signal-v1/current-responses.npz",
+      "seed": 1
+    },
+    {
+      "checkpoint": "runs/attachment-current-seed2-v1/checkpoints/step-00001000.npz",
+      "checkpoint_sha256": "ceebcec433559642382ed09e6d001c176ac551e059299863d59ba4219c965957",
+      "host": 1,
+      "report": "runs/attachment-confirmation-diagnostics-v1/attachment-current-seed2-v1/signal/result.json",
+      "responses": "runs/attachment-confirmation-diagnostics-v1/attachment-current-seed2-v1/signal/current-responses.npz",
+      "seed": 2
+    },
+    {
+      "checkpoint": "runs/attachment-current-seed3-v1/checkpoints/step-00001000.npz",
+      "checkpoint_sha256": "60ae42255518b59f94d4d0a00865ae459cb7503d49303d65365e7bcc9428b54c",
+      "host": 1,
+      "report": "runs/attachment-confirmation-diagnostics-v1/attachment-current-seed3-v1/signal/result.json",
+      "responses": "runs/attachment-confirmation-diagnostics-v1/attachment-current-seed3-v1/signal/current-responses.npz",
+      "seed": 3
+    }
+  ],
+  "input_contract": {
+    "attachment_sha256": "9ce4b1d99e499871a540d06f06dccc563e2e9c77e9ad277a6f2399a04345e087",
+    "mode": "current",
+    "version": "spherical-context-h4-ablation-v1"
+  },
+  "leading_cell_counts": [
+    1,
+    8
+  ],
+  "legal_responses": "runs/retinal-allocation-signal-v1/case-1-responses.npz",
+  "legal_responses_sha256": "e2041b0af5c9be285571daa0db86144b47e58d7fd95b56ab6ec4b76f399b3b2c",
+  "motor_annotations": "runs/readout-contributions-v1/motor-annotations.json",
+  "motor_annotations_sha256": "758bdf77d4ac2c375a130611c3a38ad10883cee3450d35e79df399c295fc515f",
+  "name": "readout-contributions-v1",
+  "reference_analysis": "runs/attachment-confirmation-analysis-v1/result.json",
+  "reference_sha256": "882aa1faf065b3098d6145210d4d2b530abb36ae694679110c504b0c8dabaef1",
+  "scope": "Read-only decoder diagnostic on existing trained B weights and retained training responses; no target labels or neural updates."
+}

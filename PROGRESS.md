@@ -1,6 +1,6 @@
 # Progress
 
-Updated **2026-09-15 00:03 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 00:33 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No fly advantage has been established.
@@ -12,9 +12,9 @@ No fly advantage has been established.
 | Milestone | Status | Remaining work |
 |---|---|---|
 | M0–M2: design, Go engine, expert pilot | Complete | Throughput improvements remain optional |
-| M3: corpus | V0 complete; production continues | Freeze later releases under separate contracts |
+| M3: corpus | V0 complete; production stopped | Preserve stop markers; freeze later releases under separate contracts |
 | M4–M5: fly execution and learning | Complete | Current Rust/Python/JAX interfaces qualified |
-| M6: controlled studies | Visual confirmations complete; larger retinal map qualified and training | Finish paired retinal allocation; keep output attachment and persistent state separate |
+| M6: controlled studies | Visual confirmations complete; retinal training complete | Finish paired retinal evaluation; keep output attachment and persistent state separate |
 | M7: four-host TPU | Default path qualified; use paused | Spherical inputs, their nondefault epsilon, and smooth-rate TPU gates remain separate; no current CPU study depends on TPU |
 | M8: online refinement | Pending useful prior | Prior/PUCT/Gumbel interfaces and evaluation panels work |
 | Group study | Spherical adapter and CPU embedding pilot qualified; no representation benefit observed | Isolate input/output attachment, persistent execution and optimization; measure signal throughout |
@@ -35,7 +35,7 @@ No fly advantage has been established.
 | Spherical motor embeddings | K8, 64 updates / 2,048 views per arm; learned versus frozen circuit | CPU pilot complete; both reach 50% branch ranking, with negligible circuit change |
 | Supervised spherical inputs | K8, 2,129 individual motor readouts; history/current/neutral, 32k exposures per arm | All endpoints, full validation, paired family analysis and signal/cost probes complete |
 | Spherical input confirmation | Same contract, paired seeds 2/3; adopt exploratory seed 1 | All six endpoints, full validations, motor/cost probes and paired analysis complete |
-| Larger retinal allocation | One current 9×9 board per eye; paired seeds 1/2/3, K8, 32k exposures | Geometry, CPU parity and recovery gates pass; three trainers running, full validation and diagnostics queued |
+| Larger retinal allocation | One current 9×9 board per eye; paired seeds 1/2/3, K8, 32k exposures | All three final checkpoints and replicas complete; full validation running, diagnostics and paired analysis queued |
 
 All studies retain their declared immutable sources, failed attempts and fixed
 final horizons. V0 has 10,256 games / 1,000,201 positions: train 887,338,
@@ -43,6 +43,13 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
 
 ## Findings and engineering
 
+- [Learned readout contributions](docs/readout-roles-study.md): neutralizing the
+  leading motor's visual component changes value by RMS **.525–.597**, and the
+  top policy move on **4.69–15.23%** of training-probe positions, across three
+  existing seeds. Policy logits reconstruct exactly; value error is at most
+  1.2e-7. This measures decoder influence, not predictive usefulness. The
+  report/source have verified replicas and two invariance/cancellation tests
+  pass. Masked heads and per-motor conditioning remain separate pending factors.
 - [Larger retinal map](docs/retinal-allocation-study.md): 97 Python tests pass;
   the original sampler rebuilds byte for byte, all native ports are unchanged,
   and each eye observes all 81 points at rank 81. Sampling conditioning worsens
@@ -232,7 +239,7 @@ visual control complete under the [registered attachment contract](docs/attachme
 The registered paired seeds 2/3 confirm a history-versus-neutral value signal
 at the same 32k horizon, with no policy improvement. Full validation and
 motor/cost probes are complete. The larger current-board map is qualified;
-`retinal-large-seed{1,2,3}-v1` now train on workers 1–3, each pinned to
+`retinal-large-seed{1,2,3}-v1` ran on workers 1–3, each pinned to
 `32–55`, at the fixed 1,000-update horizon. Their validation, signal and
 arithmetic followups wait for training completion and verified checkpoint
 replicas. The original immutable learner and dense learned heads are retained.
@@ -242,6 +249,11 @@ baselines, and all three initial checkpoints have verified worker replicas.
 [Launch evidence](docs/results/retinal-allocation-launch-v1.json). The new map,
 runtime, qualification and probe evidence—1,048 files, about 87 MB—also have
 verified copies on w0/w1. No checkpoint payload was added to root.
+By **00:23 UTC**, all three learners have exited after 1,000 updates, and all
+final checkpoints have verified worker replicas. Their full validation workers
+are running on the same lanes. The frozen paired-analysis coordinator waits for
+validation, signal and arithmetic workers to finish and release their locks;
+it then collects, checks and replicates their evidence.
 Captures/older history through nonvisual source nodes remain a separate input
 alternative. Source-graph degree, annotation and outgoing-path audits are gates.
 
