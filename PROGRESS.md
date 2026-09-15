@@ -1,9 +1,13 @@
 # Progress
 
-Updated **2026-09-15 05:02 UTC**. Fixed fly topology, learnable strengths.
+Updated **2026-09-15 05:25 UTC**. Fixed fly topology, learnable strengths.
 The main comparison is **prediction FLOPs and labeled-position exposures**;
 parameter counts, training/tuning cost and latency are reported separately.
 No advantage over the matched CNN has been established.
+The smooth-rate study reaches full-validation policy KL **1.4866–1.4930**
+(three-seed mean **1.4903**) at 128k exposures. The **1.5037–1.5054** fly
+range in the matched CNN comparison refers to its separate hard-rate control;
+the current spherical/readout screens use a shorter 32k-exposure contract.
 
 [Interfaces](README.md) · [Study contracts](RESEARCH.md) ·
 [Results](docs/research-results.md) · [Qualification history](docs/qualification-history.md) ·
@@ -124,8 +128,9 @@ validation 70,425, test 42,438. Final test labels remain outside tuning.
   Hard value-head rate scaling helps its short screen; the smooth interaction
   is worse. Larger epsilon fails the loss-based screen.
 - Smooth .01 improves KL in all three observed seeds, by **.02689** on average
-  at 128k exposures. Mean value change remains unresolved. More active edges
-  can increase work; this is not yet an equi-FLOP or playing-strength benefit.
+  at 128k exposures, reaching **1.493042 / 1.486574 / 1.491410** on full
+  validation (mean **1.490342**). Mean value change remains unresolved. More
+  active edges can increase work; this is not yet an equi-FLOP or playing-strength benefit.
 - Same-lane CPU B1 medians: fly **23.73 ms**, large CNN **2.43 ms**, small CNN
   **1.30 ms**. Backend overhead and memory work remain separate from FLOPs.
 - Streaming prediction reduces the K32/B128 probe's peak RSS from **4.005 GB
